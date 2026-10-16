@@ -23,9 +23,11 @@
     var s = D.getElementById(id); if (s) s.classList.remove('on');
     stack = stack.filter(function (x) { return x !== id; }); lock();
     try { W.dispatchEvent(new CustomEvent('mb:close', { detail: id })); } catch (e) {}
-    if (!fromPop) { try { if (history.state && history.state.mb === id) history.back(); } catch (e) {} }
+    if (!fromPop) { try { if (history.state && history.state.mb === id) { skipPop++; history.back(); } } catch (e) {} }
   }
+  var skipPop = 0;   /* 단추로 닫으며 부른 「뒤로」는 한 칸만 — 아래 시트까지 닫지 안케 */
   W.addEventListener('popstate', function () {
+    if (skipPop > 0) { skipPop--; return; }
     if (zoomOn) { hideZoom(true); return; }
     if (stack.length) close(stack[stack.length - 1], true);
   });
@@ -58,7 +60,7 @@
   }
   function hideZoom(fromPop) {
     if (!zm) return; zm.classList.remove('on'); zoomOn = false; lock();
-    if (!fromPop) { try { if (history.state && history.state.mbz) history.back(); } catch (e) {} }
+    if (!fromPop) { try { if (history.state && history.state.mbz) { skipPop++; history.back(); } } catch (e) {} }
   }
   W.mb.zoom = showZoom;
 

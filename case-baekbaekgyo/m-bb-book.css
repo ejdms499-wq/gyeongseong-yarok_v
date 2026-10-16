@@ -553,3 +553,83 @@
 .cm-st.paper .cm-sc img{filter:grayscale(1) contrast(.7) brightness(1.25)!important}
 .cm-st.paper .cm-sub .b{color:#111;font-weight:500;background:rgba(255,255,255,.55);padding:2px 6px}
 .cm-st.paper .cm-sub .k{color:var(--red)}
+
+/* ════════ 1016 · 4차 — 수배지(긁어내기) · 그 밤(무성영화 자막 · 맥박) · 끗(눈 → 흰 화면) ════════ */
+/* 수배지 — 그림 비율 그대로 덥고, 얼굴 칸을 그림의 빈 칸 자리에 정확히 */
+.wp{position:relative;margin:20px auto 0;max-width:340px;aspect-ratio:928/1232;--f:0}
+.wp-under{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;background:#000;overflow:hidden}
+.wp-under img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.8)!important}
+.wp-under p{position:relative;padding:16px 16px 18px;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.85) 30%);font:400 15px/1.75 var(--serif);color:#e7e6e1}
+.wp-under p b{display:block;font:500 10.5px/1 var(--sans);letter-spacing:.24em;color:#e07a72;margin-bottom:8px}
+.wp-paper{position:absolute;inset:0;transform-origin:20% 0;transition:transform 1.6s cubic-bezier(.6,0,.4,1),opacity 1.4s ease 0.4s;box-shadow:0 18px 40px rgba(0,0,0,.7)}
+.wp-img{position:absolute;inset:0;width:100%;height:100%;filter:grayscale(1) contrast(1.12) brightness(calc(.88 - var(--f) * .25))!important}
+.wp-face{position:absolute;left:33.4%;top:32.5%;width:32.6%;height:34.9%;overflow:hidden;background:#d9d8d3}
+.wp-names{position:absolute;inset:0;background:#dcdbd5}
+.wp-names span{position:absolute;transform:translate(-50%,-50%) rotate(var(--r)) scale(calc(var(--s) * 1.2));white-space:nowrap;font:900 13px/1 var(--serif);color:#1a1a1a;opacity:0;transition:opacity 1.2s ease,transform 1.2s ease}
+.wp-names span.on{opacity:var(--o);transform:translate(-50%,-50%) rotate(var(--r)) scale(var(--s))}
+.wp-names span.k{font-size:24px;letter-spacing:.06em;color:#000;z-index:2}
+.wp-names span.k.on{opacity:1}
+.wp-cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.wp-stamp{position:absolute;left:50%;top:76%;z-index:3;white-space:nowrap;padding:3px 7px;border:2.5px solid var(--red);color:var(--red);font:900 15px/1 var(--serif);letter-spacing:.16em;background:rgba(220,219,213,.6);transform:translate(-50%,-50%) rotate(-10deg) scale(1.8);opacity:0;transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.6,.5,1)}
+.wp.stamped .wp-stamp{opacity:.95;transform:translate(-50%,-50%) rotate(-10deg) scale(1)}
+.wp.torn .wp-paper{transform:translate(18%,118%) rotate(28deg);opacity:0}
+.wp.rubbing .wp-img{filter:grayscale(1) contrast(1.2) brightness(.6)!important}
+.wp-hand{position:absolute;left:50%;top:50%;z-index:4;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 6px rgba(255,255,255,.18);opacity:0;pointer-events:none}
+.wp-hand.go{animation:wpRub 2.4s ease-in-out 3 .4s}
+@keyframes wpRub{0%{opacity:0;transform:translate(-18px,-24px)}15%{opacity:1}35%{transform:translate(16px,-6px)}55%{transform:translate(-14px,10px)}75%{transform:translate(14px,24px);opacity:1}100%{opacity:0;transform:translate(14px,24px)}}
+.wp.rubbing .wp-hand,.wp.torn .wp-hand{display:none}
+.wp-meter{display:flex;align-items:center;gap:10px;max-width:340px;margin:14px auto 0;font:500 11px/1 var(--sans);color:#9a9994}
+.wp-meter i{flex:1;height:3px;background:#2a2a2a;position:relative}
+.wp-meter b{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--red);transition:width .3s}
+.wp-meter em{font-style:normal;color:#fff;font-weight:700;min-width:5.6em;text-align:right}
+.wp-again{margin-left:6px;padding:4px 8px;border:1px solid #777;color:#ddd;font:500 11px/1 var(--sans)}
+.mt-cap b{color:#fff}
+
+/* 그 밤 — 무성영화 */
+.sf-st{position:sticky;top:48px;height:calc(100svh - 48px);overflow:hidden;background:#000}
+.sf-sc{position:absolute;inset:0;overflow:hidden;opacity:0}
+.sf-sc img{position:absolute;left:0;top:0;height:100%;max-width:none;width:auto;will-change:transform;filter:grayscale(1) contrast(1.25) brightness(.76)!important}
+.sf-st.paper .sf-sc img{filter:grayscale(1) contrast(.7) brightness(1.25)!important;transition:filter 2.4s ease}
+.sf-grain{position:absolute;inset:-50%;z-index:2;pointer-events:none;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:cmGrain 1.2s steps(6) infinite}
+@keyframes cmGrain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-2%)}60%{transform:translate(-2%,-4%)}80%{transform:translate(4%,2%)}100%{transform:translate(0,0)}}
+.sf-vig{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 85% 70% at 50% 46%,rgba(0,0,0,0) 40%,rgba(0,0,0,.8) 100%)}
+.sf-card{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;padding:70px 20px 110px;background:#050505;opacity:0;pointer-events:none}
+.sf-frame{position:relative;width:100%;max-width:360px;padding:34px 22px 30px;border:1px solid #cfcec9;outline:1px solid #555;outline-offset:6px;text-align:center}
+.sf-frame::before,.sf-frame::after{content:"❦";position:absolute;left:50%;transform:translateX(-50%);font-size:16px;color:#9a9994;background:#050505;padding:0 10px}
+.sf-frame::before{top:-12px}.sf-frame::after{bottom:-12px;transform:translateX(-50%) rotate(180deg)}
+.sf-frame .k{font:500 11px/1.4 var(--sans);letter-spacing:.24em;color:#e07a72}
+.sf-frame h3{margin:14px 0 16px;font:900 34px/1.25 var(--serif);letter-spacing:.02em;color:#f2f1ec}
+.sf-frame .b{font:400 16px/1.95 var(--serif);color:#dcdbd6;word-break:keep-all}
+.sf-frame .no{position:absolute;right:10px;bottom:8px;font:500 10px/1 var(--serif);color:#555}
+.sf-ban{position:absolute;left:50%;top:42%;z-index:5;white-space:nowrap;padding:10px 20px;border:4px solid var(--red);color:var(--red);font:900 44px/1 var(--serif);letter-spacing:.2em;transform:translate(-50%,-50%) rotate(-9deg) scale(2);opacity:0;transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.6,.5,1)}
+.sf-st.stamped .sf-ban{opacity:.95;transform:translate(-50%,-50%) rotate(-9deg) scale(1)}
+.sf-hd{position:absolute;left:var(--g);right:var(--g);top:14px;z-index:6;display:flex;justify-content:space-between;font:500 10px/1 var(--sans);letter-spacing:.24em;color:#8a8984}
+.sf-hd span:first-child{color:var(--red)}
+.sf-hd b{color:#fff}
+.sf-rt{position:absolute;right:10px;top:36px;z-index:6;font:500 9px/1 var(--sans);letter-spacing:.18em;padding:4px 5px;background:rgba(0,0,0,.6);color:#bbb}
+.sf-pulse{position:absolute;left:var(--g);right:var(--g);bottom:calc(18px + env(safe-area-inset-bottom));z-index:6;display:flex;align-items:center;gap:10px;height:46px;border-top:1px solid #222;padding-top:6px}
+.sf-pulse canvas{flex:1;height:40px;min-width:0}
+.sf-pulse span{flex:none;font:700 12px/1 var(--serif);color:#e07a72;min-width:4em;text-align:right}
+.sf-hint{position:absolute;left:0;right:0;bottom:84px;z-index:6;text-align:center;font:500 11.5px/1 var(--sans);letter-spacing:.2em;color:#777;transition:opacity 1s}
+
+/* 끗 — 눈, 그리고 하얗게 */
+.bb-fin2{background:#050505}
+.fn{position:relative}
+.fn-st{position:sticky;top:48px;height:calc(100svh - 48px);overflow:hidden;background:#050505}
+.fn-bg{position:absolute;inset:-4%;background:url(./img/mj/bb_snow.jpg) center/cover no-repeat;filter:grayscale(1) brightness(.42) contrast(1.15);will-change:transform}
+.fn-snow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.fn-white{position:absolute;inset:0;z-index:1;background:#fbfbf9;opacity:0}
+.fn-l{position:absolute;left:var(--g);right:var(--g);top:44%;z-index:3;text-align:center;font:300 19px/1.9 var(--serif);color:#f2f1ec;text-shadow:0 2px 18px #000;opacity:0;will-change:transform,opacity}
+.fn-l.k{font:500 11px/1.5 var(--sans);letter-spacing:.3em;color:#bdbcb7}
+.fn-l.big{font:700 27px/1.6 var(--serif);color:#fff}
+.fn-l.red{color:#ff8a80;font-weight:700}
+.fn-l.end{font:500 14px/1 var(--sans);letter-spacing:.4em;color:#111;text-shadow:none}
+.fn-st.w .fn-l:not(.end){color:#222;text-shadow:none}
+.fn-rt{position:absolute;right:10px;top:10px;z-index:4;font:500 9px/1 var(--sans);letter-spacing:.18em;padding:4px 5px;background:rgba(0,0,0,.5);color:#bbb}
+.fn-st.w .fn-rt{opacity:0}
+.fn-bg{filter:grayscale(1) brightness(.3) contrast(1.2)}
+/* 일홈들 — 지우고 다시 쓴 자국처럼 */
+.wp-names span:not(.k){font:900 15px/1 var(--serif);letter-spacing:.3em;color:#111;text-decoration:line-through;text-decoration-thickness:2px;filter:blur(.5px)}
+.wp-names span:nth-child(3n){filter:blur(1.4px)}
+.wp-names span:nth-child(4n){text-decoration:none;filter:blur(2.2px);font-size:22px}
+.wp-names::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,0) 40%,rgba(0,0,0,.28));pointer-events:none}

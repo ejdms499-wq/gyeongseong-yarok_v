@@ -12,7 +12,7 @@
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="stylesheet" href="../case-jukcheomjeong/fonts/fonts.css">
 <link rel="stylesheet" href="../yk-mbook.css?v=11">
-<link rel="stylesheet" href="./m-bb-book.css?v=6">
+<link rel="stylesheet" href="./m-bb-book.css?v=8">
 </head>
 <body class="bb-m" data-bgm="../case/audio/baekbaekgyo/baekbaekgyo-bg.mp3" data-bell="../case-jukcheomjeong/audio/bell.mp3" data-whoosh="../case-jukcheomjeong/audio/whoosh.mp3">
 
@@ -215,15 +215,22 @@
 </section>
 <section class="mb-sec dark bb-mount" id="c6" data-ch="용문산 · 얼굴 업는 수배" data-no="06" data-kj="第六章" data-sub="양평 용문산 기슭">
   <h2 class="mb-h"><small>第六章 · 용문산</small>얼굴 업는 수배</h2>
-  <div class="mt-poster" id="mtPoster" role="button" tabindex="0" aria-label="수배지 얼굴 자리를 눌러 기다리기">
-    <img class="p0" src="./img/mj/bb_poster.jpg" alt="얼굴 자리가 비어 있는 수배지 (재현 그림)" loading="lazy">
-    <span class="face"><img class="s1" src="./img/mj/bb_scratch.jpg" alt=""><img class="s2" src="./img/mj/bb_scratch2.jpg" alt=""></span>
+  <div class="wp" id="wp">
+    <div class="wp-under"><img src="./img/mj/bb_watch.jpg" alt="금시계와 지폐, 동전 (재현 그림)"><p><b>주머니에 남은 것</b>엘진 금시계 하나와 팔십 원.<br>그를 알아본 것은 — 그의 아들이엇소.</p></div>
+    <div class="wp-paper" id="wpPaper">
+      <img class="wp-img" src="./img/mj/bb_poster.jpg" alt="얼굴 자리가 비어 있는 수배지 (재현 그림)">
+      <div class="wp-face" id="wpFace">
+        <div class="wp-names" id="wpNames"></div>
+        <canvas class="wp-cv" id="wpCv"></canvas>
+        <b class="wp-stamp">身元不明</b>
+      </div>
+      <i class="wp-hand" id="wpHand" aria-hidden="true"></i>
+    </div>
     <span class="rt">그림 · 재현</span>
-    <i class="ring" aria-hidden="true"></i>
   </div>
-  <p class="mt-cap" id="mtCap">수배지 · 재현 그림 — 얼굴 자리를 손가락으로 눌러, 기다려 보시압.</p>
+  <div class="wp-meter"><span>얼굴을 긁어내시압</span><i><b id="wpBar"></b></i><em id="wpN">일홈 0 / 16</em></div>
+  <p class="mt-cap" id="mtCap">손가락으로 얼굴 자리를 문질러 보시압. 그 아래에 — 그가 써 온 일홈들이 잇소.</p>
   <p class="mb-p">그가 써 온 일홈만 — 「김두선」 등 <em>열여섯 개</em>엿소.</p>
-  <div class="mt-names" id="mtNames"></div>
   <p class="mb-q">천하를 희게 한다든 이는,<br>열여섯 개의 일홈 뒤에 숨엇소.</p>
   <ol class="mb-flow dk">
     <li class="mb-rv"><b>사월 초</b><p>쉰 날 남짓 지난 사월 초, 양평 용문산 기슭에서 그를 차잣소. 이미 숨이 업섯소.</p></li>
@@ -231,7 +238,6 @@
     <li class="mb-rv"><b>주머니</b><p>주머니에 남은 것은 엘진 금시계 하나와 팔십 원. 그를 알아본 것은 — 그의 아들이엇소.</p></li>
     <li class="mb-rv"><b>의문</b><p>그러나 — 얼굴은 알아볼 수 업슬 만큼 상해 잇섯소. 죽은 날을 두고도 의문이 남앗고, 신문에는 「다른 이로 꾸며 달아낫다」는 소문도 실렷소.</p></li>
   </ol>
-  <figure class="mb-fig mb-rv"><div class="im"><img src="./img/mj/bb_watch.jpg" alt="금시계와 지폐, 동전 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>주머니에 남은 것 · 재현 그림</figcaption></figure>
   <p class="mb-note">근거 · 한국민족문화대백과사전 「백백교」 · 당시 보도</p>
   <p class="mb-q">사월 십삼일, 금지가 풀렷소.<br>그날 — 신문은 산을 파는 이야기로 가득 찻소.</p>
 </section>
@@ -344,17 +350,9 @@
 </section>
 
 <!-- 끗 — 눈 -->
-<section class="mb-finale bb-fin" id="finale" data-ch="흰 것" data-no="終" data-kj="終" data-sub="왕십리에서 용문산까지">
-  <i class="fin-bg" aria-hidden="true"></i><canvas class="fin-snow" id="finSnow" aria-hidden="true"></canvas><span class="fin-rt">그림 · 재현</span>
-  <p class="k">소화 십이 년 · 왕십리에서 용문산까지</p>
-  <p class="mb-rv">그들은 흰 것을 미덧소.</p>
-  <p class="mb-rv">한 사람의 흰 것으로, 천하를 희게 하자 하엿소.</p>
-  <p class="mb-rv">흰 옷 아래에는 장부가 잇섯고, 임명장이 잇섯고 —</p>
-  <p class="mb-rv sm">이십여 곳의 산이 잇섯소.</p>
-  <p class="mb-rv big">가장 흰 것이,<br>가장 만히 덥고 잇섯소.</p>
-  <p class="mb-rv red">덥힌 것을 다 세지 못한 채로 — 지금도.</p>
+<section class="bb-fin2" id="finale" data-ch="흰 것" data-no="終" data-kj="終" data-sub="왕십리에서 용문산까지">
+  <div class="fn" id="fnRoot"></div>
 </section>
-<section class="bb-wout" id="wout"><p>경성의 밤은 아즉 길소.</p></section>
 
 <!-- 덧붙임 · 라듸오 -->
 <section class="mb-sec dark" id="c12" data-ch="덧붙임 · 닫힌 무리의 주파수" data-no="附" data-kj="덧붙임" data-sub="흰 옷은 벗엇어도">
@@ -488,8 +486,8 @@
 
 <script src="./m-bb-ko.js?v=1"></script>
 <script src="../yk-news26.js?v=2"></script>
-<script src="../yk-mbook.js?v=12"></script>
-<script src="./m-bb-book.js?v=4"></script>
+<script src="../yk-mbook.js?v=13"></script>
+<script src="./m-bb-book.js?v=6"></script>
 <script src="./bb-chant.js?v=2"></script>
 
 <script src="../yk-reward.js?v=9"></script>

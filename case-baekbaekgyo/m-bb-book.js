@@ -218,62 +218,64 @@
     });
   })();
 
-  /* ════ 第四章 · 그 밤 — 한 컷씩 흐르는 카메라 ════
-     넓은 장면을 화면 높이에 맞추고, 내리는 만큼 카메라가 옆으로 흘러감 · 장면 사이는 검게 잠겻다 열림(컷)
-     「틈」은 문틈만큼만 보임 · 마지막은 지면이 하얗게 바래고 도장 */
+  /* ════ 第四章 · 그 밤 — 무성영화 · 자막 카드와 흐르는 카메라, 그 밤의 맥박 ════
+     장면마다: 옛 활동사진의 자막 카드 → 장면 (카메라가 옆으로 흐름) · 아래 맥박 줄이 장면의 긴장을 따라 뜀 */
   (function () {
     var root = $('#ngDoor'); if (!root) return;
     var SC = [
-      { img: 'bb_night_house.jpg', alt: '눈 덮인 밤 골목의 한 집', k: '이월 십륙일 밤 · 왕십리', h: '불이 아즉 켜져 잇섯소', b: '왕십리의 한 집에, 불이 아즉 켜져 잇섯소.', dir: 1 },
-      { img: 'bb_door2.jpg', alt: '창호 앞에서 마주 선 두 그림자', k: '밤 · 만남', h: '따지러 온 사내', b: '유곤용의 조부와 부친은 재산을 모다 바첫고, 누이동생은 교주에게 바쳐졋소. 뒤늦게 이를 안 그는 삼만 원을 바치겟다 하고 인삼과 록용을 보내어 — 이 밤, 하왕십리 부친의 집에서 교주를 맛낫소.', dir: -1 },
-      { img: 'bb_door.jpg', alt: '창호에 비친 손 그림자', k: '그 순간', h: '틈', b: '그는 틈을 엿보앗소.', dir: 0, slit: 1 },
-      { img: 'bb_door3.jpg', alt: '창호 너머로 엉킨 그림자들', k: '그 순간', h: '막힌 복수', b: '복수하려 하엿소. 그러나 수행원들에게 막혓고 — 교주는 그 길로 달아낫소.', dir: 1, hit: 1 },
-      { img: 'bb_flee.jpg', alt: '어두운 골목으로 멀어지는 흰 옷의 뒷모습', k: '그 길로', h: '사라진 교주', b: '그날 밤, 교주는 사라졋소. 경찰이 그를 쫏앗소.', dir: -1 },
-      { img: 'bb_raid.jpg', alt: '등불 아래 문 앞에 선 경찰들', k: '새벽 · 인현동', h: '인현동', b: '경찰이 인현동의 집을 덥쳣소. 이경득과 이순분이 붓잡혓소. 장부 속의 일이, 그제야 열리기 시작하엿소.', dir: 1 },
-      { img: 'bb_ban.jpg', alt: '등불 아래 펼쳐진 신문 원고', k: '사흘 뒤 · 이월 십구일', h: '보도 금지', b: '이 일을 신문에 싯는 것이 금지되엇소.', dir: -1, ban: 1 }
+      { img: 'bb_night_house.jpg', alt: '눈 덮인 밤 골목의 한 집', k: '이월 십륙일 밤 · 왕십리', h: '불이 아즉 켜져 잇섯소', b: '왕십리의 한 집에, 불이 아즉 켜져 잇섯소.', dir: 1, bpm: 62, amp: .35 },
+      { img: 'bb_door2.jpg', alt: '창호 앞에서 마주 선 두 그림자', k: '밤 · 만남', h: '따지러 온 사내', b: '유곤용의 조부와 부친은 재산을 모다 바첫고, 누이동생은 교주에게 바쳐졋소. 뒤늦게 이를 안 그는 삼만 원을 바치겟다 하고 인삼과 록용을 보내어 — 이 밤, 하왕십리 부친의 집에서 교주를 맛낫소.', dir: -1, bpm: 78, amp: .5 },
+      { img: 'bb_door.jpg', alt: '창호에 비친 손 그림자', k: '그 순간', h: '틈', b: '그는 틈을 엿보앗소.', dir: 0, slit: 1, bpm: 118, amp: .8 },
+      { img: 'bb_door3.jpg', alt: '창호 너머로 엉킨 그림자들', k: '그 순간', h: '막힌 복수', b: '복수하려 하엿소. 그러나 수행원들에게 막혓고 — 교주는 그 길로 달아낫소.', dir: 1, hit: 1, bpm: 150, amp: 1 },
+      { img: 'bb_flee.jpg', alt: '어두운 골목으로 멀어지는 흰 옷의 뒷모습', k: '그 길로', h: '사라진 교주', b: '그날 밤, 교주는 사라졋소. 경찰이 그를 쫏앗소.', dir: -1, bpm: 96, amp: .6 },
+      { img: 'bb_raid.jpg', alt: '등불 아래 문 앞에 선 경찰들', k: '새벽 · 인현동', h: '인현동', b: '경찰이 인현동의 집을 덥쳣소. 이경득과 이순분이 붓잡혓소. 장부 속의 일이, 그제야 열리기 시작하엿소.', dir: 1, bpm: 120, amp: .8 },
+      { img: 'bb_ban.jpg', alt: '등불 아래 펼쳐진 신문 원고', k: '사흘 뒤 · 이월 십구일', h: '보도 금지', b: '이 일을 신문에 싯는 것이 금지되엇소.', dir: -1, ban: 1, bpm: 0, amp: 0 }
     ];
     var N = SC.length, KJ = ['一', '二', '三', '四', '五', '六', '七'];
-    root.style.height = (N * 130 + 40) + 'svh';
-    root.innerHTML = '<div class="cm-st" id="cmSt">' +
-      SC.map(function (x, i) { return '<div class="cm-sc" data-i="' + i + '"><img src="./img/mj/' + x.img + '" alt="' + x.alt + ' (재현 그림)"></div>'; }).join('') +
-      '<i class="cm-grain" aria-hidden="true"></i><i class="cm-vig" aria-hidden="true"></i><i class="cm-black" id="cmBlack"></i>' +
-      '<b class="cm-ban" id="cmBan">報道禁止</b>' +
-      '<i class="cm-bar t"></i><i class="cm-bar b"></i>' +
-      '<div class="cm-hd"><span>第四章 · 그 밤</span><span><b id="cmNo">一</b> / 七</span></div><span class="cm-rt">그림 · 재현</span>' +
-      SC.map(function (x, i) { return '<div class="cm-sub" data-i="' + i + '"><p class="k">' + x.k + '</p><h3>' + x.h + '</h3><p class="b">' + x.b + '</p></div>'; }).join('') +
-      '<p class="cm-hint" id="cmHint">천천히 내리시압</p>' +
+    root.style.height = (N * 170 + 40) + 'svh';
+    root.innerHTML = '<div class="sf-st" id="sfSt">' +
+      SC.map(function (x, i) { return '<div class="sf-sc" data-i="' + i + '"><img src="./img/mj/' + x.img + '" alt="' + x.alt + ' (재현 그림)"></div>'; }).join('') +
+      '<i class="sf-grain" aria-hidden="true"></i><i class="sf-vig" aria-hidden="true"></i>' +
+      SC.map(function (x, i) { return '<div class="sf-card" data-i="' + i + '"><div class="sf-frame"><p class="k">' + x.k + '</p><h3>' + x.h + '</h3><p class="b">' + x.b + '</p><span class="no">' + KJ[i] + '</span></div></div>'; }).join('') +
+      '<b class="sf-ban" id="sfBan">報道禁止</b>' +
+      '<div class="sf-hd"><span>第四章 · 그 밤</span><span>場面 <b id="sfNo">一</b> / 七</span></div><span class="sf-rt">그림 · 재현</span>' +
+      '<div class="sf-pulse"><canvas id="sfPulse"></canvas><span id="sfBpm">脈</span></div>' +
+      '<p class="sf-hint" id="sfHint">천천히 내리시압 — 그 밤이 한 장면씩 흐르오</p>' +
     '</div>';
-    var st = $('#cmSt'), scs = $$('.cm-sc', st), subs = $$('.cm-sub', st), imgs = scs.map(function (s) { return $('img', s); }), blk = $('#cmBlack'), ban = $('#cmBan');
-    var tp = 0, p = 0, inside = false, raf = 0, cur = -1, hitDone = -1;
+    var st = $('#sfSt'), scs = $$('.sf-sc', st), cards = $$('.sf-card', st), imgs = scs.map(function (s) { return $('img', s); });
+    var pc = $('#sfPulse'), px = pc.getContext('2d'), bpmEl = $('#sfBpm');
+    var tp = 0, p = 0, inside = false, raf = 0, cur = -1, hitDone = false, stamped = false, beatT = 0, trace = [], bpmNow = 62, ampNow = .35, lastBeat = 0;
     function sm(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
-    function measure() { imgs.forEach(function (im) { var r = st.getBoundingClientRect(); im.dataset.w = (im.naturalWidth && im.naturalHeight) ? r.height * im.naturalWidth / im.naturalHeight : r.height * 1.78; }); }
+    function measure() { var H = st.clientHeight; imgs.forEach(function (im) { im.dataset.w = (im.naturalWidth ? H * im.naturalWidth / im.naturalHeight : H * 1.78); }); var r = pc.getBoundingClientRect(); pc.width = r.width * 2; pc.height = r.height * 2; }
     imgs.forEach(function (im) { im.addEventListener('load', measure); });
     function target() { var r = root.getBoundingClientRect(), span = r.height - W.innerHeight; tp = Math.max(0, Math.min(.9999, -r.top / Math.max(1, span))); }
-    function draw() {
+    function draw(ts) {
       if (!inside) { raf = 0; return; }
-      p += (tp - p) * .085;
+      p += (tp - p) * .08;
       var f = p * N, i = Math.min(N - 1, Math.floor(f)), t = f - i, x = SC[i], vw = st.clientWidth;
-      if (i !== cur) {
-        cur = i; $('#cmNo').textContent = KJ[i]; $('#cmHint').style.opacity = i ? 0 : 1;
-        A().heart(!!x.slit);
-        if (!x.ban) st.classList.remove('stamped', 'paper');
-      }
-      scs.forEach(function (s, k) { s.style.opacity = k === i ? 1 : 0; });
-      /* 카메라 — 넓은 그림을 옆으로 흘러감 */
-      var im = imgs[i], w = +im.dataset.w || vw * 2, over = Math.max(0, w - vw), e = sm(0, 1, t);
-      var tx = x.dir === 0 ? -over / 2 : x.dir > 0 ? -over * e : -over * (1 - e);
-      var sc = 1.06 - t * .05;
-      if (x.hit && t > .55) { var q = sm(.55, .62, t); sc += q * .14; tx += Math.sin(t * 90) * (1 - sm(.62, .75, t)) * 6; }
+      if (i !== cur) { cur = i; $('#sfNo').textContent = KJ[i]; $('#sfHint').style.opacity = i ? 0 : 1; hitDone = false; A().heart(!!x.slit || !!x.hit); }
+      /* 자막 카드 (0 ~ .3) → 장면 (.3 ~ 1) */
+      var cardO = 1 - sm(.24, .34, t); if (i === 0 && t < .02) cardO = 1;
+      var scO = sm(.26, .36, t) * (1 - sm(.94, 1, t)); if (i === N - 1) scO = sm(.26, .36, t);
+      cards.forEach(function (c, k) { var o = k === i ? cardO * (k ? sm(0, .06, t) : 1) : 0; c.style.opacity = o.toFixed(3); c.style.transform = 'scale(' + (1 + (1 - o) * .03).toFixed(3) + ')'; });
+      scs.forEach(function (s, k) { s.style.opacity = k === i ? scO.toFixed(3) : 0; });
+      var im = imgs[i], w = +im.dataset.w || vw * 2, over = Math.max(0, w - vw), e = sm(.3, 1, t);
+      var tx = x.dir === 0 ? -over / 2 : x.dir > 0 ? -over * e : -over * (1 - e), sc = 1.08 - e * .06;
+      if (x.hit && t > .62) { var q = sm(.62, .68, t); sc += q * .16; tx += Math.sin(t * 120) * (1 - sm(.68, .8, t)) * 7; if (!hitDone) { hitDone = true; tone('gavel'); } }
       im.style.width = w + 'px'; im.style.transform = 'translateX(' + tx.toFixed(1) + 'px) scale(' + sc.toFixed(3) + ')';
-      /* 틈 — 문틈만큼만 */
-      scs[i].style.clipPath = x.slit ? 'inset(0 ' + (44 - sm(.2, .7, t) * 6).toFixed(1) + '% 0 ' + (44 - sm(.2, .7, t) * 6).toFixed(1) + '%)' : '';
-      /* 컷 — 장면 끝과 처음은 검게 */
-      var b = Math.max(1 - sm(0, .1, t), sm(.9, 1, t)); if (i === 0) b = Math.max(0, sm(.9, 1, t)); if (i === N - 1) b = 1 - sm(0, .1, t);
-      blk.style.opacity = b.toFixed(3);
-      subs.forEach(function (s, k) { var o = k === i ? sm(.1, .22, t) * (1 - sm(.82, .9, t)) : 0; if (i === N - 1 && k === i) o = sm(.1, .22, t); s.style.opacity = o.toFixed(3); s.style.transform = 'translateY(' + ((1 - o) * 10).toFixed(1) + 'px)'; });
-      if (x.hit && t > .56 && hitDone !== i) { hitDone = i; tone('gavel'); }
-      if (x.hit && t < .5) hitDone = -1;
-      if (x.ban) { st.classList.toggle('paper', t > .45); if (t > .62 && !st.classList.contains('stamped')) { st.classList.add('stamped'); tone('stamp'); } if (t < .55) st.classList.remove('stamped'); }
+      scs[i].style.clipPath = x.slit ? 'inset(0 ' + (44 - sm(.4, .9, t) * 8).toFixed(1) + '% 0 ' + (44 - sm(.4, .9, t) * 8).toFixed(1) + '%)' : '';
+      if (x.ban) { st.classList.toggle('paper', t > .55); if (t > .7 && !stamped) { stamped = true; st.classList.add('stamped'); tone('stamp'); } if (t < .62 && stamped) { stamped = false; st.classList.remove('stamped'); } }
+      else if (stamped) { stamped = false; st.classList.remove('stamped', 'paper'); }
+      /* 맥박 — 장면의 긴장을 따라 뜀 · 보도 금지에서 멈춤 */
+      bpmNow += ((x.ban && t > .55 ? 0 : x.bpm) - bpmNow) * .03; ampNow += ((x.ban && t > .55 ? 0 : x.amp) - ampNow) * .04;
+      var dt = Math.min(50, ts - (beatT || ts)); beatT = ts;
+      var period = bpmNow > 5 ? 60000 / bpmNow : 1e9, ph = ((ts - lastBeat) / period);
+      if (ph >= 1) { lastBeat = ts; ph = 0; }
+      var y = 0; if (ph < .08) y = Math.sin(ph / .08 * Math.PI) * -1; else if (ph < .14) y = Math.sin((ph - .08) / .06 * Math.PI) * .45; else if (ph < .3) y = Math.sin((ph - .14) / .16 * Math.PI) * -.18;
+      trace.push(y * ampNow); var Wd = pc.width, Hd = pc.height, maxN = Math.floor(Wd / 3); if (trace.length > maxN) trace.splice(0, trace.length - maxN);
+      px.clearRect(0, 0, Wd, Hd); px.strokeStyle = ampNow > .02 ? 'rgba(224,122,114,.95)' : 'rgba(180,180,176,.7)'; px.lineWidth = 2.4; px.beginPath();
+      trace.forEach(function (v, k) { var X = k * 3, Y = Hd / 2 + v * Hd * .42; k ? px.lineTo(X, Y) : px.moveTo(X, Y); }); px.stroke();
+      bpmEl.textContent = bpmNow > 8 ? '脈 ' + Math.round(bpmNow) : '脈 ─';
       raf = requestAnimationFrame(draw);
     }
     onScroll(target);
@@ -308,25 +310,71 @@
     }, .35);
   })();
 
-  /* ════ 第六章 · 수배지 — 얼굴 자리를 누르고 기다리면, 긁힌 자국 ════ */
+  /* ════ 第六章 · 수배지 — 얼굴을 긁어내면 그 아래에 열여섯 개의 일홈, 다 긁으면 수배지가 떠러지고 주머니에 남은 것 ════ */
   (function () {
-    var p = $('#mtPoster'), cap = $('#mtCap'), t = 0, k = 0, raf = 0, last = 0, done = false;
-    function step(ts) {
-      if (!last) last = ts; var dt = ts - last; last = ts;
-      k = Math.min(1, k + dt / 2600); p.style.setProperty('--k', k.toFixed(3));
-      if (Math.random() < .12) tone('type');
-      if (k >= 1) { done = true; p.classList.add('done'); cap.textContent = '수배지 · 재현 그림 — 얼굴 자리는 긁혀 나가 잇소.'; A().heart(false); return; }
-      raf = requestAnimationFrame(step);
+    var wp = $('#wp'), paper = $('#wpPaper'), face = $('#wpFace'), cv = $('#wpCv'), names = $('#wpNames'), bar = $('#wpBar'), nEl = $('#wpN'), cap = $('#mtCap');
+    if (!wp) return;
+    /* 일홈 열여섯 — 아는 것은 「김두선」 하나, 나머지는 끗내 모르는 일홈 */
+    var N = ['김두선'];
+    for (var i = 0; i < 15; i++) N.push('○ ○ ○');
+    names.innerHTML = N.map(function (n, i) {
+      var big = i === 0, r = (Math.sin(i * 12.9898) * 43758.5453) % 1, r2 = (Math.sin(i * 78.233) * 12345.678) % 1;
+      return '<span class="' + (big ? 'k' : '') + '" style="left:' + (big ? 50 : 8 + Math.abs(r) * 84).toFixed(1) + '%;top:' + (big ? 50 : 6 + Math.abs(r2) * 88).toFixed(1) + '%;--r:' + (big ? -4 : (r * 40).toFixed(1)) + 'deg;--o:' + (big ? 1 : (.35 + Math.abs(r2) * .5).toFixed(2)) + ';--s:' + (big ? 1 : (.7 + Math.abs(r) * .8).toFixed(2)) + '">' + n + '</span>';
+    }).join('');
+    var cx = cv.getContext('2d'), face1 = new Image(), ready = false, done = false, strokes = 0, frac = 0, last = null, w = 0, h = 0, dpr = Math.min(2, W.devicePixelRatio || 1);
+    face1.src = './img/mj/bb_scratch2.jpg';
+    function paint() {
+      var r = face.getBoundingClientRect(); if (!r.width) return;
+      w = r.width; h = r.height; cv.width = w * dpr; cv.height = h * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cx.globalCompositeOperation = 'source-over';
+      var ir = face1.width / face1.height, cr = w / h, sw, sh, sx, sy;
+      if (ir > cr) { sh = face1.height; sw = sh * cr; sx = (face1.width - sw) / 2; sy = 0; } else { sw = face1.width; sh = sw / cr; sx = 0; sy = (face1.height - sh) / 2; }
+      cx.filter = 'grayscale(1) contrast(1.3) brightness(.9)'; cx.drawImage(face1, sx, sy, sw, sh, 0, 0, w, h); cx.filter = 'none';
+      ready = true; frac = 0; strokes = 0; grid = []; upd();
     }
-    function down(e) { if (done) return; if (e.cancelable) e.preventDefault(); p.classList.add('hold'); last = 0; A().heart(true); raf = requestAnimationFrame(step); }
-    function up() { if (done) return; cancelAnimationFrame(raf); p.classList.remove('hold'); A().heart(false);
-      (function back() { k = Math.max(0, k - .04); p.style.setProperty('--k', k.toFixed(3)); if (k > 0 && !p.classList.contains('hold')) requestAnimationFrame(back); })(); }
-    p.addEventListener('pointerdown', down); p.addEventListener('pointerup', up); p.addEventListener('pointerleave', up); p.addEventListener('pointercancel', up);
-    p.addEventListener('contextmenu', function (e) { e.preventDefault(); });
-    var nm = $('#mtNames'), H = ['김두선'];
-    for (var i = 1; i < 16; i++) H.push('○ ○ ○');
-    nm.innerHTML = H.map(function (x, i) { return '<span' + (i ? '' : ' class="known"') + '>' + x + '</span>'; }).join('');
-    once(nm, function () { $$('span', nm).forEach(function (s, i) { setTimeout(function () { s.classList.add('on'); tone('tick'); }, i * 220); }); }, .5);
+    face1.onload = paint; if (face1.complete && face1.naturalWidth) paint();
+    W.addEventListener('resize', function () { if (!done) paint(); });
+    function upd() {
+      var n = Math.min(16, Math.round(frac / .55 * 16));
+      bar.style.width = Math.min(100, frac / .55 * 100) + '%'; nEl.textContent = '일홈 ' + n + ' / 16';
+      $$('span', names).forEach(function (s, i) { s.classList.toggle('on', i < n || i === 0 && frac > .04); });
+      wp.style.setProperty('--f', Math.min(1, frac / .55).toFixed(3));
+    }
+    /* 긁힌 넓이 — 칸을 나눠 세어 둠 (그림 픽셀을 읽지 안어 어느 폰에서나 됨) */
+    var GX = 18, GY = 24, grid = [];
+    function mark(x, y) { var cxw = w / GX, cyh = h / GY, R = 22; for (var gy = Math.max(0, Math.floor((y - R) / cyh)); gy <= Math.min(GY - 1, Math.floor((y + R) / cyh)); gy++) for (var gx = Math.max(0, Math.floor((x - R) / cxw)); gx <= Math.min(GX - 1, Math.floor((x + R) / cxw)); gx++) { var mx = (gx + .5) * cxw - x, my = (gy + .5) * cyh - y; if (mx * mx + my * my < R * R * 1.1) grid[gy * GX + gx] = 1; } }
+    function measure() {
+      var c = 0; for (var q = 0; q < GX * GY; q++) if (grid[q]) c++;
+      frac = c / (GX * GY); upd();
+      if (frac > .55 && !done) finish();
+    }
+    function scratch(x, y) {
+      cx.globalCompositeOperation = 'destination-out';
+      var g = cx.createRadialGradient(x, y, 0, x, y, 22); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(.6, 'rgba(0,0,0,.85)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+      cx.fillStyle = g;
+      if (last) { var dx = x - last[0], dy = y - last[1], L = Math.max(1, Math.hypot(dx, dy) / 6); for (var i = 0; i <= L; i++) { cx.beginPath(); cx.arc(last[0] + dx * i / L, last[1] + dy * i / L, 22, 0, 6.3); cx.fill(); } }
+      else { cx.beginPath(); cx.arc(x, y, 22, 0, 6.3); cx.fill(); }
+      if (last) { var ddx = x - last[0], ddy = y - last[1], LL = Math.max(1, Math.hypot(ddx, ddy) / 8); for (var ii = 0; ii <= LL; ii++) mark(last[0] + ddx * ii / LL, last[1] + ddy * ii / LL); } else mark(x, y);
+      last = [x, y]; strokes++;
+      if (strokes % 6 === 0) { measure(); tone('type'); if (navigator.vibrate) try { navigator.vibrate(8); } catch (e) {} }
+    }
+    function pos(e) { var r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+    cv.addEventListener('pointerdown', function (e) { if (!ready || done) return; e.preventDefault(); cv.setPointerCapture && cv.setPointerCapture(e.pointerId); last = null; var p = pos(e); scratch(p[0], p[1]); wp.classList.add('rubbing'); A().heart(true); });
+    cv.addEventListener('pointermove', function (e) { if (!last || done) return; var p = pos(e); scratch(p[0], p[1]); });
+    function up() { if (last) measure(); last = null; wp.classList.remove('rubbing'); A().heart(false); }
+    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+    function finish() {
+      done = true; A().heart(false);
+      cx.globalCompositeOperation = 'destination-out'; cx.fillStyle = 'rgba(0,0,0,1)';
+      var a = 0; (function fade() { a += .08; cx.globalAlpha = .25; cx.fillRect(0, 0, w, h); cx.globalAlpha = 1; if (a < 1) requestAnimationFrame(fade); })();
+      $$('span', names).forEach(function (s) { s.classList.add('on'); }); nEl.textContent = '일홈 16 / 16'; bar.style.width = '100%';
+      setTimeout(function () { wp.classList.add('stamped'); tone('stamp'); cap.textContent = '얼굴은 알아볼 수 업슬 만큼 상해 잇섯소. 열여섯 개의 일홈 가운데 — 남은 것은 하나.'; }, 900);
+      setTimeout(function () { wp.classList.add('torn'); if (W.mb.sfx) W.mb.sfx('whoosh'); }, 3200);
+      setTimeout(function () { cap.innerHTML = '수배지가 떠러진 자리 — <b>주머니에 남은 것.</b> <button type="button" class="wp-again" id="wpAgain">다시 붓치기</button>'; $('#wpAgain').onclick = again; }, 4600);
+    }
+    function again() { wp.classList.remove('torn', 'stamped'); done = false; $$('span', names).forEach(function (s) { s.classList.remove('on'); }); setTimeout(paint, 800); cap.textContent = '손가락으로 얼굴 자리를 문질러 보시압. 그 아래에 — 그가 써 온 일홈들이 잇소.'; }
+    /* 처음 보는 이에게 — 손가락이 문지르는 시늉 */
+    once(wp, function () { $('#wpHand').classList.add('go'); }, .6);
   })();
 
   /* ════ 第七章 · 땅 — 눌러서 흰 표지를 꼬즘 ════ */
@@ -427,7 +475,7 @@
       dust.style.opacity = (Math.min(1, p * 1.25) * .6 * (1 - end)).toFixed(3);
       bar.style.width = (p * 100) + '%';
       caps.forEach(function (c, k) { var d = Math.abs(p - E[k].at), o = 1 - sm(.03, .062, d); if (k === E.length - 1) o = sm(E[k].at - .1, E[k].at - .05, p); c.style.opacity = o.toFixed(3); c.style.transform = 'translateY(' + ((p - E[k].at) * -120).toFixed(1) + 'px)'; });
-      var w = cv.width = cv.clientWidth, h = cv.height = cv.clientHeight; cx.clearRect(0, 0, w, h);
+      if (cv.width !== cv.clientWidth || cv.height !== cv.clientHeight) { cv.width = cv.clientWidth; cv.height = cv.clientHeight; } var w = cv.width, h = cv.height; cx.clearRect(0, 0, w, h);
       P.forEach(function (q) {
         q.ph += .006 + end * .01;
         if (end > .02) { q.y -= q.v * .0016 * end; if (q.y < -.05) { q.y = .8; q.x = .35 + Math.random() * .3; } }
@@ -441,19 +489,46 @@
     watch(root, function () { inside = true; target(); p = tp; A().drone(true); if (!raf) raf = requestAnimationFrame(draw); }, function () { inside = false; A().drone(false); });
   })();
 
-  /* ════ 끗 · 눈 — 천천히 내림, 마지막은 하얗게 ════ */
+  /* ════ 끗 · 눈 — 내리는 만큼 눈이 짙어지고, 끗내 화면이 하얗게 덥힘 (끈김 업이) ════ */
   (function () {
-    var cv = $('#finSnow'), fin = $('#finale'), cx = cv.getContext('2d'), F = [], run = false, w = 0, h = 0;
-    function size() { var d = Math.min(2, W.devicePixelRatio || 1), r = fin.getBoundingClientRect(); w = r.width; h = r.height; cv.style.height = h + 'px'; cv.width = w * d; cv.height = h * d; cx.setTransform(d, 0, 0, d, 0, 0); }
-    for (var i = 0; i < 90; i++) F.push({ x: Math.random(), y: Math.random(), r: .6 + Math.random() * 2.2, s: .15 + Math.random() * .4, p: Math.random() * 6 });
+    var root = $('#fnRoot'); if (!root) return;
+    var L = [
+      { t: '소화 십이 년 · 왕십리에서 용문산까지', c: 'k' },
+      { t: '그들은 흰 것을 미덧소.' },
+      { t: '한 사람의 흰 것으로, 천하를 희게 하자 하엿소.' },
+      { t: '흰 옷 아래에는 장부가 잇섯고, 임명장이 잇섯고 —' },
+      { t: '이십여 곳의 산이 잇섯소.' },
+      { t: '가장 흰 것이,<br>가장 만히 덥고 잇섯소.', c: 'big' },
+      { t: '덥힌 것을 다 세지 못한 채로 — 지금도.', c: 'red' },
+      { t: '경성의 밤은 아즉 길소.', c: 'end' }
+    ];
+    root.style.height = (L.length * 70 + 120) + 'svh';
+    root.innerHTML = '<div class="fn-st" id="fnSt"><i class="fn-bg"></i><canvas class="fn-snow" id="fnSnow"></canvas><i class="fn-white" id="fnWhite"></i>' +
+      L.map(function (x, i) { return '<p class="fn-l ' + (x.c || '') + '" data-i="' + i + '">' + x.t + '</p>'; }).join('') + '<span class="fn-rt">그림 · 재현</span></div>';
+    var st = $('#fnSt'), ls = $$('.fn-l', st), wh = $('#fnWhite'), bg = $('.fn-bg', st), cv = $('#fnSnow'), cx = cv.getContext('2d'), F = [], tp = 0, p = 0, inside = false, raf = 0, cw = 0, ch = 0;
+    for (var i = 0; i < 220; i++) F.push({ x: Math.random(), y: Math.random(), r: .5 + Math.random() * 2.4, s: .2 + Math.random() * .6, ph: Math.random() * 6, th: Math.random() });
+    function sm(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+    function size() { var r = st.getBoundingClientRect(), d = Math.min(2, W.devicePixelRatio || 1); if (r.width === cw && r.height === ch) return; cw = r.width; ch = r.height; cv.width = cw * d; cv.height = ch * d; cx.setTransform(d, 0, 0, d, 0, 0); }
+    function target() { var r = root.getBoundingClientRect(), span = r.height - W.innerHeight; tp = Math.max(0, Math.min(1, -r.top / Math.max(1, span))); }
     function draw() {
-      if (!run) return; cx.clearRect(0, 0, w, h); cx.fillStyle = 'rgba(255,255,255,.85)';
-      F.forEach(function (f) { f.y += f.s / h * 1.4; f.p += .01; if (f.y > 1.02) { f.y = -.02; f.x = Math.random(); } cx.beginPath(); cx.arc((f.x + Math.sin(f.p) * .012) * w, f.y * h, f.r, 0, 6.3); cx.fill(); });
-      requestAnimationFrame(draw);
+      if (!inside) { raf = 0; return; }
+      p += (tp - p) * .07;
+      var n = L.length, white = sm(.72, .9, p), dens = .25 + p * .75;
+      ls.forEach(function (el, k) {
+        var c = (k + .5) / n * .9, d = p - c, o;
+        if (k === n - 1) o = sm(c - .06, c, p);
+        else o = sm(-.06, -.02, d) * (1 - sm(.018, .044, d));
+        el.style.opacity = o.toFixed(3); el.style.transform = 'translateY(' + (-d * 160).toFixed(1) + 'px)';
+      });
+      wh.style.opacity = white.toFixed(3); st.classList.toggle('w', white > .5);
+      bg.style.transform = 'scale(' + (1.05 + p * .15).toFixed(3) + ')';
+      cx.clearRect(0, 0, cw, ch); cx.fillStyle = white > .5 ? 'rgba(170,170,166,.55)' : 'rgba(255,255,255,.85)';
+      F.forEach(function (f) { if (f.th > dens) return; f.y += f.s * (1 + p * 1.6) / ch * 1.6; f.ph += .012; if (f.y > 1.02) { f.y = -.02; f.x = Math.random(); } cx.beginPath(); cx.arc((f.x + Math.sin(f.ph) * .015) * cw, f.y * ch, f.r * (1 + p * .4), 0, 6.3); cx.fill(); });
+      raf = requestAnimationFrame(draw);
     }
-    once($('#wout'), function () { $('#wout').classList.add('in'); }, .5);
-    if (calm) return;
-    watch(fin, function () { if (run) return; size(); run = true; draw(); }, function () { run = false; });
+    onScroll(target);
+    W.addEventListener('resize', size);
+    watch(root, function () { inside = true; size(); target(); p = tp; if (!raf) raf = requestAnimationFrame(draw); }, function () { inside = false; });
   })();
 
   /* ════ 호외 세 장 — 옆으로 넘김 ════ */
