@@ -1,201 +1,192 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<!-- 경성야록 — 폰 전용 오프닝 (opening.html 이 폰에서 이리로 넘김 · 끝나면 m-main.html)
-     ① 소리를 켜고 누름 → ② 오후 여섯 시부터 실제 동아일보 지면 조각이 흘러가고 여긔저긔 붉은 테 (몃 건인지 정하지 안음)
-     → ③ 열한 시 오십구 분 벽시계 · 소리 끊김 · 자정 종 → ④ 윤전기 · 활자 → ⑤ 위로 밀면 본지로 -->
+<!-- 경성야록 — 폰 전용 오프닝 「먹을 벗기시압」
+     실제 동아일보 소화 팔 년 오월 십칠일 지면(assets/op-wall/today_scan.jpg)이 어둠 속에 놓임 → 자정 종과 함께 검열의 먹줄이 지면을 덮음
+     → 손가락으로 먹을 문질러 벗기면 지면이 드러나고, 테두리 친 한 줄의 긔사가 붉게 깨여남 → 제호 → 본지(m-main.html)
+     그림은 실물 지면 한 장뿐 · 번쩍임 업슴 · 소리는 파일 업시 브라우저가 만듦 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="only light">
 <meta name="theme-color" content="#000000">
-<title>경성야록 — 자정까지</title>
+<title>경성야록 — 먹을 벗기시압</title>
 <link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
 <link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
-<link rel="preload" as="image" href="assets/op/m_clock.jpg">
-<link rel="preload" as="image" href="assets/op/m_press.jpg">
-<link rel="preload" as="image" href="assets/op-strip/t0.jpg">
+<link rel="preload" as="image" href="assets/op-wall/today_scan.jpg">
 <style>
 :root{--red:#b3261e;--serif:"Noto Serif KR","Nanum Myeongjo",serif;--sans:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#000;color:#ecebe7;overflow:hidden;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;touch-action:none}
-.st{position:fixed;inset:0;overflow:hidden}
-.ph{position:absolute;inset:0;background:center/cover no-repeat;opacity:0;transition:opacity 1.6s ease}
-.ph.on{opacity:1}
-#p1{background-image:url(assets/op/m_clock.jpg);transform:scale(1.04);transition:opacity 1.6s ease,transform 14s linear}
-#p1.on{transform:scale(1.14) translateY(-2%)}
-#p2{background-image:url(assets/op/m_press.jpg);transform:scale(1.12);transition:opacity 1.8s ease,transform 16s cubic-bezier(.2,.5,.3,1)}
-#p2.on{transform:scale(1.02)}
-.shade{position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.1) 30%,rgba(0,0,0,.25) 55%,rgba(0,0,0,.92));pointer-events:none}
-.grain{position:absolute;inset:-50%;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 1.2s steps(6) infinite}
+html,body{height:100%;background:#000;color:#ecebe7;overflow:hidden;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;touch-action:none;overscroll-behavior:none}
+#st{position:fixed;inset:0;overflow:hidden}
+/* 지면 */
+#pg{position:absolute;inset:0;transform-origin:0 0;will-change:transform;transition:transform 2.4s cubic-bezier(.6,0,.15,1)}
+#pg img{position:absolute;display:block;filter:grayscale(1) contrast(1.18) brightness(.92)}
+#lamp{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--lx,50%) var(--ly,40%),transparent 0,rgba(0,0,0,.35) 18vmax,rgba(0,0,0,.94) 46vmax);transition:opacity 1.2s}
+#veil{position:absolute;inset:0;background:#000;transition:opacity 2.2s ease}
+#veil.off{opacity:0}
+#ink{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#frame{position:absolute;box-shadow:0 0 0 2px var(--red),0 0 0 9999px rgba(0,0,0,0);opacity:0;transition:opacity .8s,box-shadow 1.6s}
+#frame.on{opacity:1}
+#frame.dim{box-shadow:0 0 0 2px var(--red),0 0 0 9999px rgba(0,0,0,.72)}
+.grain{position:absolute;inset:-50%;pointer-events:none;opacity:.1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 1.2s steps(6) infinite}
 @keyframes gr{to{transform:translate(8%,-6%)}}
-/* 위 · 날자 */
-.top{position:absolute;left:22px;right:22px;top:calc(18px + env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;font:500 11px/1 var(--sans);letter-spacing:.2em;color:#9a9994;opacity:0;transition:opacity 1.2s ease .6s}
-.top{opacity:1}
+/* 글 */
+.top{position:absolute;left:20px;right:20px;top:calc(16px + env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;font:500 10.5px/1.4 var(--sans);letter-spacing:.16em;color:#8a8984;z-index:5;transition:opacity .8s}
 .skip{border:0;background:none;color:#cfcfca;font:500 12px/1 var(--sans);letter-spacing:.1em;padding:10px 0 10px 14px}
-/* ① 시계 */
-.s1{position:absolute;left:22px;right:22px;bottom:calc(76px + env(safe-area-inset-bottom));opacity:0;transform:translateY(10px);transition:opacity 1.2s ease 1s,transform 1.2s ease 1s}
-.on-1 .s1{opacity:1;transform:none}
-.s1 small{display:block;font:500 11px/1 var(--sans);letter-spacing:.24em;color:#e07a72}
-.s1 .t{margin-top:12px;font:900 64px/1 var(--serif);letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
-.s1 .t i{font-style:normal;color:#9a9994;font-size:40px;margin-left:6px}
-.s1 p{margin-top:12px;font:400 15px/1.7 var(--serif);color:#cfcfca}
-.tap{position:absolute;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom));text-align:center;font:500 12px/1 var(--sans);letter-spacing:.24em;color:#cfcfca;opacity:0;transition:opacity .8s}
-.tap.on{opacity:1;animation:br 2.4s ease-in-out infinite}
-@keyframes br{50%{opacity:.35}}
-/* ② 활자 */
-.s2{position:absolute;left:22px;right:22px;bottom:calc(92px + env(safe-area-inset-bottom))}
-.s2 p{font:400 34px/1.42 var(--serif);letter-spacing:-.02em;color:#d9d8d3;min-height:1.42em}
-.s2 p b{font-weight:900;color:#fff}
-.s2 .c{display:inline-block;opacity:0;transform:translateY(-14px) scale(1.25);filter:blur(2px)}
-.s2 .c.in{opacity:1;transform:none;filter:none;transition:opacity .12s,transform .18s cubic-bezier(.3,1.6,.5,1),filter .18s}
-.s2 small{display:block;margin-top:18px;font:500 11px/1.6 var(--sans);letter-spacing:.2em;color:#9a9994;opacity:0;transition:opacity 1s}
-.s2 small.on{opacity:1}
-.up{position:absolute;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:8px;font:600 12.5px/1 var(--sans);letter-spacing:.14em;color:#fff;opacity:0;transition:opacity .8s;pointer-events:none}
-.up.on{opacity:1}
-.up i{width:1.5px;height:30px;background:linear-gradient(transparent,#fff);animation:upl 1.8s ease-in-out infinite}
-@keyframes upl{0%{transform:translateY(10px);opacity:0}50%{opacity:1}100%{transform:translateY(-10px);opacity:0}}
-/* ③ 펼쳐지는 신문 */
-.sheet{position:absolute;left:0;right:0;top:100%;height:100%;background:#0b0b0b;color:#fff;border-top:1px solid #2a2a2a;transform:translateY(0);will-change:transform;box-shadow:0 -30px 60px rgba(0,0,0,.6)}
+.cap{position:absolute;left:22px;right:22px;bottom:calc(30px + env(safe-area-inset-bottom));z-index:5;min-height:5em}
+.cap p{position:absolute;left:0;right:0;bottom:0;font:400 18px/1.7 var(--serif);color:#f2f1ed;text-shadow:0 2px 14px #000,0 0 4px #000;opacity:0;transform:translateY(8px);transition:opacity .9s,transform .9s}
+.cap p.on{opacity:1;transform:none}
+.cap p b{font-weight:900;color:#fff}
+.cap p small{display:block;margin-bottom:8px;font:600 11px/1 var(--sans);letter-spacing:.22em;color:#e07a72}
+.cap p.hint{font:600 14px/1.6 var(--sans);letter-spacing:.12em;text-align:center;animation:br 2.4s ease-in-out infinite}
+@keyframes br{50%{opacity:.4}}
+.gate{position:absolute;inset:0;z-index:6;display:grid;place-items:center;text-align:center;background:#000;transition:opacity 1s}
+.gate div{padding:0 30px}
+.gate small{font:500 11px/1 var(--sans);letter-spacing:.3em;color:#e07a72}
+.gate h2{margin-top:18px;font:900 30px/1.35 var(--serif);color:#fff}
+.gate p{margin-top:30px;font:500 12.5px/1.8 var(--sans);letter-spacing:.14em;color:#cfcfca;animation:br 2.4s ease-in-out infinite}
+.gate em{display:block;margin-top:8px;font:400 11px/1.5 var(--sans);font-style:normal;color:#6f6e6a}
+/* 제호 */
+.sheet{position:absolute;left:0;right:0;top:100%;height:100%;z-index:7;background:#0b0b0b;color:#fff;border-top:1px solid #2a2a2a;transition:transform 1s cubic-bezier(.6,0,.15,1)}
+.sheet.up{transform:translateY(-100%)}
 .sheet .in{position:absolute;left:22px;right:22px;top:calc(70px + env(safe-area-inset-top))}
-.sheet .ml{display:flex;justify-content:space-between;padding-bottom:10px;font:500 10px/1 var(--sans);letter-spacing:.2em;color:#6f6e6a}
+.sheet .ml{display:flex;justify-content:space-between;font:500 10px/1 var(--sans);letter-spacing:.2em;color:#6f6e6a}
 .sheet .lg{display:flex;align-items:center;gap:14px;padding:26px 0 18px}
 .sheet .lg svg{width:64px;height:64px;color:#ecebe7}
 .sheet h1{font:900 clamp(52px,16vw,68px)/1 var(--serif);letter-spacing:-.02em}
-.sheet .rule{height:3px;background:var(--red);transform-origin:0 50%;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.6,0,.2,1)}
-.sheet.done .rule{transform:none}
-.sheet .sub{margin-top:16px;font:400 14px/1.7 var(--serif);color:#8f8e89;opacity:0;transition:opacity .8s .5s}
-.sheet.done .sub{opacity:1}
-
-/* 지면 띠 — 오후 여섯 시부터 자정까지, 셀 수 업는 긔사 조각 */
-#band{position:absolute;left:0;right:0;top:50%;height:46vh;margin-top:-25vh;overflow:hidden;opacity:0;transition:opacity 1.2s ease}
-#band.on{opacity:1}
-#strip{position:absolute;left:0;top:0;height:100%;transform-origin:0 50%;will-change:transform}
-#strip img{position:absolute;top:0;height:100%;filter:grayscale(1) contrast(1.12) brightness(.82)}
-#strip .hl{position:absolute;box-shadow:0 0 0 2px var(--red);opacity:0;transition:opacity .5s ease}
-#strip .hl.on{opacity:1}
-#band::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#000,transparent 14%,transparent 86%,#000),linear-gradient(#000,transparent 10%,transparent 90%,#000)}
-#dark{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity 1.6s ease}
-.hr{position:absolute;left:22px;right:22px;top:calc(64px + env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:baseline;opacity:0;transition:opacity .8s}
-.hr.on{opacity:1}
-.hr b{font:900 44px/1 var(--serif);color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
-.hr small{font:500 11px/1.5 var(--sans);letter-spacing:.2em;color:#9a9994;text-align:right}
-.say{position:absolute;left:22px;right:22px;bottom:calc(80px + env(safe-area-inset-bottom));min-height:3.4em;font:400 18px/1.7 var(--serif);color:#e9e8e3}
-.say span{display:block;opacity:0;transform:translateY(8px);transition:opacity .9s,transform .9s}
-.say span.on{opacity:1;transform:none}
-.say span.out{opacity:0;transition-duration:.6s}
-.gate{position:absolute;left:22px;right:22px;top:50%;transform:translateY(-50%);text-align:center;transition:opacity .8s}
-.gate small{font:500 11px/1 var(--sans);letter-spacing:.3em;color:#e07a72}
-.gate h2{margin-top:16px;font:900 34px/1.3 var(--serif);color:#fff;letter-spacing:.02em}
-.gate p{margin-top:28px;font:500 12.5px/1.8 var(--sans);letter-spacing:.14em;color:#cfcfca;animation:br 2.4s ease-in-out infinite}
-.gate em{display:block;margin-top:10px;font:400 11px/1 var(--sans);font-style:normal;color:#6f6e6a;letter-spacing:.1em}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+.sheet .rule{height:3px;background:var(--red);transform-origin:0 50%;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.6,0,.2,1) .5s}
+.sheet.up .rule{transform:none}
+.sheet .sub{margin-top:16px;font:400 14px/1.7 var(--serif);color:#8f8e89;opacity:0;transition:opacity .8s 1.1s}
+.sheet.up .sub{opacity:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
 <svg aria-hidden="true" height="0" style="position:absolute" width="0"><symbol id="mmLogo" viewBox="0 0 100 100"><defs><clipPath id="mmC"><circle cx="50" cy="50" r="49"></circle></clipPath><mask id="mmRing"><rect fill="#000" height="100" width="100"></rect><circle cx="50" cy="50" fill="#fff" r="49"></circle><circle cx="32.4" cy="50" fill="#000" r="52.6"></circle></mask></defs><g clip-path="url(#mmC)" fill="currentColor"><rect height="100" width="2.7" x="4.0" y="0"></rect><rect height="100" width="2.7" x="8.6" y="0"></rect><rect height="100" width="2.7" x="13.2" y="0"></rect><rect height="100" width="2.7" x="17.8" y="0"></rect><rect height="100" width="2.7" x="22.4" y="0"></rect><rect height="100" width="2.7" x="27.0" y="0"></rect><rect height="100" width="2.7" x="31.6" y="0"></rect><rect height="100" width="2.7" x="36.2" y="0"></rect><rect height="100" width="2.7" x="40.8" y="0"></rect><rect height="100" width="2.7" x="45.4" y="0"></rect></g><rect fill="#b3261e" height="98.8" width="3.4" x="47.6" y="0.6"></rect><g fill="currentColor" mask="url(#mmRing)"><rect height="2.5" width="46" x="54" y="1.5"></rect><rect height="2.5" width="46" x="54" y="6.0"></rect><rect height="2.5" width="46" x="54" y="10.5"></rect><rect height="2.5" width="46" x="54" y="15.0"></rect><rect height="2.5" width="46" x="54" y="19.5"></rect><rect height="2.5" width="46" x="54" y="24.0"></rect><rect height="2.5" width="46" x="54" y="28.5"></rect><rect height="2.5" width="46" x="54" y="33.0"></rect><rect height="2.5" width="46" x="54" y="37.5"></rect><rect height="2.5" width="46" x="54" y="42.0"></rect><rect height="2.5" width="46" x="54" y="46.5"></rect><rect height="2.5" width="46" x="54" y="51.0"></rect><rect height="2.5" width="46" x="54" y="55.5"></rect><rect height="2.5" width="46" x="54" y="60.0"></rect><rect height="2.5" width="46" x="54" y="64.5"></rect><rect height="2.5" width="46" x="54" y="69.0"></rect><rect height="2.5" width="46" x="54" y="73.5"></rect><rect height="2.5" width="46" x="54" y="78.0"></rect><rect height="2.5" width="46" x="54" y="82.5"></rect><rect height="2.5" width="46" x="54" y="87.0"></rect><rect height="2.5" width="46" x="54" y="91.5"></rect><rect height="2.5" width="46" x="54" y="96.0"></rect></g></symbol></svg>
-<div class="st" id="st">
-  <div class="gate" id="gate"><small>경성야록 · 오프닝</small><h2>자정까지</h2><p>소리를 켜고 화면을 누르시압</p><em>위의 건너뛰기를 누르면 바로 본지로</em></div>
-  <div id="band" aria-hidden="true"><div id="strip"></div></div>
-  <div class="hr" id="hr"><b id="hrT">18:00</b><small>동아일보 지면 조각 · 실물<br>오후 여섯 시 석간부터</small></div>
-  <div class="say" id="say"></div>
-  <div class="ph" id="p1" role="img" aria-label="자정 삼 분 전, 편집국 벽시계 (그림 · 재현)"></div>
-  <div class="ph" id="p2" role="img" aria-label="자정의 윤전기 (그림 · 재현)"></div>
-  <div class="shade"></div><div id="dark"></div><div class="grain"></div>
-  <div class="top"><span>경성야록 · 그림 재현</span><button type="button" class="skip" id="skip">건너뛰기</button></div>
-  <div class="s1" id="s1"><small>경성 · 편집국</small><div class="t" id="clk">11:59<i id="sec">00</i></div><p id="s1p">오늘 밤 지면에 실리지 못한 것들이<br>자정을 기다리고 잇소.</p></div>
-  <div class="s2" id="s2" hidden><p id="l1"></p><p id="l2"></p><p id="l3"></p><small id="l4">신문 한 줄에서 비롯하는 경성의 괴사</small></div>
-  
-  <div class="up" id="up"><i></i>위로 밀어 신문을 펼치시압</div>
-  <div class="sheet" id="sheet"><div class="in"><div class="ml"><span>괴사 문고 · 납량 특집</span><span>제일호</span></div><div class="lg"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mmLogo"></use></svg><h1>경성야록</h1></div><div class="rule"></div><p class="sub">신문 아래 칸에서 깨여난 경성의 사건 · 1920 — 1940</p></div></div>
+<div id="st">
+  <div id="pg"><img id="pgImg" src="assets/op-wall/today_scan.jpg" alt="동아일보 소화 팔 년 오월 십칠일 지면 (실물)"></div>
+  <div id="lamp"></div>
+  <canvas id="ink" aria-hidden="true"></canvas>
+  <div id="frame"></div>
+  <div id="veil"></div>
+  <div class="grain"></div>
+  <div class="top" id="top"><span>동아일보 · 소화 팔 년 오월 십칠일 · 실물 지면</span><button type="button" class="skip" id="skip">건너뛰기</button></div>
+  <div class="cap" id="cap"></div>
+  <div class="gate" id="gate"><div><small>경성야록</small><h2>자정이 되면,<br>지면이 깨여나오</h2><p>소리를 켜고 화면을 누르시압</p><em>손가락을 쓰는 오프닝이오 · 이십 초쯤</em></div></div>
+  <div class="sheet" id="sheet"><div class="in"><div class="ml"><span>괴사 문고 · 납량 특집</span><span>제일호</span></div><div class="lg"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mmLogo"></use></svg><h1>경성야록</h1></div><div class="rule"></div><p class="sub">신문 아래 칸, 한 줄로 끗난 사건들이<br>오늘 밤 다시 깨여나오.</p></div></div>
 </div>
 <script>
 (function (W, D) {
   'use strict';
-  var NEXT = 'm-main.html', $ = function (i) { return D.getElementById(i); }, st = $('st'), stage = 0, done = false, T = [];
+  var NEXT = 'm-main.html', $ = function (i) { return D.getElementById(i); }, T = [], stage = 0, done = false;
   try { sessionStorage.setItem('ykop-seen', '1'); } catch (e) {}
   var buzz = function (p) { if (navigator.vibrate) try { navigator.vibrate(p); } catch (e) {} };
   function at(s, f) { T.push(setTimeout(f, s * 1000)); }
+
   /* ── 소리 (파일 업시) ── */
-  var AC = null, room = null;
-  function ac() { if (!AC) try { AC = new (W.AudioContext || W.webkitAudioContext)(); } catch (e) {} if (AC && AC.state === 'suspended') AC.resume(); return AC; }
-  function blip(f, g, d, type) { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), v = a.createGain(), fl = a.createBiquadFilter(); o.type = type || 'square'; o.frequency.value = f; fl.type = 'bandpass'; fl.frequency.value = f; v.gain.setValueAtTime(g, t); v.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(fl); fl.connect(v); v.connect(a.destination); o.start(t); o.stop(t + d + .02); }
-  function tick() { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), g = a.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(80, t + .06); g.gain.setValueAtTime(.3, t); g.gain.exponentialRampToValueAtTime(.0001, t + .1); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + .12); }
-  function type() { blip(1900 + Math.random() * 600, .05, .02); }
-  function thud() { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), v = a.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(40, t + .25); v.gain.setValueAtTime(.35, t); v.gain.exponentialRampToValueAtTime(.0001, t + .3); o.connect(v); v.connect(a.destination); o.start(t); o.stop(t + .32); }
-  function bell() { var a = ac(); if (!a) return; var t = a.currentTime; [[98, .5], [196.5, .22], [294, .12], [523, .05]].forEach(function (p) { var o = a.createOscillator(), g = a.createGain(); o.type = 'sine'; o.frequency.value = p[0]; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(p[1], t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + 6); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + 6.2); }); }
-  function roomOn() { var a = ac(); if (!a || room) return; var n = a.createBufferSource(), b = a.createBuffer(1, a.sampleRate * 3, a.sampleRate), d = b.getChannelData(0), l = 0; for (var i = 0; i < d.length; i++) { var w = Math.random() * 2 - 1; l = (l + .02 * w) / 1.02; d[i] = l * 3.2; }
-    n.buffer = b; n.loop = true; var lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 300; var g = a.createGain(); g.gain.value = 0; g.gain.linearRampToValueAtTime(.12, a.currentTime + 2); n.connect(lp); lp.connect(g); g.connect(a.destination); n.start(); room = { g: g, a: a, lp: lp }; }
-  function roomTo(v, s) { if (room) { room.g.gain.cancelScheduledValues(room.a.currentTime); room.g.gain.setTargetAtTime(v, room.a.currentTime, s || .3); } }
-  function pressSnd() { if (!room) return; room.lp.frequency.setTargetAtTime(420, room.a.currentTime, .5); roomTo(.16, 1); }
+  var AC = null, out = null, room = null, rub = null;
+  function ac() { if (!AC) try { AC = new (W.AudioContext || W.webkitAudioContext)(); out = AC.createDynamicsCompressor(); out.connect(AC.destination); } catch (e) {} if (AC && AC.state === 'suspended') AC.resume(); return AC; }
+  function noiseBuf(sec, brown) { var a = ac(), b = a.createBuffer(1, a.sampleRate * sec, a.sampleRate), d = b.getChannelData(0), l = 0; for (var i = 0; i < d.length; i++) { var w = Math.random() * 2 - 1; if (brown) { l = (l + .02 * w) / 1.02; d[i] = l * 3.2; } else d[i] = w; } return b; }
+  function roomOn() { var a = ac(); if (!a || room) return; var n = a.createBufferSource(); n.buffer = noiseBuf(4, true); n.loop = true; var lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 260; var g = a.createGain(); g.gain.value = 0; g.gain.linearRampToValueAtTime(.1, a.currentTime + 2.5); n.connect(lp); lp.connect(g); g.connect(out); n.start(); room = g; }
+  function tick() { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), g = a.createGain(); o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(80, t + .06); g.gain.setValueAtTime(.28, t); g.gain.exponentialRampToValueAtTime(.0001, t + .1); o.connect(g); g.connect(out); o.start(t); o.stop(t + .12); }
+  function bell() { var a = ac(); if (!a) return; var t = a.currentTime; [[98, .5], [196.5, .22], [294, .12], [523, .05]].forEach(function (p) { var o = a.createOscillator(), g = a.createGain(); o.frequency.value = p[0]; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(p[1], t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + 5.5); o.connect(g); g.connect(out); o.start(t); o.stop(t + 5.7); }); }
+  function swish(v) { var a = ac(); if (!a) return; var t = a.currentTime, n = a.createBufferSource(); n.buffer = noiseBuf(.3); var bp = a.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.setValueAtTime(900, t); bp.frequency.exponentialRampToValueAtTime(260, t + .25); var g = a.createGain(); g.gain.setValueAtTime(v || .25, t); g.gain.exponentialRampToValueAtTime(.0001, t + .28); n.connect(bp); bp.connect(g); g.connect(out); n.start(t); }
+  function thud(v) { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), g = a.createGain(); o.frequency.setValueAtTime(100, t); o.frequency.exponentialRampToValueAtTime(38, t + .3); g.gain.setValueAtTime(v || .4, t); g.gain.exponentialRampToValueAtTime(.0001, t + .35); o.connect(g); g.connect(out); o.start(t); o.stop(t + .4); }
+  function rubOn() { var a = ac(); if (!a || rub) return; var n = a.createBufferSource(); n.buffer = noiseBuf(2); n.loop = true; var hp = a.createBiquadFilter(); hp.type = 'bandpass'; hp.frequency.value = 2400; hp.Q.value = .6; var g = a.createGain(); g.gain.value = 0; n.connect(hp); hp.connect(g); g.connect(out); n.start(); rub = g; }
+  function rubLevel(v) { if (rub) rub.gain.setTargetAtTime(Math.min(.22, v), AC.currentTime, .05); }
 
-  /* ── 지면 띠 (assets/op-strip · 실제 동아일보 지면 조각 7800×1000) ── */
-  var SW = 7800, SH = 1000, TILE = 1950, band = $('band'), strip = $('strip'), BH = 0, sc = 1;
-  function layout() { BH = band.clientHeight || innerHeight * .46; sc = BH / SH; var h = ''; for (var i = 0; i < 4; i++) h += '<img src="assets/op-strip/t' + i + '.jpg" alt="" style="left:' + (i * TILE * sc).toFixed(1) + 'px;width:' + (TILE * sc + 1).toFixed(1) + 'px">';
-    /* 붉은 테 — 정해진 몃 개가 아니라, 지나가는 곳마다 여긔저긔 */
-    var rnd = (function (s) { return function () { s = (s * 16807) % 2147483647; return s / 2147483647; }; })(19);
-    HL = []; for (var k = 0; k < 22; k++) { var f = .04 + k * .041 + rnd() * .02, y = .14 + rnd() * .62, w = 60 + rnd() * 70, hh = 90 + rnd() * 150; HL.push(f); h += '<i class="hl" id="hl' + k + '" style="left:' + (f * SW * sc).toFixed(1) + 'px;top:' + (y * BH).toFixed(1) + 'px;width:' + (w * sc).toFixed(1) + 'px;height:' + (hh * sc).toFixed(1) + 'px"></i>'; }
-    strip.innerHTML = h; strip.style.width = (SW * sc) + 'px'; }
-  var HL = [];
-  function cam(f, z) { var x = innerWidth / 2 - f * SW * sc * z; strip.style.transform = 'translateX(' + x.toFixed(1) + 'px) scale(' + z.toFixed(3) + ')'; }
-  var CAM = [[0, .03, 2.4], [1.6, .10, 1.25], [4.5, .40, 1.15], [7.4, .74, 1.1], [9.2, .93, .8]], DUR = 9.2;
-  function sm(u) { return u * u * (3 - 2 * u); }
-  function camAt(t) { for (var i = 0; i < CAM.length - 1; i++) { var a = CAM[i], b = CAM[i + 1]; if (t <= b[0]) { var u = sm((t - a[0]) / (b[0] - a[0])); return [a[1] + (b[1] - a[1]) * u, a[2] + (b[2] - a[2]) * u]; } } var L = CAM[CAM.length - 1]; return [L[1], L[2]]; }
-  var SAY = [[.4, '오후 여섯 시, 석간이 나왓소.'], [2.6, '사건은 한 줄로 실리고,<br>이튿날이면 니저졋소.'], [5.2, '누구도 끗까지 쫓지 안은 일들.'], [7.6, '몃 건인지 — 아즉 다 세지 못햇소.']];
-  function say(h) { var box = $('say'), old = box.querySelector('span.on'); if (old) { old.classList.add('out'); setTimeout(function () { old.remove(); }, 600); } var s = D.createElement('span'); s.innerHTML = h; box.appendChild(s); requestAnimationFrame(function () { requestAnimationFrame(function () { s.classList.add('on'); }); }); }
+  /* ── 지면 자리 (화면을 덮도록) · 테두리 친 긔사 자리 (원본 픽셀) ── */
+  var IW = 1064, IH = 1436, BOX = [542, 546, 858, 895], img = $('pgImg'), K = 1, OX = 0, OY = 0;
+  function place() {
+    var w = innerWidth, h = innerHeight; K = Math.max(w / IW, h / IH) * 1.06;
+    var cx = (BOX[0] + BOX[2]) / 2, cy = (BOX[1] + BOX[3]) / 2;
+    OX = Math.min(0, Math.max(w - IW * K, w * .5 - cx * K * .82 - w * .02)); OY = Math.min(0, Math.max(h - IH * K, h * .44 - cy * K));
+    img.style.cssText = 'left:' + OX + 'px;top:' + OY + 'px;width:' + IW * K + 'px;height:' + IH * K + 'px';
+    var f = $('frame'); f.style.left = (OX + BOX[0] * K) + 'px'; f.style.top = (OY + BOX[1] * K) + 'px'; f.style.width = ((BOX[2] - BOX[0]) * K) + 'px'; f.style.height = ((BOX[3] - BOX[1]) * K) + 'px';
+  }
+  place();
 
-  /* ① 입구 → ② 지면이 흘러감 */
+  /* ── 먹 (캔버스) ── */
+  var cv = $('ink'), cx = cv.getContext('2d'), DPR = Math.min(2, W.devicePixelRatio || 1), CW = 0, CH = 0;
+  function sizeInk() { CW = cv.width = innerWidth * DPR; CH = cv.height = innerHeight * DPR; }
+  sizeInk();
+  /* 먹줄 한 가닥 — 세로 줄 (옛 신문은 세로쓰기) · 가장자리가 고르지 안케 */
+  function inkBar(x, w, y0, y1) {
+    cx.fillStyle = '#060606'; cx.beginPath(); cx.moveTo(x, y0);
+    for (var y = y0; y <= y1; y += 14 * DPR) cx.lineTo(x + (Math.random() - .5) * 3 * DPR, y);
+    for (var y2 = y1; y2 >= y0; y2 -= 14 * DPR) cx.lineTo(x + w + (Math.random() - .5) * 3 * DPR, y2);
+    cx.closePath(); cx.fill();
+    cx.fillStyle = 'rgba(40,40,40,.5)'; for (var k = 0; k < 6; k++) cx.fillRect(x + Math.random() * w, y0 + Math.random() * (y1 - y0), 1 * DPR, 30 * DPR * Math.random());
+  }
+  function censor(cb) {
+    /* 오른편 칸부터 왼편으로 (세로쓰기 읽는 차례) — 먹줄이 내려옴 */
+    var col = 34 * DPR, n = Math.ceil(CW / col) + 1, i = 0;
+    (function step() {
+      if (i >= n) { cx.fillStyle = '#060606'; cx.fillRect(0, 0, CW, CH); cb(); return; }
+      var x = CW - (i + 1) * col, y1 = CH; (function drop(y) { var y2 = Math.min(y1, y + CH / 6); inkBar(x - 2 * DPR, col + 4 * DPR, y, y2); if (y2 < y1) requestAnimationFrame(function () { drop(y2); }); })(0);
+      if (i % 2 === 0) swish(.12 + Math.random() * .1); if (i % 4 === 0) buzz(6);
+      i++; setTimeout(step, 70);
+    })();
+  }
+  /* 손가락으로 먹 벗기기 */
+  var rubbing = false, lx = 0, ly = 0, lastT = 0, cleared = 0;
+  function brush(x, y) { x *= DPR; y *= DPR; var r = 34 * DPR; cx.globalCompositeOperation = 'destination-out'; var g = cx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, 'rgba(0,0,0,.95)'); g.addColorStop(.6, 'rgba(0,0,0,.45)'); g.addColorStop(1, 'rgba(0,0,0,0)'); cx.fillStyle = g; cx.beginPath(); cx.arc(x, y, r, 0, Math.PI * 2); cx.fill();
+    /* 먹이 결대로 갈라짐 — 세로 긁힘 몃 가닥 */
+    for (var k = 0; k < 3; k++) { cx.fillStyle = 'rgba(0,0,0,.5)'; cx.fillRect(x + (Math.random() - .5) * r * 1.4, y - r * .9, 1.4 * DPR, r * 1.8 * Math.random()); }
+    cx.globalCompositeOperation = 'source-over'; }
+  function stroke(x, y) { var d = Math.hypot(x - lx, y - ly), n = Math.max(1, Math.floor(d / 8)); for (var i = 1; i <= n; i++) brush(lx + (x - lx) * i / n, ly + (y - ly) * i / n); var now = performance.now(), v = d / Math.max(8, now - lastT); rubLevel(v * .2); if (d > 18) buzz(4); lx = x; ly = y; lastT = now; }
+  function measure() { var s = 24, gx = Math.floor(CW / s), gy = Math.floor(CH / s), d = cx.getImageData(0, 0, CW, CH).data, clear = 0, tot = 0; for (var y = 0; y < CH; y += s * 4) for (var x = 0; x < CW; x += s * 4) { tot++; if (d[(y * CW + x) * 4 + 3] < 120) clear++; } return clear / tot; }
+  var st = $('st');
+  st.addEventListener('pointerdown', function (e) { if (stage !== 3 || e.target.closest('#skip')) return; rubbing = true; lx = e.clientX; ly = e.clientY; lastT = performance.now(); rubOn(); stroke(e.clientX, e.clientY); hideHint(); });
+  st.addEventListener('pointermove', function (e) { if (!rubbing) return; stroke(e.clientX, e.clientY); });
+  function up() { if (!rubbing) return; rubbing = false; rubLevel(0); cleared = measure(); if (cleared > .3) wake(); }
+  st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up);
+  var chk = setInterval(function () { if (stage === 3 && rubbing) { cleared = measure(); if (cleared > .36) { rubbing = false; rubLevel(0); wake(); } } }, 400);
+
+  /* ── 글 ── */
+  function say(h, cls) { var c = $('cap'), o = c.querySelector('p.on'); if (o) { o.classList.remove('on'); setTimeout(function () { o.remove(); }, 900); } var p = D.createElement('p'); if (cls) p.className = cls; p.innerHTML = h; c.appendChild(p); requestAnimationFrame(function () { requestAnimationFrame(function () { p.classList.add('on'); }); }); }
+  function hideHint() { var h = $('cap').querySelector('p.hint'); if (h) { h.classList.remove('on'); } }
+
+  /* ── 차례 ── */
   function begin() {
-    if (stage) return; stage = 1; ac(); roomOn(); buzz(20);
-    $('gate').style.opacity = '0'; layout(); band.classList.add('on'); $('hr').classList.add('on');
-    var t0 = performance.now(), lastMin = -1, lastH = -1;
-    SAY.forEach(function (x) { at(x[0], function () { say(x[1]); }); });
-    (function f(now) {
-      if (stage !== 1) return; var t = Math.min(DUR, (now - t0) / 1000), c = camAt(t); cam(c[0], c[1]);
-      var mins = Math.min(359, Math.floor(c[0] / .93 * 359)), hh = 18 + Math.floor(mins / 60), mm = mins % 60; $('hrT').textContent = (hh > 23 ? '23' : hh) + ':' + ('0' + mm).slice(-2);
-      if (Math.floor(mins / 15) !== lastMin) { lastMin = Math.floor(mins / 15); tick(); }
-      HL.forEach(function (fx, k) { var el = $('hl' + k); var on = Math.abs(fx - c[0]) < .035; if (on !== el.classList.contains('on')) { el.classList.toggle('on', on); if (on) { thud(); buzz(6); } } });
-      if (t > 8.2) $('dark').style.opacity = String(Math.min(.85, (t - 8.2) * .8));
-      if (t < DUR) requestAnimationFrame(f); else three();
-    })(t0);
+    if (stage) return; stage = 1; ac(); roomOn(); buzz(15);
+    $('gate').style.opacity = '0'; setTimeout(function () { $('gate').remove(); }, 1000);
+    $('veil').classList.add('off');
+    /* 등잔이 지면을 더듬음 */
+    var t0 = performance.now(), L = $('lamp');
+    (function f(t) { if (stage > 1) return; var k = (t - t0) / 1000; L.style.setProperty('--lx', (50 + Math.sin(k * .6) * 28) + '%'); L.style.setProperty('--ly', (42 + Math.cos(k * .45) * 16) + '%'); requestAnimationFrame(f); })(t0);
+    var s = 0, iv = setInterval(function () { tick(); s++; if (s > 5) clearInterval(iv); }, 1000); T.push(iv);
+    at(.8, function () { say('<small>소화 팔 년 · 밤 열한 시 오십구 분</small>그날 신문에 실린 사건은,<br>한 줄로 끗낫소.'); });
+    at(4.2, function () { say('그리고 — 그런 줄이 <b>셀 수 업시</b> 잇소.'); });
+    at(6.8, midnight);
   }
-  /* ③ 열한 시 오십구 분 — 소리가 끊김 → 자정 종 */
-  function three() {
-    stage = 2; roomTo(0, .08); band.classList.remove('on'); $('hr').classList.remove('on'); $('say').innerHTML = '';
-    $('dark').style.opacity = '0'; $('p1').classList.add('on'); st.classList.add('on-1');
-    var s = 54; $('sec').textContent = s;
-    var iv = setInterval(function () { s++; if (s >= 60) { clearInterval(iv); $('clk').innerHTML = '0:00<i>자정</i>'; $('s1p').innerHTML = '자정이오. 지면이 깨여나오.'; bell(); buzz([60, 120, 60]); at(2.2, four); return; } $('sec').textContent = ('0' + s).slice(-2); tick(); }, 1000);
-    T.push(iv);
+  function midnight() {
+    stage = 2; bell(); buzz([60, 120, 60]); $('lamp').style.opacity = '0';
+    say('<small>자정</small>그날 쓰지 못한 말들이,<br>먹으로 지워지오.');
+    at(.6, function () { censor(function () { at(.6, function () { stage = 3; say('손가락으로 먹을 문질러 벗기시압', 'hint'); }); }); });
   }
-  /* ④ 윤전기 · 활자 */
-  var LINES = [['밤이 ', '<b>깁허지면</b>'], ['니저진 사건이'], ['<b>깨여나나니라.</b>']];
-  function four() {
-    stage = 3; $('s1').style.opacity = '0'; $('p1').classList.remove('on'); $('p2').classList.add('on'); roomOn(); pressSnd(); thud(); buzz([40, 80, 40]);
-    $('s2').hidden = false;
-    var q = [];
-    LINES.forEach(function (ln, li) { var el = $('l' + (li + 1)); ln.forEach(function (part) { var bold = /^<b>/.test(part), txt = part.replace(/<\/?b>/g, ''), host = el; if (bold) { host = D.createElement('b'); el.appendChild(host); } txt.split('').forEach(function (ch) { var sp = D.createElement('span'); sp.className = 'c'; sp.textContent = ch === ' ' ? ' ' : ch; host.appendChild(sp); q.push(sp); }); }); });
-    q.forEach(function (sp, i) { at(1 + i * .11 + (i > 7 ? .35 : 0) + (i > 14 ? .35 : 0), function () { sp.classList.add('in'); if (sp.textContent.trim()) { type(); if (i % 3 === 0) buzz(4); } }); });
-    var end = 1 + q.length * .11 + .9;
-    at(end, function () { $('l4').classList.add('on'); thud(); });
-    at(end + 1, function () { stage = 4; $('up').classList.add('on'); });
-    at(end + 9, function () { if (stage === 4) open(); });
+  function wake() {
+    if (stage !== 3) return; stage = 4; clearInterval(chk); thud(.45); buzz([30, 70, 30]);
+    /* 남은 먹이 스르르 빠짐 */
+    var o = 1; (function f() { o -= .05; cv.style.opacity = Math.max(0, o); if (o > 0) requestAnimationFrame(f); })();
+    at(.9, function () { $('frame').classList.add('on'); swish(.2); });
+    at(1.6, function () {
+      /* 테두리 친 한 줄로 다가감 */
+      var w = innerWidth, h = innerHeight, bw = (BOX[2] - BOX[0]) * K, bh = (BOX[3] - BOX[1]) * K, z = Math.min(w * .86 / bw, h * .52 / bh), bx = OX + BOX[0] * K, by = OY + BOX[1] * K;
+      var tx = w / 2 - (bx + bw / 2) * z, ty = h * .4 - (by + bh / 2) * z;
+      $('pg').style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + z + ')';
+      var f = $('frame'); f.style.transition = 'opacity .8s, box-shadow 1.6s, transform 2.4s cubic-bezier(.6,0,.15,1)'; f.style.transformOrigin = '0 0'; f.style.left = '0px'; f.style.top = '0px'; f.style.transform = 'translate(' + (tx + bx * z) + 'px,' + (ty + by * z) + 'px)'; f.style.width = bw * z + 'px'; f.style.height = bh * z + 'px';
+      f.classList.add('dim'); say('<small>동아일보 · 소화 팔 년 오월 십칠일</small>시내 형사 총출동, 팔방 활동도 수포 —<br><b>그 한 줄에서, 사건이 깨여나오.</b>');
+    });
+    at(5.4, function () { say('이 밤의 지면엔 — <b>아즉 다 세지 못한</b> 사건들이 잇소.'); });
+    at(8.4, masthead);
   }
-  /* ⑤ 위로 밀면 신문이 펼쳐짐 */
-  var sheet = $('sheet'), y0 = null, dy = 0;
-  function setS(px) { sheet.style.transform = 'translateY(' + (-px) + 'px)'; }
-  function open() {
-    if (done) return; done = true; stage = 5; roomTo(0, .4); thud(); buzz([20, 60, 20]);
-    sheet.style.transition = 'transform .9s cubic-bezier(.6,0,.15,1)'; setS(innerHeight);
-    setTimeout(function () { sheet.classList.add('done'); }, 700);
-    setTimeout(go, 2300);
-  }
+  function masthead() { if (done) return; done = true; stage = 5; thud(.35); $('cap').innerHTML = ''; $('top').style.opacity = '0'; $('sheet').classList.add('up'); buzz([20, 60, 20]); if (room) room.gain.setTargetAtTime(0, AC.currentTime, .6); at(3, go); }
   function go() { T.forEach(function (x) { clearTimeout(x); clearInterval(x); }); location.replace(NEXT); }
-  st.addEventListener('pointerdown', function (e) { if (e.target.closest('#skip')) return; if (stage === 4) { y0 = e.clientY; dy = 0; sheet.style.transition = 'none'; } });
-  st.addEventListener('pointermove', function (e) { if (y0 == null) return; dy = Math.max(0, y0 - e.clientY); setS(dy * 1.1); });
-  function rel() { if (y0 == null) return; y0 = null; if (dy > innerHeight * .18 || dy < 8) open(); else { sheet.style.transition = 'transform .5s cubic-bezier(.3,1.4,.5,1)'; setS(0); } }
-  st.addEventListener('pointerup', rel); st.addEventListener('pointercancel', rel);
-  st.addEventListener('click', function (e) { if (e.target.closest('#skip')) return; if (!stage) begin(); });
-  $('skip').addEventListener('click', function (e) { e.stopPropagation(); open(); });
-  ['assets/op/m_clock.jpg', 'assets/op/m_press.jpg', 'assets/op-strip/t0.jpg', 'assets/op-strip/t1.jpg', 'assets/op-strip/t2.jpg', 'assets/op-strip/t3.jpg'].forEach(function (u) { new Image().src = u; });
+  $('gate').addEventListener('click', begin);
+  $('skip').addEventListener('click', function (e) { e.stopPropagation(); if (stage === 5) go(); else { T.forEach(function (x) { clearTimeout(x); clearInterval(x); }); done = false; masthead(); } });
+  $('sheet').addEventListener('click', go);
+  addEventListener('resize', function () { if (stage < 2) { place(); sizeInk(); } });
 })(window, document);
 </script>
 </body>
