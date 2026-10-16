@@ -291,3 +291,11 @@
     kb.addEventListener('contextmenu', function (e) { e.preventDefault(); });
   })();
 })(window, document);
+/* 그림이 한 번 못 불려오면 새로 한 번 더 — 그래도 안 되면 깨진 칸을 숨김 */
+(function (D) {
+  D.addEventListener('error', function (e) {
+    var i = e.target; if (!i || i.tagName !== 'IMG') return;
+    if (!i.dataset.retry) { i.dataset.retry = '1'; var s = i.getAttribute('src'); i.src = s + (s.indexOf('?') < 0 ? '?' : '&') + 'r=' + Date.now(); return; }
+    var f = i.closest('figure'); (f || i).style.display = 'none';
+  }, true);
+})(document);
