@@ -186,49 +186,53 @@
     lobby(root, { title: '그 밤', k: '第四章 · 活動寫眞', sub: '이월 십륙일 밤 · 왕십리 — 여덟 장면', time: '약 일 분 이십 초', cover: 'bb_door', coverPos: '50% 40%', scenes: SC }, film);
   })();
 
-  /* ════════ 第九章 · 선반 우의 병 ════════ */
+  /* ════════ 第九章 · 선반 우의 병 — 내리는 만큼 장면이 서서히 번져 바뀜 (입자 · 눈 업슴) ════════ */
   (function () {
     var root = $('#jarStage'); if (!root) return;
-    root.removeAttribute('style');
     var SC = [
-      { img: 'bb_jar3', alt: '선반 위의 표본 병 (속은 알아볼 수 없게 그림)', short: '1937', k: '1937 · 소화 십이 년', h: '병', b: '일본 경찰은 그의 머리를 잘라 포르말린 병에 너헛소.', fx: 'in', focus: .5, to: 1.35, d: 9000 },
-      { img: 'bb_jar3', alt: '어둠 속 선반의 병들', short: '해방', k: '1945 · 해방', h: '나라가 바뀌엇소', b: '병은 그대로 남앗소.', fx: 'pan', dir: -1, d: 7600 },
-      { img: 'bb_jar_macro', alt: '병 속을 떠도는 가는 실오리 (재현)', short: '전쟁', k: '1950 · 전쟁', h: '전쟁이 지나갓소', b: '병은 그대로 남앗소.', fx: 'drift', focus: .45, dx: .04, dy: -.03, to: 1.25, rot: 0, d: 8200 },
-      { img: 'bb_jar3', alt: '연구원 선반 위의 병', short: '국과수', k: '그 뒤 · 국과수', h: '선반 우에', b: '병은 국립과학수사연구원의 선반 우에 노혀 잇섯소.', fx: 'out', focus: .5, from: 1.5, d: 9000 },
-      { img: 'bb_jar_macro', alt: '병 속의 가는 실오리 (재현)', short: '진정', k: '훗날 · 진정', h: '「비인도적」', b: '「사람의 몸을 표본으로 두는 것은 비인도적」이라는 진정을 행정안전부가 바다들엿소.', fx: 'drift', focus: .6, dx: -.05, dy: .03, to: 1.4, d: 11000 },
-      { img: 'bb_jar', alt: '창가 선반 위의 비워진 병', short: '2011', k: '2011 · 시월 이십오일', h: '병이 비워지고', b: '불교단체가 병을 넘겨바다, 서울시립승화원에서 화장하엿소. 이틀 뒤 남양주 봉선사에서 위령제가 열렷소.', fx: 'in', focus: .68, to: 1.12, d: 12500 }
+      { img: 'bb_jar3', alt: '선반 위의 표본 병 (속은 알아볼 수 없게 그림)', k: '1937 · 소화 십이 년', b: '일본 경찰은 그의 머리를 잘라 포르말린 병에 너헛소.', y: 1937, s0: 1.0, s1: 1.18, fx: .5 },
+      { img: 'bb_jar3', alt: '어둠 속 선반의 병들', k: '1945 · 해방', b: '나라가 바뀌엇소. 병은 그대로 남앗소.', y: 1945, s0: 1.25, s1: 1.1, fx: .3 },
+      { img: 'bb_jar_macro', alt: '병 속을 떠도는 가는 실오리 (재현)', k: '1950 · 전쟁', b: '전쟁이 지나갓소. 병은 그대로 남앗소.', y: 1950, s0: 1.05, s1: 1.25, fx: .45 },
+      { img: 'bb_jar3', alt: '연구원 선반 위의 병', k: '그 뒤 · 국과수', b: '병은 국립과학수사연구원의 선반 우에 노혀 잇섯소.', y: 0, s0: 1.4, s1: 1.15, fx: .5 },
+      { img: 'bb_jar_macro', alt: '병 속의 가는 실오리 (재현)', k: '훗날 · 진정', b: '「사람의 몸을 표본으로 두는 것은 비인도적」이라는 진정을 행정안전부가 바다들엿소.', y: 0, s0: 1.15, s1: 1.4, fx: .6 },
+      { img: 'bb_jar', alt: '창가 선반 위의 비워진 병', k: '2011 · 시월 이십오일', b: '불교단체가 병을 넘겨바다, 서울시립승화원에서 화장하엿소. 이틀 뒤 남양주 봉선사에서 위령제가 열렷소.', y: 2011, s0: 1.12, s1: 1.0, fx: .68 }
     ];
-    /* 해 — 장면을 따라 끈김 업시 흐름 (국과수 · 진정은 몰라서 흐린 수) */
-    var YR = [[1937, 1937], [1937, 1945], [1945, 1950], [1950, 0], [0, 0], [0, 2011]];
-    var film = Film({ id: 'jrFilm', cls: 'jar', title: '第九章 · 선반 우의 병', scenes: SC,
-      extra: '<canvas class="fl-ash" aria-hidden="true"></canvas><div class="fl-year"><b>1937</b><small>병 속에서 — 0 년</small></div>',
-      end: { k: '칠십사 년', h: '병이 비워지고 —<br>그는 재가 되엇소.', b: '선반 우의 병 · 재현 그림 — 속은 알아볼 수 업게 그렷소' },
-      onTime: function (i, t) {
-        var y = YR[i], yb = $('.fl-year b', film.el), ys = $('.fl-year small', film.el);
-        if (y[0] && y[1]) { var v = Math.round(y[0] + (y[1] - y[0]) * Math.min(1, t * 1.6)); yb.textContent = v; yb.classList.remove('roll'); ys.textContent = '병 속에서 — ' + (v - 1937) + ' 년'; }
-        else if (!y[1] || (!y[0] && t < .55)) { yb.textContent = '19' + (Math.floor(Date.now() / 90) % 50 + 50); yb.classList.add('roll'); ys.textContent = '해가 가도 — 병은 그대로'; }
-        else { yb.textContent = 2011; yb.classList.remove('roll'); ys.textContent = '칠십사 년 — 병이 비워짐'; }
-        ash.on = i === SC.length - 1 && t > .3;
-      },
-      onEnd: function () { ash.on = true; }, onClose: function () { ash.on = false; }
-    });
-    /* 재 — 마지막 장면에서 가는 재가 떠오름 */
-    var ash = { on: false }, cv = $('.fl-ash', film.el), cx = cv.getContext('2d'), P = [], rafA = 0;
-    for (var i = 0; i < 90; i++) P.push({ x: Math.random(), y: 1 + Math.random(), r: .4 + Math.random() * 1.6, v: .0006 + Math.random() * .0016, ph: Math.random() * 6 });
-    (function loop() {
-      if (!film.el.hidden) {
-        var w = cv.clientWidth, h = cv.clientHeight; if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
-        cx.clearRect(0, 0, w, h);
-        if (ash.on || P.some(function (p) { return p.y < 1; })) P.forEach(function (p) {
-          if (ash.on || p.y < 1) { p.y -= p.v; p.ph += .02; if (p.y < -.05) { p.y = ash.on ? 1.05 : 2; p.x = Math.random(); } }
-          if (p.y > 1) return;
-          cx.fillStyle = 'rgba(236,235,231,' + (.25 + .5 * (1 - p.y)).toFixed(3) + ')';
-          cx.beginPath(); cx.arc((p.x + Math.sin(p.ph) * .02) * w, p.y * h, p.r, 0, 6.3); cx.fill();
-        });
-      }
-      rafA = requestAnimationFrame(loop);
-    })();
-    lobby(root, { title: '선반 우의 병', k: '第九章 · 標本', sub: '1937 → 2011 · 칠십사 년 — 여섯 장면', time: '약 일 분', cover: 'bb_jar3', coverPos: '50% 50%', scenes: SC }, film);
+    var N = SC.length;
+    root.removeAttribute('style'); root.className = 'jx'; root.style.height = (N * 110 + 60) + 'svh';
+    root.innerHTML = '<div class="jx-st">' + SC.map(function (x, i) { return '<div class="jx-l" style="--fx:' + (x.fx * 100) + '%"><img src="' + G + x.img + '.jpg" alt="' + x.alt + ' (재현 그림)" decoding="async"></div>'; }).join('') +
+      '<i class="jx-vig" aria-hidden="true"></i>' +
+      '<div class="jx-yr"><b id="jxY">1937</b><small id="jxA">병 속에서 — 0 년</small></div>' +
+      SC.map(function (x, i) { return '<div class="jx-cap"><p class="k">' + x.k + '</p><p class="b">' + x.b + '</p></div>'; }).join('') +
+      '<div class="jx-rule"><i id="jxBar"></i></div><span class="jx-rt">그림 · 재현</span><p class="jx-hint" id="jxHint">천천히 내리시압 — 칠십사 년이 번져 가오</p></div>';
+    var ls = $$('.jx-l', root), im = ls.map(function (l) { return $('img', l); }), caps = $$('.jx-cap', root), yb = $('#jxY'), ya = $('#jxA'), bar = $('#jxBar'), hint = $('#jxHint');
+    var tp = 0, p = 0, raf = 0, on = false;
+    function sm(t) { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); }
+    function target() { var r = root.getBoundingClientRect(), span = r.height - W.innerHeight; tp = Math.max(0, Math.min(1, -r.top / Math.max(1, span))); if (!raf && on) raf = requestAnimationFrame(draw); }
+    var YK = [1937, 1945, 1950, 0, 0, 2011];
+    function draw() {
+      raf = 0; p += (tp - p) * .085; if (Math.abs(tp - p) < .0004) p = tp;
+      var f = p * (N - 1);
+      ls.forEach(function (l, k) {
+        var o = k === 0 ? 1 : sm(f - k + 1);
+        l.style.opacity = o.toFixed(3);
+        var t = Math.max(0, Math.min(1, (f - k + 1) / 2)), x = SC[k];
+        im[k].style.transform = 'scale(' + (x.s0 + (x.s1 - x.s0) * t).toFixed(4) + ')';
+      });
+      caps.forEach(function (c, k) { var d = Math.abs(f - k), o = 1 - sm((d - .18) / .3); c.style.opacity = o.toFixed(3); c.style.transform = 'translateY(' + ((f - k) * -26).toFixed(1) + 'px)'; });
+      var i0 = Math.floor(f), t0 = f - i0, y;
+      if (f >= N - 1.05) y = 2011;
+      else if (i0 < 2) y = Math.round(YK[i0] + (YK[i0 + 1] - YK[i0]) * sm(t0));
+      else if (i0 === 2 && t0 < .5) y = 1950;
+      else y = null;
+      if (y) { yb.textContent = y; yb.classList.remove('roll'); ya.textContent = y >= 2011 ? '칠십사 년 — 병이 비워짐' : '병 속에서 — ' + (y - 1937) + ' 년'; }
+      else { yb.textContent = '19··'; yb.classList.add('roll'); ya.textContent = '해가 가도 — 병은 그대로'; }
+      bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      hint.style.opacity = p < .03 ? 1 : 0;
+      if (on && p !== tp) raf = requestAnimationFrame(draw);
+    }
+    W.addEventListener('scroll', target, { passive: true }); W.addEventListener('resize', target);
+    if ('IntersectionObserver' in W) new IntersectionObserver(function (es) { es.forEach(function (e) { on = e.isIntersecting; if (on) { target(); A().drone(true); } else A().drone(false); }); }).observe(root);
+    target(); p = tp; draw();
   })();
 
   /* ════════ 第六章 · 얼굴 업는 수배 — 그림과 손자국이 한 화폭(캔버스)에 그려져 어긋날 일이 업슴 ════════
@@ -354,12 +358,12 @@
   (function () {
     var root = $('#fnRoot'); if (!root) return;
     root.removeAttribute('style'); root.className = 'fz';
-    root.innerHTML = '<i class="fz-bg" aria-hidden="true"></i><canvas class="fz-snow" aria-hidden="true"></canvas><i class="fz-white" aria-hidden="true"></i>' +
+    root.innerHTML = '<i class="fz-bg" aria-hidden="true"></i><canvas class="fz-snow" aria-hidden="true" hidden></canvas><i class="fz-white" aria-hidden="true"></i>' +
       '<div class="fz-g a"><p class="fz-k">소화 십이 년 · 왕십리에서 용문산까지</p><p class="fz-l" style="--d:1.4s">그들은 흰 것을 미덧소.</p><p class="fz-l" style="--d:3.6s">한 사람의 흰 것으로,<br>천하를 희게 하자 하엿소.</p><p class="fz-l" style="--d:6.2s">흰 옷 아래에는 장부가 잇섯고,<br>임명장이 잇섯고 —</p><p class="fz-l" style="--d:8.8s">이십여 곳의 산이 잇섯소.</p></div>' +
       '<div class="fz-g b"><p class="fz-big">가장 흰 것이,<br>가장 만히 덥고 잇섯소.</p><p class="fz-red">덥힌 것을 다 세지 못한 채로 — 지금도.</p></div>' +
       '<div class="fz-g c"><p class="fz-end">경성의 밤은 아즉 길소.</p><button type="button" class="fz-re">한 번 더</button></div><span class="fz-rt">그림 · 재현</span>';
     var cv = $('.fz-snow', root), cx = cv.getContext('2d'), F = [], vis = false, t0 = 0, raf = 0, WHITE = 17000;
-    for (var i = 0; i < 110; i++) F.push({ x: Math.random(), y: Math.random(), r: .5 + Math.random() * 2, s: .25 + Math.random() * .6, ph: Math.random() * 6 });
+    for (var i = 0; i < 0; i++) F.push({ x: Math.random(), y: Math.random(), r: .5 + Math.random() * 2, s: .25 + Math.random() * .6, ph: Math.random() * 6 });
     function draw(ts) {
       raf = 0; if (!vis) return;
       var w = cv.clientWidth, h = cv.clientHeight, d = Math.min(2, W.devicePixelRatio || 1);

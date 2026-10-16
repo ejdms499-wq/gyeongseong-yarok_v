@@ -766,3 +766,22 @@ html.fl-lock,html.fl-lock body{overflow:hidden!important;overscroll-behavior:non
 @keyframes fzIn{from{opacity:0;transform:translateY(10px);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
 @keyframes fzOut{to{opacity:0;filter:blur(6px)}}
 @media (prefers-reduced-motion:reduce){.fl-grain{animation:none}.fz.play *{animation-duration:.01s!important;animation-delay:0s!important}}
+
+/* 1016c — 병: 내리는 만큼 번지는 장면 */
+.bb-jar .jx{position:relative;margin:0 calc(var(--g) * -1)}
+.jx-st{position:sticky;top:48px;height:calc(100svh - 48px);overflow:hidden;background:#000}
+.jx-l{position:absolute;inset:0;opacity:0;will-change:opacity}
+.jx-l:first-child{opacity:1}
+.jx-l img{width:100%;height:100%;object-fit:cover;object-position:var(--fx) 50%;filter:grayscale(1) contrast(1.1) brightness(.78)!important;will-change:transform;transform-origin:var(--fx) 50%}
+.jx-vig{position:absolute;inset:0;box-shadow:inset 0 0 120px 30px rgba(0,0,0,.85),inset 0 -260px 160px -90px rgba(0,0,0,.95);pointer-events:none}
+.jx-yr{position:absolute;right:var(--g);top:22px;text-align:right;text-shadow:0 2px 20px #000}
+.jx-yr b{display:block;font:300 clamp(54px,18vw,76px)/1 var(--serif);color:#fff;transition:filter .5s}
+.jx-yr b.roll{filter:blur(3px);opacity:.75}
+.jx-yr small{display:block;margin-top:6px;font:500 11px/1 var(--sans);letter-spacing:.12em;color:#bdbcb7}
+.jx-cap{position:absolute;left:0;right:0;bottom:56px;padding:0 var(--g);opacity:0;text-shadow:0 2px 16px #000}
+.jx-cap .k{font:500 11px/1.4 var(--sans);letter-spacing:.2em;color:#e07a72}
+.jx-cap .b{margin-top:10px;font:400 17px/1.8 var(--serif);color:#f2f1ed}
+.jx-rule{position:absolute;left:var(--g);right:var(--g);bottom:26px;height:1px;background:rgba(255,255,255,.2)}
+.jx-rule i{position:absolute;inset:0;background:#fff;transform-origin:0 50%;transform:scaleX(0)}
+.jx-rt{position:absolute;left:var(--g);top:22px;font:500 9px/1 var(--sans);letter-spacing:.18em;padding:4px 5px;background:rgba(0,0,0,.6);color:#bbb}
+.jx-hint{position:absolute;left:0;right:0;top:46%;text-align:center;font:500 12px/1 var(--sans);letter-spacing:.14em;color:#e4e3df;transition:opacity .6s;pointer-events:none}

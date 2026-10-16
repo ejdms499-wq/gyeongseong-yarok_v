@@ -332,7 +332,6 @@
         '<div class="ph-gram"><img src="' + AD + 'mj-gramophone.png" alt="축음기 (재현 그림)"><i class="ph-disc" id="phDisc"><i class="ph-lbl" id="phLbl"></i></i><span class="rt">그림 · 재현</span><p class="ph-lyric" id="phLyric"></p></div>' +
         '<p class="hx-hint">' + T({ old: '판을 골라 누르면 바늘이 나리오', now: '음반을 골라 누르면 재생됩니다' }) + '</p>' +
         '<div class="ph-flow" id="phFlow"></div>' +
-        '<div class="ph-time"><i class="ln"></i>' + F.timeline.map(function (t) { return '<span style="left:' + ((t.y - 1924) / 18 * 100) + '%"><b>' + t.y + '</b><small>' + T(t.t) + '</small></span>'; }).join('') + '<em id="phMark"></em></div>' +
         '<div class="ph-panel" id="phPanel"></div>' +
       '</div>';
     var disc = $('#phDisc'), on = false, au = null, lt = 0, li = 0, cur = -1;
@@ -364,7 +363,7 @@
     function pick(i) {
       if (cur === i) return; if (au) { au.pause(); } setPlay(false); cur = i; var w = L[i];
       $('#phLbl').innerHTML = '<b>' + esc(w.title.old) + '</b><small>' + w.year + '</small>';
-      $('#phMark').style.left = Math.max(0, Math.min(100, (w.year - 1924) / 18 * 100)) + '%'; $('#phMark').textContent = w.year < 1924 ? '◀ ' + w.year : w.year;
+      
       var S = srcs(w), sp = spUri(w.spotify), alb = w.albumNo ? C.spotifyAlbum : '';
       var cs = w.case && F.cases[w.case];
       $('#phPanel').innerHTML =
