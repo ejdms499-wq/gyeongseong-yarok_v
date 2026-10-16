@@ -231,7 +231,7 @@
     list.unshift(d); try { localStorage.setItem('yk-hogoe', JSON.stringify(list.slice(0, 6))); } catch (e) {}
     count();
     try { sessionStorage.setItem('yk-hogoe-fresh', '1'); } catch (e) {}
-    say('본지 「독자 호외」 빨랫줄에 널엇소. <a href="index.html#hogoe">널린 것 보러 가기 →</a>');
+    say(window.HG_LINE ? window.HG_LINE() : '본지 「독자 호외」 빨랫줄에 널엇소. <a href="index.html#hogoe">널린 것 보러 가기 →</a>');
   });
   function count() { var n = load().length; $('#h2Count').textContent = n ? '오늘 밤 찍은 호외 · ' + n + '장' : ''; }
 
@@ -251,7 +251,7 @@
   function draw() {
     return (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { return window.HGP ? HGP.load(readSheet().ph) : null; }).then(function (PHD) {
       var d = readSheet(), W = 1400, P = 80, SERIF = '"Noto Serif KR", serif';
-      var dark = d.style === 'horror', bg = dark ? '#1f1a15' : '#f2e9d4', ink = dark ? '#e6dac0' : '#1e1913';
+      var TN = window.HG_TONE || {}, dark = d.style === 'horror', bg = dark ? (TN.dbg || '#1f1a15') : (TN.bg || '#f2e9d4'), ink = dark ? (TN.dink || '#e6dac0') : (TN.ink || '#1e1913'), LP = TN.bg || '#f2e9d4';
       var acc = dark ? '#c9a46a' : (ACC[d.tone] || ink), red = '#8a2a21';
       var c = document.createElement('canvas'), x = c.getContext('2d');
       var hs = d.style === 'breaking' ? 112 : 92, mainW = W - P * 2, artW = Math.round(mainW * .36), bodyW = mainW - artW - 36, colW = (bodyW - 28) / 2, lh = 44;
@@ -267,21 +267,21 @@
       var mainH = Math.max(half * lh, artH), H = Math.round(top + mainH + 40 + 190 + 80);
       c.width = W; c.height = H; x = c.getContext('2d');
       x.fillStyle = bg; x.fillRect(0, 0, W, H);
-      var g = x.createRadialGradient(W * .4, H * .25, W * .3, W * .5, H * .5, W * .95); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, dark ? 'rgba(0,0,0,.35)' : 'rgba(110,80,40,.22)'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+      var g = x.createRadialGradient(W * .4, H * .25, W * .3, W * .5, H * .5, W * .95); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, dark ? 'rgba(0,0,0,.35)' : (TN.vig || 'rgba(110,80,40,.22)')); x.fillStyle = g; x.fillRect(0, 0, W, H);
       x.fillStyle = ink; x.strokeStyle = ink; x.textBaseline = 'alphabetic';
       /* 제호 */
       var y = P + 92;
       x.font = '900 84px ' + SERIF; x.textAlign = 'center'; var nm = '경성야록'; var nw = x.measureText(nm).width;
       x.fillText(nm, W / 2 - 40, y);
       var bx = W / 2 - 40 + nw / 2 + 22; x.fillStyle = d.style === 'breaking' ? red : (dark ? ink : '#1e1913'); x.fillRect(bx, y - 92, 66, 112);
-      x.fillStyle = dark ? bg : '#f2e9d4'; x.font = '900 42px ' + SERIF; x.fillText('호', bx + 33, y - 46); x.fillText('외', bx + 33, y + 6); x.fillStyle = ink;
+      x.fillStyle = dark ? bg : LP; x.font = '900 42px ' + SERIF; x.fillText('호', bx + 33, y - 46); x.fillText('외', bx + 33, y + 6); x.fillStyle = ink;
       x.font = '800 22px ' + SERIF; x.textAlign = 'left'; x.strokeRect(P, y - 74, 112, 36); x.fillText('독자판', P + 14, y - 47);
       x.font = '400 20px ' + SERIF; x.fillText(d.no || '', P, y - 6);
       x.textAlign = 'right'; x.font = '700 22px ' + SERIF; x.fillText(DATE, W - P, y - 47); x.font = '400 20px ' + SERIF; x.fillText('정가 · 공짜', W - P, y - 6);
       y += 34; x.fillStyle = d.style === 'breaking' ? red : ink; x.fillRect(P, y, mainW, 4); x.fillRect(P, y + 9, mainW, 1.5); x.fillStyle = ink; y += 66;
       /* 머리글 */
       x.textAlign = 'left'; x.font = '800 24px ' + SERIF;
-      if (d.style === 'breaking') { var kw = x.measureText(d.kick).width; x.fillStyle = red; x.fillRect(P, y - 32, kw + 34, 44); x.fillStyle = '#f2e9d4'; x.fillText(d.kick, P + 17, y); x.fillStyle = ink; }
+      if (d.style === 'breaking') { var kw = x.measureText(d.kick).width; x.fillStyle = red; x.fillRect(P, y - 32, kw + 34, 44); x.fillStyle = LP; x.fillText(d.kick, P + 17, y); x.fillStyle = ink; }
       else { x.fillStyle = acc; x.fillText(d.kick, P, y); x.fillStyle = ink; }
       y += 16; x.font = '900 ' + hs + 'px ' + SERIF;
       HL.forEach(function (l) { y += hs * 1.1; x.fillText(l, P, y); });
@@ -335,7 +335,7 @@
         return finish();
       }
       var src = art(d.topic);
-      if (src) return new Promise(function (ok) { var im = new Image(); im.onload = function () { x.save(); x.filter = 'grayscale(1) sepia(.35) contrast(1.15)' + (dark ? ' brightness(.8)' : ''); var r = Math.max(artW / im.width, ah / im.height), iw = im.width * r, ih = im.height * r; x.beginPath(); x.rect(ax, ay, artW, ah); x.clip(); x.drawImage(im, ax + (artW - iw) / 2, ay + (ah - ih) / 2, iw, ih); x.restore(); ok(finish()); }; im.onerror = function () { ok(finish()); }; im.src = src; });
+      if (src) return new Promise(function (ok) { var im = new Image(); im.onload = function () { x.save(); x.filter = (TN.filter || 'grayscale(1) sepia(.35) contrast(1.15)') + (dark ? ' brightness(.8)' : ''); var r = Math.max(artW / im.width, ah / im.height), iw = im.width * r, ih = im.height * r; x.beginPath(); x.rect(ax, ay, artW, ah); x.clip(); x.drawImage(im, ax + (artW - iw) / 2, ay + (ah - ih) / 2, iw, ih); x.restore(); ok(finish()); }; im.onerror = function () { ok(finish()); }; im.src = src; });
       x.save(); x.beginPath(); x.rect(ax, ay, artW, ah); x.clip(); x.fillStyle = dark ? 'rgba(230,218,192,.08)' : 'rgba(30,25,19,.06)'; x.fillRect(ax, ay, artW, ah); x.fillStyle = ink;
       x.translate(ax + artW / 2, ay + ah / 2);
       x.rotate(Math.PI / 4); x.globalAlpha = .16; for (var i = -artW; i < artW; i += 9) x.fillRect(i, -artW, 1.2, artW * 2);

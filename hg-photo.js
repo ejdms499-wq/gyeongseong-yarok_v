@@ -160,7 +160,7 @@
   function photo(x, im, sp, ax, ay, w, h, spOn) {
     x.save(); x.beginPath(); x.rect(ax, ay, w, h); x.clip();
     if (im) {
-      try { x.filter = 'grayscale(1) sepia(.35) contrast(1.15)'; } catch (e) {}
+      try { x.filter = (window.HG_TONE && window.HG_TONE.filter) || 'grayscale(1) sepia(.35) contrast(1.15)'; } catch (e) {}
       var r = Math.max(w / im.width, h / im.height), iw = im.width * r, ih = im.height * r;
       x.drawImage(im, ax + (w - iw) / 2, ay + (h - ih) / 2, iw, ih);
       x.filter = 'none';
