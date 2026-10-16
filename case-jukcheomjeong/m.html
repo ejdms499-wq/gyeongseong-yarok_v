@@ -10,10 +10,10 @@
 <title>경성야록 · 죽첨정 골목의 어린 주검</title>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="stylesheet" href="./fonts/fonts.css">
-<link rel="stylesheet" href="../yk-mbook.css?v=2">
-<link rel="stylesheet" href="./m-jk-book.css?v=2">
+<link rel="stylesheet" href="../yk-mbook.css?v=3">
+<link rel="stylesheet" href="./m-jk-book.css?v=3">
 </head>
-<body>
+<body data-bgm="./audio/Key_to_the_Consulate.mp3" data-bell="./audio/bell.mp3" data-whoosh="./audio/whoosh.mp3">
 
 <!-- 위 띠 -->
 <div class="mb-bar"><a href="../index.html">‹ 本紙</a><span class="mb-now" data-def="죽첨정 골목의 어린 주검"></span><button data-open="mbToc">目次</button><i class="mb-prog"></i></div>
@@ -126,20 +126,16 @@
   <div class="mb-ch"><span class="no">04</span><span class="nm"><b>第四章</b>搜査</span></div>
   <h2 class="mb-h">지면 뒤의 스물세 날</h2>
   <p class="mb-src"><b>再構成</b><span>신동아 1933년 7월호 · 전봉관 연재 바탕</span></p>
-  <p class="mb-p">신문에 다 실리지 못한 수사의 길이오. 날마다 해가 떳고, 날마다 범인은 업섯소. <em>지면이 침묵한 날이, 말한 날보다 길엇소.</em></p>
-  <div class="jk-cal mb-rv" id="jkCal" aria-label="이십삼 일 달력"></div>
-  <p class="mb-note" style="margin-top:10px">붉은 칸 · 지면에 무언가 실린 날 &nbsp;|&nbsp; 빈 칸 · 지면이 침묵한 날</p>
-  <button class="mb-dev" type="button" data-open="shDays">
-    <div class="ph" style="background-image:url(./image/Jukcheomjeong/mj/jk_st4.jpg)"></div>
-    <div class="tx"><div class="kk"><span>裝置 · 형사들의 발자국</span><b>열한 장면</b></div>
-      <strong>빈 칸마다 —<br>형사들은 무엇을 쪼찻는가</strong>
-      <span class="d">하로씩 넘기며 내려가시압. 쫏는 단서가 하나씩 끈기오. 그림은 모다 재현이오.</span>
-      <span class="go">따라가기<i>→</i></span></div>
-  </button>
+  <p class="mb-p">신문에 다 실리지 못한 수사의 길이오. 형사들의 발자국을 따라, 천천히 내려가시압.</p>
+  <p class="mb-q">날마다 해가 떳고, 날마다 범인은 업섯소.<small>지면이 침묵한 날이, 말한 날보다 길엇소.</small></p>
+  <div class="st-rail" id="stRail"></div>
+  <ol class="st-list" id="stList"></ol>
+  <p class="mb-note" style="margin-top:20px">근거 · 전봉관 「죽첨정 '단두 유아' 사건」 (신동아 연재 · 당시 동아일보 · 조선일보 기사 인용) · 동아일보 1933년 5~6월 · 사람 이름은 쓰지 않음 · 그림은 모다 재현</p>
 </section>
 
 <!-- 第五章 號外 -->
-<section class="mb-sec dark jk-extra" id="ch5" data-ch="진상 · 號外" data-no="05" data-kj="第五章" data-sub="동아일보 · 소화 팔 년 유월 팔일자">
+<div class="jk-bridge"><p>그리고 유월 팔일 — 호외가 나왓소.</p></div>
+<section class="mb-sec dark jk-extra" id="ch5" style="--exbg:url(./image/Jukcheomjeong/mj/jk_extra.jpg)" data-ch="진상 · 號外" data-no="05" data-kj="第五章" data-sub="동아일보 · 소화 팔 년 유월 팔일자">
   <div class="mb-ch"><span class="no">05</span><span class="nm"><b>第五章</b>號外</span></div>
   <p class="mb-src"><b>原文</b><span>동아일보 1933.6.8 · 호외 꼴은 재구성</span></p>
   <button class="ex-seal" type="button" id="exOpen">
@@ -147,6 +143,7 @@
     <span class="s2">동아일보 · 소화 팔 년 유월 팔일자 · 수사 이십삼 일째</span>
     <span class="s3">봉을 뜨드시압 <i>→</i></span>
   </button>
+  <i class="ex-bg" aria-hidden="true"></i>
   <div class="ex-body" id="exBody" hidden>
     <ul class="ex-lines">
       <li>발생 이래 이십삼 일 만에 해결된 유아 단두 사건 진상</li>
@@ -158,7 +155,7 @@
       <img src="./image/Jukcheomjeong/articles-toned/19330608.jpg" alt="1933년 6월 8일자 동아일보 지면" loading="lazy">
       <span><small><b>原文</b></small><strong>우 제목들이 실린 유월 팔일자 지면</strong><small>동아일보 1933년 6월 8일</small><u>크게 보기</u></span>
     </button>
-    <p class="mb-q big">살인은 —<br>업섯소.</p>
+    <p class="mb-q big ex-twist" id="exTwist">살인은 —<br>업섯소.</p>
     <p class="mb-p">아해는 병으로 죽어, 이미 무덤에 누어 잇섯소.</p>
     <p class="mb-p">그 무덤을 판 이가 잇섯소. 간질을 앓는 여섯 살 아들에게 — <em>사람의 뇌수가 약이 된다는 말을, 미든 것이오.</em></p>
     <p class="mb-note">※ 여긔서 「진범」은 아해를 죽인 이가 아니라 — 무덤을 판 이오.</p>
@@ -233,7 +230,8 @@
 </section>
 
 <!-- 그 아해 -->
-<section class="mb-finale" id="finale" data-ch="그 아해" data-no="終" data-kj="終" data-sub="소화 팔 년 오월 · 경성 죽첨정">
+<section class="mb-finale jk-fin" id="finale" data-ch="그 아해" data-no="終" data-kj="終" data-sub="소화 팔 년 오월 · 경성 죽첨정">
+  <i class="fin-bg" aria-hidden="true"></i><span class="fin-rt">그림 · 재현</span>
   <p class="k">소화 팔 년 오월 · 경성 죽첨정</p>
   <p class="mb-rv">그 아해는 한 살이엇소.</p>
   <p class="mb-rv">병으로 죽어, 한 번 무덤에 누엇소.</p>
@@ -298,7 +296,7 @@
 <footer class="mb-end page-foot">
   <span class="seal">京城<br>野錄</span>
   <p>社會面 · 죽첨정 사건 · 끗</p>
-  <a href="../index.html">본지로 도라가기</a><a href="./index.html?pc=1">컴퓨터판으로 보기</a>
+  <a href="../index.html">본지로 도라가기</a>
 </footer>
 
 <!-- ══════ 장치 시트 ══════ -->
@@ -316,14 +314,6 @@
   <nav class="mb-tabs" id="ppTabs"></nav>
   <div class="mb-sh-bd" id="ppBody"></div>
   <div class="mb-sh-ft pp-ft"><span>이날 지면에 오른 말 · 모은 말</span><b><span class="mbWordN">0</span> / 6</b><span class="pp-dots" id="ppDots"></span></div>
-</div>
-
-<!-- 스물세 날 -->
-<div class="mb-sheet" id="shDays" role="dialog" aria-label="지면 뒤의 스물세 날">
-  <div class="mb-sh-hd"><b><small>第四章 · 裝置 · 再構成</small>지면 뒤의 스물세 날</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
-  <div class="dy-strip" id="dyStrip"></div>
-  <div class="mb-sh-bd" id="dyBody"></div>
-  <div class="mb-sh-ft dy-ft"><button class="mb-btn ghost" id="dyPrev">‹ 앞</button><span id="dyCount">1 / 12</span><button class="mb-btn" id="dyNext">다음 날 ›</button></div>
 </div>
 
 <!-- 라듸오 -->
@@ -365,13 +355,13 @@
     <details class="yr-w q"><summary><i>問 1</i>신문은 왜 확인도 안 된 「한 가족」을 범인처럼 썻을까?</summary><ul><li>경찰의 짐작을 그대로 받아 적은 것은 아닐까?</li><li>독자의 눈길을 끄는 말이 먼저엿던 것은 아닐까?</li><li>오늘의 「피의자 신상」 보도와 견주어 보시압.</li></ul></details>
     <details class="yr-w q"><summary><i>問 2</i>첫 보도의 「문둥병 환자의 짓」이라는 짐작은, 누구에게 무슨 일을 만들엇을까?</summary><ul><li>걸인과 한센인 백여 명이 붓들렷다 풀려낫소 (6장 · 2장).</li><li>편견이 담긴 말 한 마듸가 수사의 그물이 되엇소.</li></ul></details>
     <details class="yr-w q"><summary><i>問 3</i>가튼 장 우의 사건 기사와 아래칸 광고를 함께 보면, 무엇이 보일까?</summary><ul><li>신문은 뉴스와 광고가 한 장에 실리는 매체요.</li><li>그날 사람들은 무엇을 사고, 무엇을 두려워햇을까? (2장 오월 십칠일 지면 아래칸)</li></ul></details>
-    <p class="yr-note">투고는 <a href="./index.html?pc=1#extra">컴퓨터판</a> 부록에서 할 수 잇소. · 고등학교 한국사 교과서 · 국사편찬위원회 「우리역사넷」에서 확인되는 내용만 적엇소.</p>
+    <p class="yr-note">투고는 컴퓨터로 이 사건을 열면 부록에서 할 수 잇소. · 고등학교 한국사 교과서 · 국사편찬위원회 「우리역사넷」에서 확인되는 내용만 적엇소.</p>
   </div>
 </div>
 
-<audio id="sfxBell" src="./audio/bell.mp3" preload="none"></audio>
-<script src="../yk-mbook.js?v=2"></script>
-<script src="./m-jk-book.js?v=2"></script>
+<script src="./m-jk-ko.js?v=1"></script>
+<script src="../yk-mbook.js?v=3"></script>
+<script src="./m-jk-book.js?v=3"></script>
 <script src="../yk-reward.js?v=9"></script>
 </body>
 </html>

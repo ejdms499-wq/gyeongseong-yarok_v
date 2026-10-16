@@ -352,3 +352,24 @@ html.mb-lock,html.mb-lock body{overflow:hidden}
 .mb-finale .sm{font-size:13px;line-height:1.8;color:var(--nmute)}
 .pp-words.miss{border-top-color:var(--red)}
 .pp-words.miss .pp-none{font-style:italic}
+
+/* ── 옛말 → 오늘말 ── */
+.hj[data-ko]{text-decoration:underline dotted rgba(127,127,127,.32);text-underline-offset:.28em;text-decoration-thickness:1px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.hj.ko{text-decoration:underline solid var(--red);text-decoration-thickness:1.5px}
+.mb-bar .mb-ko,.mb-bar .mb-snd{flex:none;padding:0 9px;font:500 11px/1 var(--sans);letter-spacing:.04em;gap:4px}
+.mb-bar .mb-ko b{display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid var(--ink);font:700 12px/1 var(--serif)}
+.mb-bar .mb-ko.on b{background:var(--red);border-color:var(--red);color:#fff}
+.mb-bar .mb-snd{font-size:16px;color:#999}
+.mb-bar .mb-snd.on{color:var(--red)}
+.mb-bar a,.mb-bar button[data-open]{padding:0 11px}
+/* 오늘 사진은 컬러 */
+.mb-pair figure:nth-child(2) img{filter:none}
+/* 간추려 읽기 */
+.pp-sum.big{padding-left:20px;font:500 16px/1.8 var(--serif);color:#111}
+.pp-sum.big li{margin-bottom:8px}
+.pp-qa{border-top:1px solid var(--line)}
+.pp-qa summary{list-style:none;padding:12px 0;font:700 15px/1.6 var(--serif);cursor:pointer}
+.pp-qa summary::-webkit-details-marker{display:none}
+.pp-qa b{display:inline-grid;place-items:center;width:22px;height:22px;margin-right:8px;background:var(--ink);color:#fff;font:700 11px/1 var(--sans)}
+.pp-qa p b{background:var(--red)}
+.pp-qa p{padding:0 0 14px;font:400 15px/1.8 var(--sans)!important}

@@ -107,3 +107,77 @@
 .dy-ft .mb-btn{min-height:46px}
 .dy-ft .mb-btn:disabled{opacity:.3}
 
+
+/* ═══ 1016 고침 ═══ */
+/* 채록 — 줄이 깨지지 않게 */
+.jk-rumor{font-size:clamp(21px,6.6vw,28px);padding:24px 10px;letter-spacing:-.03em}
+.jk-rumor .blank{width:1.15em;height:1.15em}
+
+/* 第四章 · 영화처럼 스물세 날 */
+#ch4{padding-left:0;padding-right:0}
+#ch4>.mb-ch,#ch4>.mb-h,#ch4>.mb-src,#ch4>.mb-p,#ch4>.mb-q,#ch4>.mb-note{margin-left:var(--g);margin-right:var(--g)}
+.st-rail{position:sticky;top:48px;z-index:5;display:flex;align-items:center;gap:14px;padding:10px var(--g);background:rgba(11,11,11,.94);border-top:1px solid #2a2a2a;border-bottom:1px solid #2a2a2a;margin-top:22px}
+.st-n{display:flex;align-items:baseline;gap:4px;flex:none}
+.st-n small{font:500 9.5px/1 var(--sans);letter-spacing:.14em;color:var(--nmute)}
+.st-n b{font:900 34px/1 var(--serif);min-width:1.3em;text-align:center;color:#fff}
+.st-mid{flex:1;min-width:0}
+.st-ticks{display:grid;grid-template-columns:repeat(24,1fr);gap:2px}
+.st-ticks i{height:8px;background:#222;transition:background .6s ease}
+.st-ticks i.on{background:#777}
+.st-ticks i.now{background:var(--red)}
+.st-date{margin-top:7px;font:500 11.5px/1 var(--sans);letter-spacing:.08em;color:#cfcec9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st-list{list-style:none;padding:20px 0 30vh}
+.st-sc{padding:0 0 70px;opacity:.18;transition:opacity 1.2s ease}
+.st-sc.seen{opacity:.4}
+.st-sc.now{opacity:1}
+.st-fig{position:relative;overflow:hidden;height:62svh;max-height:560px}
+.st-fig img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.82);transform:scale(1.08);transition:transform 9s ease-out}
+.st-sc.now .st-fig img{transform:scale(1)}
+.st-fig::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(11,11,11,.55),rgba(11,11,11,0) 18%,rgba(11,11,11,0) 55%,var(--night) 100%)}
+.st-fig .rt{position:absolute;right:10px;top:10px;z-index:2;font:500 9.5px/1 var(--sans);letter-spacing:.18em;padding:5px 6px;background:rgba(11,11,11,.7);color:#ddd}
+.st-tx{position:relative;z-index:2;margin:-120px var(--g) 0}
+.st-k{font:500 11px/1.5 var(--sans);letter-spacing:.12em;color:#bdbcb7}
+.st-k b{color:var(--red);font:900 15px/1 var(--serif);margin-right:10px;letter-spacing:.1em}
+.st-tx h3{font:900 32px/1.25 var(--serif);letter-spacing:-.04em;margin:10px 0 16px;color:#fff;text-shadow:0 2px 20px #000}
+.st-p{font:300 16.5px/1.95 var(--serif);color:#dddcd7}
+.st-clue{margin-top:20px;padding:12px 14px;border:1px solid #333;display:grid;gap:4px;background:rgba(0,0,0,.4)}
+.st-clue small{font:500 9.5px/1 var(--sans);letter-spacing:.24em;color:var(--nmute)}
+.st-clue b{font:700 15px/1.5 var(--serif)}
+.st-clue span{font:500 13px/1.5 var(--sans);color:#e7b1ac}
+.st-clue span::before{content:"→ "}
+.st-sc.gap,.st-sc.end{padding:20vh var(--g) 80px}
+.st-big{font:900 38px/1.25 var(--serif);letter-spacing:-.03em;margin-bottom:22px;color:#fff}
+.st-sc.end .st-big{font-size:84px;letter-spacing:.06em;color:var(--red)}
+.st-sc.gap ul{list-style:none;border-top:1px solid #333}
+.st-sc.gap li{display:grid;grid-template-columns:110px 1fr;padding:10px 0;border-bottom:1px solid #222;font:400 13.5px/1.5 var(--sans);color:#55544f}
+.st-sc.gap li.mk{color:#fff}
+.st-sc.gap li.mk span{color:#e7b1ac}
+.st-end{margin-top:22px;font:400 16px/1.8 var(--serif);color:#d9d8d3}
+
+/* 號外 — 다리 줄 · 배경 · 차례로 */
+.jk-bridge{background:var(--night);padding:60px var(--g) 30px;text-align:center}
+.jk-bridge p{font:300 17px/1.8 var(--serif);color:#bdbcb7;letter-spacing:.04em}
+.jk-bridge p::before{content:"";display:block;width:1px;height:46px;margin:0 auto 18px;background:#555}
+.jk-extra{position:relative;overflow:hidden}
+.jk-extra .ex-bg{position:absolute;left:0;right:0;top:0;height:120svh;background:var(--exbg) center 30%/cover no-repeat;filter:grayscale(1) contrast(1.1) brightness(.5);opacity:.5;transition:opacity 3s ease;pointer-events:none}
+.jk-extra .ex-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(11,11,11,.3),var(--night) 92%)}
+.jk-extra.twist .ex-bg{opacity:.12}
+.jk-extra>*:not(.ex-bg){position:relative;z-index:1}
+.ex-seal{background:rgba(239,238,234,.96)!important}
+.jk-extra .ex-body .mb-doc{opacity:0;transform:translateY(16px);transition:opacity 1.6s ease,transform 1.6s ease}
+.jk-extra.plate .ex-body .mb-doc{opacity:1;transform:none}
+.ex-twist{opacity:0;transform:scale(.96);transition:opacity 2.2s ease,transform 2.2s ease;margin:60px 0!important;font-size:38px!important}
+.jk-extra.twist .ex-twist{opacity:1;transform:none}
+.jk-extra .ex-body>*:not(.ex-lines):not(.mb-doc):not(.ex-twist){opacity:0;transition:opacity 1.8s ease}
+.jk-extra.truth .ex-body>*{opacity:1!important}
+
+/* 끗 — 그 아해 (미드저니 그림 우에) */
+.jk-fin{position:relative;overflow:hidden;padding-top:60svh!important}
+.jk-fin .fin-bg{position:absolute;left:0;right:0;top:0;height:100svh;background:url(./image/Jukcheomjeong/mj/jk_child.jpg) center 40%/cover no-repeat;filter:grayscale(1) contrast(1.08) brightness(.8)}
+.jk-fin .fin-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(11,11,11,.15) 0%,rgba(11,11,11,.1) 35%,rgba(11,11,11,.85) 72%,var(--night) 100%)}
+.jk-fin .fin-rt{position:absolute;right:12px;top:12px;font:500 9.5px/1 var(--sans);letter-spacing:.18em;color:#ccc;background:rgba(11,11,11,.6);padding:5px 6px}
+.jk-fin>*:not(.fin-bg):not(.fin-rt){position:relative;z-index:1}
+.jk-rumor{white-space:nowrap}
+.jk-rumor .blank{vertical-align:-.08em;border-width:0 0 2px;border-style:solid;border-color:#888;width:1.3em;height:1.2em;color:#666;font-size:.8em}
+.jk-rumor.fill.on .blank{font-size:1em;border-color:var(--red)}
+.jk-rumor .blank{font-size:1em;height:1.15em;width:1.2em;line-height:1;vertical-align:-.1em;color:#777}

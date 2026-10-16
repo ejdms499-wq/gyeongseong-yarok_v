@@ -105,8 +105,6 @@
   /* 第二章 · 일곱 날의 지면 (공통 장치) */
   W.mb.paper({ arts: ARTS, words: WORDS, imgBase: IMG + 'articles-toned/', era: '소화 팔 년', goto: 'ch5',
     sealHead: '유월 팔일자 지면은,<br>호외에서 뜨드시압.', sealText: '이 날의 말은 모아 둔 말들과 함께 第五章 號外에서 드러나오.', sealBtn: '第五章 號外로 →' });
-  D.addEventListener('click', function (e) { if (e.target.closest('[data-open-extra]')) setTimeout(openExtra, 700); });
-
   /* ════ 第四章 · 스물세 날 ════ */
   var DATES = ['5.16','5.17','5.18','5.19','5.20','5.21','5.22','5.23','5.24','5.25','5.26','5.27','5.28','5.29','5.30','5.31','6.1','6.2','6.3','6.4','6.5','6.6','6.7','6.8'];
   var MARK = { 0: ['發見', '쓰레기장'], 1: ['첫 보도', '「사내아해 갓다」'], 2: ['이튿날', '「오리무중」'], 3: ['비', '흔적이 씻김'], 9: ['회의', '방침을 다시'], 17: ['오보', '「유력한 혐의자」'], 18: ['백여 명', '붓들림'], 23: ['號外', ''] };
@@ -144,59 +142,58 @@
     { end: 1, day: 23 }
   ];
   var GAP = [['오월 이십삼일', '—'], ['오월 이십사일', '—'], ['오월 이십오일', '경긔도 경찰부, 여러 서를 불러 모음'], ['오월 이십륙일', '—'], ['오월 이십칠일', '—'], ['오월 이십팔일', '—'], ['오월 이십구일', '—'], ['오월 삼십일', '—'], ['오월 삼십일일', '—']];
-  var dyI = 0;
-  function dyStrip() {
-    var b = BEATS[dyI], lo = b.day, hi = b.to || b.day;
-    $('#dyStrip').innerHTML = '<div class="dy-read"><b>發見 後 <em>' + hi + '</em> 日</b><span>犯人 <em>' + (b.end ? '號外에서' : '未詳') + '</em></span></div><div class="dy-cells">' +
-      DATES.map(function (d, i) { return '<i class="' + (i < lo ? 'past' : '') + (i >= lo && i <= hi ? ' now' : '') + (MARK[i] ? ' mk' : '') + '"><small>' + d + '</small></i>'; }).join('') + '</div>';
-    var n = $('#dyStrip .now'); if (n && n.scrollIntoView) n.scrollIntoView({ inline: 'center', block: 'nearest' });
-  }
-  function dyRender() {
-    var b = BEATS[dyI], h;
-    if (b.gap) {
-      h = '<div class="dy-gap"><p class="dy-big">그리고 — 아흐레.</p><ul>' + GAP.map(function (g) { return '<li class="' + (g[1] !== '—' ? 'mk' : '') + '"><b>' + g[0] + '</b><span>' + g[1] + '</span></li>'; }).join('') +
-        '</ul><p class="dy-end">날이 갓소. 범인의 칸은, 여전히 비어 잇섯소.</p></div>';
-    } else if (b.end) {
-      h = '<div class="dy-gap"><p class="dy-k">유월 팔일 · 二十三日</p><p class="dy-big">號外</p><p class="mb-p" style="color:#d9d8d3">그 세 시간 동안 무엇이 맛추어졋는지는 — 이튿날 지면이 말하오.</p>' +
-        '<button class="mb-btn red" data-goto="ch5" data-open-extra style="margin-top:24px">第五章 號外 뜨드러 보기 →</button>' +
-        '<p class="mb-note" style="margin-top:22px">근거 · 전봉관 「죽첨정 \'단두 유아\' 사건」 (신동아 연재 · 당시 동아일보 · 조선일보 기사 인용) · 동아일보 1933년 5~6월 · 사람 이름은 쓰지 않음</p></div>';
-    } else {
-      h = '<figure class="dy-fig"><img src="' + IMG + 'mj/jk_st' + b.img + '.jpg" alt="' + b.t + ' (재현 그림)"><span class="rt">그림 · 재현</span></figure>' +
-        '<div class="dy-tx"><p class="dy-k"><b>' + b.n + '</b>' + b.d + ' · ' + b.p + '</p><h3>' + b.t + '</h3><p class="dy-b">' + b.b + '</p>' +
-        (b.clue ? '<div class="dy-clue"><small>쫏는 단서</small><b>' + b.clue[0] + '</b>' + (b.clue[1] ? '<span>' + b.clue[1] + '</span>' : '') + '</div>' : '') + '</div>';
+  /* 영화처럼 — 장면이 화면 가운데 오면 밝아지고, 우의 날짜판이 따라 넘어감 */
+  (function () {
+    var list = $('#stList'); if (!list) return;
+    list.innerHTML = BEATS.map(function (b, i) {
+      if (b.gap) return '<li class="st-sc gap" data-i="' + i + '"><p class="st-big">그리고 — 아흐레.</p><ul>' + GAP.map(function (g) { return '<li class="' + (g[1] !== '—' ? 'mk' : '') + '"><b>' + g[0] + '</b><span>' + g[1] + '</span></li>'; }).join('') + '</ul><p class="st-end">날이 갓소. 범인의 칸은, 여전히 비어 잇섯소.</p></li>';
+      if (b.end) return '<li class="st-sc end" data-i="' + i + '"><p class="st-k">유월 팔일 · 二十三日</p><p class="st-big">號外</p><p class="st-p">그 세 시간 동안 무엇이 맛추어졋는지는 — 이튿날 지면이 말하오.</p></li>';
+      return '<li class="st-sc" data-i="' + i + '"><figure class="st-fig"><img src="' + IMG + 'mj/jk_st' + b.img + '.jpg" alt="' + b.t + ' (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></figure>' +
+        '<div class="st-tx"><p class="st-k"><b>' + b.n + '</b>' + b.d + ' · ' + b.p + '</p><h3>' + b.t + '</h3><p class="st-p">' + b.b + '</p>' +
+        (b.clue ? '<div class="st-clue"><small>쫏는 단서</small><b>' + b.clue[0] + '</b>' + (b.clue[1] ? '<span>' + b.clue[1] + '</span>' : '') + '</div>' : '') + '</div></li>';
+    }).join('');
+    var rail = $('#stRail'), sc = $$('.st-sc', list), cur = -1, shown = 0, anim;
+    rail.innerHTML = '<div class="st-n"><small>發見 後</small><b id="stN">0</b><small>日</small></div><div class="st-mid"><div class="st-ticks">' + DATES.map(function (d, i) { return '<i data-k="' + i + '"></i>'; }).join('') + '</div><p class="st-date" id="stDate">오월 십륙일 · 犯人 未詳</p></div>';
+    var KD = ['오월 십륙일', '오월 십칠일', '오월 십팔일', '오월 십구일', '오월 이십일', '오월 이십일일', '오월 이십이일', '오월 이십삼일', '오월 이십사일', '오월 이십오일', '오월 이십륙일', '오월 이십칠일', '오월 이십팔일', '오월 이십구일', '오월 삼십일', '오월 삼십일일', '유월 일일', '유월 이일', '유월 삼일', '유월 사일', '유월 오일', '유월 륙일', '유월 칠일', '유월 팔일'];
+    function count(to) {
+      cancelAnimationFrame(anim); var from = shown, t0 = performance.now();
+      (function f(t) { var k = Math.min(1, (t - t0) / 700); shown = Math.round(from + (to - from) * k); $('#stN').textContent = shown; if (k < 1) anim = requestAnimationFrame(f); })(t0);
     }
-    var bd = $('#dyBody'); bd.innerHTML = '<div class="dy-pg">' + h + '</div>'; bd.scrollTop = 0;
-    $('#dyCount').textContent = (dyI + 1) + ' / ' + BEATS.length;
-    $('#dyPrev').disabled = dyI === 0;
-    $('#dyNext').style.visibility = dyI === BEATS.length - 1 ? 'hidden' : '';
-    dyStrip();
-  }
-  function dyGo(k) { var n = Math.max(0, Math.min(BEATS.length - 1, dyI + k)); if (n === dyI) return; dyI = n; dyRender(); }
-  $('#dyPrev').onclick = function () { dyGo(-1); };
-  $('#dyNext').onclick = function () { dyGo(1); };
-  (function swipe() {
-    var el = $('#dyBody'), x0 = null, y0 = 0;
-    el.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
-    el.addEventListener('touchend', function (e) {
-      if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
-      if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) dyGo(dx < 0 ? 1 : -1);
-    }, { passive: true });
+    function set(i) {
+      if (i === cur) return; cur = i; var b = BEATS[i], hi = b.to || b.day;
+      sc.forEach(function (el, k) { el.classList.toggle('now', k === i); if (k <= i) el.classList.add('seen'); });
+      $$('.st-ticks i', rail).forEach(function (t, k) { t.classList.toggle('on', k <= hi); t.classList.toggle('now', k >= b.day && k <= hi); });
+      count(hi); $('#stDate').textContent = KD[hi] + ' · 犯人 ' + (b.end ? '— 號外에서' : '未詳');
+    }
+    var tick = false;
+    function onScroll() {
+      tick = false; var mid = W.innerHeight * .55, best = -1, bd = 1e9;
+      var r0 = list.getBoundingClientRect(); rail.classList.toggle('on', r0.top < W.innerHeight * .6 && r0.bottom > 120);
+      sc.forEach(function (el, k) { var r = el.getBoundingClientRect(), c = r.top + Math.min(r.height, W.innerHeight) / 2, d = Math.abs(c - mid); if (r.bottom > 0 && r.top < W.innerHeight && d < bd) { bd = d; best = k; } });
+      if (best >= 0) set(best);
+    }
+    W.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
+    onScroll();
   })();
 
   /* 第七章 · 라듸오 (공통 장치) */
   W.mb.radio({ st: ST, audioBase: './audio/', staticSrc: './audio/radio-static.mp3', endLine: '여전히, 그 말은 우리 겨테서 소근거리고 잇소.' });
 
-  /* ════ 第五章 · 號外 ════ */
+  /* ════ 第五章 · 號外 — 봉을 뜨드면: 제목 한 줄씩 → 지면 → 종소리와 함께 「살인은 — 업섯소.」 → 진상 ════ */
   var exDone = false;
   function openExtra() {
     if (exDone) return; exDone = true;
     var sec = $('#ch5'), body = $('#exBody'), seal = $('#exOpen');
     sec.classList.add('opened'); body.hidden = false;
-    try { var b = $('#sfxBell'); b.volume = .5; b.play().catch(function () {}); } catch (e) {}
-    $$('.ex-lines li', body).forEach(function (li, i) { setTimeout(function () { li.classList.add('on'); }, 300 + i * 520); });
     var wall = $('#exWall');
     wall.innerHTML = WORDS.map(function (w) { return '<li><small>' + w.d + '</small><b>' + w.w[0] + '</b><span>' + w.fix[0] + '</span></li>'; }).join('') +
       '<li class="true"><small>채록 第一號</small><b>「아해의 골은, 약이 된다」</b><span>이 말만이, 사람을 움직엿소.</span></li>';
+    var T = 400, step = function (fn, ms) { setTimeout(fn, T); T += ms; };
+    W.mb.sfx('whoosh', .4);
+    $$('.ex-lines li', body).forEach(function (li) { step(function () { li.classList.add('on'); }, 1100); });
+    step(function () { sec.classList.add('plate'); }, 1600);
+    step(function () { sec.classList.add('twist'); W.mb.sfx('bell', .55); var t = $('#exTwist'); if (t) W.scrollTo({ top: t.getBoundingClientRect().top + W.scrollY - W.innerHeight * .3, behavior: 'smooth' }); }, 2200);
+    step(function () { sec.classList.add('truth'); }, 10);
     if ('IntersectionObserver' in W) {
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; io.unobserve(e.target);
         if (e.target.id === 'exRumor') setTimeout(function () { e.target.classList.add('on'); }, 500);
@@ -207,6 +204,7 @@
     setTimeout(function () { W.scrollTo({ top: seal.getBoundingClientRect().top + W.scrollY - 60, behavior: 'smooth' }); }, 120);
   }
   $('#exOpen').onclick = openExtra;
+  D.addEventListener('click', function (e) { if (e.target.closest('[data-open-extra]')) setTimeout(openExtra, 700); });
 
   /* 사건 요지 · 봉함 먼저 뜻기 */
   $('#briefOpen').onclick = function () { var s = $('#briefSeal'); $('.sealed', s).hidden = true; $('.opened', s).hidden = false; s.classList.add('open'); };
@@ -218,5 +216,4 @@
     $$('.mis-pane').forEach(function (p) { p.hidden = p.dataset.k !== b.dataset.k; });
   });
 
-  W.addEventListener('mb:open', function (e) { if (e.detail === 'shDays') dyRender(); });
 })(window, document);

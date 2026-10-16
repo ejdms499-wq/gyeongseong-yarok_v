@@ -128,10 +128,16 @@
       } else {
         var src = cfg.imgBase + a.img, yr = a.date.slice(0, 4);
         h = '<div class="pp-hd"><small>' + (cfg.sec || '사회면') + ' | ' + t0(a.d) + ' | ' + t0(a.day) + '</small>' + (a.mark ? '<i class="stamp">' + a.mark + '</i>' : '') + '</div>' +
-          '<div class="mb-seg pp-seg"><button data-m="scan" class="' + (mode === 'scan' ? 'on' : '') + '">원문 지면</button><button data-m="now" class="' + (mode === 'now' ? 'on' : '') + '">오늘 말로 읽기</button></div>';
+          '<div class="mb-seg pp-seg three"><button data-m="scan" class="' + (mode === 'scan' ? 'on' : '') + '">원문 지면</button><button data-m="now" class="' + (mode === 'now' ? 'on' : '') + '">오늘 말로 읽기</button><button data-m="sum" class="' + (mode === 'sum' ? 'on' : '') + '">간추려 읽기</button></div>';
         if (mode === 'scan') {
           h += '<button class="pp-scan" type="button" data-zoom="' + src + '" data-cap="동아일보 ' + a.date + ' 원문 지면"><img src="' + src + '" alt="동아일보 ' + a.date + ' 원문 지면"><span>눌러 크게 보기</span></button>' +
             '<p class="pp-cap">원 긔사 · 동아일보 · ' + cfg.era + ' ' + t0(a.d) + ' — 테두리 친 곳이 그날 실린 긔사이오.</p>';
+        } else if (mode === 'sum') {
+          var Q = ['이 보도의 요뎜은 무엇이오?', '그때 형편은 엇더하엿소?', '긔록에서 눈여겨볼 대목은 어대요?'];
+          h += '<article class="pp-art pp-short"><p class="pp-sec">간추려 읽기 · ' + t0(a.d) + '</p><h3>' + a.title + '</h3><ol class="pp-sum big">' + a.sum.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>' +
+            '<h4>긔록에게 뭇다</h4><p class="pp-cap" style="margin:0 0 10px">이 긔사에 궁금한 것을 긔록과 함께 풀어 보시압. 물음을 누르면 답이 나오오.</p>' +
+            Q.map(function (q, i) { return a.sum[i] ? '<details class="pp-qa"><summary><b>문</b>' + q + '</summary><p><b>답</b>' + a.sum[i] + '</p></details>' : ''; }).join('') +
+            '<p class="pp-warn">※ ' + yr + '년 동아일보 원문을 바탕으로 간추린 것입니다.</p></article>';
         } else {
           h += '<article class="pp-art"><p class="pp-sec">경성야록뉴스 · 사회 › 사건·사고 › 아카이브</p><h3>' + a.title + '</h3>' +
             '<p class="pp-by">경성야록 아카이브팀 기자 · 입력 2026.' + a.date.slice(5) + ' 06:00 · 원 보도 동아일보 ' + a.date + '</p>' +
@@ -182,26 +188,32 @@
       var nd = $('#rdNeedle'); if (nd) nd.style.left = (I < 0 ? 4 : ((I + .5) * 100 / n)) + '%';
     }
     function stop() { if (au) au.pause(); if (stc) stc.pause(); clearInterval(tm); var p = $('#rdPlay'); if (p && au) p.textContent = '▶ 듯기'; }
+    function playAu() {
+      if (!au) return;
+      try { W.dispatchEvent(new CustomEvent('mb:audio')); } catch (e) {}
+      var pr = au.play(); if (pr && pr.catch) pr.catch(function () { var r = $('#rdTime'); if (r) r.textContent = '▶ 듯기를 한 번 더 누르시압'; });
+      $('#rdPlay').textContent = '❚❚ 멈춤'; clearInterval(tm);
+      tm = setInterval(function () { var r = $('#rdTime'); if (r) r.textContent = '방송 중이오 · ' + fmt(au.currentTime) + ' / ' + fmt(au.duration); }, 500);
+    }
     function tune(i) {
       stop(); I = i; var s = ST[i]; scale();
       $('#rdNo').textContent = s.no + ' · ' + s.y; $('#rdWhen').textContent = s.when;
       var m = $('#rdMeter'); m.style.width = '0%'; setTimeout(function () { m.style.width = (s.moon || 60) + '%'; }, 60);
       try { if (!stc) { stc = new Audio(cfg.staticSrc); stc.volume = .35; } stc.currentTime = 0; stc.play().catch(function () {}); setTimeout(function () { if (stc) stc.pause(); }, 700); } catch (e) {}
       var p = $('#rdPlay'); p.disabled = !s.au; p.textContent = s.au ? '▶ 듯기' : '녹음 업슴';
-      $('#rdTime').textContent = s.au ? '00:00 / --:--' : '이 칸은 녹음이 업소';
-      au = s.au ? new Audio(cfg.audioBase + s.au) : null;
-      if (au) { au.addEventListener('loadedmetadata', function () { $('#rdTime').textContent = '00:00 / ' + fmt(au.duration); }); au.addEventListener('ended', stop); }
+      $('#rdTime').textContent = s.au ? '주파수를 맛추는 중…' : '이 칸은 녹음이 업소 — 다음 주파수를 누르시압';
+      if (!W.__mbRd) { W.__mbRd = D.createElement('audio'); W.__mbRd.preload = 'auto'; W.__mbRd.setAttribute('playsinline', ''); D.body.appendChild(W.__mbRd);
+        W.__mbRd.addEventListener('loadedmetadata', function () { var r = $('#rdTime'); if (r && W.__mbRd.paused) r.textContent = '00:00 / ' + fmt(W.__mbRd.duration); });
+        W.__mbRd.addEventListener('ended', stop); }
+      au = null;
+      if (s.au) { au = W.__mbRd; au.src = cfg.audioBase + s.au; try { au.load(); } catch (e) {} setTimeout(function () { if (I === i) playAu(); }, 650); }
       $('#rdCard').innerHTML = '<p class="rd-k">' + s.no + ' · ' + s.when + '</p><h3>' + t0(s.t) + '</h3><ul>' + s.b.map(function (x) { return '<li>' + t0(x) + '</li>'; }).join('') + '</ul>' +
         '<p class="rd-d">' + t0(s.d) + '</p>' + (s.link ? '<p class="mb-q" style="font-size:16.5px">' + t0(s.link) + '</p>' : '') +
         (ST[i + 1] ? '<button class="mb-btn ghost" data-r="' + (i + 1) + '">다음 주파수 · ' + ST[i + 1].y + ' →</button>' : '<p class="mb-p" style="margin-top:18px;color:#d9d8d3">' + (cfg.endLine || '') + '</p>');
     }
     D.addEventListener('click', function (e) {
       var r = e.target.closest('#shRadio [data-r]'); if (r) { tune(+r.dataset.r); if (r.closest('#rdCard')) $('#rdBody').scrollTop = 0; return; }
-      if (e.target.closest('#rdPlay')) {
-        if (!au) return;
-        if (au.paused) { au.play().catch(function () {}); $('#rdPlay').textContent = '❚❚ 멈춤'; clearInterval(tm); tm = setInterval(function () { $('#rdTime').textContent = '방송 중이오 · ' + fmt(au.currentTime) + ' / ' + fmt(au.duration); }, 500); }
-        else stop();
-      }
+      if (e.target.closest('#rdPlay')) { if (!au) return; if (au.paused) playAu(); else stop(); }
     });
     W.addEventListener('mb:open', function (e) {
       if (e.detail !== 'shRadio') return; scale();
@@ -209,4 +221,79 @@
     });
     W.addEventListener('mb:close', function (e) { if (e.detail === 'shRadio') stop(); });
   };
+})(window, document);
+
+/* ════ 공통 ③ 옛말 → 오늘말 (낱말을 누르면 바뀜 · 위 띠 「가」 단추는 전부) ════
+   window.MB_KO = { 옛말: 오늘말 } 이 잇으면 켜짐 */
+(function (W, D) {
+  'use strict';
+  var MAP = W.MB_KO; if (!MAP) return;
+  var keys = Object.keys(MAP).filter(function (k) { return k.length >= 2; }).sort(function (a, b) { return b.length - a.length; });
+  if (!keys.length) return;
+  var esc = function (t) { return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); };
+  var RX = new RegExp(keys.map(esc).join('|'), 'g');
+  var SKIP = /^(SCRIPT|STYLE|BUTTON|TEXTAREA|svg|text|SUMMARY|TIME)$/;
+  var all = false;
+  function scan(root) {
+    var tw = D.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
+      var p = n.parentNode; if (!n.nodeValue || n.nodeValue.length < 2) return 2;
+      for (var e = p; e && e !== root.parentNode; e = e.parentNode) { if (e.nodeType === 1 && (SKIP.test(e.nodeName) || (e.classList && (e.classList.contains('hj') || e.classList.contains('mb-bar') || e.classList.contains('mb-cover'))))) return 2; }
+      RX.lastIndex = 0; return RX.test(n.nodeValue) ? 1 : 2; } });
+    var list = []; while (tw.nextNode()) list.push(tw.currentNode);
+    list.forEach(function (n) {
+      var t = n.nodeValue, frag = D.createDocumentFragment(), last = 0; RX.lastIndex = 0; var m;
+      while ((m = RX.exec(t))) {
+        if (m.index > last) frag.appendChild(D.createTextNode(t.slice(last, m.index)));
+        var sp = D.createElement('y-k'); sp.className = 'hj' + (all ? ' ko' : ''); sp.setAttribute('data-old', m[0]); sp.setAttribute('data-ko', MAP[m[0]]);
+        sp.textContent = all ? MAP[m[0]] : m[0]; frag.appendChild(sp); last = m.index + m[0].length;
+      }
+      if (last < t.length) frag.appendChild(D.createTextNode(t.slice(last)));
+      n.parentNode.replaceChild(frag, n);
+    });
+  }
+  function flip(sp, on) { sp.classList.toggle('ko', on); sp.textContent = on ? sp.getAttribute('data-ko') : sp.getAttribute('data-old'); }
+  D.addEventListener('click', function (e) {
+    var sp = e.target.closest('.hj[data-ko]'); if (!sp || e.target.closest('button, a')) return;
+    flip(sp, !sp.classList.contains('ko'));
+  });
+  function init() {
+    scan(D.body);
+    var bar = D.querySelector('.mb-bar'), toc = bar && bar.querySelector('[data-open="mbToc"]');
+    if (bar && toc) {
+      var b = D.createElement('button'); b.type = 'button'; b.className = 'mb-ko'; b.innerHTML = '<b>가</b>오늘말'; b.setAttribute('aria-label', '오늘 말로 바꾸기');
+      bar.insertBefore(b, toc);
+      b.addEventListener('click', function () { all = !all; b.classList.toggle('on', all); b.innerHTML = all ? '<b>가</b>옛말' : '<b>가</b>오늘말'; D.querySelectorAll('.hj[data-ko]').forEach(function (sp) { flip(sp, all); }); });
+    }
+    var tmr; var mo = new MutationObserver(function (ms) {
+      clearTimeout(tmr); tmr = setTimeout(function () { var seen = []; ms.forEach(function (m) { var t = m.target; if (t.nodeType === 1 && seen.indexOf(t) < 0 && !t.closest('.hj')) { seen.push(t); } }); seen.forEach(scan); }, 30);
+    });
+    D.querySelectorAll('.mb-sheet .mb-sh-bd, .mb-sheet .mb-tabs, [data-ko-live]').forEach(function (el) { mo.observe(el, { childList: true, subtree: true }); });
+  }
+  if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
+})(window, document);
+
+/* ════ 공통 ④ 소리 — 축음긔(배경 곡조) · 효과음 ════
+   <body data-bgm="곡조.mp3" data-whoosh="…" data-bell="…"> · 처음 누르는 순간 곡조가 흐름 · 위 띠 ♪ 로 끄고 켬 */
+(function (W, D) {
+  'use strict';
+  function init() {
+    var B = D.body, src = B.getAttribute('data-bgm'); W.mb = W.mb || {};
+    var sfx = {};
+    W.mb.sfx = function (k, v) { var s = B.getAttribute('data-' + k); if (!s) return; try { var a = sfx[k] || (sfx[k] = new Audio(s)); a.volume = v || .5; a.currentTime = 0; var p = a.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {} };
+    W.addEventListener('mb:open', function (e) { if (e.detail !== 'mbToc') W.mb.sfx('whoosh', .35); });
+    if (!src) return;
+    var bgm = new Audio(src); bgm.loop = true; bgm.volume = .3; bgm.preload = 'auto';
+    var off = false;
+    var bar = D.querySelector('.mb-bar'), b = D.createElement('button'); b.type = 'button'; b.className = 'mb-snd'; b.setAttribute('aria-label', '배경 곡조 켜고 끄기'); b.innerHTML = '♪';
+    if (bar) bar.insertBefore(b, bar.querySelector('.mb-now').nextSibling);
+    function sync() { b.classList.toggle('on', !bgm.paused); }
+    bgm.addEventListener('play', sync); bgm.addEventListener('pause', sync);
+    b.addEventListener('click', function (e) { e.stopPropagation(); if (bgm.paused) { off = false; bgm.play().catch(function () {}); } else { off = true; bgm.pause(); } });
+    function first(e) { if (e.target.closest && e.target.closest('.mb-snd')) return; ['pointerdown', 'touchstart', 'keydown'].forEach(function (t) { D.removeEventListener(t, first, true); }); if (!off) bgm.play().catch(function () {}); }
+    ['pointerdown', 'touchstart', 'keydown'].forEach(function (t) { D.addEventListener(t, first, true); });
+    W.addEventListener('mb:audio', function () { if (!bgm.paused) { bgm.pause(); W.__mbResume = !off; } });
+    W.addEventListener('mb:close', function (e) { if (e.detail === 'shRadio' && W.__mbResume && !off) { W.__mbResume = false; bgm.play().catch(function () {}); } });
+    W.mb.bgm = bgm;
+  }
+  if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 })(window, document);
