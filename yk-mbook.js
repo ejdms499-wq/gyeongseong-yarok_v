@@ -281,6 +281,21 @@
     var sfx = {};
     W.mb.sfx = function (k, v) { var s = B.getAttribute('data-' + k); if (!s) return; try { var a = sfx[k] || (sfx[k] = new Audio(s)); a.volume = v || .5; a.currentTime = 0; var p = a.play(); if (p && p.catch) p.catch(function () {}); } catch (e) {} };
     W.addEventListener('mb:open', function (e) { if (e.detail !== 'mbToc') W.mb.sfx('whoosh', .35); });
+    /* 파일 업는 소리 — 똑딱(tick) · 도장(stamp) · 망치(gavel) · 글자(type) */
+    var AC = null;
+    W.mb.muted = function () { return !!W.__mbOff; };
+    W.mb.tone = function (k) {
+      if (W.__mbOff) return;
+      try {
+        AC = AC || new (W.AudioContext || W.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume();
+        var t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain(), f = AC.createBiquadFilter();
+        var P = { tick: [1800, .05, .04, 'square'], stamp: [90, .5, .22, 'sine'], gavel: [140, .7, .3, 'triangle'], type: [2400, .02, .015, 'square'] }[k] || [440, .2, .1, 'sine'];
+        o.type = P[3]; o.frequency.setValueAtTime(P[0], t); if (k === 'stamp' || k === 'gavel') o.frequency.exponentialRampToValueAtTime(P[0] * .5, t + P[2]);
+        f.type = 'lowpass'; f.frequency.value = k === 'tick' || k === 'type' ? 3000 : 600;
+        g.gain.setValueAtTime(P[1] * (k === 'type' ? .25 : .6), t); g.gain.exponentialRampToValueAtTime(.0001, t + P[2]);
+        o.connect(f); f.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + P[2] + .02);
+      } catch (e) {}
+    };
     if (!src) return;
     var bgm = new Audio(src); bgm.loop = true; bgm.volume = .3; bgm.preload = 'auto';
     var off = false;
@@ -288,7 +303,7 @@
     if (bar) bar.insertBefore(b, bar.querySelector('.mb-now').nextSibling);
     function sync() { b.classList.toggle('on', !bgm.paused); }
     bgm.addEventListener('play', sync); bgm.addEventListener('pause', sync);
-    b.addEventListener('click', function (e) { e.stopPropagation(); if (bgm.paused) { off = false; bgm.play().catch(function () {}); } else { off = true; bgm.pause(); } });
+    b.addEventListener('click', function (e) { e.stopPropagation(); if (bgm.paused) { off = false; W.__mbOff = false; bgm.play().catch(function () {}); } else { off = true; W.__mbOff = true; bgm.pause(); } });
     function first(e) { if (e.target.closest && e.target.closest('.mb-snd')) return; ['pointerdown', 'touchstart', 'keydown'].forEach(function (t) { D.removeEventListener(t, first, true); }); if (!off) bgm.play().catch(function () {}); }
     ['pointerdown', 'touchstart', 'keydown'].forEach(function (t) { D.addEventListener(t, first, true); });
     W.addEventListener('mb:audio', function () { if (!bgm.paused) { bgm.pause(); W.__mbResume = !off; } });

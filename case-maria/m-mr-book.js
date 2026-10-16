@@ -1,4 +1,4 @@
-/* 경성야록 · 마리아 폰판 장치 — 관사 평면도 · 수첩 · 괴투서 · 진술 · 공판 · 그 자리 · 라듸오
+/* 경성야록 · 마리아 폰판 장치 — 연판 · 평면도 · 시계 · 수첩 · 괴투서 · 진술 · 공판 · 그 자리 · 라듸오
    글 데이터는 컴퓨터판 maria.js 의 것을 그대로 옮김 */
 (function (W, D) {
   'use strict';
@@ -278,76 +278,209 @@
   ARTS.forEach(function (a, i) { a.hook = HOOK[i]; });
   W.mb.paper({ arts: ARTS, imgBase: './img/scan/', era: '소화 륙 년' });
 
-  /* ════ 第五話 · 취재 수첩 ════ */
+  var tone = function (k) { if (W.mb.tone) W.mb.tone(k); };
+  /* 글자를 한 자씩 (깜빡임 업시) */
+  function typeIn(el, text, ms, done) {
+    var i = 0; el.textContent = ''; el.classList.add('typing');
+    (function f() { el.textContent = text.slice(0, ++i); if (i % 3 === 0) tone('type'); if (i < text.length) setTimeout(f, ms); else { el.classList.remove('typing'); if (done) done(); } })();
+  }
+  W.mb.typeIn = typeIn;
+
+  /* ════ 第一話 · 연판 — 손가락으로 문지르면 지면이 드러남 ════ */
   (function () {
-    var I = 0;
+    var root = $('#mrPlate'); if (!root) return;
+    var box = $('.pl-box', root), pts = [], drawn = 0;
+    function paint() {
+      var m = pts.map(function (p) { return 'radial-gradient(circle 64px at ' + p[0] + 'px ' + p[1] + 'px,#000 55%,transparent 100%)'; }).join(',') || 'radial-gradient(circle 0 at 0 0,#000,transparent)';
+      var img = $('.paper', box); img.style.webkitMaskImage = m; img.style.maskImage = m;
+    }
+    function at(e) {
+      var r = box.getBoundingClientRect(), t = e.touches ? e.touches[0] : e;
+      pts.push([Math.round(t.clientX - r.left), Math.round(t.clientY - r.top)]); if (pts.length > 60) pts.shift();
+      drawn++; paint(); if (drawn === 1) root.classList.add('touched'); if (drawn > 70) all();
+    }
+    function all() { root.classList.add('open'); var img = $('.paper', box); img.style.webkitMaskImage = 'none'; img.style.maskImage = 'none'; }
+    box.addEventListener('touchstart', function (e) { at(e); }, { passive: true });
+    box.addEventListener('touchmove', function (e) { at(e); if (!root.classList.contains('open')) e.preventDefault(); }, { passive: false });
+    box.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') at(e); });
+    $('.pl-all', root).addEventListener('click', all);
+    paint();
+  })();
+
+  /* ════ 第三話 · 시계 — 내려갈수록 바늘이 돌고, 밤이 깁허짐 ════ */
+  (function () {
+    var rail = $('#ckRail'), items = $$('#c3 .mr-tl > li'); if (!rail || !items.length) return;
+    var H = [12, 18, 21, 21, 22, 23, 23.5, 24, 25, 25.5, 27, 30, 34];
+    var LBL = ['낫', '저녁 여섯 시', '밤 아홉 시', '밤 아홉 시', '밤 열 시', '밤 열한 시', '열한 시 ~ 열두 시', '열두 시', '새벽 한 시', '새벽 한 시 반', '새벽 세 시', '아츰 여섯 시', '아츰 열 시'];
+    var ticks = ''; for (var k = 0; k < 60; k++) { var a = k * 6 * Math.PI / 180, r1 = k % 5 ? 43 : 39; ticks += '<line x1="' + (50 + Math.sin(a) * r1).toFixed(1) + '" y1="' + (50 - Math.cos(a) * r1).toFixed(1) + '" x2="' + (50 + Math.sin(a) * 46).toFixed(1) + '" y2="' + (50 - Math.cos(a) * 46).toFixed(1) + '"' + (k % 5 ? '' : ' class="h"') + '/>'; }
+    var nums = ['XII', 'I', 'II', 'III', 'IIII', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'].map(function (n, i) { var a = i * 30 * Math.PI / 180; return '<text x="' + (50 + Math.sin(a) * 31).toFixed(1) + '" y="' + (53 - Math.cos(a) * 31).toFixed(1) + '">' + n + '</text>'; }).join('');
+    rail.innerHTML = '<svg class="ck-face" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48"/>' + ticks + nums + '<line class="hh" x1="50" y1="50" x2="50" y2="27"/><line class="mm" x1="50" y1="50" x2="50" y2="14"/><circle class="pin" cx="50" cy="50" r="2.4"/></svg>' +
+      '<div class="ck-read"><small>소화 륙 년 칠월 삼십일일 ~</small><b id="ckT">낫</b><span id="ckW"></span></div>';
+    var cur = -1, hourAngle = 0, minAngle = 0;
+    function set(i) {
+      if (i === cur) return; var prev = cur; cur = i;
+      var h = H[i], ha = h * 30, ma = (h % 1) * 360 + Math.floor(h) * 360; /* 분침은 시간만큼 돌아감 */
+      $('.hh', rail).style.transform = 'rotate(' + ha + 'deg)'; $('.mm', rail).style.transform = 'rotate(' + ma + 'deg)';
+      $('#ckT').textContent = LBL[i];
+      var tag = $('i', items[i]); $('#ckW').innerHTML = tag ? tag.outerHTML : '';
+      items.forEach(function (li, k) { li.classList.toggle('now', k === i); if (k <= i) li.classList.add('seen'); });
+      var night = Math.min(1, Math.max(0, (h - 17) / 8)) - Math.max(0, (h - 29) / 6);
+      $('#c3').style.setProperty('--nt', night.toFixed(2));
+      rail.classList.toggle('key', items[i].classList.contains('key'));
+      if (prev >= 0) tone('tick');
+    }
+    var tick = false;
+    function onScroll() {
+      tick = false; var mid = W.innerHeight * .5, best = -1, bd = 1e9;
+      items.forEach(function (li, k) { var r = li.getBoundingClientRect(), d = Math.abs(r.top + Math.min(r.height, 200) / 2 - mid); if (r.bottom > 80 && r.top < W.innerHeight && d < bd) { bd = d; best = k; } });
+      if (best >= 0) set(best);
+    }
+    W.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
+    onScroll();
+  })();
+
+  /* ════ 第五話 · 취재 수첩 — 표지를 열고, 한 장씩 넘김 ════ */
+  (function () {
+    var I = 0, opened = false;
     $('#mrCast').innerHTML = PEOPLE.map(function (p, i) {
       return '<button type="button" data-p="' + i + '"><span class="ph"><img src="' + p.mj + '" alt="" loading="lazy"></span><b>' + p.tab + '</b>' + (p.stamp ? '<i>' + p.stamp + '</i>' : '<i class="q">?</i>') + '</button>';
     }).join('');
     function tabs() { $('#bkTabs').innerHTML = PEOPLE.map(function (p, i) { return '<button data-p="' + i + '" class="' + (i === I ? 'on' : '') + '">' + p.tab + '</button>'; }).join(''); }
-    function render() {
-      var p = PEOPLE[I], h = '<article class="bk-pg">';
-      h += '<div class="bk-top"><figure class="bk-ph"><img src="' + p.mj + '" alt="' + (p.name || '범인') + ' (재현 사진)"><figcaption>사진은 재현 — 얼골은 남기지 아니함</figcaption></figure>' +
-        '<div class="bk-id"><small>인물 조사 · 뎨 ' + (I + 1) + ' 호</small><b>' + (p.name || '　') + '</b>' + (p.hj ? '<span>' + p.hj + '</span>' : '') + (p.stamp ? '<i class="bk-st">' + p.stamp + '</i>' : '') + '</div></div>';
+    function page(p) {
+      var h = '<article class="bk-pg' + (p.last ? ' last' : '') + '"><div class="bk-top"><figure class="bk-ph"><i class="clip"></i><img src="' + p.mj + '" alt="' + (p.name || '범인') + ' (재현 사진)"><figcaption>사진은 재현 — 얼골은 남기지 아니함</figcaption></figure>' +
+        '<div class="bk-id"><small>인물 조사 · 뎨 ' + (I + 1) + ' 호</small><b>' + (p.name || '') + '</b>' + (p.hj ? '<span>' + p.hj + '</span>' : '') + '</div>' + (p.stamp ? '<i class="bk-st">' + p.stamp + '</i>' : '') + '</div>';
       h += '<dl class="bk-f">' + p.f.map(function (f) { return '<div><dt>' + t0(f[0]) + '</dt><dd>' + (t0(f[1]) || '<span class="blank"></span>') + '</dd></div>'; }).join('') + '</dl>';
       h += '<h4>취재 일지</h4><ol class="bk-j">' + p.j.map(function (j) { return '<li><b>' + t0(j[0]) + '</b><p>' + t0(j[1]) + '</p></li>'; }).join('') + '</ol>';
       if (p.q) h += '<div class="bk-q"><small>의문</small>' + t0(p.q) + '</div>';
-      h += '<button class="mb-doc bk-clip" type="button" data-zoom="' + p.clip[0] + '" data-cap="' + p.clip[1] + '"><img src="' + p.clip[0] + '" alt="' + p.clip[1] + '" loading="lazy"><span><small><b>原文</b></small><strong>' + p.clip[1] + '</strong><u>크게 보기</u></span></button>';
+      h += '<button class="bk-clip" type="button" data-zoom="' + p.clip[0] + '" data-cap="' + p.clip[1] + '"><img src="' + p.clip[0] + '" alt="' + p.clip[1] + '" loading="lazy"><span><b>原文 오려 붓친 것</b>' + p.clip[1] + '</span></button>';
       h += '<div class="bk-go"><small>이어진 사람</small>' + p.go.map(function (id) { var k = 0; PEOPLE.forEach(function (x, i) { if (x.id === id) k = i; }); return '<button data-p="' + k + '">' + PEOPLE[k].tab + ' →</button>'; }).join('') + '</div>';
-      h += '</article>';
-      var bd = $('#bkBody'); bd.innerHTML = h; bd.scrollTop = 0; tabs();
-      var on = $('#bkTabs .on'); if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest' });
+      h += '<p class="bk-foot">동아일보 사회부 · 부산 출장 취재 수첩 · ' + (I + 1) + ' / ' + PEOPLE.length + '</p></article>';
+      return h;
     }
+    function render(dir) {
+      var bd = $('#bkBody');
+      bd.innerHTML = '<div class="bk-leaf ' + (dir > 0 ? 'in-r' : dir < 0 ? 'in-l' : '') + '">' + page(PEOPLE[I]) + '</div>'; bd.scrollTop = 0; tabs();
+      var on = $('#bkTabs .on'); if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest' });
+      var st = $('.bk-st', bd); if (st) setTimeout(function () { st.classList.add('down'); tone('stamp'); }, 650);
+    }
+    function go(k) { if (k < 0 || k >= PEOPLE.length || k === I) return; var d = k > I ? 1 : -1; I = k; render(d); W.mb.sfx('whoosh', .25); }
+    function open() { opened = true; $('#bkCover').classList.add('gone'); render(0); }
     D.addEventListener('click', function (e) {
       var c = e.target.closest('#mrCast [data-p]'); if (c) { I = +c.dataset.p; W.mb.open('shBook'); return; }
-      var t = e.target.closest('#bkTabs [data-p], #bkBody .bk-go [data-p]'); if (t) { I = +t.dataset.p; render(); }
+      if (e.target.closest('.bk-open')) { open(); return; }
+      var t = e.target.closest('#bkTabs [data-p], #bkBody .bk-go [data-p]'); if (t) go(+t.dataset.p);
     });
-    W.addEventListener('mb:open', function (e) { if (e.detail === 'shBook') render(); });
+    (function () { var el = $('#bkBody'), x0 = null, y0 = 0;
+      el.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      el.addEventListener('touchend', function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null; if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(I + (dx < 0 ? 1 : -1)); }, { passive: true });
+    })();
+    W.addEventListener('mb:open', function (e) { if (e.detail === 'shBook') { if (opened) render(0); else { $('#bkCover').classList.remove('gone'); $('#bkBody').innerHTML = ''; tabs(); } } });
   })();
 
   /* ════ 第六話 · 괴투서 ════ */
   $('#mrSteps').innerHTML = STEPS.map(function (s) { return '<li class="mb-rv' + (s.key ? ' key' : '') + '"><b>' + t0(s.b) + ' · ' + t0(s.h) + '</b><p>' + t0(s.s) + '</p></li>'; }).join('');
   (function () {
-    var found = {}, chk = {}, L = 0;
-    function render() {
-      var nf = Object.keys(found).length, nc = Object.keys(chk).length;
-      var h = '<section class="lt-sec"><div class="lt-hd"><b>鑑定書 · 필적 감정</b><span>' + nf + ' / 3</span></div>' +
-        '<p class="lt-hint">편지 우를 눌러 보시압. 같은 손의 버릇이 세 군데 숨어 잇소.</p>' +
-        '<figure class="lt-sheet' + (nf === 3 ? ' done' : '') + '"><img src="./img/letter1.png" alt="붓으로 쓴 괴투서 (재현 그림)">' +
-        SPOTS.map(function (s, i) { return '<button class="lt-spot' + (found[i] ? ' on' : '') + '" data-s="' + i + '" style="left:' + s.x + '%;top:' + s.y + '%" aria-label="' + t0(s.t) + '"><span>' + (found[i] ? t0(s.t) : '') + '</span></button>'; }).join('') +
-        '<span class="lt-match">筆跡<br>一致</span><span class="rt">그림 · 재현</span></figure>' +
-        '<ul class="lt-found">' + SPOTS.map(function (s, i) { return '<li class="' + (found[i] ? 'on' : '') + '"><b>' + t0(s.t) + '</b>' + (found[i] ? t0(s.d) : '— 아즉 차지 못함') + '</li>'; }).join('') + '</ul></section>';
-      h += '<section class="lt-sec"><div class="lt-hd"><b>다시 읽기</b><span>부산경찰서 · 괴투서 (재현)</span></div>' +
-        '<div class="mb-seg lt-seg">' + LETTERS.map(function (l, i) { return '<button data-l="' + i + '" class="' + (i === L ? 'on' : '') + '">' + t0(l.t) + ' · ' + l.d + '</button>'; }).join('') + '</div>' +
-        '<div class="lt-text">' + LETTERS[L].lines.map(function (x) { return '<p>' + t0(x) + '</p>'; }).join('') + '</div></section>';
-      h += '<section class="lt-sec"><div class="lt-hd"><b>편지 대 사실</b><span>' + nc + ' / 5</span></div><p class="lt-hint">줄을 눌러 도장을 찍으시압.</p>' +
-        CHECK.map(function (c, i) { return '<button class="lt-ck ' + c.k + (chk[i] ? ' on' : '') + '" data-c="' + i + '"><q>' + c.c + '</q><span>' + c.f + '</span><i>' + c.st + '</i></button>'; }).join('') + '</section>';
-      if (nc === 5) h += '<p class="mb-q" style="margin:26px var(--g)">편지를 쓴 이는 잡혓스나, 죽인 이는 업섯소.</p>';
-      var bd = $('#ltBody'), y = bd.scrollTop; bd.innerHTML = h; bd.scrollTop = y;
+    var found = {}, chk = {}, env = false, built = false;
+    function build() {
+      built = true;
+      var h = '<section class="lt-sec desk"><div class="lt-hd"><b>鑑定書 · 필적 감정</b><span id="ltN">0 / 3</span></div>' +
+        '<p class="lt-hint">확대경을 손가락으로 끌어, 편지 우를 천천히 살피시압. 같은 손의 버릇이 세 군데 숨어 잇소.</p>' +
+        '<figure class="lt-sheet" id="ltSheet"><img src="./img/letter1.png" alt="붓으로 쓴 괴투서 (재현 그림)" draggable="false">' +
+        SPOTS.map(function (s, i) { return '<span class="lt-mark" data-s="' + i + '" style="left:' + s.x + '%;top:' + s.y + '%"><em>' + t0(s.t) + '</em></span>'; }).join('') +
+        '<span class="lt-lens" id="ltLens"><i></i></span><span class="lt-match">筆跡<br>一致</span><span class="rt">그림 · 재현</span></figure>' +
+        '<ul class="lt-found">' + SPOTS.map(function (s, i) { return '<li data-s="' + i + '"><b>' + t0(s.t) + '</b><span>— 아즉 차지 못함</span></li>'; }).join('') + '</ul></section>';
+      h += '<section class="lt-sec"><div class="lt-hd"><b>첫째 편지 · ' + LETTERS[0].d + '</b><span>부산경찰서 서장 친전</span></div><div class="lt-text" id="ltT1"></div></section>';
+      h += '<section class="lt-sec"><div class="lt-hd"><b>둘째 편지 · ' + LETTERS[1].d + '</b><span>가튼 손 · 가튼 먹</span></div>' +
+        '<button type="button" class="lt-env" id="ltEnv"><img src="./img/envelope.jpg" alt="봉투 (재현 그림)"><span>봉투를 뜻으시압</span></button><div class="lt-text two" id="ltT2" hidden></div></section>';
+      h += '<section class="lt-sec"><div class="lt-hd"><b>편지 대 사실</b><span id="ltC">0 / 5</span></div><p class="lt-hint">줄을 눌러 도장을 찍으시압.</p>' +
+        CHECK.map(function (c, i) { return '<button class="lt-ck ' + c.k + '" data-c="' + i + '"><q>' + c.c + '</q><span>' + c.f + '</span><i>' + c.st + '</i></button>'; }).join('') +
+        '<p class="mb-q lt-end" id="ltEnd" hidden>편지를 쓴 이는 잡혓스나, 죽인 이는 업섯소.</p></section>';
+      $('#ltBody').innerHTML = h;
+      /* 확대경 */
+      var sh = $('#ltSheet'), lens = $('#ltLens'), im = $('img', sh), dwell = {}, lx = 50, ly = 40;
+      function place(px, py) {
+        var r = sh.getBoundingClientRect(); lx = Math.max(0, Math.min(100, px)); ly = Math.max(0, Math.min(100, py));
+        lens.style.left = lx + '%'; lens.style.top = ly + '%';
+        var Z = 2.4, w = r.width * Z, hh = r.height * Z;
+        lens.firstChild.style.backgroundImage = 'url(' + im.src + ')'; lens.firstChild.style.backgroundSize = w + 'px ' + hh + 'px';
+        lens.firstChild.style.backgroundPosition = (-(lx / 100 * w) + 60) + 'px ' + (-(ly / 100 * hh) + 60) + 'px';
+        SPOTS.forEach(function (s, i) {
+          if (found[i]) return; var near = Math.abs(s.x - lx) < 9 && Math.abs(s.y - ly) < 7;
+          if (near) { dwell[i] = dwell[i] || Date.now(); if (Date.now() - dwell[i] > 450) hit(i); } else dwell[i] = 0;
+        });
+      }
+      function hit(i) {
+        found[i] = 1; tone('stamp');
+        $('.lt-mark[data-s="' + i + '"]', sh).classList.add('on');
+        var li = $('.lt-found li[data-s="' + i + '"]'); li.classList.add('on'); $('span', li).textContent = t0(SPOTS[i].d);
+        var n = Object.keys(found).length; $('#ltN').textContent = n + ' / 3';
+        if (n === 3) setTimeout(function () { sh.classList.add('done'); tone('stamp'); }, 500);
+      }
+      function mv(e) { var r = sh.getBoundingClientRect(), t = e.touches ? e.touches[0] : e; place((t.clientX - r.left) / r.width * 100, (t.clientY - r.top - 50) / r.height * 100); }
+      sh.addEventListener('touchstart', function (e) { sh.classList.add('hold'); mv(e); }, { passive: true });
+      sh.addEventListener('touchmove', function (e) { e.preventDefault(); mv(e); }, { passive: false });
+      sh.addEventListener('touchend', function () { sh.classList.remove('hold'); });
+      sh.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') mv(e); });
+      sh.addEventListener('click', function (e) { var m = e.target.closest('.lt-mark'); if (m) hit(+m.dataset.s); });
+      setTimeout(function () { place(50, 40); }, 60);
+      /* 첫째 편지 — 한 줄씩 */
+      var t1 = $('#ltT1'), L1 = LETTERS[0].lines;
+      var io = new IntersectionObserver(function (es) { if (!es[0].isIntersecting) return; io.disconnect();
+        var k = 0; (function nx() { if (k >= L1.length) return; var p = D.createElement('p'); if (k === L1.length - 1) p.className = 'r'; t1.appendChild(p); typeIn(p, t0(L1[k++]), 38, function () { setTimeout(nx, 260); }); })();
+      }, { root: $('#ltBody'), threshold: .4 }); io.observe(t1);
     }
     D.addEventListener('click', function (e) {
-      var s = e.target.closest('#ltBody [data-s]'); if (s) { found[s.dataset.s] = 1; render(); return; }
-      var l = e.target.closest('#ltBody [data-l]'); if (l) { L = +l.dataset.l; render(); return; }
-      var c = e.target.closest('#ltBody [data-c]'); if (c) { chk[c.dataset.c] = 1; render(); }
+      if (e.target.closest('#ltEnv')) {
+        if (env) return; env = true; var b = $('#ltEnv'); b.classList.add('torn'); W.mb.sfx('whoosh', .4);
+        setTimeout(function () { b.hidden = true; var t2 = $('#ltT2'); t2.hidden = false; var L2 = LETTERS[1].lines, k = 0;
+          (function nx() { if (k >= L2.length) return; var p = D.createElement('p'); if (k === L2.length - 1) p.className = 'r big'; t2.appendChild(p); typeIn(p, t0(L2[k++]), 70, function () { setTimeout(nx, 500); }); })(); }, 700);
+        return;
+      }
+      var c = e.target.closest('#ltBody [data-c]'); if (c && !c.classList.contains('on')) {
+        c.classList.add('on'); chk[c.dataset.c] = 1; tone('stamp'); var n = Object.keys(chk).length; $('#ltC').textContent = n + ' / 5';
+        if (n === 5) setTimeout(function () { $('#ltEnd').hidden = false; }, 600);
+      }
     });
-    W.addEventListener('mb:open', function (e) { if (e.detail === 'shLetter') { render(); $('#ltBody').scrollTop = 0; } });
+    W.addEventListener('mb:open', function (e) { if (e.detail === 'shLetter' && !built) build(); });
   })();
 
-  /* ════ 第七話 · 진술 대조 ════ */
-  $$('#c7 .al').forEach(function (b) { b.addEventListener('click', function () { b.classList.add('on'); $('#alN').textContent = $$('#c7 .al.on').length; }); });
-  /* ════ 第八話 · 봉한 쪽지 ════ */
-  $$('#c8 .sl').forEach(function (b) { b.addEventListener('click', function () { b.classList.add('open'); }); });
-
-  /* ════ 第十話 · 공판 문답 ════ */
+  /* ════ 第七話 · 진술 대조 — 도장이 찍히고, 긔록이 타자로 ════ */
   (function () {
-    var qs = $$('#mrCourt .qa'), n = 1, btn = $('#ctNext');
-    qs.forEach(function (q, i) { if (i) q.hidden = true; });
-    btn.addEventListener('click', function () {
-      if (n >= qs.length) { var t = $('#c11'); W.scrollTo({ top: t.getBoundingClientRect().top + W.scrollY - 48, behavior: 'smooth' }); return; }
-      qs[n].hidden = false; qs[n].classList.add('in'); n++;
-      $('#ctN').textContent = n + ' / ' + qs.length;
-      if (n >= qs.length) btn.innerHTML = '공판 끗 — 第十一話 판결로 ↓';
+    var als = $$('#c7 .al');
+    als.forEach(function (b) {
+      var sp = $('span', b), full = sp.textContent; sp.textContent = '';
+      b.addEventListener('click', function () {
+        if (b.classList.contains('on')) return; b.classList.add('on'); tone('stamp');
+        typeIn(sp, full, 26);
+        var n = $$('#c7 .al.on').length; $('#alN').textContent = n;
+        if (n === als.length) setTimeout(function () { $('#c7').classList.add('all'); }, 1600);
+      });
     });
+  })();
+  /* ════ 第八話 · 봉한 쪽지 ════ */
+  $$('#c8 .sl').forEach(function (b) { b.addEventListener('click', function () { if (!b.classList.contains('open')) { b.classList.add('open'); W.mb.sfx('whoosh', .3); } }); });
+
+  /* ════ 第十話 · 방청석 — 말이 한 자씩 ════ */
+  (function () {
+    var qs = $$('#mrCourt .qa'), n = 0, btn = $('#ctNext'), busy = false;
+    var texts = qs.map(function (q) { return $$('p', q).map(function (p) { var b = $('b', p), t = p.textContent.replace(b.textContent, ''); return [b.outerHTML, t]; }); });
+    qs.forEach(function (q) { q.hidden = true; });
+    function say(p, pair, done) { p.innerHTML = pair[0] + '<span class="tx"></span>'; var dots = D.createElement('span'); dots.className = 'dots'; dots.textContent = '…'; p.appendChild(dots);
+      setTimeout(function () { dots.remove(); typeIn($('.tx', p), pair[1], 42, done); }, 700); }
+    function next() {
+      if (busy) return;
+      if (n >= qs.length) { var t = $('#c11'); W.scrollTo({ top: t.getBoundingClientRect().top + W.scrollY - 48, behavior: 'smooth' }); return; }
+      busy = true; var q = qs[n], ps = $$('p', q), tx = texts[n]; q.hidden = false; q.classList.add('in'); n++;
+      if (n === 1) tone('gavel');
+      ps[1].style.visibility = 'hidden';
+      say(ps[0], tx[0], function () { setTimeout(function () { ps[1].style.visibility = ''; say(ps[1], tx[1], function () {
+        busy = false; btn.innerHTML = '다음 문답 ▸ <span id="ctN">' + n + ' / ' + qs.length + '</span>';
+        if (n >= qs.length) { btn.innerHTML = '공판 끗 — 第十一話 판결로 ↓'; $('#c10').classList.add('end'); }
+      }); }, 500); });
+      setTimeout(function () { var r = q.getBoundingClientRect(); if (r.bottom > W.innerHeight - 120) W.scrollBy({ top: r.bottom - W.innerHeight + 200, behavior: 'smooth' }); }, 300);
+    }
+    btn.innerHTML = '공판을 시작하오 ▸ <span id="ctN">0 / 7</span>';
+    btn.addEventListener('click', next);
   })();
 
   /* ════ 終章 · 그때와 이제 ════ */
