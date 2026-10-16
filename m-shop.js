@@ -155,7 +155,8 @@
       var d = S.DR[i]; open = i;
       $$('.dw-f', row).forEach(function (b, k) { b.classList.toggle('on', k === i); });
       tray.classList.remove('in'); void tray.offsetWidth;
-      tray.innerHTML = '<p class="dw-say"><b>' + esc(d.k === 'lock' ? '성 · 잠긴 칸' : d.lab) + '</b>' + esc(d.say) + '</p><div class="dw-items">' + d.items.map(function (it, k) {
+      var PIC = { 0: 'rise', 1: 'learn', 2: 'health', 3: 'secret', 4: 'nation', lock: 'secret' }[d.k === 'lock' ? 'lock' : i];
+      tray.innerHTML = (PIC ? '<figure class="dw-pic"><img src="assets/shop3/m_dw_' + PIC + '.jpg" alt="' + esc(d.lab || '서랍') + ' (재현 그림)"><span class="rt">그림 · 재현</span></figure>' : '') + '<p class="dw-say"><b>' + esc(d.k === 'lock' ? '성 · 잠긴 칸' : d.lab) + '</b>' + esc(d.say) + '</p><div class="dw-items">' + d.items.map(function (it, k) {
         return '<button type="button" class="dw-it" data-k="' + k + '"><img src="' + it.src + '" alt="' + esc(it.t) + ' 광고" loading="lazy"><em>' + esc(it.d) + '</em><b>' + esc(it.t) + '</b></button>';
       }).join('') + '</div>';
       tray.classList.add('in'); tone('stamp'); buzz(15);

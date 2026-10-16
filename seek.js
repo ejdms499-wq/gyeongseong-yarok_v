@@ -508,7 +508,7 @@
     w.querySelector('.cw-x').addEventListener('click', close); setTimeout(close, 12000);
   }
   function stampede() {   /* 다섯을 잡으면 — 고양이 떼 */
-    setTimeout(wanted, 2200);
+    setTimeout(wanted, 2200); if (W.ykHerd) W.ykHerd();
     var ts = targets(); ts.slice(0, 9).forEach(function (el, i) { setTimeout(function () { spawn(true, el, i % 3 ? 's-top' : (i % 2 ? 's-left' : 's-right')); }, i * 140); });
     var f = D.querySelector('.sk-board'); if (f) { var b = D.createElement('span'); b.className = 'yk-herd'; b.innerHTML = hj('※ 고양이 떼 출몰 — 본사는 책임지지 아니함', '※ 고양이 떼 출몰 — 본사는 책임지지 않음'); b.style.cssText = 'color:#8a2a21;font-weight:800'; f.appendChild(b); }
   }

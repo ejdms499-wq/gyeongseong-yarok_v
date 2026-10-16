@@ -357,3 +357,31 @@
 /* 떡: 검은 덧칠 대신 글로만 · 말풍선은 사진 위쪽에 */
 .ix-crumb{display:none!important}
 #readSay{top:12px;bottom:auto}
+
+/* 1017 그림을 만지면 다음 장면이 이어 그려짐 — 컴퓨터판 세피아 톤 그대로 */
+.sk-mini,.sk-l-img{overflow:hidden}
+.sk-mini.sk-play,.sk-low .sk-l-img{cursor:pointer}
+.sk-mini img,.sk-l-img img{transition:transform .9s cubic-bezier(.3,1,.4,1)}
+.sk-mini img.xf,.sk-l-img img.xf{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s ease;z-index:1}
+.sk-band .sk-mini img.tall.xf{object-fit:contain}
+.sk-mini img.xf.on,.sk-l-img img.xf.on{opacity:1}
+.sk-mini figcaption,.sk-l-img figcaption{z-index:2}
+.sk-hint{min-height:1.6em;margin:6px 0 4px;font-family:var(--myeongjo,serif);font-size:12.5px;line-height:1.6;color:var(--fade,#6e6250)}
+.sk-hint.pop{color:var(--ink,#1e1913);animation:skHint .4s ease}
+@keyframes skHint{from{opacity:.3}}
+.sk-mini.jolt,.sk-l-img.jolt{animation:skJolt .4s ease}
+@keyframes skJolt{20%{transform:translateX(-4px) rotate(-.4deg)}50%{transform:translateX(4px) rotate(.4deg)}80%{transform:translateX(-2px)}}
+.sk-mini.dash img{animation:skDash .45s ease}
+@keyframes skDash{30%{transform:translateX(-12px) scale(1.04)}60%{transform:translateX(9px)}}
+.sk-mini.lamp .sk-lamp{position:absolute;inset:0;z-index:1;pointer-events:none;background:rgba(20,15,10,.92);transition:opacity .8s}
+.sk-mini.lamp.lit .sk-lamp{background:radial-gradient(circle at var(--lx,50%) var(--ly,50%),transparent 0 44px,rgba(20,15,10,.93) 78px)}
+.sk-mini.lamp.found .sk-lamp{opacity:0}
+.sk-act{display:block;width:100%;margin:2px 0 6px;padding:9px 0 8px;border:1px solid var(--ink,#1e1913);background:var(--ink,#1e1913);color:#efe3c8;font-family:var(--serif);font-size:13px;letter-spacing:.12em;cursor:pointer}
+.sk-act i{font-style:normal;display:inline-block;min-width:18px;margin-left:6px;padding:1px 4px;background:#efe3c8;color:#1e1913}
+.sk-act:disabled{opacity:.45;cursor:default}
+.sk-smoke{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:calc(var(--sm,0) * .85);background:radial-gradient(ellipse 30% 40% at 30% 70%,rgba(255,250,235,.6),transparent 70%),radial-gradient(ellipse 25% 45% at 70% 60%,rgba(255,250,235,.55),transparent 70%);filter:blur(6px);transition:opacity 1s}
+.sk-l-img.puff .sk-smoke{animation:skSmoke 2.4s ease-out}
+@keyframes skSmoke{from{transform:translateY(18px)}to{transform:translateY(-12px)}}
+.sk-ring{position:absolute;left:4%;top:16%;width:36%;height:72%;z-index:2;border:3px solid var(--seal,#8a2a21);border-radius:50%;opacity:0;transform:scale(1.3) rotate(-6deg);pointer-events:none}
+.sk-ring.on{opacity:.95;transform:scale(1) rotate(-6deg);transition:all .35s cubic-bezier(.3,1.6,.5,1)}
+.sk-ring b{position:absolute;right:-10px;top:-12px;padding:2px 7px;background:var(--seal,#8a2a21);color:#efe3c8;font-family:var(--serif);font-size:12px;white-space:nowrap;transform:rotate(6deg)}

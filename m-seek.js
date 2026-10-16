@@ -121,7 +121,16 @@
 
   /* ══ 쪽지 광고 · 아래칸 — 그림마다 손을 대면 움직임 ══
      새 그림(assets/seek3/…)이 잇으면 바꿔 끼우고, 업스면 지금 그림으로 움직임만 보여 줌 */
-  function swap(img, src, cb) { if (!img) return; var im = new Image(); im.onload = function () { img.classList.add('sw'); setTimeout(function () { img.src = src; img.classList.remove('sw'); if (cb) cb(true); }, 260); }; im.onerror = function () { if (cb) cb(false); }; im.src = src; }
+  function swap(img, src, cb) {   /* 같은 그림의 다음 장면이 겹쳐 서서히 떠오름 (크로스페이드) */
+    if (!img) return; var im = new Image();
+    im.onload = function () {
+      var o = img.cloneNode(); o.removeAttribute('loading'); o.src = src; o.className = (img.className || '') + ' xf'; o.style.transform = 'none';
+      img.parentNode.insertBefore(o, img.nextSibling);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { o.classList.add('on'); }); });
+      setTimeout(function () { img.src = src; img.style.transform = ''; o.remove(); if (cb) cb(true); }, 1500);
+    };
+    im.onerror = function () { if (cb) cb(false); }; im.src = src;
+  }
   function card(k) { return $('.msk-card[data-k="' + k + '"]'); }
   function hint(c, t) { var h = $('.cd-hint', c); if (h) { h.textContent = t; h.classList.remove('pop'); void h.offsetWidth; h.classList.add('pop'); } }
   function upd(c) { var b = $('.sk-upb', c); if (b && !c.classList.contains('upd')) b.click(); }
