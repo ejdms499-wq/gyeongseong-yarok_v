@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
 <!-- 경성야록 — 폰 전용 오프닝 (opening.html 이 폰에서 이리로 넘김 · 끝나면 m-main.html)
-     ① 자정 삼 분 전 편집국 벽시계 → ② 누르면 윤전기가 돌고 활자가 박힘 → ③ 위로 밀면 신문이 펼쳐지며 본지로 -->
+     ① 소리를 켜고 누름 → ② 오후 여섯 시부터 실제 동아일보 지면 조각이 흘러가고 여긔저긔 붉은 테 (몃 건인지 정하지 안음)
+     → ③ 열한 시 오십구 분 벽시계 · 소리 끊김 · 자정 종 → ④ 윤전기 · 활자 → ⑤ 위로 밀면 본지로 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -12,6 +13,7 @@
 <link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
 <link rel="preload" as="image" href="assets/op/m_clock.jpg">
 <link rel="preload" as="image" href="assets/op/m_press.jpg">
+<link rel="preload" as="image" href="assets/op-strip/t0.jpg">
 <style>
 :root{--red:#b3261e;--serif:"Noto Serif KR","Nanum Myeongjo",serif;--sans:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -28,7 +30,7 @@ html,body{height:100%;background:#000;color:#ecebe7;overflow:hidden;-webkit-tap-
 @keyframes gr{to{transform:translate(8%,-6%)}}
 /* 위 · 날자 */
 .top{position:absolute;left:22px;right:22px;top:calc(18px + env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;font:500 11px/1 var(--sans);letter-spacing:.2em;color:#9a9994;opacity:0;transition:opacity 1.2s ease .6s}
-.on-1 .top{opacity:1}
+.top{opacity:1}
 .skip{border:0;background:none;color:#cfcfca;font:500 12px/1 var(--sans);letter-spacing:.1em;padding:10px 0 10px 14px}
 /* ① 시계 */
 .s1{position:absolute;left:22px;right:22px;bottom:calc(76px + env(safe-area-inset-bottom));opacity:0;transform:translateY(10px);transition:opacity 1.2s ease 1s,transform 1.2s ease 1s}
@@ -63,19 +65,46 @@ html,body{height:100%;background:#000;color:#ecebe7;overflow:hidden;-webkit-tap-
 .sheet.done .rule{transform:none}
 .sheet .sub{margin-top:16px;font:400 14px/1.7 var(--serif);color:#8f8e89;opacity:0;transition:opacity .8s .5s}
 .sheet.done .sub{opacity:1}
+
+/* 지면 띠 — 오후 여섯 시부터 자정까지, 셀 수 업는 긔사 조각 */
+#band{position:absolute;left:0;right:0;top:50%;height:46vh;margin-top:-25vh;overflow:hidden;opacity:0;transition:opacity 1.2s ease}
+#band.on{opacity:1}
+#strip{position:absolute;left:0;top:0;height:100%;transform-origin:0 50%;will-change:transform}
+#strip img{position:absolute;top:0;height:100%;filter:grayscale(1) contrast(1.12) brightness(.82)}
+#strip .hl{position:absolute;box-shadow:0 0 0 2px var(--red);opacity:0;transition:opacity .5s ease}
+#strip .hl.on{opacity:1}
+#band::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#000,transparent 14%,transparent 86%,#000),linear-gradient(#000,transparent 10%,transparent 90%,#000)}
+#dark{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity 1.6s ease}
+.hr{position:absolute;left:22px;right:22px;top:calc(64px + env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:baseline;opacity:0;transition:opacity .8s}
+.hr.on{opacity:1}
+.hr b{font:900 44px/1 var(--serif);color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.hr small{font:500 11px/1.5 var(--sans);letter-spacing:.2em;color:#9a9994;text-align:right}
+.say{position:absolute;left:22px;right:22px;bottom:calc(80px + env(safe-area-inset-bottom));min-height:3.4em;font:400 18px/1.7 var(--serif);color:#e9e8e3}
+.say span{display:block;opacity:0;transform:translateY(8px);transition:opacity .9s,transform .9s}
+.say span.on{opacity:1;transform:none}
+.say span.out{opacity:0;transition-duration:.6s}
+.gate{position:absolute;left:22px;right:22px;top:50%;transform:translateY(-50%);text-align:center;transition:opacity .8s}
+.gate small{font:500 11px/1 var(--sans);letter-spacing:.3em;color:#e07a72}
+.gate h2{margin-top:16px;font:900 34px/1.3 var(--serif);color:#fff;letter-spacing:.02em}
+.gate p{margin-top:28px;font:500 12.5px/1.8 var(--sans);letter-spacing:.14em;color:#cfcfca;animation:br 2.4s ease-in-out infinite}
+.gate em{display:block;margin-top:10px;font:400 11px/1 var(--sans);font-style:normal;color:#6f6e6a;letter-spacing:.1em}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
 </style>
 </head>
 <body>
 <svg aria-hidden="true" height="0" style="position:absolute" width="0"><symbol id="mmLogo" viewBox="0 0 100 100"><defs><clipPath id="mmC"><circle cx="50" cy="50" r="49"></circle></clipPath><mask id="mmRing"><rect fill="#000" height="100" width="100"></rect><circle cx="50" cy="50" fill="#fff" r="49"></circle><circle cx="32.4" cy="50" fill="#000" r="52.6"></circle></mask></defs><g clip-path="url(#mmC)" fill="currentColor"><rect height="100" width="2.7" x="4.0" y="0"></rect><rect height="100" width="2.7" x="8.6" y="0"></rect><rect height="100" width="2.7" x="13.2" y="0"></rect><rect height="100" width="2.7" x="17.8" y="0"></rect><rect height="100" width="2.7" x="22.4" y="0"></rect><rect height="100" width="2.7" x="27.0" y="0"></rect><rect height="100" width="2.7" x="31.6" y="0"></rect><rect height="100" width="2.7" x="36.2" y="0"></rect><rect height="100" width="2.7" x="40.8" y="0"></rect><rect height="100" width="2.7" x="45.4" y="0"></rect></g><rect fill="#b3261e" height="98.8" width="3.4" x="47.6" y="0.6"></rect><g fill="currentColor" mask="url(#mmRing)"><rect height="2.5" width="46" x="54" y="1.5"></rect><rect height="2.5" width="46" x="54" y="6.0"></rect><rect height="2.5" width="46" x="54" y="10.5"></rect><rect height="2.5" width="46" x="54" y="15.0"></rect><rect height="2.5" width="46" x="54" y="19.5"></rect><rect height="2.5" width="46" x="54" y="24.0"></rect><rect height="2.5" width="46" x="54" y="28.5"></rect><rect height="2.5" width="46" x="54" y="33.0"></rect><rect height="2.5" width="46" x="54" y="37.5"></rect><rect height="2.5" width="46" x="54" y="42.0"></rect><rect height="2.5" width="46" x="54" y="46.5"></rect><rect height="2.5" width="46" x="54" y="51.0"></rect><rect height="2.5" width="46" x="54" y="55.5"></rect><rect height="2.5" width="46" x="54" y="60.0"></rect><rect height="2.5" width="46" x="54" y="64.5"></rect><rect height="2.5" width="46" x="54" y="69.0"></rect><rect height="2.5" width="46" x="54" y="73.5"></rect><rect height="2.5" width="46" x="54" y="78.0"></rect><rect height="2.5" width="46" x="54" y="82.5"></rect><rect height="2.5" width="46" x="54" y="87.0"></rect><rect height="2.5" width="46" x="54" y="91.5"></rect><rect height="2.5" width="46" x="54" y="96.0"></rect></g></symbol></svg>
 <div class="st" id="st">
+  <div class="gate" id="gate"><small>경성야록 · 오프닝</small><h2>자정까지</h2><p>소리를 켜고 화면을 누르시압</p><em>위의 건너뛰기를 누르면 바로 본지로</em></div>
+  <div id="band" aria-hidden="true"><div id="strip"></div></div>
+  <div class="hr" id="hr"><b id="hrT">18:00</b><small>동아일보 지면 조각 · 실물<br>오후 여섯 시 석간부터</small></div>
+  <div class="say" id="say"></div>
   <div class="ph" id="p1" role="img" aria-label="자정 삼 분 전, 편집국 벽시계 (그림 · 재현)"></div>
   <div class="ph" id="p2" role="img" aria-label="자정의 윤전기 (그림 · 재현)"></div>
-  <div class="shade"></div><div class="grain"></div>
+  <div class="shade"></div><div id="dark"></div><div class="grain"></div>
   <div class="top"><span>경성야록 · 그림 재현</span><button type="button" class="skip" id="skip">건너뛰기</button></div>
-  <div class="s1" id="s1"><small>경성 · 편집국 · 소화 십일 년</small><div class="t" id="clk">11:57<i id="sec">00</i></div><p>자정까지 삼 분. 오늘 밤의 지면이<br>아직 짜이지 않았소.</p></div>
+  <div class="s1" id="s1"><small>경성 · 편집국</small><div class="t" id="clk">11:59<i id="sec">00</i></div><p id="s1p">오늘 밤 지면에 실리지 못한 것들이<br>자정을 기다리고 잇소.</p></div>
   <div class="s2" id="s2" hidden><p id="l1"></p><p id="l2"></p><p id="l3"></p><small id="l4">신문 한 줄에서 비롯하는 경성의 괴사</small></div>
-  <p class="tap" id="tap">화면을 누르시압 · 소리가 납니다</p>
+  
   <div class="up" id="up"><i></i>위로 밀어 신문을 펼치시압</div>
   <div class="sheet" id="sheet"><div class="in"><div class="ml"><span>괴사 문고 · 납량 특집</span><span>제일호</span></div><div class="lg"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mmLogo"></use></svg><h1>경성야록</h1></div><div class="rule"></div><p class="sub">신문 아래 칸에서 깨여난 경성의 사건 · 1920 — 1940</p></div></div>
 </div>
@@ -86,59 +115,87 @@ html,body{height:100%;background:#000;color:#ecebe7;overflow:hidden;-webkit-tap-
   try { sessionStorage.setItem('ykop-seen', '1'); } catch (e) {}
   var buzz = function (p) { if (navigator.vibrate) try { navigator.vibrate(p); } catch (e) {} };
   function at(s, f) { T.push(setTimeout(f, s * 1000)); }
-  /* ── 소리 (파일 업시) : 초침 · 윤전기 · 활자 ── */
-  var AC = null, press = null;
+  /* ── 소리 (파일 업시) ── */
+  var AC = null, room = null;
   function ac() { if (!AC) try { AC = new (W.AudioContext || W.webkitAudioContext)(); } catch (e) {} if (AC && AC.state === 'suspended') AC.resume(); return AC; }
   function blip(f, g, d, type) { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), v = a.createGain(), fl = a.createBiquadFilter(); o.type = type || 'square'; o.frequency.value = f; fl.type = 'bandpass'; fl.frequency.value = f; v.gain.setValueAtTime(g, t); v.gain.exponentialRampToValueAtTime(.0001, t + d); o.connect(fl); fl.connect(v); v.connect(a.destination); o.start(t); o.stop(t + d + .02); }
-  function tick() { blip(2600, .12, .03); }
+  function tick() { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), g = a.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(80, t + .06); g.gain.setValueAtTime(.3, t); g.gain.exponentialRampToValueAtTime(.0001, t + .1); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + .12); }
   function type() { blip(1900 + Math.random() * 600, .05, .02); }
   function thud() { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), v = a.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(110, t); o.frequency.exponentialRampToValueAtTime(40, t + .25); v.gain.setValueAtTime(.35, t); v.gain.exponentialRampToValueAtTime(.0001, t + .3); o.connect(v); v.connect(a.destination); o.start(t); o.stop(t + .32); }
-  function pressOn() {
-    var a = ac(); if (!a || press) return;
-    var n = a.createBufferSource(), b = a.createBuffer(1, a.sampleRate * 2, a.sampleRate), d = b.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    n.buffer = b; n.loop = true; var lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 340; var g = a.createGain(); g.gain.value = 0; g.gain.linearRampToValueAtTime(.16, a.currentTime + 2.5);
-    var lfo = a.createOscillator(), lg = a.createGain(); lfo.frequency.value = 3.2; lg.gain.value = .06; lfo.connect(lg); lg.connect(g.gain); lfo.start();
-    n.connect(lp); lp.connect(g); g.connect(a.destination); n.start(); press = { g: g, a: a };
+  function bell() { var a = ac(); if (!a) return; var t = a.currentTime; [[98, .5], [196.5, .22], [294, .12], [523, .05]].forEach(function (p) { var o = a.createOscillator(), g = a.createGain(); o.type = 'sine'; o.frequency.value = p[0]; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(p[1], t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + 6); o.connect(g); g.connect(a.destination); o.start(t); o.stop(t + 6.2); }); }
+  function roomOn() { var a = ac(); if (!a || room) return; var n = a.createBufferSource(), b = a.createBuffer(1, a.sampleRate * 3, a.sampleRate), d = b.getChannelData(0), l = 0; for (var i = 0; i < d.length; i++) { var w = Math.random() * 2 - 1; l = (l + .02 * w) / 1.02; d[i] = l * 3.2; }
+    n.buffer = b; n.loop = true; var lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 300; var g = a.createGain(); g.gain.value = 0; g.gain.linearRampToValueAtTime(.12, a.currentTime + 2); n.connect(lp); lp.connect(g); g.connect(a.destination); n.start(); room = { g: g, a: a, lp: lp }; }
+  function roomTo(v, s) { if (room) { room.g.gain.cancelScheduledValues(room.a.currentTime); room.g.gain.setTargetAtTime(v, room.a.currentTime, s || .3); } }
+  function pressSnd() { if (!room) return; room.lp.frequency.setTargetAtTime(420, room.a.currentTime, .5); roomTo(.16, 1); }
+
+  /* ── 지면 띠 (assets/op-strip · 실제 동아일보 지면 조각 7800×1000) ── */
+  var SW = 7800, SH = 1000, TILE = 1950, band = $('band'), strip = $('strip'), BH = 0, sc = 1;
+  function layout() { BH = band.clientHeight || innerHeight * .46; sc = BH / SH; var h = ''; for (var i = 0; i < 4; i++) h += '<img src="assets/op-strip/t' + i + '.jpg" alt="" style="left:' + (i * TILE * sc).toFixed(1) + 'px;width:' + (TILE * sc + 1).toFixed(1) + 'px">';
+    /* 붉은 테 — 정해진 몃 개가 아니라, 지나가는 곳마다 여긔저긔 */
+    var rnd = (function (s) { return function () { s = (s * 16807) % 2147483647; return s / 2147483647; }; })(19);
+    HL = []; for (var k = 0; k < 22; k++) { var f = .04 + k * .041 + rnd() * .02, y = .14 + rnd() * .62, w = 60 + rnd() * 70, hh = 90 + rnd() * 150; HL.push(f); h += '<i class="hl" id="hl' + k + '" style="left:' + (f * SW * sc).toFixed(1) + 'px;top:' + (y * BH).toFixed(1) + 'px;width:' + (w * sc).toFixed(1) + 'px;height:' + (hh * sc).toFixed(1) + 'px"></i>'; }
+    strip.innerHTML = h; strip.style.width = (SW * sc) + 'px'; }
+  var HL = [];
+  function cam(f, z) { var x = innerWidth / 2 - f * SW * sc * z; strip.style.transform = 'translateX(' + x.toFixed(1) + 'px) scale(' + z.toFixed(3) + ')'; }
+  var CAM = [[0, .03, 2.4], [1.6, .10, 1.25], [4.5, .40, 1.15], [7.4, .74, 1.1], [9.2, .93, .8]], DUR = 9.2;
+  function sm(u) { return u * u * (3 - 2 * u); }
+  function camAt(t) { for (var i = 0; i < CAM.length - 1; i++) { var a = CAM[i], b = CAM[i + 1]; if (t <= b[0]) { var u = sm((t - a[0]) / (b[0] - a[0])); return [a[1] + (b[1] - a[1]) * u, a[2] + (b[2] - a[2]) * u]; } } var L = CAM[CAM.length - 1]; return [L[1], L[2]]; }
+  var SAY = [[.4, '오후 여섯 시, 석간이 나왓소.'], [2.6, '사건은 한 줄로 실리고,<br>이튿날이면 니저졋소.'], [5.2, '누구도 끗까지 쫓지 안은 일들.'], [7.6, '몃 건인지 — 아즉 다 세지 못햇소.']];
+  function say(h) { var box = $('say'), old = box.querySelector('span.on'); if (old) { old.classList.add('out'); setTimeout(function () { old.remove(); }, 600); } var s = D.createElement('span'); s.innerHTML = h; box.appendChild(s); requestAnimationFrame(function () { requestAnimationFrame(function () { s.classList.add('on'); }); }); }
+
+  /* ① 입구 → ② 지면이 흘러감 */
+  function begin() {
+    if (stage) return; stage = 1; ac(); roomOn(); buzz(20);
+    $('gate').style.opacity = '0'; layout(); band.classList.add('on'); $('hr').classList.add('on');
+    var t0 = performance.now(), lastMin = -1, lastH = -1;
+    SAY.forEach(function (x) { at(x[0], function () { say(x[1]); }); });
+    (function f(now) {
+      if (stage !== 1) return; var t = Math.min(DUR, (now - t0) / 1000), c = camAt(t); cam(c[0], c[1]);
+      var mins = Math.min(359, Math.floor(c[0] / .93 * 359)), hh = 18 + Math.floor(mins / 60), mm = mins % 60; $('hrT').textContent = (hh > 23 ? '23' : hh) + ':' + ('0' + mm).slice(-2);
+      if (Math.floor(mins / 15) !== lastMin) { lastMin = Math.floor(mins / 15); tick(); }
+      HL.forEach(function (fx, k) { var el = $('hl' + k); var on = Math.abs(fx - c[0]) < .035; if (on !== el.classList.contains('on')) { el.classList.toggle('on', on); if (on) { thud(); buzz(6); } } });
+      if (t > 8.2) $('dark').style.opacity = String(Math.min(.85, (t - 8.2) * .8));
+      if (t < DUR) requestAnimationFrame(f); else three();
+    })(t0);
   }
-  function pressOff() { if (!press) return; press.g.gain.linearRampToValueAtTime(0, press.a.currentTime + .9); }
-  /* ① 자정 삼 분 전 */
-  var s0 = new Date().getSeconds(), secT = setInterval(function () { s0 = (s0 + 1) % 60; $('sec').textContent = ('0' + s0).slice(-2); if (stage === 1) tick(); }, 1000);
-  function one() { stage = 1; $('p1').classList.add('on'); st.classList.add('on-1'); at(2.4, function () { $('tap').classList.add('on'); }); }
-  /* ② 윤전기 · 활자 */
+  /* ③ 열한 시 오십구 분 — 소리가 끊김 → 자정 종 */
+  function three() {
+    stage = 2; roomTo(0, .08); band.classList.remove('on'); $('hr').classList.remove('on'); $('say').innerHTML = '';
+    $('dark').style.opacity = '0'; $('p1').classList.add('on'); st.classList.add('on-1');
+    var s = 54; $('sec').textContent = s;
+    var iv = setInterval(function () { s++; if (s >= 60) { clearInterval(iv); $('clk').innerHTML = '0:00<i>자정</i>'; $('s1p').innerHTML = '자정이오. 지면이 깨여나오.'; bell(); buzz([60, 120, 60]); at(2.2, four); return; } $('sec').textContent = ('0' + s).slice(-2); tick(); }, 1000);
+    T.push(iv);
+  }
+  /* ④ 윤전기 · 활자 */
   var LINES = [['밤이 ', '<b>깁허지면</b>'], ['니저진 사건이'], ['<b>깨여나나니라.</b>']];
-  function two() {
-    if (stage !== 1) return; stage = 2; ac(); tick(); buzz(30);
-    $('tap').classList.remove('on'); $('s1').style.opacity = '0'; $('p1').classList.remove('on'); $('p2').classList.add('on');
-    at(.4, pressOn); at(.6, function () { thud(); buzz([40, 80, 40]); });
+  function four() {
+    stage = 3; $('s1').style.opacity = '0'; $('p1').classList.remove('on'); $('p2').classList.add('on'); roomOn(); pressSnd(); thud(); buzz([40, 80, 40]);
     $('s2').hidden = false;
-    var k = 0, q = [];
-    LINES.forEach(function (ln, li) { var el = $('l' + (li + 1)); ln.forEach(function (part) { var bold = /^<b>/.test(part), txt = part.replace(/<\/?b>/g, ''), host = el; if (bold) { host = D.createElement('b'); el.appendChild(host); } txt.split('').forEach(function (ch) { var s = D.createElement('span'); s.className = 'c'; s.textContent = ch === ' ' ? ' ' : ch; host.appendChild(s); q.push(s); }); }); });
-    q.forEach(function (s, i) { at(1.4 + i * .11 + (i > 7 ? .35 : 0) + (i > 14 ? .35 : 0), function () { s.classList.add('in'); if (s.textContent.trim()) { type(); if (i % 3 === 0) buzz(4); } }); });
-    var end = 1.4 + q.length * .11 + .9;
+    var q = [];
+    LINES.forEach(function (ln, li) { var el = $('l' + (li + 1)); ln.forEach(function (part) { var bold = /^<b>/.test(part), txt = part.replace(/<\/?b>/g, ''), host = el; if (bold) { host = D.createElement('b'); el.appendChild(host); } txt.split('').forEach(function (ch) { var sp = D.createElement('span'); sp.className = 'c'; sp.textContent = ch === ' ' ? ' ' : ch; host.appendChild(sp); q.push(sp); }); }); });
+    q.forEach(function (sp, i) { at(1 + i * .11 + (i > 7 ? .35 : 0) + (i > 14 ? .35 : 0), function () { sp.classList.add('in'); if (sp.textContent.trim()) { type(); if (i % 3 === 0) buzz(4); } }); });
+    var end = 1 + q.length * .11 + .9;
     at(end, function () { $('l4').classList.add('on'); thud(); });
-    at(end + 1.2, function () { stage = 3; $('up').classList.add('on'); });
-    at(end + 9, function () { if (stage === 3) open(); });
+    at(end + 1, function () { stage = 4; $('up').classList.add('on'); });
+    at(end + 9, function () { if (stage === 4) open(); });
   }
-  /* ③ 위로 밀면 신문이 펼쳐짐 */
+  /* ⑤ 위로 밀면 신문이 펼쳐짐 */
   var sheet = $('sheet'), y0 = null, dy = 0;
   function setS(px) { sheet.style.transform = 'translateY(' + (-px) + 'px)'; }
   function open() {
-    if (done) return; done = true; stage = 4; pressOff(); thud(); buzz([20, 60, 20]);
+    if (done) return; done = true; stage = 5; roomTo(0, .4); thud(); buzz([20, 60, 20]);
     sheet.style.transition = 'transform .9s cubic-bezier(.6,0,.15,1)'; setS(innerHeight);
     setTimeout(function () { sheet.classList.add('done'); }, 700);
     setTimeout(go, 2300);
   }
-  function go() { T.forEach(clearTimeout); clearInterval(secT); location.replace(NEXT); }
-  st.addEventListener('pointerdown', function (e) { if (e.target.closest('#skip')) return; if (stage === 3) { y0 = e.clientY; dy = 0; sheet.style.transition = 'none'; } });
+  function go() { T.forEach(function (x) { clearTimeout(x); clearInterval(x); }); location.replace(NEXT); }
+  st.addEventListener('pointerdown', function (e) { if (e.target.closest('#skip')) return; if (stage === 4) { y0 = e.clientY; dy = 0; sheet.style.transition = 'none'; } });
   st.addEventListener('pointermove', function (e) { if (y0 == null) return; dy = Math.max(0, y0 - e.clientY); setS(dy * 1.1); });
-  function rel() { if (y0 == null) return; y0 = null; if (dy > innerHeight * .18) open(); else { sheet.style.transition = 'transform .5s cubic-bezier(.3,1.4,.5,1)'; setS(0); if (dy < 8) open(); } }
+  function rel() { if (y0 == null) return; y0 = null; if (dy > innerHeight * .18 || dy < 8) open(); else { sheet.style.transition = 'transform .5s cubic-bezier(.3,1.4,.5,1)'; setS(0); } }
   st.addEventListener('pointerup', rel); st.addEventListener('pointercancel', rel);
-  st.addEventListener('click', function (e) { if (e.target.closest('#skip')) return; if (stage === 1) two(); });
-  $('skip').addEventListener('click', function (e) { e.stopPropagation(); if (stage < 4) { done = false; open(); } });
-  /* 그림이 다 오면 시작 (늦어도 1.6초) */
-  var im = new Image(), started = false; function st1() { if (started) return; started = true; one(); }
-  im.onload = st1; im.src = 'assets/op/m_clock.jpg'; setTimeout(st1, 1600);
-  new Image().src = 'assets/op/m_press.jpg';
+  st.addEventListener('click', function (e) { if (e.target.closest('#skip')) return; if (!stage) begin(); });
+  $('skip').addEventListener('click', function (e) { e.stopPropagation(); open(); });
+  ['assets/op/m_clock.jpg', 'assets/op/m_press.jpg', 'assets/op-strip/t0.jpg', 'assets/op-strip/t1.jpg', 'assets/op-strip/t2.jpg', 'assets/op-strip/t3.jpg'].forEach(function (u) { new Image().src = u; });
 })(window, document);
 </script>
 </body>
