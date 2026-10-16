@@ -468,3 +468,10 @@ html,body.mm{background:var(--paper)}
 .mm-sik .mm-ph img{object-position:center 40%}
 .mm-sik .mm-act b{color:#e07a72}
 .mm-case>.mv .egg-relic{z-index:7}
+/* 식자실 물건 — 숨어 잇다가, 그 자리를 누르면 구석에서 비져나옴 */
+.egg-relic{opacity:0!important;pointer-events:none;transform-origin:50% 100%;transition:opacity .5s ease,translate .5s cubic-bezier(.3,1.4,.5,1);translate:0 14px}
+.egg-relic::after{opacity:0}
+.egg-relic.peek{opacity:.92!important;pointer-events:auto;translate:0 0}
+.egg-relic.peek::after{opacity:1}
+.mm-logo,.mm-today,.mm-tag,.mm-plans,.mm-ft-b{position:relative}
+.mm-ft-b{display:inline-block}
