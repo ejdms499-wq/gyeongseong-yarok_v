@@ -218,3 +218,132 @@ html,body.mm{background:var(--paper)}
 .mm-real em{display:block;margin-top:7px;font:500 10px/1 var(--sans);font-style:normal;letter-spacing:.12em;color:var(--red)}
 .mm-real b{display:block;margin-top:4px;font:700 13px/1.35 var(--serif)}
 .mm-real.more span{background:var(--ink);color:#fff;font:900 15px/1.5 var(--serif);text-align:center}
+
+/* 1017 박람회 입장권 — 제자리에 반듯하게, 가운데 정렬. 누르면 반권이 뜨더지고 표 한가운데 「개찰」 */
+.mm-expo .mm-rk{margin-top:0}
+.mm-expo{display:flex;flex-direction:column}
+.mm-tk{position:relative!important;right:auto!important;top:auto!important;order:-1;align-self:center;width:100%!important;max-width:300px;margin:6px 0 22px;display:flex;transform:none!important;box-shadow:0 14px 30px rgba(0,0,0,.75);animation:none!important}
+.mm-tkm{flex:1;background:#e9e8e4;padding:5px;transition:transform .7s cubic-bezier(.3,1.2,.4,1)}
+.mm-tkm img{width:100%!important;display:block;filter:grayscale(1) contrast(1.08) brightness(.97)}
+.mm-stub{flex:none;width:58px!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:6px;writing-mode:horizontal-tb!important;background:#e9e8e4;border-left:2px dashed #888;transition:transform .7s cubic-bezier(.3,1.2,.4,1),opacity .6s ease .1s!important}
+.mm-stub b{font:900 15px/1.2 var(--serif);writing-mode:vertical-rl;letter-spacing:.2em;color:#0b0b0b}
+.mm-stub small{font:500 9px/1.2 var(--sans);color:#666;writing-mode:vertical-rl}
+.mm-punch{position:absolute;left:50%;top:50%;padding:5px 9px;border:3px solid var(--red);color:var(--red);font:900 19px/1 var(--serif);letter-spacing:.2em;background:rgba(233,232,228,.55);opacity:0;transform:translate(-50%,-50%) rotate(-12deg) scale(1.8);transition:opacity .3s ease .4s,transform .45s cubic-bezier(.3,1.6,.5,1) .4s;pointer-events:none}
+.mm-expo.torn .mm-stub{transform:translate(60px,70px) rotate(26deg)!important;opacity:0}
+.mm-expo.torn .mm-tkm{transform:translateX(29px)}
+.mm-expo.torn .mm-punch{opacity:.95;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}
+
+/* ═══ 1017 일면 — 움직이는 사진 (그 시절 신문 속 사진이 저 혼자 움직이오) ═══
+   화면에 들어오면 돌고(.on), 나가면 멈춤. 번쩍임 업슴. 누르면 한 번 더 */
+.mv{position:relative;display:block;overflow:hidden;-webkit-tap-highlight-color:transparent;cursor:pointer;user-select:none;-webkit-user-select:none}
+.mv:not(.on) *,.mv:not(.on)::before,.mv:not(.on)::after{animation-play-state:paused!important}
+.mv img{-webkit-user-drag:none}
+.mm-case>.mv{aspect-ratio:4/5;background:#0b0b0b;color:#fff;isolation:isolate}
+.mm-case>.mv::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;box-shadow:inset 0 0 80px 10px rgba(0,0,0,.75);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");mix-blend-mode:overlay;opacity:.7}
+.mv-no{position:absolute;left:12px;top:6px;z-index:6;font:900 50px/1 var(--serif);color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.mv-cap{position:absolute;left:0;right:0;bottom:0;z-index:6;padding:9px 12px;font:500 10px/1.3 var(--sans);letter-spacing:.12em;color:#9a9994;background:linear-gradient(transparent,rgba(0,0,0,.85))}
+.mm-case>.mv+.mm-lead .mm-lt{padding-top:16px}
+
+/* 01 약병 — 흔들리고, 라벨이 「특효」 ↔ 「미신」으로 뒤집힘 */
+.mv-bottle{background:radial-gradient(ellipse at 55% 40%,#2b2b29,#070707 70%)!important}
+.mv-ad{position:absolute;right:-8%;top:9%;width:44%;margin:0;z-index:1;transform:rotate(7deg);opacity:.55;filter:grayscale(1)}
+.mv-ad img{display:block;width:100%;box-shadow:0 10px 24px rgba(0,0,0,.7)}
+.mv-ad figcaption{margin-top:6px;font:500 9px/1.3 var(--sans);color:#8a8984;letter-spacing:.06em}
+.mv-bt{position:absolute;left:12%;bottom:9%;width:50%;z-index:2;transform-origin:50% 100%;animation:mvSway 6s ease-in-out infinite}
+.mv-bt>img{display:block;width:100%;filter:grayscale(1) contrast(1.15) brightness(.9) drop-shadow(0 18px 18px rgba(0,0,0,.8))}
+@keyframes mvSway{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.8deg)}}
+.mv-lab{position:absolute;left:19%;right:20%;top:51%;height:17%;perspective:400px}
+.mv-lab b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#e8e4da;color:#111;font:900 clamp(15px,5vw,22px)/1 var(--serif);letter-spacing:.2em;backface-visibility:hidden;box-shadow:inset 0 0 12px rgba(0,0,0,.35);animation:mvFlipF 9s ease-in-out infinite}
+.mv-lab b small{margin-top:4px;font:500 8px/1.2 var(--sans);letter-spacing:.02em;color:#555}
+.mv-lab b.k{color:var(--red);animation-name:mvFlipK}
+.mv-lab i{position:absolute;left:6px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--red);color:#fff;font:700 9px/16px var(--serif);font-style:normal;text-align:center;letter-spacing:0}
+@keyframes mvFlipF{0%,42%{transform:rotateY(0)}50%,92%{transform:rotateY(180deg)}100%{transform:rotateY(360deg)}}
+@keyframes mvFlipK{0%,42%{transform:rotateY(-180deg)}50%,92%{transform:rotateY(0)}100%{transform:rotateY(180deg)}}
+.mv-bottle.tap .mv-lab b{animation-duration:1.4s;animation-iteration-count:1}
+
+/* 02 괴투서 — 편지가 봉투에서 솟고, 「필적 일치」가 찍힘 */
+.mv-letter{background:radial-gradient(ellipse at 50% 70%,#262624,#060606 72%)!important}
+.mv-lt{position:absolute;left:21%;width:58%;bottom:16%;z-index:1;animation:mvRise 8s cubic-bezier(.5,0,.3,1) infinite}
+.mv-lt img{display:block;width:100%;filter:grayscale(1) contrast(1.1) brightness(.95)}
+@keyframes mvRise{0%,12%{transform:translateY(40%)}38%,78%{transform:translateY(-14%) rotate(-2deg)}100%{transform:translateY(40%)}}
+.mv-stamp{position:absolute;left:50%;top:38%;padding:6px 10px;border:3px solid var(--red);color:var(--red);font:900 18px/1 var(--serif);letter-spacing:.2em;background:rgba(232,228,218,.4);transform:translate(-50%,-50%) rotate(-10deg) scale(2);opacity:0;animation:mvStamp 8s ease infinite}
+@keyframes mvStamp{0%,44%{opacity:0;transform:translate(-50%,-50%) rotate(-10deg) scale(2)}48%,76%{opacity:.95;transform:translate(-50%,-50%) rotate(-10deg) scale(1)}84%,100%{opacity:0}}
+.mv-env{position:absolute;left:8%;right:8%;bottom:6%;z-index:2}
+.mv-env img{display:block;width:100%;filter:grayscale(1) contrast(1.08) brightness(.82) drop-shadow(0 -6px 14px rgba(0,0,0,.6))}
+.mv-env span{position:absolute;font:700 13px/1.2 var(--serif);color:#222}
+.mv-env .to{left:38%;top:44%;font-size:16px;letter-spacing:.2em}
+.mv-env .fr{left:8%;bottom:12%;font-size:10px;font-weight:500;color:#444}
+.mv-letter.tap .mv-lt,.mv-letter.tap .mv-stamp{animation-duration:4s}
+
+/* 03 손긔정 — 흰 붓이 가슴의 표지를 지우고, 지면으로 바뀜 */
+.mv-sohn{background:#0e0e0d!important}
+.mv-pic{position:absolute;left:50%;top:5%;height:80%;aspect-ratio:560/810;transform:translateX(-50%);box-shadow:0 20px 40px rgba(0,0,0,.8)}
+.mv-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1)}
+.mv-pic .p{opacity:0;object-fit:cover;object-position:50% 30%;animation:mvPrint 10s ease infinite}
+.mv-brush{position:absolute;left:39%;top:46.5%;width:25%;height:14%;background:#efede6;border-radius:40% 55% 45% 60%/60% 40% 55% 45%;filter:blur(.6px);transform-origin:0 50%;transform:scaleX(0);animation:mvBrush 10s cubic-bezier(.6,0,.3,1) infinite;box-shadow:0 0 0 2px rgba(239,237,230,.6)}
+@keyframes mvBrush{0%,14%{transform:scaleX(0)}34%,100%{transform:scaleX(1)}}
+@keyframes mvPrint{0%,46%{opacity:0}58%,88%{opacity:1}100%{opacity:0}}
+.mv-pc{position:absolute;left:0;right:0;top:86%;text-align:center;font:500 10px/1.3 var(--sans);color:#8a8984;letter-spacing:.06em}
+.mv-count{position:absolute;right:12px;top:12px;z-index:6;padding:6px 9px;border:2px solid var(--red);background:rgba(0,0,0,.55);font:900 14px/1 var(--serif);color:#fff;letter-spacing:.04em}
+.mv-count b{font-size:20px;color:#ff6b5f;font-variant-numeric:tabular-nums}
+.mv-sohn.tap .mv-brush,.mv-sohn.tap .p{animation-duration:5s}
+
+/* 04 백백교 — 확대경이 저 혼자 흰 옷 사이를 더듬음 */
+.mv-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(1) contrast(1.1) brightness(.62);animation:mvDrift 30s ease-in-out infinite alternate}
+@keyframes mvDrift{to{transform:scale(1.08)}}
+.mv-lp{position:absolute;left:0;top:0;z-index:3;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;overflow:hidden;border:3px solid #d9d8d3;box-shadow:0 0 0 2px #000,0 14px 30px rgba(0,0,0,.8),inset 0 0 22px rgba(0,0,0,.6);will-change:transform;touch-action:none}
+.mv-lp>div{position:absolute;inset:0;background-repeat:no-repeat;filter:grayscale(1) contrast(1.25) brightness(1.05)}
+.mv-lp::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.25),transparent 40%)}
+.mv-ask{position:absolute;left:var(--g);right:var(--g);top:16%;z-index:4;margin:0;font:900 22px/1.45 var(--serif);color:#fff;text-shadow:0 2px 16px #000}
+.mv-loupe{touch-action:pan-y}
+
+/* ── 다른 긔사 — 작은 움직이는 사진 ── */
+.mm-alt .mm-ob.mv{position:relative;height:96px;background:#e3e2de}
+.mm-alt{grid-template-columns:84px 1fr!important}
+.mm-ob.mv .w{position:relative;display:block;height:86%;max-width:90%}
+.mm-ob.mv .w img{display:block;height:100%;width:auto;max-width:100%;object-fit:contain;filter:grayscale(1) contrast(1.1)}
+.mm-ob.mv>img{max-width:none!important;max-height:none!important}
+.mm-ob.mv em{font-style:normal}
+/* 대문 — 쿵 쿵 쿵 */
+.mv-door .w{animation:mvKnock 5s ease infinite}
+@keyframes mvKnock{0%,60%,100%{transform:none}63%{transform:translateX(-2px)}66%{transform:translateX(2px)}70%{transform:translateX(-2px)}73%{transform:translateX(2px)}77%{transform:translateX(-1px)}}
+.mv-door .kk{position:absolute;font:900 11px/1 var(--serif);font-style:normal;color:var(--red);opacity:0;animation:mvKK 5s ease infinite}
+.mv-door .kk.a{left:4px;top:20%}.mv-door .kk.b{right:4px;top:42%;animation-delay:.25s}.mv-door .kk.c{left:6px;top:64%;animation-delay:.5s}
+@keyframes mvKK{0%,60%{opacity:0;transform:scale(.6)}64%{opacity:1;transform:scale(1.15)}80%,100%{opacity:0}}
+.mv-door.tap .w{animation:mvKnock 1.2s ease}
+/* 금시계 — 지금 시각으로 감 */
+.mv-watch .hands{position:absolute;left:47.5%;top:45%;width:0;height:0}
+.mv-watch .hands i{position:absolute;left:-1px;bottom:0;width:2px;background:#1a1a1a;border-radius:1px;transform-origin:50% 100%}
+.mv-watch .hands .h{height:9px;width:2.4px}.mv-watch .hands .m{height:14px;width:1.6px}.mv-watch .hands .s{height:16px;width:1px;background:var(--red)}
+/* 빈 띠지 — 돈다발이 잠깐 비쳣다 사라짐 */
+.mv-straps .was{position:absolute;left:0;top:6%;opacity:0;animation:mvGhost 7s ease-in-out infinite}
+@keyframes mvGhost{0%,30%{opacity:0}50%{opacity:.75}70%,100%{opacity:0}}
+/* 현진건 · 김정필 — 사진 밋 글귀가 바뀜 */
+.mv-hyun>img,.mv-kim>img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;filter:grayscale(1) contrast(1.15)}
+.mv-hyun .t{position:absolute;left:0;right:0;bottom:0;height:20px;background:rgba(0,0,0,.75);color:#fff;font:700 10px/20px var(--sans);text-align:center;overflow:hidden}
+.mv-hyun .t span{display:block;animation:mvTick2 6s ease infinite}
+.mv-hyun .t span+span{color:#ff6b5f}
+@keyframes mvTick2{0%,40%{transform:translateY(0)}50%,90%{transform:translateY(-20px)}100%{transform:translateY(0)}}
+.mv-hyun>img{animation:mvPush 6s ease-in-out infinite}
+@keyframes mvPush{50%{transform:scale(1.08)}}
+.mv-kim .band{position:absolute;left:-4%;right:-4%;top:22%;height:22%;display:grid;place-items:center;background:#0b0b0b;color:#fff;font:900 11px/1 var(--serif);letter-spacing:.12em;transform:rotate(-4deg);animation:mvBand 7s cubic-bezier(.5,0,.3,1) infinite}
+@keyframes mvBand{0%,38%{transform:rotate(-4deg)}50%,80%{transform:translateY(240%) rotate(-4deg)}92%,100%{transform:rotate(-4deg)}}
+/* 주판 — 알이 저 혼자 올라갓다 한꺼번에 떨어짐 */
+.mv-abacus .w{height:56%!important}
+.mv-abacus .full{position:absolute;left:0;top:0;opacity:0;animation:mvBeads 7s ease infinite}
+@keyframes mvBeads{0%{opacity:0;transform:none}55%{opacity:1;transform:none}70%{opacity:1;transform:none}80%{opacity:0;transform:translateY(6px)}100%{opacity:0}}
+/* 장진홍 — 금지된 지면이 판결 지면으로 밀려남 */
+.mv-jang>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1)}
+.mv-jang .bef{animation:mvWipe 8s ease-in-out infinite}
+.mv-jang .hd{position:absolute;top:0;bottom:0;width:2px;background:var(--red);animation:mvHd 8s ease-in-out infinite}
+@keyframes mvWipe{0%,25%{clip-path:inset(0 0 0 0)}55%,85%{clip-path:inset(0 0 0 100%)}100%{clip-path:inset(0 0 0 0)}}
+@keyframes mvHd{0%,25%{left:0}55%,85%{left:100%}100%{left:0}}
+/* 금 요대 — 사라졋다 희미하게 돌아옴 */
+.mv-belt .w{height:60%!important;animation:mvVanish 9s ease infinite}
+@keyframes mvVanish{0%,20%{opacity:1}35%,55%{opacity:0}70%{opacity:.35}85%,100%{opacity:1}}
+.mv-belt .t{position:absolute;left:0;right:0;bottom:4px;height:14px;overflow:hidden;font:700 9.5px/14px var(--sans);text-align:center;color:var(--red)}
+.mv-belt .t span{display:block;animation:mvTick3 9s ease infinite}
+@keyframes mvTick3{0%,30%{transform:translateY(0)}36%,63%{transform:translateY(-14px)}70%,96%{transform:translateY(-28px)}100%{transform:translateY(0)}}
+.mm-ob.mv.tap{animation:mvTap .4s ease}
+@keyframes mvTap{40%{transform:scale(.95)}}
+@media (prefers-reduced-motion:reduce){.mv *{animation:none!important}}

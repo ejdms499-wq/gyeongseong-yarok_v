@@ -34,14 +34,14 @@
       var f = b.dataset.f;
       if (f === 'all') { out.hidden = true; out.innerHTML = ''; front.hidden = false; }
       else {
-        var leads = $$('.mm-case', front).filter(function (c) { return c.dataset.tag === f; }).map(function (c) { return $('.mm-lead', c).outerHTML; });
+        var leads = $$('.mm-case', front).filter(function (c) { return c.dataset.tag === f; }).map(function (c) { var k = c.cloneNode(true), al = $('.mm-alts', k); if (al) al.remove(); return k.outerHTML; });
         var alts = $$('.mm-alt', front).filter(function (a) { return a.dataset.tag === f; }).map(function (a) { return a.outerHTML; });
         out.innerHTML = '<div class="mm-hd"><small>' + f + '면</small><h2>' + f + '면의 긔사 ' + kn(leads.length + alts.length) + ' 건</h2></div>' +
           leads.join('') + '<div class="mm-alts solo">' + alts.join('') + '</div>' +
           '<button type="button" class="mm-back">온 지면으로 도라가기</button>';
         $$('.mb-rv', out).forEach(function (el) { el.classList.add('in'); });
         $('.mm-back', out).onclick = function () { $('button[data-f="all"]', nav).click(); };
-        out.hidden = false; front.hidden = true;
+        out.hidden = false; front.hidden = true; if (W.mmMv) W.mmMv(out);
       }
       tone('tick');
       var top = nav.getBoundingClientRect().top + W.scrollY - 48;
@@ -66,7 +66,7 @@
       setTimeout(function () { location.href = el.getAttribute('href') || el.dataset.href; }, calm ? 0 : ms);
     });
   }
-  act($('#mmExpo'), 'torn', 900, 'stamp');
+  act($('#mmExpo'), 'torn', 1300, 'stamp');
   act($('#mmDesk'), 'pulled', 900, 'tick');
 
   /* ── 광고 ── */
@@ -91,4 +91,43 @@
     shop.classList.remove('cut'); seek.classList.remove('found'); black.classList.remove('on');
     ['#mmExpo', '#mmDesk'].forEach(function (s) { $(s).classList.remove('torn', 'pulled'); });
   });
+
+  /* ══ 일면 — 움직이는 사진 ══ */
+  (function () {
+    var io = 'IntersectionObserver' in W ? new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('on', e.isIntersecting); if (e.isIntersecting) first(e.target); }); }, { threshold: .25 }) : null;
+    function first(el) {
+      if (el.dataset.seen) return; el.dataset.seen = 1;
+      var b = $('.mv-count b', el); if (b) { var to = +b.dataset.to, t0 = performance.now(); (function f(t) { var p = Math.min(1, (t - t0) / 2400); b.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(f); })(t0); }
+    }
+    function tap(el) {
+      el.classList.remove('tap'); void el.offsetWidth; el.classList.add('tap'); clearTimeout(el._t); el._t = setTimeout(function () { el.classList.remove('tap'); }, 1600);
+      var k = el.dataset.mv; buzz(k === 'door' ? [25, 90, 25, 90, 25] : k === 'letter' || k === 'sohn' ? [10, 40, 30] : 12); tone(k === 'letter' ? 'stamp' : 'tick');
+    }
+    function scan(root) {
+      $$('.mv', root || D).forEach(function (el) {
+        if (el._mv) return; el._mv = 1; if (io) io.observe(el); else el.classList.add('on');
+        if (el.dataset.mv !== 'loupe') el.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); tap(el); });
+        if (el.dataset.mv === 'loupe') loupe(el);
+      });
+    }
+    /* 금시계 — 지금 시각 */
+    function clock() { var d = new Date(), s = d.getSeconds(), m = d.getMinutes() + s / 60, h = (d.getHours() % 12) + m / 60;
+      $$('.mv-watch .hands').forEach(function (hd) { hd.children[0].style.transform = 'rotate(' + h * 30 + 'deg)'; hd.children[1].style.transform = 'rotate(' + m * 6 + 'deg)'; hd.children[2].style.transform = 'rotate(' + s * 6 + 'deg)'; }); }
+    clock(); setInterval(clock, 1000);
+    /* 확대경 — 혼자 더듬다가, 손가락을 대면 따라옴 */
+    function loupe(el) {
+      var lp = $('.mv-lp', el), inn = $('.mv-lp>div', el), Z = 2.4, R = 60, man = null, t0 = performance.now(), x = 0, y = 0;
+      function place(px, py) { var w = el.clientWidth, h = el.clientHeight; x = Math.max(R, Math.min(w - R, px)); y = Math.max(R, Math.min(h - R, py));
+        lp.style.transform = 'translate(' + x + 'px,' + y + 'px)'; inn.style.backgroundSize = (w * Z) + 'px ' + (h * Z) + 'px'; inn.style.backgroundPosition = (-(x * Z - R)) + 'px ' + (-(y * Z - R)) + 'px'; }
+      (function f(t) { if (el.isConnected) requestAnimationFrame(f); if (!el.classList.contains('on') || man) return;
+        var k = (t - t0) / 1000, w = el.clientWidth, h = el.clientHeight; place(w * (.5 + .32 * Math.sin(k * .37)), h * (.62 + .2 * Math.sin(k * .53 + 1.3))); })(t0);
+      function pos(e) { var r = el.getBoundingClientRect(); place(e.clientX - r.left, e.clientY - r.top); }
+      lp.addEventListener('pointerdown', function (e) { man = 1; lp.setPointerCapture && lp.setPointerCapture(e.pointerId); pos(e); buzz(8); e.preventDefault(); });
+      lp.addEventListener('pointermove', function (e) { if (man) { pos(e); e.preventDefault(); } });
+      function up() { if (!man) return; man = null; t0 = performance.now() - 1000 * Math.asin(Math.max(-1, Math.min(1, (x / el.clientWidth - .5) / .32))) / .37; }
+      lp.addEventListener('pointerup', up); lp.addEventListener('pointercancel', up);
+      el.addEventListener('click', function (e) { if (e.target.closest('.mv-lp')) return; man = 1; var r = el.getBoundingClientRect(); place(e.clientX - r.left, e.clientY - r.top); buzz(8); setTimeout(function () { man = null; }, 2500); });
+    }
+    W.mmMv = scan; scan();
+  })();
 })(window, document);

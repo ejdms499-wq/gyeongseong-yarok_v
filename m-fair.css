@@ -574,3 +574,15 @@ html,body.fx{height:100%;overflow:hidden;overscroll-behavior:none}
 .ph-wind i{flex:0 0 72px;height:3px;background:#2a2a2a;position:relative}
 .ph-wind b{position:absolute;left:0;top:0;bottom:0;width:0;background:#ecebe7;transition:width .2s linear}
 .ph-wind em{font-style:normal;flex:1;min-width:0}
+
+/* 1017 입장권 — 가운데 정렬 · 반권 뜯으면 표가 가운데로 오고 「개찰」이 표 한가운데 찍힘 */
+.wl-p.p3{text-align:center;align-items:center}
+.wl-p.p3>*{width:100%;max-width:346px}
+.wl-p.p3 h2{margin-left:auto;margin-right:auto}
+.tk{width:100%;max-width:346px}
+.tk-main{transition:transform .7s cubic-bezier(.3,1.2,.4,1)}
+.tk.torn .tk-main{transform:translateX(35px)}
+.tk-stub{transition:transform .7s cubic-bezier(.3,1.2,.4,1),opacity .6s ease .1s}
+.tk-punch{right:auto!important;left:50%;transform:translate(-50%,-50%) rotate(-12deg) scale(1.8)!important;transition:opacity .35s ease .45s,transform .45s cubic-bezier(.3,1.6,.5,1) .45s}
+.tk.torn .tk-punch{transform:translate(-50%,-50%) rotate(-12deg) scale(1)!important}
+.wl-p.p3 .wl-skip{align-self:center;width:auto}
