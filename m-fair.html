@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<!-- 경성야록 부록 · 京城事件博覽會 — 폰판 (폰에서 fair.html 이 이 쪽으로 넘김 · 컴퓨터판은 fair.html?pc=1)
+     글 · 작품 · 1929 자료는 컴퓨터판과 같은 fair-data.js 를 그대로 씀. 새로 지어낸 사실 없음. -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#050505">
+<title>경성야록 · 경성사건박람회</title>
+<link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
+<link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
+<link rel="stylesheet" href="yk-mbook.css?v=11">
+<link rel="stylesheet" href="m-fair.css?v=1">
+</head>
+<body class="fx">
+
+<div class="mb-bar"><a href="index.html#appendix">‹ 本紙</a><span class="mb-now" data-def="경성사건박람회"></span><button type="button" class="fx-passbtn" data-open="fxPass"><b id="passN">0</b>/4</button><button data-open="mbToc">案內圖</button><i class="mb-prog"></i></div>
+
+<!-- 하늘 · 먼 경성 · 안개 (화면 뒤에 고정) -->
+<div class="fx-sky" aria-hidden="true"><i class="fx-stars"></i><i class="fx-far"></i><i class="fx-fog a"></i><i class="fx-fog b"></i></div>
+
+<!-- 정문 -->
+<header class="fx-gate mb-cover" id="gate">
+  <div class="g-art"><img src="assets/expo/mj-gate.jpg" alt="전구로 두른 박람회 정문 (재현 그림)"><span class="rt">그림 · 재현</span></div>
+  <div class="g-in">
+    <p class="g-k">京城野錄 附錄 · 子正 開場 · 鷄鳴 閉場</p>
+    <h1><span>京城事件</span><span>博覽會</span></h1>
+    <p class="g-ko">경성사건박람회</p>
+    <p class="g-lede">지면에서 끗나지 안은 사건이<br>소설 · 노래 · 활동사진이 되어<br>백 년을 건너온 긔록.</p>
+    <div class="tk" id="tk">
+      <div class="tk-main"><img src="assets/expo/ex-ticket-adult.jpg" alt="1929년 조선박람회 대인 입장권 (실물)"></div>
+      <div class="tk-stub" id="tkStub" role="button" tabindex="0" aria-label="반권을 뜯고 입장하기"><span>半<br>券</span><i class="tk-date" id="tkDate"></i></div>
+      <b class="tk-punch" id="tkPunch">改札</b>
+    </div>
+    <p class="g-how" id="gHow">반권을 오른쪽으로 밀어 뜨드시압 — 또는 눌러도 되오</p>
+    <a class="g-skip" href="#st-info" data-goto="st-info">개찰 업시 둘러보기 ↓</a>
+  </div>
+</header>
+
+<!-- 회장 거리 (fair-data.js 로 세움) -->
+<div class="fx-rail" id="fxRail"><p id="fxSay">이번은 정문이오.</p><ol id="fxDots"></ol></div>
+<main class="fx-street" id="street"></main>
+
+<footer class="fx-foot">
+  <p>시즌 1 · 事件은 다른 作品으로 이어진다</p>
+  <p>작품 정보는 리서치 자료집과 공개 자료 기준 · 1990년 이후 작품은 포스터와 장면 없이 제목 · 연도 · 찾아보기만 둡니다 · 재현 그림은 그림마다 '재현'이라 밝힘</p>
+  <a href="index.html#appendix">본지로 도라가기</a>
+</footer>
+
+<!-- 목차 = 회장 안내도 -->
+<div class="mb-sheet" id="mbToc" role="dialog" aria-label="회장 안내도">
+  <div class="mb-sh-hd"><b><small>案內圖</small>경성사건박람회 회장</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-bd"><nav class="mb-toc"></nav></div>
+</div>
+
+<!-- 관 안 (관마다 다시 그림) -->
+<div class="mb-sheet fx-hall" id="shHall" role="dialog" aria-label="전시관">
+  <div class="mb-sh-hd"><b><small id="hlKj">陳列館</small><span id="hlName">관</span></b><button class="mb-sh-x" data-close aria-label="관 밧그로">×</button></div>
+  <div class="mb-sh-bd" id="hlBody"></div>
+</div>
+
+<!-- 책 펼치기 -->
+<div class="mb-sheet light fx-book" id="shBook" role="dialog" aria-label="책">
+  <div class="mb-sh-hd"><b><small>文學館 · 펼친 책</small><span id="bkHead">책</span></b><button class="mb-sh-x" data-close aria-label="책 덥기">×</button></div>
+  <div class="mb-sh-bd" id="bkBody"></div>
+</div>
+
+<!-- 안내소 -->
+<div class="mb-sheet light fx-info" id="shInfo" role="dialog" aria-label="안내소">
+  <div class="mb-sh-hd"><b><small>案內所 · 一九二九 朝鮮博覽會</small>안내소</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <nav class="mb-tabs" id="ifTabs"></nav>
+  <div class="mb-sh-bd" id="ifBody"></div>
+</div>
+
+<!-- 관람 수첩 -->
+<div class="mb-sheet light fx-pass" id="fxPass" role="dialog" aria-label="관람 수첩">
+  <div class="mb-sh-hd"><b><small>觀覽 印章 手帖</small>관람 수첩</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-bd" id="psBody"></div>
+</div>
+
+<script src="fair-data.js"></script>
+<script src="m-fair.js?v=1"></script>
+<script>window.MB_KO = window.MB_KO || { '경성사건박람회장': '경성사건박람회장' };</script>
+<script src="yk-mbook.js?v=12"></script>
+</body>
+</html>
