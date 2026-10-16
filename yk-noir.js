@@ -29,7 +29,8 @@
     'html.yk-noir:not(#yn) body .archive-radio .rx-radio,html.yk-noir:not(#yn) body .archive-radio .rx-stage,html.yk-noir:not(#yn) body .yk-gramo,html.yk-noir:not(#yn) body [class*="radio"] [class*="glow"]{filter:grayscale(1)!important}',
     'html.yk-noir:not(#yn) body .cb-seal span{color:#333!important}',
     'html.yk-noir:not(#yn) body *{scrollbar-color:#555 transparent}',
-    'html.yk-noir *::before,html.yk-noir *::after{filter:grayscale(1)}',
+    'html.yk-noir:not(#yn) body *::before,html.yk-noir:not(#yn) body *::after{filter:grayscale(1)!important}',
+    'html.yk-noir:not(#yn) body .ykg-tab{filter:grayscale(1)!important}',
     'html.yk-noir ::selection{background:#0e0e0e;color:#f3f2ef}',
     'html.yk-noir .ykg-toast{display:none!important}',
     /* 본지(메인) 첫 면 머리 — 검은 음화 */
@@ -346,13 +347,14 @@
   function one(e) {
     if (e.__yn || e.nodeType !== 1) return; e.__yn = 1;
     if (/^(IMG|VIDEO|CANVAS|SCRIPT|STYLE|IFRAME|SOURCE|PICTURE)$/.test(e.tagName)) return;
-    if (e.closest && e.closest('.yn-neg,#ykn,.ykp-veil,.m-dock,.yn-flip')) return;
+    if (e.closest && e.closest('.yn-neg,#ykn,.m-dock,.yn-flip')) return;
     var cs = getComputedStyle(e);
     for (var i = 0; i < PROPS.length; i++) { var v = cs[PROPS[i][0]]; if (v && v.indexOf('rgb') === 0) { var f = fix(v); if (f) e.style.setProperty(PROPS[i][1], f, 'important'); } }
     var bi = cs.backgroundImage;
     if (bi && bi !== 'none') {
       if (/gradient/.test(bi)) { var nb = fixStr(bi); if (nb !== bi) e.style.setProperty('background-image', nb, 'important'); }
       if (PAPER.test(bi)) { e.style.setProperty('background-image', 'none', 'important'); bi = 'none'; }
+      if (/url\(/.test(bi) && (e.textContent || '').replace(/\s+/g, '').length < 20) e.style.setProperty('filter', 'grayscale(1)', 'important');
       if (/url\(/.test(bi)) { e.style.setProperty('background-blend-mode', 'luminosity', 'important'); var bc = parse(cs.backgroundColor); if (!bc || bc.a === 0) e.style.setProperty('background-color', 'rgb(128,128,128)', 'important'); }
     }
     var sh = cs.textShadow; if (sh && sh !== 'none' && /rgb/.test(sh)) { var ns = fixStr(sh); if (ns !== sh) e.style.setProperty('text-shadow', ns, 'important'); }
