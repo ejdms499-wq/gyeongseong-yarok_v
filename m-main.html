@@ -12,7 +12,7 @@
 <link href="case-baekbaekgyo/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="case-jukcheomjeong/fonts/fonts.css" rel="stylesheet"/>
 <link href="yk-mbook.css?v=12" rel="stylesheet"/>
-<link href="m-main.css?v=5" rel="stylesheet"/>
+<link href="m-main.css?v=6" rel="stylesheet"/>
 </head>
 <body class="mm" data-whoosh="case-jukcheomjeong/audio/whoosh.mp3">
 <div class="mb-bar mm-bar"><a aria-label="경성야록 — 맨 우로" class="mm-brand" href="#top"><svg aria-hidden="true" class="mm-mark sm" viewBox="0 0 100 100"><use href="#mmLogo"></use></svg><b>경성야록</b></a><span class="mb-now" data-def=""></span><button aria-label="차례" data-open="mbToc">차례</button><i class="mb-prog"></i></div>
@@ -24,13 +24,6 @@
 <div class="mm-info"><p>신문 아래 칸에서<br/>깨여난 경성의 사건</p><p class="r">네 사건<br/>1920 — 1940</p></div>
 <div class="mm-today"><p class="mm-date" id="mmDate">소화 십일 년</p><p class="mm-now" id="mmNow">지금은 —</p><p class="mm-ago" id="mmAgo">구십 년 전 오늘날</p><p class="mm-stop">이날 본보는 발행되지 못하엿다 — 정간 중</p></div>
 <p class="mm-tag">밤이 <b>깁허지면</b><br/>니저진 사건이<br/><b>깨여나나니라.</b></p>
-<p class="mm-sub2">신문 한 줄로부터 비롯하는 경성의 괴사</p>
-<ol class="mm-list">
-<li><a href="case-jukcheomjeong/m.html"><s>01</s><span><b>죽첨정 사건</b><small>사회 · 1933 · 경성</small></span><img alt="" src="assets/noir/jk_cover.jpg"/></a></li>
-<li><a href="case-maria/m.html"><s>02</s><span><b>부산 마리아 참살사건</b><small>사회 · 1931 · 부산</small></span><img alt="" src="assets/noir/mr_cover.jpg"/></a></li>
-<li><a href="case-sonkijeong/m.html"><s>03</s><span><b>손기정 군과 지워진 표지</b><small>문화예술 · 1936 · 경성</small></span><img alt="" src="assets/noir/sk_cover.jpg"/></a></li>
-<li><a href="case-baekbaekgyo/m.html"><s>04</s><span><b>백백교 사건</b><small>경제 · 1937 · 경성</small></span><img alt="" src="assets/noir/bb_cover.jpg"/></a></li>
-</ol>
 </header>
 <!-- 면 고르기 -->
 <nav aria-label="지면 고르기" class="mm-secs" id="mmSecs">
@@ -44,7 +37,7 @@
 <!-- 일면 -->
 <main id="mmFront">
 <section class="mm-sec mm-front" data-ch="일면 · 오늘 밤 열린 사건 넷" data-kj="일면" data-no="1" data-sub="죽첨정 · 마리아 · 손긔정 · 백백교" id="front">
-<div class="mm-hd"><small>일면 · 오늘 밤 열린 사건</small><h2>사건 넷,<br/>지면이 다시 열렷소</h2><p>눌러서 그 사건의 지면으로 드러가시압. 사건마다 아래에 — 가튼 면의 다른 긔사가 잇소.</p></div>
+<div class="mm-hd"><small>일면 · 오늘 밤 열린 사건</small><h2>사건 넷,<br/>지면이 다시 열렷소</h2><p>사진을 누르면 움직이고, 글을 누르면 그 사건의 지면이 열리오.</p></div>
 <article class="mm-case" data-tag="사회">
 <div aria-label="움직이는 사진 — 약병. 누르면 라벨이 뒤집히오" class="mv mv-bottle" data-mv="bottle" role="button" tabindex="0">
 <span class="mv-no">01</span>
@@ -134,7 +127,7 @@
 </article>
 </section>
 <!-- 색인 -->
-<section class="mm-sec mm-paper" data-ch="각면 긔록 색인" data-kj="색인" data-no="2" data-sub="사회 7 · 경제 4 · 문화예술 4" id="index">
+<section class="mm-sec mm-paper" hidden id="index">
 <div class="mm-hd dk"><small>각면 긔록 색인 · 제일집 조사 자료에 의함</small><h2>열다섯 건의 긔록</h2></div>
 <div class="mm-ixtabs" role="tablist"><button class="on" data-ix="사회" type="button">사회<sup>7</sup></button><button data-ix="경제" type="button">경제<sup>4</sup></button><button data-ix="문화예술" type="button">문화예술<sup>4</sup></button></div>
 <ol class="mm-ix" data-ix="사회">
@@ -161,8 +154,9 @@
 <p class="mm-ixkey"><i class="f">일면</i> 일면 게재 · <i class="k">지면 확인</i> 본보 지면 일자 확인 · <i>다른 문헌</i> 다른 문헌에 의함 · 붉은 줄은 지면이 열린 사건</p>
 </section>
 <!-- 부록 · 편집국 · 호외 -->
-<section class="mm-sec mm-rooms" data-ch="부록 · 편집국 · 호외" data-kj="부록" data-no="3" data-sub="박람회 · 자정의 편집국 · 인쇄소" id="rooms">
-<div class="mm-hd"><small>부록 · 독자판</small><h2>자정에 문을 여는<br/>세 곳</h2></div>
+<section class="mm-sec mm-rooms" data-ch="부록 · 편집국 · 호외" data-kj="부록" data-no="2" data-sub="박람회 · 자정의 편집국 · 인쇄소" id="rooms">
+<div class="mm-hd"><small>부록 · 독자판</small><h2>자정에 문을 여는 세 곳</h2><p>옆으로 밀어 보시압 →</p></div>
+<div class="mm-rrow">
 <a class="mm-room mm-expo mb-rv" href="fair.html" id="mmExpo">
 <span class="mm-ph"><img alt="전구로 두른 박람회 정문 (재현 그림)" loading="lazy" src="assets/noir/expo_gate.jpg"/></span><span class="mm-rt">그림 · 재현</span>
 <span class="mm-rk">부록 · 소화 사 년 · 경복궁</span>
@@ -181,14 +175,15 @@
 </a>
 <a class="mm-room mm-press mb-rv" href="hogoe.html" id="mmPress">
 <span class="mm-ph"><img alt="밤의 인쇄소 윤전기 (재현 그림)" loading="lazy" src="assets/noir/press.jpg"/></span><span class="mm-rt">그림 · 재현</span>
-<span class="mm-rk">독자판 · 자정의 인쇄소 · 독자 창작 · 실제 사건 아님</span>
-<b class="mm-rh">당신의 이약이를<br/>호외로 찍어 드리오</b>
+<span class="mm-rk">독자판 · 실제 사건 아님</span>
+<b class="mm-rh">당신의 호외</b>
 <span class="mm-rd">활자 서랍을 열고, 종이와 잉크를 고르고, 윤전기 손잡이를 당기면 한 장짜리 호외가 나오오.</span>
 <span class="mm-act">인쇄소로 드러가시압 →</span>
 </a>
+</div>
 </section>
 <!-- 광고 -->
-<section class="mm-sec mm-ads" data-ch="광고" data-kj="광고" data-no="4" data-sub="상뎜 · 심인 · 단성사" id="ads">
+<section class="mm-sec mm-ads" data-ch="광고" data-kj="광고" data-no="3" data-sub="상뎜 · 심인 · 단성사" id="ads">
 <div class="mm-adh"><b>광 고</b><span>녯 지면의 광고를 다시 짜 넣엇소 · 눌러 보시압</span></div>
 <button aria-label="경성야록 상뎜으로" class="mm-ad mm-ad-shop mb-rv" data-href="shop.html" type="button">
 <svg aria-hidden="true" class="mm-cut" preserveAspectRatio="none" viewBox="0 0 100 100"><rect height="97.6" pathLength="100" width="97.6" x="1.2" y="1.2"></rect></svg>
@@ -199,10 +194,6 @@
 <span class="mm-ad-d">그 시절 동아일보 · 신동아에 실린 진짜 광고. 가위로 오려 엽서로 간직하시압. 가위는 빌려 드리오.</span>
 <span class="mm-ad-go">눌러서 오리기 ✂</span>
 </button>
-<div class="mm-reals">
-<p class="mm-reals-h"><b>그 시절 진짜 광고</b><span>눌러서 상뎜에서 크게 보기 →</span></p>
-<div class="mm-reals-row"><a class="mm-real" href="m-shop.html#v-smoka"><span><img alt="스모카 치약 · 급하면 광고" loading="lazy" src="assets/ads/smoka.jpg"/></span><em>1930</em><b>스모카 치약</b></a><a class="mm-real" href="m-shop.html#v-morinaga"><span><img alt="모리나가 캐러멜 · 자라는 봄! 광고" loading="lazy" src="assets/ads/morinaga.jpg"/></span><em>1931</em><b>모리나가 캐러멜</b></a><a class="mm-real" href="m-shop.html#v-x_kirin"><span><img alt="기린 맥주 광고" loading="lazy" src="assets/ads/x_kirin.jpg"/></span><em>1931</em><b>기린 맥주</b></a><a class="mm-real" href="m-shop.html#v-hwasin"><span><img alt="화신 연쇄점 광고" loading="lazy" src="assets/ads/hwasin.jpg"/></span><em>1935</em><b>화신 연쇄점</b></a><a class="mm-real" href="m-shop.html#v-lion2"><span><img alt="라이온 · 50만 명 대현상 광고" loading="lazy" src="assets/ads/lion2.jpg"/></span><em>1935</em><b>라이온</b></a><a class="mm-real" href="m-shop.html#v-x_ford"><span><img alt="1935년형 포드 트럭 광고" loading="lazy" src="assets/ads/x_ford.jpg"/></span><em>1935</em><b>1935년형 포드 트럭</b></a><a class="mm-real" href="m-shop.html#v-x_retcream"><span><img alt="레토 크림 광고" loading="lazy" src="assets/ads/x_retcream.jpg"/></span><em>1935</em><b>레토 크림</b></a><a class="mm-real" href="m-shop.html#v-n_ski"><span><img alt="스키 · 겨울 여행 광고" loading="lazy" src="assets/ads/n_ski.jpg"/></span><em>1937</em><b>스키</b></a><a class="mm-real" href="m-shop.html#v-x_utena2"><span><img alt="우테나 물분 광고" loading="lazy" src="assets/ads/x_utena2.jpg"/></span><em>1936</em><b>우테나 물분</b></a><a class="mm-real" href="m-shop.html#v-injan"><span><img alt="인단 · 여름엔 특히 광고" loading="lazy" src="assets/ads/injan.jpg"/></span><em>1937</em><b>인단</b></a><a class="mm-real more" href="m-shop.html#vitrine"><span>마흔여섯<br/>뎜<br/>전부</span><b>상뎜으로 →</b></a></div>
-</div>
 <div class="mm-ad-row">
 <button aria-label="심인 광고 — 사람을 찻는 곳으로" class="mm-ad mm-ad-seek mb-rv" data-href="seek.html" type="button">
 <span class="mm-ad-k">심인</span>
@@ -223,12 +214,12 @@
 <p class="mm-adnote">※ 우 광고는 경성야록이 그 시절 광고란처럼 다시 짠 것이오 (재현).</p>
 </section>
 <!-- 구독 안내 -->
-<section class="mm-sec mm-subs" data-ch="구독 안내" data-kj="구독" data-no="5" data-sub="정긔 독자 전용 지면" id="sub">
-<div class="mm-hd dk"><small>영업국 · 구독 안내 · 시연 화면</small><h2>이 사건 긔록은<br/>「정긔 독자」께만 배달하오</h2><p>지금 열린 네 사건은 시험판이오. 남은 긔록은 구독하신 독자께 한 호식 차례로 배달되오.</p></div>
+<section class="mm-sec mm-subs" data-ch="구독 안내" data-kj="구독" data-no="4" data-sub="정긔 독자 전용 지면" id="sub">
+<div class="mm-hd dk"><small>영업국 · 구독 안내 · 시연 화면</small><h2>남은 긔록은<br/>정긔 독자께만</h2></div>
 <div class="mm-plans">
-<div class="mm-plan"><small>호외 한 장</small><b>오 전</b><span>사건 하나만 · 한 번 닑고 끗</span></div>
-<div class="mm-plan best"><small>권함 · 월정 구독</small><b>일 원</b><span>매달 새 사건 · 모든 사건 · 수신긔 방송 · 호외 무제한</span></div>
-<div class="mm-plan"><small>종신 독자</small><b>십 원</b><span>죽을 때까지 배달 · 편집국 출입증 동봉</span></div>
+<div class="mm-plan"><small>호외 한 장</small><b>오 전</b><span>사건 하나</span></div>
+<div class="mm-plan best"><small>월정 구독</small><b>일 원</b><span>매달 새 사건</span></div>
+<div class="mm-plan"><small>종신 독자</small><b>십 원</b><span>출입증 동봉</span></div>
 </div>
 <p class="mm-subn">※ 구독 접수는 아즉 밧지 안소 (시연 화면). 값은 그 시절 신문값 꼴을 본뜬 것이오.</p>
 </section>
@@ -246,6 +237,6 @@
 </div>
 <script src="case-sonkijeong/m-sk-ko.js"></script>
 <script src="yk-mbook.js?v=14"></script>
-<script src="m-main.js?v=93"></script>
+<script src="m-main.js?v=94"></script>
 </body>
 </html>

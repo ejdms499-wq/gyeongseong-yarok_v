@@ -28,6 +28,7 @@
   /* ── 면 고르기 — 고른 면의 긔사만 한데 모아 보여 줌 ── */
   (function () {
     var nav = $('#mmSecs'), out = $('#mmFiltered'), front = $('#mmFront');
+    function ixOf(f) { var o = $('ol.mm-ix[data-ix="' + f + '"]'); if (!o) return ''; var k = o.cloneNode(true); k.hidden = false; return '<div class="mm-fix"><p class="mm-fix-h">' + f + '면 긔록 목록</p>' + k.outerHTML + '<p class="mm-ixkey">' + ($('.mm-ixkey') || { innerHTML: '' }).innerHTML + '</p></div>'; }
     nav.addEventListener('click', function (e) {
       var b = e.target.closest('button[data-f]'); if (!b) return;
       $$('button', nav).forEach(function (x) { x.classList.toggle('on', x === b); });
@@ -37,7 +38,7 @@
         var leads = $$('.mm-case', front).filter(function (c) { return c.dataset.tag === f; }).map(function (c) { var k = c.cloneNode(true), al = $('.mm-alts', k); if (al) al.remove(); return k.outerHTML; });
         var alts = $$('.mm-alt', front).filter(function (a) { return a.dataset.tag === f; }).map(function (a) { return a.outerHTML; });
         out.innerHTML = '<div class="mm-hd"><small>' + f + '면</small><h2>' + f + '면의 긔사 ' + kn(leads.length + alts.length) + ' 건</h2></div>' +
-          leads.join('') + '<div class="mm-alts solo">' + alts.join('') + '</div>' +
+          leads.join('') + '<div class="mm-alts solo">' + alts.join('') + '</div>' + ixOf(f) +
           '<button type="button" class="mm-back">온 지면으로 도라가기</button>';
         $$('.mb-rv', out).forEach(function (el) { el.classList.add('in'); });
         $('.mm-back', out).onclick = function () { $('button[data-f="all"]', nav).click(); };

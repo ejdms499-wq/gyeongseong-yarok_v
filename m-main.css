@@ -347,3 +347,28 @@ html,body.mm{background:var(--paper)}
 .mm-ob.mv.tap{animation:mvTap .4s ease}
 @keyframes mvTap{40%{transform:scale(.95)}}
 @media (prefers-reduced-motion:reduce){.mv *{animation:none!important}}
+
+/* ── v6 줄이기: 온 지면엔 네 사건만 ── */
+#mmFront .mm-front .mm-alts{display:none}
+#index{display:none!important}
+.mm-fix{margin:26px 0 8px;padding-top:16px;border-top:2px solid var(--ink)}
+.mm-fix-h{margin-bottom:6px;font:700 12px/1 var(--sans);letter-spacing:.16em;color:var(--red)}
+.mm-fix .mm-ix{display:block}
+/* 세 곳 — 옆으로 밀기 */
+.mm-rooms .mm-hd p{margin-top:6px;font:400 12px/1.5 var(--sans);color:var(--nmute,#9a9994)}
+.mm-rrow{display:flex;gap:10px;margin:0 calc(var(--g) * -1);padding:0 var(--g) 6px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.mm-rrow::-webkit-scrollbar{display:none}
+.mm-rrow .mm-room{flex:0 0 82%;margin:0;min-height:0;scroll-snap-align:center;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:3/4}
+.mm-rrow .mm-room .mm-rh{font-size:26px}
+.mm-rrow .mm-room .mm-rd{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mm-rrow .mm-expo .mm-tk{max-width:200px!important;margin:0 0 12px!important}
+/* 광고 — 짧게 */
+.mm-ad-shop{min-height:0;padding:22px 20px 20px}
+.mm-ad-shop .mm-ad-k{margin-top:70px}
+.mm-ad-shop .mm-ad-h{font-size:40px}
+/* 구독 — 한 줄 세 칸 */
+.mm-subs .mm-hd h2{font-size:26px}
+.mm-plans{grid-template-columns:repeat(3,1fr);gap:6px}
+.mm-plan{display:block;padding:12px 8px;text-align:center}
+.mm-plan b{display:block;margin:4px 0 2px;font-size:22px}
+.mm-plan span{font-size:11px}
