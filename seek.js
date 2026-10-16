@@ -447,7 +447,8 @@
 
   /* 목격 수 */
   var board = D.querySelector('.sk-board'), cnt = null, n = 0, li = 0;
-  if (board) { var s = D.createElement('span'); s.innerHTML = hj('고양이 목격', '고양이 목격') + ' <em id="bCat">0</em>'; board.appendChild(s); cnt = s.querySelector('em'); }
+  var MOB = D.body.classList.contains('msk');   /* 폰판은 제 고양이(m-seek.js)를 씀 */
+  if (board && !MOB) { var s = D.createElement('span'); s.innerHTML = hj('고양이 목격', '고양이 목격') + ' <em id="bCat">0</em>'; board.appendChild(s); cnt = s.querySelector('em'); }
 
   function targets() { return [].filter.call(D.querySelectorAll(SPOTS), function (el) { var r = el.getBoundingClientRect(); var cs = getComputedStyle(el); return r.width > 120 && r.bottom > 40 && r.top < innerHeight - 40 && !/hidden|clip/.test(cs.overflow + cs.overflowX + cs.overflowY); }); }
   var live = 0;
@@ -522,7 +523,7 @@
       o.connect(f); f.connect(g); g.connect(ctx.destination); o.start(t); o.stop(t + d + .05);
     } catch (e) {}
   }
-  if (reduce) return;
+  if (reduce || MOB) return;
   function loop() { if (live < 2) spawn(); setTimeout(loop, 6000 + Math.random() * 6000); }
   setTimeout(loop, 3500);
   W.ykCatSpawn = spawn;   /* 시험용 */

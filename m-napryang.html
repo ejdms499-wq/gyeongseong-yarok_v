@@ -11,7 +11,7 @@
 <link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
 <link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
 <link rel="stylesheet" href="yk-mbook.css?v=11">
-<link rel="stylesheet" href="m-napryang.css?v=4">
+<link rel="stylesheet" href="m-napryang.css?v=5">
 </head>
 <body class="np" data-bell="case-jukcheomjeong/audio/bell.mp3" data-whoosh="case-jukcheomjeong/audio/whoosh.mp3">
 
@@ -143,11 +143,16 @@
 <article class="ep" id="ep5" data-n="5" data-ch="대답하지 안는 혐의자" data-no="5" data-kj="봉투 5" data-sub="1932 · 취조실">
   <header class="eh"><p class="env">봉투 제오호</p><h2>대답하지 안는 혐의자</h2><p class="meta">동아일보 1932년 11월 11일 · 2면 5단 · 사건 보도</p></header>
   <div class="iq">
-    <div class="iq-ph"><img src="assets/np/g/ep5.jpg" alt="빈 취조실, 책상과 의자 (재현 그림)"><img class="iq-bulb" src="assets/np/g/v2_bulb.jpg" alt=""><span class="rt">그림 · 재현</span></div>
+    <div class="iq-ph"><img src="assets/np/g/ep5.jpg" alt="빈 취조실, 책상과 의자 (재현 그림)"><span class="rt">그림 · 재현</span></div>
     <div class="iq-lg">
       <p class="iq-hd"><b>취조 긔록</b><em>편집국이 꾸민 장면</em></p>
       <div class="iq-lines" id="iqL" aria-live="polite"><p class="sys">혐의자가 의자에 안저 잇소. 무르시오.</p></div>
       <div class="iq-ch" id="iqC"><button type="button">일흠이 무엇이오</button><button type="button">그날 밤 어듸 잇섯소</button><button type="button">웨 말을 안 하오</button></div>
+      <div class="iq-off" id="iqOff" hidden>
+        <p class="o1">긔록계가 귀띔하오 — 이 사람은 <b>불이 꺼저야</b> 입을 연다 하오.</p>
+        <p class="o2">폰 화면을 잠간 <b>꺼 두엇다가</b>, 다시 켜시오.</p>
+        <button type="button" class="o3" id="iqHold">화면을 끌 수 업스면 — 여기를 꾹 누르고 눈을 감으시오</button>
+      </div>
       <form class="iq-f" id="iqF" autocomplete="off"><input id="iqQ" maxlength="30" placeholder="무를 말을 적으시오" aria-label="혐의자에게 물을 말"><button type="submit">묻기</button></form>
     </div>
   </div>
@@ -203,6 +208,12 @@
   </article>
 </div>
 <div class="mute" id="mute" aria-hidden="true"><p>묵념</p></div>
+<div class="blk" id="blk" aria-hidden="true"></div>
+<div class="trap" id="trap" hidden role="alertdialog" aria-label="나가시려오">
+  <figure><img src="assets/np/g/v2_shoes.jpg" alt="문턱 압헤 노힌 신 두 켤레 (재현 그림)"><span class="rt">그림 · 재현</span></figure>
+  <div class="tp-tx" id="tpTx"></div>
+  <div class="tp-b" id="tpB"><button type="button" id="tpStay">초를 마저 끄겟소</button><button type="button" id="tpGo">그래도 나가겟소</button></div>
+</div>
 
 <!-- 원문 서랍 -->
 <div class="mb-sheet light" id="shSrc" role="dialog" aria-label="원문 확인">
@@ -216,6 +227,6 @@
 
 <script>window.MB_KO = { '납량란': '여름 괴담란', '닑지': '읽지', '긔이한': '기이한', '긔사': '기사', '모핫다': '모았다', '아즉': '아직', '녀름': '여름', '업섯다': '없었다', '잇섯다': '있었다', '뎐화': '전화', '뎐화통': '전화기', '우에': '위에', '드러가기': '들어가기', '끄시오': '끄시오' };</script>
 <script src="yk-mbook.js?v=13"></script>
-<script src="m-napryang.js?v=2"></script>
+<script src="m-napryang.js?v=3"></script>
 </body>
 </html>

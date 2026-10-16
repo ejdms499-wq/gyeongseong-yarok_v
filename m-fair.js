@@ -281,6 +281,7 @@
     else roomMedia(body, h, list);
     W.mb.open('shHall'); stamp(id);
   }
+  W.__fairHall = openHall;
   W.addEventListener('mb:close', function (e) {
     if (e.detail === 'shHall') { stopAll(); openId = null; }
   });
@@ -329,15 +330,48 @@
     var L = list;
     body.innerHTML = head(h, 'mj-room-music.jpg') +
       '<div class="ph">' +
-        '<div class="ph-gram"><img src="' + AD + 'mj-gramophone.png" alt="축음기 (재현 그림)"><i class="ph-disc" id="phDisc"><i class="ph-lbl" id="phLbl"></i></i><span class="rt">그림 · 재현</span><p class="ph-lyric" id="phLyric"></p></div>' +
-        '<p class="hx-hint">' + T({ old: '판을 골라 누르면 바늘이 나리오', now: '음반을 골라 누르면 재생됩니다' }) + '</p>' +
+        '<div class="ph-gram"><img src="' + AD + 'mj-gramophone.png" alt="축음기 (재현 그림)"><i class="ph-disc" id="phDisc"><i class="ph-lbl" id="phLbl"></i></i><span class="rt">그림 · 재현</span><p class="ph-lyric" id="phLyric"></p><div class="ph-crank" id="phCrank" aria-label="태엽 손잡이 — 손가락으로 돌리시오"><i id="phCk"></i></div></div>' +
+        '<div class="ph-wind"><span>태엽</span><i><b id="phWb"></b></i><em id="phWt"></em></div>' +
+        '<p class="hx-hint">' + T({ old: '판을 골라 누르면 바늘이 나리오 · 태엽이 풀리면 노래가 느려지오', now: '음반을 누르면 재생 · 태엽이 풀리면 노래가 느려져요' }) + '</p>' +
         '<div class="ph-flow" id="phFlow"></div>' +
         '<div class="ph-panel" id="phPanel"></div>' +
       '</div>';
     var disc = $('#phDisc'), on = false, au = null, lt = 0, li = 0, cur = -1;
     PH.au = null;
+    /* 태엽 — 손으로 감는 류성긔는 태엽이 풀리면 판이 느려지고 소리가 나저지오 */
+    var wind = 0, wt = 0, ck = $('#phCrank'), ang = 0, lastA = null, quarter = 0, played = false;
+    function rate() { return wind >= .3 ? 1 : .45 + .55 * (wind / .3); }
+    function paintWind() {
+      $('#phWb').style.width = Math.round(wind * 100) + '%';
+      disc.style.setProperty('--spd', (1.8 / Math.max(.3, rate())).toFixed(2) + 's');
+      $('#phWt').innerHTML = !played && wind <= 0 ? T({ old: '판을 걸면 감아 둔 만큼 도오', now: '판을 걸면 감아 둔 만큼 돌아요' })
+        : wind <= 0 ? T({ old: '태엽이 다 풀렷소 — 손잡이 둘레를 빙빙 돌리시오', now: '태엽이 다 풀렸어요 — 손잡이 둘레를 빙빙 돌리세요' })
+        : wind < .3 ? T({ old: '노래가 늘어지오 — 어서 감으시오', now: '노래가 늘어져요 — 어서 감으세요' })
+        : T({ old: '팽팽하게 감겻소', now: '팽팽하게 감겼어요' });
+      ck.classList.toggle('need', played && wind < .3);
+    }
+    function tickWind() {
+      clearInterval(wt); if (!on) return;
+      wt = setInterval(function () {
+        wind = Math.max(0, wind - .2 / 12); if (au) { try { au.playbackRate = rate(); } catch (e) {} }
+        if (wind <= 0) { au && au.pause(); setPlay(false); }
+        paintWind();
+      }, 200);
+    }
+    ck.addEventListener('pointerdown', function (e) { e.preventDefault(); e.stopPropagation(); ck.setPointerCapture && ck.setPointerCapture(e.pointerId); lastA = null; ck.classList.add('hold'); });
+    ck.addEventListener('pointermove', function (e) {
+      if (!ck.classList.contains('hold')) return; e.preventDefault();
+      var r = ck.getBoundingClientRect(), a = Math.atan2(e.clientY - (r.top + r.height / 2), e.clientX - (r.left + r.width / 2));
+      if (lastA !== null) { var d = a - lastA; if (d > Math.PI) d -= 2 * Math.PI; if (d < -Math.PI) d += 2 * Math.PI;
+        ang += d; wind = Math.min(1, wind + Math.abs(d) / (2 * Math.PI) * .2); $('#phCk').style.transform = 'rotate(' + ang.toFixed(3) + 'rad)';
+        var q = Math.floor(Math.abs(ang) / (Math.PI / 2)); if (q !== quarter) { quarter = q; tone('tick'); if (navigator.vibrate) try { navigator.vibrate(6); } catch (x) {} }
+        if (au) { try { au.playbackRate = rate(); } catch (x) {} } paintWind(); }
+      lastA = a;
+    });
+    function ckUp() { ck.classList.remove('hold'); lastA = null; if (!on && wind > .15 && cur >= 0 && $('#phPlay')) play(); }
+    ck.addEventListener('pointerup', ckUp); ck.addEventListener('pointercancel', ckUp);
     function setPlay(v) {
-      on = v; disc.classList.toggle('spin', v); var b = $('#phPlay'); if (b) b.innerHTML = v ? '❚❚ 멈춤' : '▶ 판 걸기';
+      on = v; disc.classList.toggle('spin', v); tickWind(); var b = $('#phPlay'); if (b) b.innerHTML = v ? '❚❚ 멈춤' : '▶ 판 걸기';
       $('#phLyric').classList.toggle('on', v);
       clearInterval(lt);
       var w = L[cur];
@@ -354,6 +388,10 @@
       if (!S.length) { setPlay(false); return; }
       if (au) au.pause();
       au = PH.au = new Audio(); au.preload = 'auto';
+      if (!played) { played = true; if (wind <= 0) wind = .5; }   /* 처음 한 번은 조곰 감아 두엇소 — 곳 풀리오 */
+      if (wind <= 0) { paintWind(); ck.classList.remove('nudge'); void ck.offsetWidth; ck.classList.add('nudge'); return; }
+      try { au.preservesPitch = false; au.mozPreservesPitch = false; au.webkitPreservesPitch = false; } catch (e) {}
+      au.onplaying = function () { try { au.playbackRate = rate(); } catch (e) {} };
       au.onerror = function () { if (k < S.length) { au.src = S[k++]; au.play().catch(function () {}); } else { setPlay(false); $('#phMsg').innerHTML = T({ old: '이 판은 여긔서 소리가 나지 안소 — 아래 단추로 드르시압', now: '여기서는 재생되지 않습니다 — 아래 링크로 들어 보세요' }); } };
       au.onended = function () { setPlay(false); };
       au.src = S[k++]; var p = au.play(); if (p && p.catch) p.catch(function () {});
@@ -386,6 +424,7 @@
     }
     var FL = Flow($('#phFlow'), L.map(function (w) { return '<div class="slv' + (w.still ? ' still' : '') + '"><i class="rec"><b>' + esc(w.title.old) + '<small>' + w.year + '</small></b></i><span>' + T(w.title) + '</span></div>'; }),
       { pull: '판을 아래로 끌어 축음긔에 거시압', onChange: function (i) { pick(i); }, onPick: function (i) { pick(i); if ($('#phPlay')) play(); $('.ph-gram', body).scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
+    paintWind();
     disc.addEventListener('click', function () { if (cur < 0) return; if (on) { au && au.pause(); setPlay(false); } else play(); });
     pick(0);
   }

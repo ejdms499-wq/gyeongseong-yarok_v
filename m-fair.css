@@ -554,3 +554,23 @@ html,body.fx{height:100%;overflow:hidden;overscroll-behavior:none}
 .ld>*:not(.ld-bg){position:relative}
 @media (prefers-reduced-motion:reduce){.fest-garland,.fest-sky-img{animation:none}}
 .ld p{color:#e4e3df;text-shadow:0 1px 10px #000,0 0 3px #000}.ld-seal{background:rgba(5,5,5,.55)}
+
+/* 1016b 창가관 — 겹침 고침 · 태엽 */
+.ph-flow{height:auto!important}
+.ph-flow .cf-stage{min-height:0;height:214px;flex:none}
+.ph-flow .cf-pull{padding:6px var(--g) 2px}
+.ph-disc.spin::after{animation-duration:var(--spd,1.8s)}
+.ph-crank{position:absolute;left:63%;top:75%;width:30%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;touch-action:none;z-index:5;cursor:grab}
+.ph-crank::before{content:"";position:absolute;inset:8%;border-radius:50%;border:1px dashed rgba(255,255,255,.28);transition:border-color .3s}
+.ph-crank i{position:absolute;inset:8%;border-radius:50%;pointer-events:none}
+.ph-crank i::after{content:"";position:absolute;left:50%;top:-4px;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:#fff;box-shadow:0 0 8px rgba(255,255,255,.6)}
+.ph-crank.hold::before{border-color:rgba(255,255,255,.7)}
+.ph-crank.need::before{border-color:var(--red);animation:phNeed 1.4s ease-in-out infinite}
+.ph-crank.nudge{animation:phNudge .5s ease}
+@keyframes phNeed{50%{opacity:.35}}
+@keyframes phNudge{25%{transform:translate(-46%,-50%)}75%{transform:translate(-54%,-50%)}}
+.ph-wind{display:flex;align-items:center;gap:10px;margin:10px var(--g) 0;font:500 11px/1 var(--sans);color:#8a8984}
+.ph-wind span{letter-spacing:.2em;color:#cfcfca}
+.ph-wind i{flex:0 0 72px;height:3px;background:#2a2a2a;position:relative}
+.ph-wind b{position:absolute;left:0;top:0;bottom:0;width:0;background:#ecebe7;transition:width .2s linear}
+.ph-wind em{font-style:normal;flex:1;min-width:0}

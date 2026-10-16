@@ -28,7 +28,7 @@
   function lightUp(go) {
     if (lit) { if (go) goPro(); return; } lit = true;
     $$('#gtFl i').forEach(function (f, i) { setTimeout(function () { f.classList.add('on'); tone('tick'); }, calm ? 0 : 280 + i * 260); });
-    setTimeout(function () { D.body.classList.add('lit'); A().drone(true); if (go) goPro(); }, calm ? 0 : 2100);
+    setTimeout(function () { D.body.classList.add('lit'); A().drone(true); armTrap(); if (go) goPro(); }, calm ? 0 : 2100);
   }
   function goPro() { var p = $('#pro'); W.scrollTo({ top: p.getBoundingClientRect().top + W.scrollY - 92, behavior: 'smooth' }); }
   $('#gtGo').onclick = function () { lightUp(true); };
@@ -182,17 +182,91 @@
       var a = D.createElement('p'); a.className = 'him'; L.appendChild(a); L.scrollTop = L.scrollHeight;
       var dots = 0, t = setInterval(function () { a.textContent = '·'.repeat(++dots % 4); }, 380);
       setTimeout(function () { clearInterval(t); a.textContent = '……'; asked++; busy = false; L.scrollTop = L.scrollHeight; A().heart(asked >= 2);
-        if (asked >= 3) { setTimeout(function () { var s = D.createElement('p'); s.className = 'sys'; s.textContent = '혐의자는 — 끗내 한 마듸도 하지 안앗소.'; L.appendChild(s); L.scrollTop = L.scrollHeight; $('#done5').classList.add('in'); tone('gavel'); buzz([30, 50, 120]); A().heart(false); $('#iqF').hidden = true; $('#iqC').hidden = true; setTimeout(function () { ready(5); }, 1600); }, 900); }
+        if (asked >= 3) { setTimeout(function () { line('sys', '혐의자는 — 한 마듸도 하지 안앗소.'); A().heart(false); $('#iqF').hidden = true; $('#iqC').hidden = true; setTimeout(offAsk, calm ? 0 : 1400); }, 900); }
       }, calm ? 200 : 2300);
+    }
+    function line(c, t) { var p = D.createElement('p'); p.className = c; p.textContent = t; L.appendChild(p); L.scrollTop = L.scrollHeight; return p; }
+    /* 화면을 끄면 — 꺼져 잇던 초(秒)마다 한 줄씩 「……」가 적혀 잇소. 혐의자는 끗내 말하지 안음 (기사 그대로) */
+    var waitOff = false, hidAt = 0, done = false;
+    function hm(d) { var h = d.getHours(), ap = h < 12 ? '오전' : '오후', hh = h % 12 || 12; return ap + ' ' + hh + ':' + ('0' + d.getMinutes()).slice(-2) + ':' + ('0' + d.getSeconds()).slice(-2); }
+    function offAsk() { waitOff = true; var o = $('#iqOff'); o.hidden = false; requestAnimationFrame(function () { o.classList.add('in'); }); L.scrollTop = L.scrollHeight; }
+    D.addEventListener('visibilitychange', function () {
+      if (!waitOff || done) return;
+      if (D.hidden) hidAt = Date.now();
+      else if (hidAt) { var g = Date.now() - hidAt; if (g > 1200) reveal(hidAt, g); hidAt = 0; }
+    });
+    (function () {
+      var b = $('#iqHold'), blk = $('#blk'), t0 = 0, tm = 0;
+      function down(e) { if (!waitOff || done) return; e.preventDefault(); t0 = Date.now(); blk.classList.add('on'); buzz(10); tm = setTimeout(function () { blk.classList.add('deep'); }, 2600); }
+      function up() { if (!t0) return; clearTimeout(tm); var g = Date.now() - t0, a = t0; t0 = 0; blk.classList.remove('on', 'deep');
+        if (g >= 3500) reveal(a, g); else { b.textContent = '눈을 너무 일즉 떳소 — 넉넉히, 꾹 누르고 기다리시오'; } }
+      b.addEventListener('pointerdown', down); b.addEventListener('pointerup', up); b.addEventListener('pointercancel', up); b.addEventListener('pointerleave', up);
+      b.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    })();
+    function reveal(at, gap) {
+      if (done) return; done = true; waitOff = false;
+      var o = $('#iqOff'); o.classList.remove('in'); setTimeout(function () { o.hidden = true; }, 400);
+      var sec = Math.max(1, Math.round(gap / 1000)), n = Math.min(sec, 9), ph = $('#ep5 .iq-ph');
+      ph.classList.add('dark');
+      line('sys', '화면이 꺼저 잇던 ' + kn(sec) + ' 초 동안 받아 적은 것');
+      var i = 0;
+      (function nx() {
+        if (i < n) { var t = new Date(at + Math.round(i * gap / n)); var p = line('him ts', '……'); p.setAttribute('data-t', hm(t)); tone('type'); buzz(6); i++; setTimeout(nx, calm ? 0 : 420); return; }
+        if (sec > 9) line('sys', '(… ' + kn(sec - 9) + ' 줄 더)');
+        setTimeout(function () {
+          line('sys', '받아 적은 것은 — 모다 「……」 뿐이오.');
+          setTimeout(function () {
+            line('sys red', '그런데, 화면을 켠 지금도 — 적히고 잇소.'); A().heart(true); buzz([20, 120, 20]);
+            var k = 0, iv = setInterval(function () { var p = line('him ts now', '……'); p.setAttribute('data-t', hm(new Date())); tone('type'); if (++k >= 5) { clearInterval(iv); finish(); } }, calm ? 60 : 1500);
+          }, calm ? 0 : 1600);
+        }, calm ? 0 : 900);
+      })();
+    }
+    function finish() {
+      setTimeout(function () { line('sys', '혐의자는 — 끗내 한 마듸도 하지 안앗소.'); A().heart(false); $('#done5').classList.add('in'); tone('gavel'); buzz([30, 50, 120]); setTimeout(function () { ready(5); }, 1600); }, calm ? 0 : 1400);
     }
     $$('#iqC button').forEach(function (b) { b.onclick = function () { ask(b.textContent); b.disabled = true; }; });
     $('#iqF').addEventListener('submit', function (e) { e.preventDefault(); var i = $('#iqQ'); ask(i.value); i.value = ''; i.blur(); });
   })();
 
+  /* ── 뒤로 가려 하면 — 문턱의 신 두 켤레 ── */
+  var trapArmed = false, trapUp = false, leaving = false;
+  function armTrap() { if (trapArmed) return; trapArmed = true; try { history.pushState({ npTrap: 1 }, ''); } catch (e) {} }
+  W.addEventListener('popstate', function () {
+    setTimeout(function () {
+      if (!trapArmed || leaving) return;
+      var st = history.state; if (st && (st.npTrap || st.mb || st.mbz)) return;
+      if (trapUp) { goOut(); return; }
+      showTrap();
+    }, 0);
+  });
+  function left() { return 6 - Object.keys(out).filter(function (k) { return k < 7; }).length; }
+  function showTrap() {
+    trapUp = true; try { history.pushState({ npTrap: 1 }, ''); } catch (e) {}
+    var tp = $('#trap'), tx = $('#tpTx'), bt = $('#tpB'), d = new Date(), h = d.getHours();
+    var when = (h < 12 ? '오전 ' : '오후 ') + kn(h % 12 || 12) + ' 시 ' + kn(d.getMinutes()) + ' 분';
+    var L = ['나가시려오?', '문턱 압헤 — 신이 두 켤레 노혀 잇소.', '하나는 당신 것이오.', '다른 하나는, 당신이 들어올 때 <b>업섯소</b>.', '<small>지금 ' + when + ' · 아즉 타는 초 ' + kn(left()) + ' 자루</small>'];
+    tx.innerHTML = ''; bt.classList.remove('in'); tp.hidden = false; D.documentElement.classList.add('mb-lock'); A().drone(false);
+    requestAnimationFrame(function () { tp.classList.add('on'); });
+    buzz([40, 160, 40, 900, 40, 160, 40]); A().heart(true);
+    L.forEach(function (t, i) { setTimeout(function () { var p = D.createElement('p'); p.innerHTML = t; tx.appendChild(p); requestAnimationFrame(function () { p.classList.add('in'); }); if (i === 3) { tp.classList.add('cold'); tone('gavel'); } }, calm ? 0 : 700 + i * 1300); });
+    setTimeout(function () { bt.classList.add('in'); }, calm ? 0 : 700 + L.length * 1300);
+  }
+  function hideTrap() { var tp = $('#trap'); tp.classList.remove('on', 'cold'); trapUp = false; A().heart(false); setTimeout(function () { tp.hidden = true; D.documentElement.classList.remove('mb-lock'); if (D.body.classList.contains('lit')) A().drone(true); }, 600); }
+  function goOut() {
+    if (leaving) return; leaving = true; var tp = $('#trap'), tx = $('#tpTx');
+    $('#tpB').classList.remove('in'); tx.innerHTML = '<p class="in">그럼 — 불은 끄고 가시오.</p>'; tp.classList.add('out'); sfx('whoosh'); A().heart(false); buzz(60);
+    setTimeout(function () { location.href = 'index.html'; }, calm ? 300 : 2600);
+  }
+  $('#tpStay').onclick = hideTrap;
+  $('#tpGo').onclick = goOut;
+  var T0 = D.title;
+  D.addEventListener('visibilitychange', function () { if (!D.body.classList.contains('lit')) return; D.title = D.hidden ? '…초가 아즉 타고 잇소' : T0; });
+
   /* ── 끗 · 일곱째 초 ── */
   var STORY = '', finaled = false;
   function showEnd() {
-    var end = $('#end'); end.hidden = false; A().drone(false);
+    var end = $('#end'); end.hidden = false; A().drone(false); trapArmed = false;
     setTimeout(function () { end.classList.add('on'); W.scrollTo({ top: end.getBoundingClientRect().top + W.scrollY - 92, behavior: 'smooth' }); }, 60);
     setTimeout(function () { $('#cbRow a.seven').classList.add('on'); sfx('bell'); buzz(60); end.classList.add('seven'); }, calm ? 0 : 4200);
   }

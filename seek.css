@@ -344,3 +344,16 @@
 
 .sk-mini img{filter:grayscale(1) sepia(.35) contrast(1.15) brightness(.93)!important;mix-blend-mode:multiply}
 .sk-mini figcaption{background:rgba(30,25,19,.82)}
+
+/* 1016b — 작은 광고 넷은 아래 띠로 (가운데 단이 길어져 양옆이 비던 문제) */
+.sk-page{grid-template-areas:"crew s1 reader" "crew s2 reader"}
+.sk-band{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--rule)}
+.sk-band>.sk-ad{border:0!important;border-right:1px solid var(--rule)!important}
+.sk-band>.sk-ad:last-child{border-right:0!important}
+.sk-band .sk-mini img{aspect-ratio:16/10;object-fit:cover}
+.sk-band .sk-mini img.tall{object-fit:contain;border:0}
+@media (max-width:980px){.sk-page{grid-template-areas:"crew reader" "s1 s2"}.sk-band{grid-template-columns:1fr 1fr}.sk-band>.sk-ad:nth-child(n+3){border-top:1px solid var(--rule)!important}}
+@media (max-width:620px){.sk-page{grid-template-areas:"crew" "reader" "s1" "s2"}.sk-band{grid-template-columns:1fr}}
+/* 떡: 검은 덧칠 대신 글로만 · 말풍선은 사진 위쪽에 */
+.ix-crumb{display:none!important}
+#readSay{top:12px;bottom:auto}
