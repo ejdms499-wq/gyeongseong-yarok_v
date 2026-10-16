@@ -208,6 +208,47 @@
     onReady(scan);
   })();
 
+
+  /* ── 폰 가독성 (1016e): 글자 크기 · 글꼴 · 대비 · 줄 간격을 한 규칙으로 ──
+     · 본문(긴 글) 15.5px · 줄 간격 1.8 · 자간 0 · 가는 나눔명조 → 또렷한 Noto Serif
+     · 설명 · 출처 같은 작은 글 최소 12.5px
+     · 바탕과 글자색 대비가 4.5:1 보다 낮으면 (검은 바탕에 어두운 회색 등) 글자색을 밝게 / 어둡게 */
+  function L(c) { var o = parse(c); if (!o) return null; var f = function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return { l: .2126 * f(o.r) + .7152 * f(o.g) + .0722 * f(o.b), a: o.a }; }
+  function bgL(e) { for (var a = e; a; a = a.parentElement) { if (a === D.documentElement) break; var x = L(getComputedStyle(a).backgroundColor); if (x && x.a > .6) return x.l; } return L(getComputedStyle(D.body).backgroundColor).l; }
+  function ratio(a, b) { return (Math.max(a, b) + .05) / (Math.min(a, b) + .05); }
+  function readable(near) {
+    var w = D.createTreeWalker(D.body, NodeFilter.SHOW_TEXT), n, done = new Set();
+    while ((n = w.nextNode())) {
+      var e = n.parentElement; if (!e || done.has(e)) continue; done.add(e);
+      if (near) { var rr = e.getBoundingClientRect(); if (rr.bottom < -innerHeight || rr.top > innerHeight * 2) continue; }
+      var t = (n.textContent || '').trim(); if (t.length < 4) continue;
+      if (e.closest('.m-hd,.m-dock,.yn-erase,svg,[hidden],.ykp-veil,#ykn,.opening,#gate')) continue;
+      var cs = getComputedStyle(e); if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+      var fs = parseFloat(cs.fontSize) || 16, blk = e.closest('p,li,dd,blockquote,figcaption,small,td') || e, len = (blk.textContent || '').replace(/\s+/g, '').length;
+      var isHead = !!e.closest('h1,h2,h3,h4,.label,[class*="title"],[class*="head"] b');
+      /* 크기 · 글꼴 · 줄 간격 */
+      if (!isHead && len > 40 && fs < 15.5) { e.style.setProperty('font-size', '15.5px', 'important'); fs = 15.5; }
+      else if (!isHead && len > 12 && fs < 13.5) { e.style.setProperty('font-size', '13.5px', 'important'); fs = 13.5; }
+      if (!isHead && len > 20) {
+        if (/Nanum Myeongjo|Song Myung/.test(cs.fontFamily.split(',')[0])) e.style.setProperty('font-family', '"Noto Serif KR","Nanum Myeongjo",serif', 'important');
+        if (parseFloat(cs.fontWeight) < 400) e.style.setProperty('font-weight', '400', 'important');
+        var lh = parseFloat(cs.lineHeight); if (!lh || lh / fs < 1.7) e.style.setProperty('line-height', '1.8', 'important');
+        if ((parseFloat(cs.letterSpacing) || 0) > fs * .04) e.style.setProperty('letter-spacing', '.01em', 'important');
+      }
+      /* 대비 */
+      var fg = L(cs.color); if (!fg) continue;
+      var bl = bgL(e), op = parseFloat(cs.opacity) || 1;
+      if (ratio(fg.l, bl) < (fs >= 18 ? 3.2 : 4.5) || fg.a < .7) {
+        var col = bl < .2 ? (len > 60 ? '#e6e3dc' : '#bdb9b0') : (len > 60 ? '#1a1a1a' : '#555');
+        e.style.setProperty('color', col, 'important');
+      }
+    }
+  }
+  var rq = null;
+  function readSoon() { clearTimeout(rq); rq = setTimeout(function () { readable(true); }, 300); }
+  onReady(function () { readable(false); });
+  addEventListener('scroll', readSoon, { passive: true });
+
   /* 마리아 · 한 방에 불 하나 — 어두운 장의 그림은 등불 하나만큼만 보이고, 손가락을 따라 불빛이 움직임 */
   if (path.indexOf('/case-maria/') > -1) {
     H.classList.add('yn-mr');
