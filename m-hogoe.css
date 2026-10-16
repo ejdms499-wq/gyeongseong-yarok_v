@@ -210,3 +210,12 @@ body.mhg-done{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
 .mhg-next{margin-top:24px!important}
 .mhg .ms{background:none!important;padding:0!important;border:0!important;box-shadow:none!important}
 .mhg .ph-type::before,.mhg .ph-press::before{margin:-24px calc(var(--g) * -1) 18px!important;filter:grayscale(1) brightness(.7)}
+/* 1017 단계마다 머리 그림 (assets/hg3 · 재현 그림) */
+.mhg .ph-type::before,.mhg .ph-press::before{display:none!important}
+.mhg-hd{position:relative;margin:-24px calc(var(--g) * -1) 18px;aspect-ratio:16/8;overflow:hidden;background:#000}
+.mhg-hd img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.8)}
+.mhg-hd::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,var(--night))}
+.mhg .rt{position:absolute;right:8px;top:8px;z-index:2;font:500 9px/1 var(--sans);letter-spacing:.16em;padding:4px 5px;background:rgba(0,0,0,.6);color:#bbb}
+.ln-pic{position:relative;margin:-30px 0 18px;aspect-ratio:16/9;overflow:hidden}
+.ln-pic img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.85)}
+.ln-pic::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,#0b0b0b)}

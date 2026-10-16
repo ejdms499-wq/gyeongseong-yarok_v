@@ -10,6 +10,8 @@
   var desk = $('#mhgDesk'), nav = $('#mhgSteps');
   var hp = $('#hpPart'); if (hp) hp.setAttribute('data-step', '사진');
   var parts = $$('.h2-part', desk);
+  var PIC = { '활자': 'type', '사진': 'photo', '종이': 'paper', '잉크': 'ink', '원고': 'write', '찍기': 'press' };
+  parts.forEach(function (p) { var k = PIC[p.dataset.step]; if (!k) return; var f = D.createElement('figure'); f.className = 'mhg-hd'; f.innerHTML = '<img src="assets/hg3/m_hg_' + k + '.jpg" alt=""><span class="rt">그림 · 재현</span>'; f.firstChild.onload = function () { fit(); }; p.insertBefore(f, p.firstChild); });
   nav.innerHTML = parts.map(function (p, i) { return '<button type="button" data-i="' + i + '"><b>' + (i + 1) + '</b>' + p.dataset.step + '</button>'; }).join('');
   var tabs = $$('button', nav), cur = -1;
   parts.forEach(function (p, i) {
