@@ -15,6 +15,7 @@
     for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (/^(yk|gsyr|yarok)[-_]/.test(k) && !keep[k] && !/^yk-(intro1|dev1-)/.test(k)) rm.push(k);   /* 안내 · 장치 수첩 기록은 남김 (1013) */ }
     rm.forEach(function (k) { localStorage.removeItem(k); });
   } catch (e) {}
+  try { localStorage.setItem('yk-intro1', '1'); } catch (e) {}   /* 1016 · 첫 화면을 덮는 안내 투어는 띄우지 않음 (본지에 한 줄 안내) */
 })();
 /* 경성야록 · 폰에서 「반쯤 보이면 나타남」이 안 되던 것 고침
    폰 화면은 짧아서, 화면보다 긴 칸은 「35% 보이면」 같은 조건을 영영 못 채움 → 글이 끝내 안 나타나던 문제.
