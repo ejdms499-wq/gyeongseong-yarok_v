@@ -10,8 +10,8 @@
 <title>경성야록 상점</title>
 <link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
 <link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
-<link rel="stylesheet" href="yk-mbook.css?v=11">
-<link rel="stylesheet" href="m-shop.css?v=1">
+<link rel="stylesheet" href="yk-mbook.css?v=12">
+<link rel="stylesheet" href="m-shop.css?v=2">
 </head>
 <body class="ms">
 
@@ -32,10 +32,20 @@
 </header>
 
 <!-- 一 진렬장 -->
-<section class="ms-sec" id="vitrine" data-ch="진렬장" data-no="1" data-kj="01" data-sub="광고 46 뎜 · 날자 순">
-  <div class="ms-hd"><small>진렬장 · 날자 순</small><h2>광고 마흔여섯 뎜</h2><p>한 장을 누르면 크게 펼치고, 오늘 말 풀이가 나오오. 마음에 드는 것은 가위로 오려 엽서로 간직하시압.</p></div>
+<section class="ms-sec vw-sec" id="vitrine" data-ch="진렬장" data-no="1" data-kj="01" data-sub="광고 46 뎜 · 한 장씩">
+  <div class="ms-hd"><small>진렬장 · 날자 순</small><h2>광고 마흔여섯 뎜</h2><p>옆으로 밀어 한 장씩 넘기시압. 글씨가 작으면 그림을 누르면 크게 보이오.</p></div>
   <nav class="ms-cats" id="msCats"></nav>
-  <div class="ms-grid" id="msGrid"></div>
+  <div class="vw" id="vw">
+    <div class="vw-track" id="vwTrack"></div>
+    <p class="vw-n" id="vwN">1 / 46</p>
+  </div>
+  <div class="vw-info" id="vwInfo">
+    <p class="vw-m" id="vwM"></p>
+    <h3 class="vw-t" id="vwT"></h3>
+    <p class="vw-o" id="vwO"></p>
+    <div class="vw-act"><button type="button" id="vwKo" class="vw-b"><b>가</b><span>오늘 말로</span></button><button type="button" id="vwZoom" class="vw-b"><b>⤢</b><span>크게</span></button><button type="button" id="vwCut" class="vw-b red"><b>✂</b><span>오려 엽서로</span></button></div>
+  </div>
+  <div class="vw-strip" id="vwStrip"></div>
 </section>
 
 <div class="ms-div"><img src="assets/shop2/div_collage.jpg" alt="" loading="lazy"><span>여기서부터 특별 진렬</span></div>
@@ -119,6 +129,11 @@
   <div class="mb-sh-hd"><b><small id="adK">광고</small><span id="adT">광고</span></b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
   <div class="mb-sh-bd" id="adBd"></div>
 </div>
+<!-- 사건 본편에서 넘어왓을 때 — 그날 가튼 장 아래칸 -->
+<div class="mb-sheet light" id="shFrom" role="dialog" aria-label="그날의 아래칸">
+  <div class="mb-sh-hd"><b><small id="frK">사건 본편에서</small><span id="frT">그날의 아래칸</span></b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-bd" id="frBd"></div>
+</div>
 <!-- 오린 엽서 -->
 <div class="cut" id="cut" hidden><div class="cut-in"><canvas id="cutCv"></canvas><p class="cut-say" id="cutSay">가위가 지나가오…</p><div class="cut-btns"><a class="cut-save" id="cutSave" download="경성야록-엽서.png">엽서로 저장</a><button type="button" id="cutX">닫기</button></div></div></div>
 <div class="mb-sheet" id="mbToc" role="dialog" aria-label="차례">
@@ -128,7 +143,7 @@
 
 <script src="m-shop-data.js?v=1"></script>
 <script src="case-sonkijeong/m-sk-ko.js"></script>
-<script src="yk-mbook.js?v=13"></script>
-<script src="m-shop.js?v=1"></script>
+<script src="yk-mbook.js?v=14"></script>
+<script src="m-shop.js?v=2"></script>
 </body>
 </html>

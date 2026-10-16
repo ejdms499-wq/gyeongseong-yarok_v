@@ -9,19 +9,56 @@
   var nl = function (s) { return esc(s).replace(/\n/g, '<br>'); };
   var S = W.SHOP; if (!S) return;
 
-  /* ═══ 一 진렬장 ═══ */
-  var CATS = ['전부', '약', '화장품', '먹거리', '생활'], cat = '전부';
+  /* ═══ 一 진렬장 — 한 장씩 넘겨 보기 ═══ */
+  var CATS = ['전부', '약', '화장품', '먹거리', '생활'], cat = '전부', L = S.VT.slice(), cur = 0, ko = false;
   $('#msCats').innerHTML = CATS.map(function (c) { var n = c === '전부' ? S.VT.length : S.VT.filter(function (v) { return v.cat === c; }).length; return '<button type="button" data-c="' + c + '"' + (c === cat ? ' class="on"' : '') + '>' + c + '<sup>' + n + '</sup></button>'; }).join('');
-  function grid() {
-    var L = S.VT.filter(function (v) { return cat === '전부' || v.cat === cat; });
-    var cols = [[], []], h = [0, 0];
-    L.forEach(function (v) { var k = h[0] <= h[1] ? 0 : 1; cols[k].push(v); h[k] += 1 / Math.max(.25, Math.min(4.6, v.r)) + .35; });
-    $('#msGrid').innerHTML = cols.map(function (c) { return '<div class="ms-col">' + c.map(function (v) {
-      return '<button type="button" class="ad" data-id="' + v.id + '"><span class="ad-g"><img src="' + v.src + '" alt="' + esc(v.t) + ' 광고" loading="lazy"></span><span class="ad-m"><em>' + esc(v.d) + (v.p ? ' · ' + esc(v.p) : '') + '</em><i>' + esc(v.cat) + '</i></span><b>' + esc(v.t) + '</b></button>';
-    }).join('') + '</div>'; }).join('');
+  var track = $('#vwTrack'), strip = $('#vwStrip'), slides = [], thumbs = [];
+  function build() {
+    L = S.VT.filter(function (v) { return cat === '전부' || v.cat === cat; });
+    track.innerHTML = L.map(function (v, i) {
+      return '<div class="vw-s" data-i="' + i + '"><button type="button" class="vw-card' + (v.r > 1.6 ? ' wide' : '') + '" data-i="' + i + '"><img src="' + v.src + '" alt="' + esc(v.t) + ' 광고"' + (i > 2 ? ' loading="lazy"' : '') + '><i class="vw-tag">' + esc(v.d.slice(0, 4)) + '</i></button></div>';
+    }).join('');
+    strip.innerHTML = L.map(function (v, i) { return '<button type="button" data-i="' + i + '"><img src="' + v.src + '" alt="" loading="lazy"></button>'; }).join('');
+    slides = $$('.vw-s', track); thumbs = $$('button', strip);
+    track.scrollLeft = 0; cur = -1; set(0); fx();
   }
-  grid();
-  $('#msCats').addEventListener('click', function (e) { var b = e.target.closest('button[data-c]'); if (!b) return; cat = b.dataset.c; $$('#msCats button').forEach(function (x) { x.classList.toggle('on', x === b); }); grid(); tone('tick'); });
+  function set(i) {
+    i = Math.max(0, Math.min(L.length - 1, i)); if (i === cur) return; cur = i; var v = L[i];
+    $('#vwN').textContent = (i + 1) + ' / ' + L.length;
+    var info = $('#vwInfo'); info.classList.remove('in'); void info.offsetWidth; info.classList.add('in');
+    $('#vwM').innerHTML = '<b>' + esc(v.cat) + '</b>동아일보 ' + esc(v.d) + (v.p ? ' · ' + esc(v.p) : '') + ' · 실제 광고';
+    $('#vwT').textContent = v.t; paintO();
+    thumbs.forEach(function (t, k) { t.classList.toggle('on', k === i); });
+    var th = thumbs[i]; if (th) strip.scrollTo({ left: th.offsetLeft - strip.clientWidth / 2 + th.offsetWidth / 2, behavior: 'smooth' });
+    tone('tick'); buzz(4);
+  }
+  function paintO() { var v = L[cur]; if (!v) return; var t = ko && v.k ? v.k : v.o; $('#vwO').innerHTML = nl(t); var b = $('#vwKo span'); b.textContent = ko ? '그때 말로' : '오늘 말로'; $('#vwKo').classList.toggle('on', ko); }
+  function fx() {   /* 넘길 때 — 가운데 장은 바로 서고, 옆 장은 살짝 눕고 멀어짐 */
+    var w = track.clientWidth, x = track.scrollLeft;
+    slides.forEach(function (s, i) {
+      var d = (i * w - x) / w; if (Math.abs(d) > 1.6) return; var a = Math.min(1, Math.abs(d));
+      s.firstChild.style.transform = 'translateX(' + (d * -18).toFixed(1) + '%) scale(' + (1 - a * .14).toFixed(3) + ') rotate(' + (d * 4).toFixed(2) + 'deg)';
+      s.firstChild.style.opacity = (1 - a * .55).toFixed(3);
+    });
+    set(Math.round(x / w));
+  }
+  var raf = 0; track.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; fx(); }); }, { passive: true });
+  W.addEventListener('resize', fx);
+  function go(i, smooth) { track.scrollTo({ left: i * track.clientWidth, behavior: smooth === false ? 'auto' : 'smooth' }); }
+  strip.addEventListener('click', function (e) { var b = e.target.closest('button[data-i]'); if (b) go(+b.dataset.i); });
+  track.addEventListener('click', function (e) { var b = e.target.closest('.vw-card'); if (!b) return; var i = +b.dataset.i; if (i !== cur) { go(i); return; } zoom(); });
+  function zoom() { var v = L[cur]; if (v && W.mb.zoom) W.mb.zoom(v.src, v.t + ' · 동아일보 ' + v.d); }
+  $('#vwZoom').onclick = zoom;
+  $('#vwKo').onclick = function () { ko = !ko; paintO(); tone('tick'); };
+  $('#vwCut').onclick = function () { var v = L[cur]; if (v) cutOut(v); };
+  $('#msCats').addEventListener('click', function (e) { var b = e.target.closest('button[data-c]'); if (!b) return; cat = b.dataset.c; $$('#msCats button').forEach(function (x) { x.classList.toggle('on', x === b); }); build(); tone('tick'); });
+  build();
+  W.ykShowAd = function (id) {   /* 다른 쪽에서 광고 하나를 바로 펼칠 때 */
+    if (cat !== '전부') { cat = '전부'; $$('#msCats button').forEach(function (x) { x.classList.toggle('on', x.dataset.c === '전부'); }); build(); }
+    var i = -1; L.forEach(function (v, k) { if (v.id === id) i = k; }); if (i < 0) return false;
+    var sec = $('#vitrine'); W.scrollTo({ top: sec.getBoundingClientRect().top + W.scrollY - 48 });
+    setTimeout(function () { go(i, false); fx(); }, 60); return true;
+  };
   function openAd(v, kind) {
     $('#adK').textContent = (kind || v.cat || '광고') + ' · ' + v.d + (v.p ? ' · ' + v.p : '');
     $('#adT').textContent = v.t;
@@ -31,7 +68,6 @@
     $('#adCut').onclick = function () { cutOut(v); };
     W.mb.open('shAd');
   }
-  $('#msGrid').addEventListener('click', function (e) { var b = e.target.closest('.ad'); if (!b) return; var v = S.VT.filter(function (x) { return x.id === b.dataset.id; })[0]; if (v) openAd(v); });
 
   /* 가위로 오리기 — 점선을 따라 가위가 돌고, 엽서 한 장이 만들어짐 */
   function cutOut(v) {
@@ -155,7 +191,7 @@
     }).join('');
     $('#udAllP').textContent = S.UDALL.replace(/^사건 지면마다 — 아래칸 모음/, '');
     $('#udCases').innerHTML = S.UC.map(function (c) {
-      return '<details class="uc"><summary><b>' + esc(c.h) + '</b><span>' + c.items.length + ' 장</span></summary>' + c.items.map(function (m) {
+      return '<details class="uc"><summary><b>' + esc(c.h.replace(/사건 기록으로 →\s*$/, '')) + '</b><span>' + c.items.length + ' 장</span></summary>' + c.items.map(function (m) {
         return '<div class="um" id="' + m.id + '"><p class="um-d"><b>' + esc(m.md) + '</b><span>' + esc(m.tag) + '</span></p>' +
           '<button type="button" class="um-b" data-zoom="' + m.band + '" data-cap="' + esc(m.md) + ' · 맨 아래칸"><img src="' + m.band + '" alt="' + esc(m.md) + ' 맨 아래칸" loading="lazy"></button>' +
           '<p class="um-c">' + esc(m.mc) + '</p>' + (m.notes.length ? '<ul class="um-n">' + m.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul><p class="um-s">작은 칸은 글씨가 흐려 다 읽지 못하엿소.</p>' : '') + '</div>';
@@ -164,7 +200,25 @@
     if ('IntersectionObserver' in W) { var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .35 }); $$('.ud.revive').forEach(function (r) { io.observe(r); }); }
     /* 다른 쪽에서 #ad-... 로 드러오면 그 칸을 펼침 */
     var h = location.hash.slice(1);
-    if (/^ad-/.test(h)) { var t = D.getElementById(h); if (t) { t.closest('details').open = true; setTimeout(function () { W.scrollTo({ top: t.getBoundingClientRect().top + W.scrollY - 70 }); t.classList.add('hot'); }, 500); } }
+    if (/^ad-/.test(h)) { var t = D.getElementById(h); if (t) { t.closest('details').open = true; t.classList.add('hot'); fromCase(h); } }
+    else if (/^v-/.test(h)) { setTimeout(function () { W.ykShowAd(h.slice(2)); }, 300); }
+    /* 사건 본편 지면의 「그날의 광고」를 눌러 넘어오면 — 그날 가튼 장 아래칸을 바로 펼침 */
+    function fromCase(id) {
+      var it = null, cs = null;
+      S.UC.forEach(function (c) { c.items.forEach(function (m) { if (m.id === id) { it = m; cs = c; } }); });
+      if (!it) return;
+      var name = cs.h.replace(/사건 기록으로 →\s*$/, '');
+      $('#frK').textContent = name + ' · 사건 본편에서'; $('#frT').textContent = it.md;
+      $('#frBd').innerHTML = '<p class="fr-k">그날, 사건이 실린 가튼 장 — 맨 아래칸</p>' +
+        '<button type="button" class="fr-band" data-zoom="' + it.band + '" data-cap="' + esc(it.md) + ' · 맨 아래칸"><img src="' + it.band + '" alt="' + esc(it.md) + ' 맨 아래칸 광고"><span>누르면 크게 · 손가락으로 밀어 보시압</span></button>' +
+        '<p class="fr-tag"><b>' + esc(it.tag.replace(/^위 · /, '')) + '</b> 우에선 사건, 아래에선 장사.</p>' +
+        '<p class="fr-c">' + esc(it.mc) + '</p>' +
+        (it.notes.length ? '<ul class="fr-n">' + it.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul>' : '') +
+        '<div class="fr-go"><button type="button" class="mb-btn" id="frBack">사건으로 도라가기</button><button type="button" class="mb-btn ghost" id="frShop">상뎜 구경하기</button></div>';
+      $('#frBack').onclick = function () { if (history.length > 2) history.go(-2); else location.href = cs.href.replace('/index.html', '/m.html'); };
+      $('#frShop').onclick = function () { W.mb.close('shFrom'); };
+      setTimeout(function () { W.mb.open('shFrom'); }, 350);
+    }
   })();
 
   /* ═══ 六 분양 공고 ═══ */

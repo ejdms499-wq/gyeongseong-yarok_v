@@ -240,3 +240,50 @@ html,body.ms{background:var(--paper)}
 .ms-foot{padding:30px var(--g) calc(40px + env(safe-area-inset-bottom));background:#050505;color:#6b6b68;font:400 11px/1.7 var(--sans)}
 .ms-foot a{display:inline-block;margin:14px 14px 0 0;color:#cfcfca;font-weight:600}
 #years.dusk .yr-tabs button{color:#9a9994}#years.dusk .yr-tabs{border-color:#e4e3df}#years.dusk .yr-tabs button.on{background:#e4e3df;color:#0b0b0b}#years.dusk .yr-c b{color:#fff}#years.dusk .ms-src{color:#6b6b68}
+
+/* ═══ v2 (1017) 진렬장 — 한 장씩 넘겨 보기 ═══ */
+.vw-sec{padding-left:0;padding-right:0}
+.vw-sec .ms-hd{margin-left:var(--g);margin-right:var(--g)}
+.vw-sec .ms-cats{margin:0 0 0;padding:0 var(--g)}
+.vw{position:relative;background:#e9e8e4;border-bottom:1px solid var(--ink)}
+.vw::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,rgba(255,255,255,.75),transparent 70%);pointer-events:none}
+.vw-track{position:relative;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.vw-track::-webkit-scrollbar{display:none}
+.vw-s{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;height:min(64vh,560px);display:flex;align-items:center;justify-content:center;padding:26px 0 30px}
+.vw-card{position:relative;max-width:78%;max-height:100%;padding:12px;border:0;background:#fbfaf7;box-shadow:0 1px 0 rgba(0,0,0,.08),0 18px 34px -16px rgba(0,0,0,.45),0 4px 10px -6px rgba(0,0,0,.25);will-change:transform,opacity;transition:box-shadow .3s}
+.vw-card img{display:block;max-width:100%;max-height:calc(min(64vh,560px) - 80px);width:auto;height:auto;object-fit:contain;filter:grayscale(1) contrast(1.08)}
+.vw-tag{position:absolute;left:-6px;top:14px;padding:3px 7px 2px;background:var(--ink);color:#fff;font:700 10px/1.3 var(--sans);font-style:normal;letter-spacing:.12em}
+.vw-n{position:absolute;right:12px;bottom:8px;margin:0;font:500 11px/1 var(--sans);letter-spacing:.12em;color:var(--mute);pointer-events:none}
+.vw-info{padding:18px var(--g) 4px;min-height:190px}
+.vw-info.in>*{animation:vwIn .45s ease both}
+.vw-info.in>*:nth-child(2){animation-delay:.05s}.vw-info.in>*:nth-child(3){animation-delay:.1s}
+@keyframes vwIn{from{opacity:0;transform:translateY(6px)}}
+.vw-m{font:400 11px/1.5 var(--sans);letter-spacing:.06em;color:var(--mute)}
+.vw-m b{display:inline-block;margin-right:8px;padding:2px 6px 1px;border:1px solid var(--ink);color:var(--ink);font-weight:700;letter-spacing:.1em}
+.vw-t{margin-top:10px;font:900 24px/1.35 var(--serif);letter-spacing:-.01em}
+.vw-o{margin-top:10px;font:400 15px/1.8 var(--serif);color:#333;min-height:3.6em}
+.vw-act{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:6px;margin-top:16px}
+.vw-b{display:flex;align-items:center;justify-content:center;gap:6px;height:46px;border:1px solid var(--ink);background:none;color:var(--ink);font:500 13px/1 var(--sans)}
+.vw-b b{font:700 14px/1 var(--serif)}
+.vw-b.on{background:var(--ink);color:#fff}
+.vw-b.red{background:var(--ink);color:#fff}
+.vw-b:active{transform:scale(.97)}
+.vw-strip{display:flex;gap:6px;overflow-x:auto;padding:14px var(--g) 4px;scrollbar-width:none}
+.vw-strip::-webkit-scrollbar{display:none}
+.vw-strip button{flex:none;width:44px;height:58px;padding:0;border:1px solid #c9c8c3;background:#fbfaf7;opacity:.55;transition:opacity .25s,border-color .25s,transform .25s}
+.vw-strip button img{width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
+.vw-strip button.on{opacity:1;border:2px solid var(--red);transform:translateY(-3px)}
+
+/* 사건 본편에서 넘어옴 */
+.fr-k{font:500 11px/1.5 var(--sans);letter-spacing:.14em;color:var(--red)}
+.fr-band{display:block;width:100%;margin-top:10px;padding:0;border:1px solid var(--ink);background:#fff;position:relative}
+.fr-band img{display:block;width:100%;filter:grayscale(1) contrast(1.08)}
+.fr-band span{position:absolute;right:6px;bottom:6px;padding:3px 6px;background:rgba(0,0,0,.65);color:#fff;font:500 10px/1.3 var(--sans)}
+.fr-tag{margin-top:14px;font:400 14px/1.6 var(--serif)}
+.fr-tag b{font-weight:900;margin-right:4px}
+.fr-c{margin-top:8px;font:400 15px/1.8 var(--serif)}
+.fr-n{margin:10px 0 0;padding-left:18px;font:400 13px/1.7 var(--serif);color:#444}
+.fr-go{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+.vw-card.wide{max-width:94%;padding:8px}
+#frBd{padding:16px var(--g) calc(28px + env(safe-area-inset-bottom))}
+#frBd .fr-band{margin-left:0;margin-right:0}

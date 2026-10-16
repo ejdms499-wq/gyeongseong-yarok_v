@@ -144,7 +144,7 @@
               '<button type="button" class="pp-adimg" data-zoom="' + AD.img + '" data-cap="' + y + '년 ' + m + '월 ' + dd + '일 지면 맨 아래칸 광고"><img src="' + AD.img + '" alt="' + y + '년 ' + m + '월 ' + dd + '일 지면 아래칸 광고" loading="lazy"><span>눌러 크게 보기</span></button>' +
               '<p class="pp-ad-cap">' + (AD.cap || (y + '년 ' + m + '월 ' + dd + '일 지면, 그 맨 아래칸이오. 가튼 날 가튼 장에 실린 진짜 광고들이오.')) + '</p>' +
               '<p class="pp-ad-say">' + (AD.say || '가튼 장 우에선 사건을 쫏고, 아래칸에선 물건을 팔앗소.') + '</p>' +
-              (cfg.shop ? '<a class="pp-ad-go" href="' + cfg.shop + (AD.sk || key) + '">그 시절 광고 상뎜으로 →</a>' : '') + '</details>';
+              (cfg.shop ? '<a class="pp-ad-go" href="' + cfg.shop + (AD.sk || key) + '">이 아래칸 광고 — 상뎜에서 펼쳐 보기 →</a>' : '') + '</details>';
           }
         } else if (mode === 'sum') {
           var Q = ['이 보도의 요뎜은 무엇이오?', '그때 형편은 엇더하엿소?', '긔록에서 눈여겨볼 대목은 어대요?'];
