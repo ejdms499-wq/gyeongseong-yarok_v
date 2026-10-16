@@ -127,34 +127,34 @@
           '<button class="mb-btn red" data-goto="' + cfg.goto + '" data-open-extra>' + (cfg.sealBtn || '호외로 →') + '</button></div>';
       } else {
         var src = cfg.imgBase + a.img, yr = a.date.slice(0, 4);
-        h = '<div class="pp-hd"><small>' + (cfg.sec || '사회면') + ' | ' + t0(a.d) + ' | ' + t0(a.day) + '</small>' + (a.mark ? '<i class="stamp">' + a.mark + '</i>' : '') + '</div>' +
+        h = '<div class="pp-hd"><small>' + (cfg.sec || '사회면') + ' | ' + t0(a.d) + ' | ' + t0(a.day) + '</small>' + (a.mark ? '<i class="stamp">' + a.mark + '</i>' : '') + '</div>' + (a.paper ? '<p class="pp-paper">' + (a.paper === '동아일보' ? '실제 동아일보 기사' : '실제 ' + a.paper + ' 기사') + '</p>' : '') + (a.note ? '<div class="pp-note"><b>알려 두오</b>' + t0(a.note) + '</div>' : '') +
           '<div class="mb-seg pp-seg three"><button data-m="scan" class="' + (mode === 'scan' ? 'on' : '') + '">원문 지면</button><button data-m="now" class="' + (mode === 'now' ? 'on' : '') + '">오늘 말로 읽기</button><button data-m="sum" class="' + (mode === 'sum' ? 'on' : '') + '">간추려 읽기</button></div>';
         if (mode === 'scan') {
           var key = String(a.img).replace(/\.[a-z]+$/, '').replace(/_0\d$/, ''), AD = cfg.ads && cfg.ads[String(a.img).replace(/\.[a-z]+$/, '')];
-          h += '<div class="pp-scanbox"><button class="pp-scan" type="button" data-zoom="' + src + '" data-cap="동아일보 ' + a.date + ' 원문 지면"><img src="' + src + '" alt="동아일보 ' + a.date + ' 원문 지면"><span>눌러 크게 보기</span></button>' +
+          h += '<div class="pp-scanbox"><button class="pp-scan" type="button" data-zoom="' + src + '" data-cap="' + (a.paper || '동아일보') + ' ' + a.date + ' 원문 지면"><img src="' + src + '" alt="' + (a.paper || '동아일보') + ' ' + a.date + ' 원문 지면"><span>눌러 크게 보기</span></button>' +
             (AD ? '<button type="button" class="pp-cut" style="top:' + (AD.top * 100) + '%;height:' + (AD.h * 100) + '%" data-goad>아래칸 · 그날의 광고 ▾</button>' : '') + '</div>' +
-            '<p class="pp-cap">원 긔사 · 동아일보 · ' + cfg.era + ' ' + t0(a.d) + ' — 테두리 친 곳이 그날 실린 긔사이오.' + (AD ? ' 붉은 절취선 안은 가튼 장 맨 아래칸의 광고요.' : '') + '</p>';
+            '<p class="pp-cap">원 긔사 · ' + (a.paper || '동아일보') + ' · ' + cfg.era + ' ' + t0(a.d) + ' — 테두리 친 곳이 그날 실린 긔사이오.' + (AD ? ' 붉은 절취선 안은 가튼 장 맨 아래칸의 광고요.' : '') + '</p>';
           if (AD) {
             var y = a.date.slice(0, 4), m = +a.date.slice(5, 7), dd = +a.date.slice(8, 10);
             h += '<section class="pp-ad" id="ppAd"><h4>아래칸 · 그날의 광고</h4><p class="pp-ad-k">그날, 가튼 장 아래칸 · ' + y + '년 ' + m + '월 ' + dd + '일 · 동아일보</p>' +
               '<button type="button" class="pp-adimg" data-zoom="' + AD.img + '" data-cap="' + y + '년 ' + m + '월 ' + dd + '일 지면 맨 아래칸 광고"><img src="' + AD.img + '" alt="' + y + '년 ' + m + '월 ' + dd + '일 지면 아래칸 광고" loading="lazy"><span>눌러 크게 보기</span></button>' +
               '<p class="pp-ad-cap">' + (AD.cap || (y + '년 ' + m + '월 ' + dd + '일 지면, 그 맨 아래칸이오. 가튼 날 가튼 장에 실린 진짜 광고들이오.')) + '</p>' +
               '<p class="pp-ad-say">' + (AD.say || '가튼 장 우에선 사건을 쫏고, 아래칸에선 물건을 팔앗소.') + '</p>' +
-              (cfg.shop ? '<a class="pp-ad-go" href="' + cfg.shop + key + '">그 시절 광고 상뎜으로 →</a>' : '') + '</section>';
+              (cfg.shop ? '<a class="pp-ad-go" href="' + cfg.shop + (AD.sk || key) + '">그 시절 광고 상뎜으로 →</a>' : '') + '</section>';
           }
         } else if (mode === 'sum') {
           var Q = ['이 보도의 요뎜은 무엇이오?', '그때 형편은 엇더하엿소?', '긔록에서 눈여겨볼 대목은 어대요?'];
           h += '<article class="pp-art pp-short"><p class="pp-sec">간추려 읽기 · ' + t0(a.d) + '</p><h3>' + a.title + '</h3><ol class="pp-sum big">' + a.sum.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>' +
             '<h4>긔록에게 뭇다</h4><p class="pp-cap" style="margin:0 0 10px">이 긔사에 궁금한 것을 긔록과 함께 풀어 보시압. 물음을 누르면 답이 나오오.</p>' +
-            Q.map(function (q, i) { return a.sum[i] ? '<details class="pp-qa"><summary><b>문</b>' + q + '</summary><p><b>답</b>' + a.sum[i] + '</p></details>' : ''; }).join('') +
-            '<p class="pp-warn">※ ' + yr + '년 동아일보 원문을 바탕으로 간추린 것입니다.</p></article>';
+            (a.qa ? a.qa.map(function (x) { return '<details class="pp-qa"><summary><b>문</b>' + x[0] + '</summary><p><b>답</b>' + x[2] + '</p></details>'; }).join('') : Q.map(function (q, i) { return a.sum[i] ? '<details class="pp-qa"><summary><b>문</b>' + q + '</summary><p><b>답</b>' + a.sum[i] + '</p></details>' : ''; }).join('')) +
+            '<p class="pp-warn">※ ' + yr + '년 ' + (a.paper || '동아일보') + ' 원문을 바탕으로 간추린 것입니다.</p></article>';
         } else {
           h += '<article class="pp-art"><p class="pp-sec">경성야록뉴스 · 사회 › 사건·사고 › 아카이브</p><h3>' + a.title + '</h3>' +
-            '<p class="pp-by">경성야록 아카이브팀 기자 · 입력 2026.' + a.date.slice(5) + ' 06:00 · 원 보도 동아일보 ' + a.date + '</p>' +
+            '<p class="pp-by">경성야록 아카이브팀 기자 · 입력 2026.' + a.date.slice(5) + ' 06:00 · 원 보도 ' + (a.paper || '동아일보') + ' ' + a.date + '</p>' +
             '<p class="pp-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') +
             '<p class="pp-tags">' + a.keys.map(function (k) { return '#' + k; }).join(' ') + '</p>' +
             '<h4>간추려 읽기</h4><ul class="pp-sum">' + a.sum.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
-            '<p class="pp-warn">※ ' + yr + '년 동아일보 원문을 바탕으로, 오늘의 기사 형식으로 다시 쓴 것입니다. 실제 2026년 보도가 아닙니다.</p></article>';
+            '<p class="pp-warn">※ ' + yr + '년 ' + (a.paper || '동아일보') + ' 원문을 바탕으로, 오늘의 기사 형식으로 다시 쓴 것입니다. 실제 2026년 보도가 아닙니다.</p></article>';
         }
         if (a.hook) h += '<div class="pp-words"><h4>이 날의 수수께끼</h4><p class="pp-none">' + t0(a.hook) + '</p></div>';
         if (a.w) {
@@ -241,7 +241,7 @@
       var s = ST[i];
       $('#rdCard').innerHTML = '<p class="rd-k">' + s.no + ' · ' + s.when + (s.au ? '' : ' · 녹음 업슴') + '</p><h3>' + t0(s.t) + '</h3><ul>' + s.b.map(function (x) { return '<li>' + t0(x) + '</li>'; }).join('') + '</ul>' +
         '<p class="rd-d">' + t0(s.d) + '</p>' + (s.link ? '<p class="mb-q" style="font-size:16.5px">' + t0(s.link) + '</p>' : '') +
-        (i === ST.length - 1 ? '<p class="mb-p" style="margin-top:18px;color:#d9d8d3">' + (cfg.endLine || '') + '</p>' : '<p class="rd-next">다이얼을 더 돌리면 — 다음 목소리가 잡히오.</p>');
+        (i === ST.length - 1 ? '<p class="mb-p" style="margin-top:18px;color:#d9d8d3">' + (cfg.endLine || '') + '</p>' : '<p class="rd-next">' + (cfg.gaps && cfg.gaps[i] ? t0(cfg.gaps[i]) + '<br>' : '') + '다이얼을 더 돌리면 — 다음 목소리가 잡히오.</p>');
       $('#rdCard').classList.remove('in'); void $('#rdCard').offsetWidth; $('#rdCard').classList.add('in');
     }
     /* 화면의 물결 — 잡음이면 들쑥날쑥, 잡히면 느린 물결 */
