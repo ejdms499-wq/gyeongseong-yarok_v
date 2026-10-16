@@ -334,6 +334,7 @@
   }
   function flip(sp, on) { sp.classList.toggle('ko', on); sp.textContent = on ? sp.getAttribute('data-ko') : sp.getAttribute('data-old'); }
   D.addEventListener('click', function (e) {
+    if (Date.now() - (W.__mbTouchKo || 0) < 900) return;
     var sp = e.target.closest('.hj[data-ko]'); if (!sp || e.target.closest('button, a, [role="button"]')) return;
     flip(sp, !sp.classList.contains('ko'));
   });
@@ -458,4 +459,55 @@
     if (W.mb.audio) W.mb.audio.rain(v);
     if (v && !raf) raf = requestAnimationFrame(frame);
   };
+})(window, document);
+
+/* ════ 공통 ④ 폰판 — 한자는 모다 한글로 · 손가락을 대면 그 단락이 통째로 오늘 말로 (컴퓨터판의 「마우스를 대면 현대어」와 같은 감각) ════ */
+(function (W, D) {
+  'use strict';
+  var H = {"c":"一丁七三上下不世丙中丸丹主久之乙九也乳了事二五井亞京人介代以件任伏会似佐何作佳併供便係保信修個倒偏停健備催傳債僞價優儲元充兇光免兒入內全八公六其冊再冥凱出刊刑列判別利券則削前割創劇劑力加効動勝募勢勳勸化十卅半卒協南博印原參及取受口古史各合吉名君呈告周呪味命和品員哭唱商問啞喘器四回國園圓圖團土在地埋城基堂報場塡塵墓墨壤士壯壹夕外夜大天夫央奇奮女妖姿婦嫌嬰子字孫學完宗官定宜室宮害家容寂察實審寫寬寶封專尋小少就尹局屋屍展屠層山峰工差己巷市帖師幕平年幻幽序店庚府度座廉廊廢廣廷廿式引弘張強强弼彈彬影往待後徒復心快急性怨怪息患悳情惡意愚慘慶慾憑應戊成戾房所手才技投抹拘拾挾授掘採接控提揭搜擧擴支改放政故效敎數文料斬新斷於旋族旗日昌明映春昭時景暴曜書會月服朝期木未末本札李材束東某柱査校核格桂案梁森棺楊業極榮構槪樂樓標樹橋機橫檢欺歌止正死殖段殺殿毒氏氓水永求池決沈沒油治泉法波泣注洋洞活派流浪海消涼淋淸添湖源準演漢潘激濟灘火災炫無燈燐燒營爆版物特犯狀猫獄獨獻玄率玉王現理甑生産用由甲男町畜畫異當疊疑疾病症痛療發白百盜盡盤目直相盾眞眼着瞞瞰矛短硅確示社祐祝神票祭禁禎福禮私科秒秘稿突窓立章童競竹第筆等管範篇簿米粉精約紅納紙級索紹終組結絶經網緘線編縛總續罪置署美義羽習翼者聖聞聯聲職育肺脈脹腐膨臨自至致臺興舊舍舞般良芥花苑茸草菜萬落葉著葬蓮蔘藏藝藥虐處虛號血衆行術街表被裁補裝製西要見覧覺覽觀解言訃計記訣訪設訴詐詩話詳誇誌認誘語誤說調談論謝證識譜警議譽讀變讚谷豆豫貞貨販貫貳貴買賀資賣購贊跡路身車軍載輩輯轉辭返述迷追送通速進逸遂運過道遠選邪邱邸郞部郵都配酒醫里重野金釜鉛銀錄錢鎭鏡鐵鑑鑛長門閉開閱闇關闢防附限院除陰陳陸陽隆際雄集雜難雨雲零電霧靈靑面頃頭題顔顚類風食餘館首馬騷骨體高鬼魂魔鮮鳥鳳鳴鷄黃黑齋龍","r":["일","정","칠","삼","상","하","불","세","병","중","환","단","주","구","지","을","구","야","유","요","사","이","오","정","아","경","인","개","대","이","건","임","복","회","사","좌","하","작","가","병","공","편","계","보","신","수","개","도","편","정","건","비","최","전","채","위","가","우","저","원","충","흉","광","면","아","입","내","전","팔","공","육","기","책","재","명","개","출","간","형","열","판","별","이","권","칙","삭","전","할","창","극","제","역","가","효","동","승","모","세","훈","권","화","십","삽","반","졸","협","남","박","인","원","참","급","취","수","구","고","사","각","합","길","명","군","정","고","주","주","미","명","화","품","원","곡","창","상","문","아","천","기","사","회","국","원","원","도","단","토","재","지","매","성","기","당","보","장","전","진","묘","묵","양","사","장","일","석","외","야","대","천","부","앙","기","분","여","요","자","부","혐","영","자","자","손","학","완","종","관","정","의","실","궁","해","가","용","적","찰","실","심","사","관","보","봉","전","심","소","소","취","윤","국","옥","시","전","도","층","산","봉","공","차","기","항","시","첩","사","막","평","연","환","유","서","점","경","부","도","좌","염","낭","폐","광","정","입","식","인","홍","장","강","강","필","탄","빈","영","왕","대","후","도","복","심","쾌","급","성","원","괴","식","환","덕","정","악","의","우","참","경","욕","빙","응","무","성","여","방","소","수","재","기","투","말","구","습","협","수","굴","채","접","공","제","게","수","거","확","지","개","방","정","고","효","교","수","문","요","참","신","단","어","선","족","기","일","창","명","영","춘","소","시","경","폭","요","서","회","월","복","조","기","목","미","말","본","찰","이","재","속","동","모","주","사","교","핵","격","계","안","양","삼","관","양","업","극","영","구","개","낙","누","표","수","교","기","횡","검","기","가","지","정","사","식","단","살","전","독","씨","맹","수","영","구","지","결","침","몰","유","치","천","법","파","읍","주","양","동","활","파","유","낭","해","소","양","임","청","첨","호","원","준","연","한","반","격","제","탄","화","재","현","무","등","인","소","영","폭","판","물","특","범","상","묘","옥","독","헌","현","솔","옥","왕","현","이","증","생","산","용","유","갑","남","정","축","화","이","당","첩","의","질","병","증","통","요","발","백","백","도","진","반","목","직","상","순","진","안","착","만","감","모","단","규","확","시","사","우","축","신","표","제","금","정","복","예","사","과","초","비","고","돌","창","입","장","동","경","죽","제","필","등","관","범","편","부","미","분","정","약","홍","납","지","급","색","소","종","조","결","절","경","망","함","선","편","박","총","속","죄","치","서","미","의","우","습","익","자","성","문","연","성","직","육","폐","맥","창","부","팽","임","자","지","치","대","흥","구","사","무","반","양","개","화","원","용","초","채","만","낙","엽","저","장","연","삼","장","예","약","학","처","허","호","혈","중","행","술","가","표","피","재","보","장","제","서","요","견","남","각","남","관","해","언","부","계","기","결","방","설","소","사","시","화","상","과","지","인","유","어","오","설","조","담","논","사","증","식","보","경","의","예","독","변","찬","곡","두","예","정","화","판","관","이","귀","매","하","자","매","구","찬","적","노","신","차","군","재","배","집","전","사","반","술","미","추","송","통","속","진","일","수","운","과","도","원","선","사","구","저","낭","부","우","도","배","주","의","이","중","야","금","부","연","은","녹","전","진","경","철","감","광","장","문","폐","개","열","암","관","벽","방","부","한","원","제","음","진","육","양","융","제","웅","집","잡","난","우","운","영","전","무","영","청","면","경","두","제","안","전","유","풍","식","여","관","수","마","소","골","체","고","귀","혼","마","선","조","봉","명","계","황","흑","재","용"],"w":{"三年未解決":"삼년미해결","京城野錄":"경성야록","京城事件博覽會":"경성사건박람회","附錄":"부록","博覽會":"박람회","資料室":"자료실","陳列":"진렬","一九二九年":"일구이구년","資料":"자료","朝鮮博覽會":"조선박람회","觀覽案內":"관람안내","入場料":"입장료","觀覽法":"관람법","觀覽":"관람","當選謝禮":"당선사례","効力一等":"효력일등","當選淋藥":"당선림약","無料進呈":"무료진정","萬年筆":"만년필","合併症新療法":"합병증신료법","萬年號":"만년호","大陸":"대륙","何理由":"하리유","特別廉價提供":"특별렴가제공","昭和十一年":"소화십일년","大正十三年":"대정십삼년","一二三四五六七八九":"일이삼사오륙칠팔구","京城夜錄":"경성야록","納涼":"납량","殺人屠場埋屍敎徒詐欺白鑛山天苑罪惡鬼畜怪事件社會文化藝術人物記錄":"살인도장매시교도사기백광산천원죄악귀축괴사건사회문화예술인물기록","博覽會之章":"박람회지장","朝鮮博覽會之章":"조선박람회지장","第六章":"제륙장","草梁":"초량","下女":"하녀","六年":"육년","第六話":"제륙화","三年霧中":"삼년무중","井上修一郞":"정상수일랑","修一郞":"수일랑","採錄":"채록","八年":"팔년","其六":"기륙","一二三四五六七八九十":"일이삼사오륙칠팔구십","第六面":"제륙면","校了":"교료","返戾":"반려","六六":"육륙","道立師範校長":"도립사범교장","平原線鐵路":"평원선철로","死鬼血夜哭墓骨影怨魂闇獄呪殺刑屍冥幽靈陰燐棺葬泣慘斷首妖怪腐":"사귀혈야곡묘골영원혼암옥주살형시명유령음린관장읍참단수요괴부","一九三三年":"일구삼삼년","夜影燈紙墨舊巷雨月霧街門窓樓寂雲沈古":"야영등지묵구항우월무가문창루적운침고","納涼特輯":"납량특집","三百四十六":"삼백사십륙","二六":"이륙","二六年":"이륙년","野錄":"야록","完了":"완료","朝鮮博覽會案內":"조선박람회안내","昭和四年":"소화사년","鷄龍山":"계룡산","玄海灘激浪中":"현해탄격랑중","靑年男女":"청년남녀","無料":"무료","朝鮮博覽會鳥瞰圖":"조선박람회조감도","朝鮮博覽會場配置圖":"조선박람회장배치도","朝鮮博覽會會場案內圖":"조선박람회회장안내도","博覽會場":"박람회장","朝鮮博覧会":"조선박람회","慶會樓":"경회루","記錄":"기록","聲樂家":"성락가","目錄":"목록","關聯":"관련","言論":"언론","獨立運動家":"독립운동가","一九三六":"일구삼륙","草梁町":"초량정","少年":"소년","取調段落":"취조단락","往十里":"왕십리","事件記錄":"사건기록","下女房":"하녀방"}}, CM = {}, i;
+  for (i = 0; i < H.c.length; i++) CM[H.c[i]] = H.r[i];
+  var WK = Object.keys(H.w).sort(function (a, b) { return b.length - a.length; });
+  var RX = /[㐀-䶿一-鿿豈-﫿]+/g;
+  var NUM = { '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9 }, UNIT = { '章': '장', '話': '화', '號': '호', '回': '회', '面': '면', '日': '일', '年': '년', '月': '월' };
+  function hn(x) { var n = 0, cur = 0; for (var q = 0; q < x.length; q++) { var ch = x[q]; if (ch === '十') { n += (cur || 1) * 10; cur = 0; } else if (ch === '百') { n += (cur || 1) * 100; cur = 0; } else if (NUM[ch]) cur = NUM[ch]; else if (ch === '〇' || ch === '零') cur = cur * 10; } return n + cur; }
+  var RN = /第?([一二三四五六七八九十百〇]+)([章話號回])/g;
+  function de(t) { if (!t || !RX.test(t)) { RX.lastIndex = 0; return t; } RX.lastIndex = 0; t = t.replace(RN, function (m, a, u) { return hn(a) + UNIT[u]; }).replace(/序章/g, '서장'); if (!RX.test(t)) { RX.lastIndex = 0; return t; } RX.lastIndex = 0; return t.replace(RX, function (m) { if (H.w[m]) return H.w[m]; var o = '', k = 0; while (k < m.length) { var hit = null; for (var j = 0; j < WK.length; j++) { var w = WK[j]; if (w.length > 1 && m.substr(k, w.length) === w) { hit = w; break; } } if (hit) { o += H.w[hit]; k += hit.length; } else { o += CM[m[k]] || m[k]; k++; } } return o; }); }
+  W.mbDeHan = de;
+  var SKIP = /^(SCRIPT|STYLE|TEXTAREA|NOSCRIPT|CANVAS|svg|SVG)$/, ATTR = ['alt', 'title', 'aria-label', 'data-ko', 'data-old', 'placeholder', 'data-cap'];
+  function walk(root) {
+    if (!root) return;
+    if (root.nodeType === 3) { var v = de(root.nodeValue); if (v !== root.nodeValue) root.nodeValue = v; return; }
+    if (root.nodeType !== 1 || SKIP.test(root.nodeName)) return;
+    ATTR.forEach(function (a) { var x = root.getAttribute && root.getAttribute(a); if (x) { var y = de(x); if (y !== x) root.setAttribute(a, y); } });
+    var tw = D.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, { acceptNode: function (n) { if (n.nodeType === 1) return SKIP.test(n.nodeName) ? 2 : 1; RX.lastIndex = 0; return RX.test(n.nodeValue) ? 1 : 3; } });
+    var n, list = [];
+    while ((n = tw.nextNode())) list.push(n);
+    list.forEach(function (x) { if (x.nodeType === 3) { var v = de(x.nodeValue); if (v !== x.nodeValue) x.nodeValue = v; } else ATTR.forEach(function (a) { var t = x.getAttribute(a); if (t) { var y = de(t); if (y !== t) x.setAttribute(a, y); } }); });
+  }
+  function init() {
+    walk(D.body); D.title = de(D.title);
+    var q = [], tm = 0;
+    new MutationObserver(function (ms) {
+      ms.forEach(function (m) { if (m.type === 'characterData') q.push(m.target); else if (m.type === 'attributes') q.push(m.target); else m.addedNodes.forEach(function (a) { q.push(a); }); });
+      if (!tm) tm = setTimeout(function () { tm = 0; var l = q; q = []; l.forEach(walk); }, 0);
+    }).observe(D.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ATTR });
+
+    /* 손가락을 대면 — 그 단락의 옛말이 모다 오늘 말로, 떼고 조금 잇다가 도로 */
+    var BLK = 'p,li,h1,h2,h3,h4,h5,blockquote,figcaption,dd,dt,td,th,label,.mb-q,.mb-p,.mb-note,.rd-card,.pp-art,.mm-lt,.mb-cover,article,section';
+    var on = null, back = 0;
+    function allMode() { var b = D.querySelector('.mb-ko'); return b && b.classList.contains('on'); }
+    function set(el, ko) { el.classList.toggle('ko', ko); if (!el.hasAttribute('data-old')) el.setAttribute('data-old', el.textContent); el.textContent = ko ? el.getAttribute('data-ko') : el.getAttribute('data-old'); }
+    function spans(b) { return b ? b.querySelectorAll('.hj[data-ko]') : []; }
+    function blockOf(t) { var b = t.closest && t.closest(BLK), k = 0; while (b && !spans(b).length && k < 3) { b = b.parentElement && b.parentElement.closest(BLK); k++; } return b && spans(b).length ? b : null; }
+    function revert() { if (!on || allMode()) { on = null; return; } [].forEach.call(spans(on), function (s) { if (s.classList.contains('ko')) set(s, false); }); on.classList.remove('mb-kotouch'); on = null; }
+    D.addEventListener('touchstart', function (e) {
+      if (allMode()) return; var b = blockOf(e.target); if (!b) return;
+      clearTimeout(back); if (on && on !== b) revert();
+      on = b; b.classList.add('mb-kotouch'); W.__mbTouchKo = Date.now();
+      [].forEach.call(spans(b), function (s) { if (!s.classList.contains('ko')) set(s, true); });
+    }, { passive: true, capture: true });
+    function end() { clearTimeout(back); back = setTimeout(revert, 2600); }
+    D.addEventListener('touchend', end, { passive: true, capture: true }); D.addEventListener('touchcancel', end, { passive: true, capture: true });
+  }
+  if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
 })(window, document);

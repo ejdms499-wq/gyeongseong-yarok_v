@@ -522,3 +522,5 @@ details.pp-ad[open]{padding-bottom:18px}
 .rd-link{font-size:16px;color:#f2f1ed}
 .rx2-vis{opacity:calc(.62 + var(--near,0) * .38)}
 .rx2-knobwrap,.rx2-scr,.rx2-scale{-webkit-user-select:none;user-select:none}
+/* 손가락을 댄 단락 — 오늘 말로 바뀐 동안 살짝 표시 */
+.mb-kotouch .hj.ko{background:rgba(179,38,30,.07);transition:background .3s}

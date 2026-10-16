@@ -11,7 +11,7 @@
     { k: 'jk', dir: 'case-jukcheomjeong', name: '죽첨정', full: '죽첨정 사건', sec: '사회면', no: '01', cover: 'jk_cover.jpg', cards: 4 },
     { k: 'maria', dir: 'case-maria', name: '마리아', full: '부산 마리아 참살사건', sec: '사회면', no: '02', cover: 'mr_cover.jpg', cards: 2 },
     { k: 'sk', dir: 'case-sonkijeong', name: '손긔정', full: '손긔정 군과 지워진 표지', sec: '문화예술면', no: '03', cover: 'sk_cover.jpg', cards: 1 },
-    { k: 'bb', dir: 'case-baekbaekgyo', name: '백백교', full: '백백교 사건', sec: '경제면', no: '04', cover: 'bb_cover.jpg', cards: 3 }
+    { k: 'bb', dir: 'case-baekbaekgyo', name: '백백교', full: '백백교 사건', sec: '경제면', no: '04', cover: 'bb_cover.jpg', cards: 2 }
   ];
   var path = location.pathname.replace(/\\/g, '/'), HERE = null;
   CASES.forEach(function (c) { if (path.indexOf('/' + c.dir + '/') > -1) HERE = c; });
