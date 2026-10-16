@@ -229,5 +229,5 @@
   $('#orBtn').addEventListener('click', function () { var o = $('#or2'); o.classList.toggle('kr'); this.textContent = o.classList.contains('kr') ? '다시 — 지금의 공식 긔록으로' : '누르면 — 그가 엽서에 적은 말로'; tone('stamp'); });
 
   /* ════ 第七章 · 라듸오 (공통 장치) ════ */
-  W.mb.radio({ dial: './img/case/dial.png', st: ST, gaps: GAPS.map(function (g) { return g[2]; }), audioBase: '../case/audio/sonkijeong/', staticSrc: '../case-jukcheomjeong/audio/radio-static.mp3', endLine: '빈자리는, 무엇이 지워졌는지를 말하오.' });
+  W.mb.radio({ cardBase: './img/case/', linkLabel: '1936년과 겹치는 자리', dial: './img/case/dial.png', st: ST, gaps: GAPS, audioBase: '../case/audio/sonkijeong/', staticSrc: '../case-jukcheomjeong/audio/radio-static.mp3', endLine: '빈자리는, 무엇이 지워졌는지를 말하오.' });
 })(window, document);

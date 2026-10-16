@@ -526,3 +526,15 @@
 .hs2-svg.lit text{font-size:34px}
 .hs2-cnt{top:-4px}
 .hs2-stage.torch .hs2-light{background:radial-gradient(circle 90px at var(--x) var(--y),rgba(255,240,210,.10),transparent 100%)}
+/* 1016 · 3차 — 평면도 한 화면에 · 시계는 하녀들의 하루 전까지 · 붉은 덮개 걷음 */
+.hs2-dark,.hs2-light{max-width:min(340px,calc((100svh - 330px) * .554))}
+.hs2-stage{padding-bottom:10px}
+.ck-wrap{position:relative;clip-path:inset(0 -100vw)}
+#c3.scream .ck-stage{background:none}
+#c3.scream .ck-big .rim{stroke:#cfcec9;stroke-width:1.2}
+#c3.scream .ck-t{color:#fff;opacity:.85;letter-spacing:.06em}
+.ck-room{position:absolute;inset:0;background:center/cover no-repeat;filter:grayscale(1) contrast(1.25) brightness(.35);opacity:0;transform:scale(1.08);transition:opacity 2.4s ease,transform 12s ease-out}
+#c3.scream .ck-room{opacity:.75;transform:scale(1)}
+#c3.scream .ck-big{opacity:.18}
+#c3 .mr-tl li.key.now::before{background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.12)}
+.mr-tl li.key time{color:#fff}

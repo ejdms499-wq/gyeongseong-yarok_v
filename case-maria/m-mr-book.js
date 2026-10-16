@@ -2,6 +2,14 @@
    글 데이터는 컴퓨터판 maria.js 의 것을 그대로 옮김 */
 (function (W, D) {
   'use strict';
+  var GAPS = [
+      ['1931', '1970', '죽은 녀자보다 먼저 \'치정\'이 지면에 실렷다. 사십 년 뒤에도.', '죽은 여자보다 먼저 \'치정\'이 지면에 실렸다. 사십 년 뒤에도.'],
+      ['1970', '1980s', '권력의 일홈은 수첩에 남고, 녀자만 사라졌다.', '권력의 이름은 수첩에 남고, 여자만 사라졌다.'],
+      ['1980s', '2000s', '돈을 나르든 녀자가, 돈의 끗에서 버려졌다.', '돈을 나르던 여자가, 돈의 끝에서 버려졌다.'],
+      ['2000s', '2023', '신문은 또 피해자의 몸가짐부터 무럿다.', '신문은 또 피해자의 행실부터 물었다.'],
+      ['2023', '2020s', '금괴에서 코인으로. 거래는 바뀌어도 표적은 그대로.', '금괴에서 코인으로. 거래는 바뀌어도 표적은 그대로.'],
+      ['2020s', '1931', '가장 약한 고리를 따라가면 — 다시 소화 륙 년, 초량정 관사.', '가장 약한 고리를 따라가면 — 다시 1931년, 초량정 관사.']
+    ];
   var IMG = '../case/image/maria/';
   var PORT = '../assets/portraits/';
   var PLACES = [
@@ -346,7 +354,7 @@
     var LBL = ['낫', '저녁 여섯 시', '밤 아홉 시', '밤 아홉 시', '밤 열 시', '밤 열한 시', '열한 시 ~ 열두 시', '열두 시', '새벽 한 시', '새벽 한 시 반', '새벽 세 시', '아츰 여섯 시', '아츰 열 시'];
     var ticks = ''; for (var k = 0; k < 60; k++) { var a = k * 6 * Math.PI / 180, r1 = k % 5 ? 43 : 38.5; ticks += '<line x1="' + (50 + Math.sin(a) * r1).toFixed(1) + '" y1="' + (50 - Math.cos(a) * r1).toFixed(1) + '" x2="' + (50 + Math.sin(a) * 46).toFixed(1) + '" y2="' + (50 - Math.cos(a) * 46).toFixed(1) + '"' + (k % 5 ? '' : ' class="h"') + '/>'; }
     var nums = ['XII', 'I', 'II', 'III', 'IIII', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'].map(function (n, i) { var a = i * 30 * Math.PI / 180; return '<text x="' + (50 + Math.sin(a) * 31).toFixed(1) + '" y="' + (52.5 - Math.cos(a) * 31).toFixed(1) + '">' + n + '</text>'; }).join('');
-    stage.innerHTML = '<div class="ck-in"><svg class="ck-big" viewBox="0 0 100 100"><circle class="rim" cx="50" cy="50" r="48"/>' + ticks + nums + '<line class="hh" x1="50" y1="50" x2="50" y2="26"/><line class="mm" x1="50" y1="50" x2="50" y2="12"/><line class="ss" x1="50" y1="56" x2="50" y2="10"/><circle class="pin" cx="50" cy="50" r="2"/></svg>' +
+    stage.innerHTML = '<i class="ck-room" style="background-image:url(./img/room_found.jpg)"></i><div class="ck-in"><svg class="ck-big" viewBox="0 0 100 100"><circle class="rim" cx="50" cy="50" r="48"/>' + ticks + nums + '<line class="hh" x1="50" y1="50" x2="50" y2="26"/><line class="mm" x1="50" y1="50" x2="50" y2="12"/><line class="ss" x1="50" y1="56" x2="50" y2="10"/><circle class="pin" cx="50" cy="50" r="2"/></svg>' +
       '<p class="ck-t" id="ckT">낫</p><p class="ck-w" id="ckW"></p></div>';
     var cur = -1, sec = 0, secT = 0, inView = false;
     function sweep() { clearInterval(secT); secT = setInterval(function () { if (!stage.classList.contains('stop')) { sec = (sec + 6) % 360; $('.ss', stage).style.transform = 'rotate(' + sec + 'deg)'; } }, 1000); }
@@ -363,7 +371,7 @@
     function sound() { var A = W.mb.audio; if (!A) return; var key = cur >= 0 && items[cur].classList.contains('key'); A.tick(inView && !key, 1000); A.heart(inView && key); }
     var tick = false;
     function onScroll() {
-      tick = false; var sr = $('#c3').getBoundingClientRect(), v = sr.top < W.innerHeight * .4 && sr.bottom > W.innerHeight * .6;
+      tick = false; var sr = $('#c3 .ck-wrap').getBoundingClientRect(), v = sr.top < W.innerHeight * .4 && sr.bottom > W.innerHeight * .6;
       if (v !== inView) { inView = v; sound(); }
       var mid = W.innerHeight * .55, best = -1, bd = 1e9;
       items.forEach(function (li, k) { var r = li.getBoundingClientRect(), d = Math.abs(r.top + Math.min(r.height, 220) / 2 - mid); if (r.bottom > 80 && r.top < W.innerHeight && d < bd) { bd = d; best = k; } });
@@ -546,5 +554,5 @@
   })();
 
   /* ════ 第十二話 · 라듸오 (공통 장치) ════ */
-  W.mb.radio({ dial: '../case-jukcheomjeong/image/Jukcheomjeong/case/dial.png', st: ST, audioBase: '../case/audio/maria/', staticSrc: '../case-jukcheomjeong/audio/radio-static.mp3', endLine: '여전히, 긔록은 우리 겨테서 소근거리고 잇소.' });
+  W.mb.radio({ cardBase: '../case/image/maria/case/', linkLabel: '마리아와 겹치는 자리', gaps: GAPS, dial: '../case-jukcheomjeong/image/Jukcheomjeong/case/dial.png', st: ST, audioBase: '../case/audio/maria/', staticSrc: '../case-jukcheomjeong/audio/radio-static.mp3', endLine: '여전히, 긔록은 우리 겨테서 소근거리고 잇소.' });
 })(window, document);

@@ -2,6 +2,13 @@
    글 데이터(ARTS · WORDS · ST)는 컴퓨터판 jk.js 의 것을 그대로 옮김 */
 (function (W, D) {
   'use strict';
+  var GAPS = [
+    ['1933', '1930s', '그 말은 죽첨정에서 처음 생긴 것이 아니엇소.', '그 말은 죽첨정에서 처음 생긴 것이 아니었다.'],
+    ['1930s', '1953', '해방이 와도, 전쟁이 와도 — 그 말은 살아남앗소.', '해방이 와도, 전쟁이 와도 — 그 말은 살아남았다.'],
+    ['1953', '1970s', '돌은 한센인에게 날아갓고, 무덤은 더 작아졋소.', '돌은 한센인에게 날아갔고, 무덤은 더 작아졌다.'],
+    ['1970s', '2011', '무덤 대신 약장수가, 약장수 대신 국경 너머의 캡슐이.', '무덤 대신 약장수가, 약장수 대신 국경 너머의 캡슐이.'],
+    ['2011', '1933', '모양만 바꾼 그 한 마듸를 따라가면 — 다시 소화 팔 년, 죽첨정 쓰레기장.', '모양만 바꾼 그 한마디를 따라가면 — 다시 1933년, 죽첨정 쓰레기장.']
+  ];
   var ARTS = [
     { d: ['오월 십칠일', '5월 17일'], tag: ['처음 실림', '첫 보도'], day: ['이튿날', '이튿날'], date: '1933.05.17', img: '19330517.jpg',
       title: '시내 형사 총출동, 팔방 활동도 수포',
@@ -184,7 +191,7 @@
   })();
 
   /* 第七章 · 라듸오 (공통 장치) */
-  W.mb.radio({ dial: './image/Jukcheomjeong/case/dial.png', st: ST, audioBase: './audio/', staticSrc: './audio/radio-static.mp3', endLine: '여전히, 그 말은 우리 겨테서 소근거리고 잇소.' });
+  W.mb.radio({ cardBase: './image/Jukcheomjeong/case/', linkLabel: '죽첨정과 겹치는 자리', gaps: GAPS, dial: './image/Jukcheomjeong/case/dial.png', st: ST, audioBase: './audio/', staticSrc: './audio/radio-static.mp3', endLine: '여전히, 그 말은 우리 겨테서 소근거리고 잇소.' });
 
   /* ════ 第五章 · 號外 — 봉을 뜨드면: 제목 한 줄씩 → 지면 → 종소리와 함께 「살인은 — 업섯소.」 → 진상 ════ */
   var exDone = false;

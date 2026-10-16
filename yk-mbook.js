@@ -197,7 +197,7 @@
     function build() {
       built = true;
       $('#rdBody').innerHTML =
-        '<div class="rx2"><div class="rx2-scr"><canvas id="rxWave"></canvas><div class="rx2-ghost" id="rxGhost"></div>' +
+        '<div class="rx2"><div class="rx2-scr"><canvas id="rxWave"></canvas><div class="rx2-vis" id="rxVis"></div>' +
         '<div class="rx2-top"><span id="rxState">잡음뿐이오</span><span class="rx2-kc"><b id="rxKc">---</b> 키로</span></div></div>' +
         '<div class="rx2-scale"><div class="rd-nums"><span>550</span><span>700</span><span>900</span><span>1100</span><span>1300</span><span>1500</span></div><div class="rd-ticks"></div>' +
         ST.map(function (s) { return '<i class="rx2-st" style="left:' + ((fq(s.ang) - LO) / (HI - LO) * 100) + '%"></i>'; }).join('') + '<i class="rd-needle" id="rxNeedle"></i></div>' +
@@ -222,13 +222,26 @@
       var best = -1, bd = 1e9; ST.forEach(function (s, i) { var d = Math.abs(fq(s.ang) - f); if (d < bd) { bd = d; best = i; } });
       var near = Math.max(0, 1 - bd / 70), on = bd < 14 ? best : -1;
       if (A) A.noiseLevel(.42 * (1 - near * .92));
-      var g = $('#rxGhost'); g.textContent = ST[best].y; g.style.opacity = (near * near * .9).toFixed(2); g.style.filter = 'blur(' + ((1 - near) * 10).toFixed(1) + 'px)';
+      $('.rx2').style.setProperty('--near', near.toFixed(2));
       if (on !== lock) tuneTo(on);
+      if (on < 0) between();
       if (au) au.volume = Math.min(1, Math.max(0, (near - .4) / .6));
+    }
+    var gap = -1, HILLS = '<svg class="rx2-hills" viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46 L40 24 L76 40 L118 12 L160 38 L196 22 L236 42 L270 28 L300 38 L300 60 L0 60Z" fill="#1c1c1c"/><path d="M0 54 L60 42 L110 50 L160 40 L214 52 L260 44 L300 50 L300 60 L0 60Z" fill="#111"/></svg>';
+    function between() {
+      if (!cfg.gaps || !cfg.gaps.length) return;
+      var n = ST.length, SP = 360 / n, m = function (a) { return ((a % 360) + 360) % 360; }, g = Math.floor(m(ang - ST[0].ang) / SP) % n; if (g === gap) return; gap = g;
+      var G = cfg.gaps[g]; if (!G) return;
+      $('#rxVis').innerHTML = '<span class="rx2-moon"></span>' + HILLS + '<p class="rx2-btw"><small>' + G[0] + ' ─── ' + G[1] + '</small>' + t0(G.slice ? (G.length > 2 ? G[2] : G) : G) + '</p>';
+      $('#rxState').textContent = '주파수 사이 · ' + G[0] + ' → ' + G[1];
+      if (card < 0) $('#rdCard').innerHTML = '<p class="rd-hint">두 칸 사이에서 이어지는 것을 드르시오. 바늘을 조금 더 돌리면 다음 이약이가 잡히오.</p>';
     }
     function tuneTo(i) {
       lock = i; var st = $('#rxState'), s = ST[i];
-      if (i < 0) { st.textContent = '잡음뿐이오'; $('.rx2').classList.remove('lock'); if (au) { au.pause(); } return; }
+      if (i < 0) { st.textContent = '잡음뿐이오'; $('.rx2').classList.remove('lock'); if (au) { au.pause(); } gap = -1; return; }
+      gap = -1;
+      $('#rxVis').innerHTML = '<span class="rx2-moon" style="left:' + (s.moon || 60) + '%"></span>' + HILLS + (s.au ? '' : '<p class="rx2-nos">이 칸은 소리가 업소 — 지면만 남앗소</p>') + '<h4>' + (s.h || t0(s.t)) + '</h4>' +
+        (s.card && cfg.cardBase ? '<button type="button" class="rx2-card" data-zoom="' + cfg.cardBase + s.card + '" data-cap="' + s.y + ' 카드뉴스"><img src="' + cfg.cardBase + s.card + '" alt="' + s.y + ' 카드뉴스"><span>크게</span></button>' : '');
       $('.rx2').classList.add('lock'); st.textContent = s.no + ' · 잡혓소';
       if (W.mb.tone) W.mb.tone('tick');
       if (card !== i) { card = i; showCard(i); }
@@ -240,8 +253,9 @@
     function showCard(i) {
       var s = ST[i];
       $('#rdCard').innerHTML = '<p class="rd-k">' + s.no + ' · ' + s.when + (s.au ? '' : ' · 녹음 업슴') + '</p><h3>' + t0(s.t) + '</h3><ul>' + s.b.map(function (x) { return '<li>' + t0(x) + '</li>'; }).join('') + '</ul>' +
-        '<p class="rd-d">' + t0(s.d) + '</p>' + (s.link ? '<p class="mb-q" style="font-size:16.5px">' + t0(s.link) + '</p>' : '') +
-        (i === ST.length - 1 ? '<p class="mb-p" style="margin-top:18px;color:#d9d8d3">' + (cfg.endLine || '') + '</p>' : '<p class="rd-next">' + (cfg.gaps && cfg.gaps[i] ? t0(cfg.gaps[i]) + '<br>' : '') + '다이얼을 더 돌리면 — 다음 목소리가 잡히오.</p>');
+        '<p class="rd-d">' + t0(s.d) + '</p>' + (s.link ? '<p class="rd-link"><b>' + (cfg.linkLabel || '겹치는 자리') + '</b>' + t0(s.link) + '</p>' : '') +
+        (s.card && cfg.cardBase ? '<button type="button" class="rd-cardimg" data-zoom="' + cfg.cardBase + s.card + '" data-cap="' + s.y + ' 카드뉴스"><img src="' + cfg.cardBase + s.card + '" alt="' + s.y + ' 카드뉴스" loading="lazy"><span>카드뉴스 · 눌러 크게 보기</span></button>' : '') +
+        (i === ST.length - 1 ? '<p class="mb-p" style="margin-top:18px;color:#d9d8d3">' + (cfg.endLine || '') + '</p>' : '<p class="rd-next">다이얼을 더 돌리면 — 주파수 사이에서, 이어지는 말이 들리오.</p>');
       $('#rdCard').classList.remove('in'); void $('#rdCard').offsetWidth; $('#rdCard').classList.add('in');
     }
     /* 화면의 물결 — 잡음이면 들쑥날쑥, 잡히면 느린 물결 */
@@ -325,7 +339,7 @@
     W.mb.tone = function (k) {
       if (W.__mbOff) return;
       try {
-        AC = AC || new (W.AudioContext || W.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume();
+        AC = (W.mb.ctx && W.mb.ctx()) || AC || new (W.AudioContext || W.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume();
         var t = AC.currentTime, o = AC.createOscillator(), g = AC.createGain(), f = AC.createBiquadFilter();
         var P = { tick: [1800, .05, .04, 'square'], stamp: [90, .5, .22, 'sine'], gavel: [140, .7, .3, 'triangle'], type: [2400, .02, .015, 'square'] }[k] || [440, .2, .1, 'sine'];
         o.type = P[3]; o.frequency.setValueAtTime(P[0], t); if (k === 'stamp' || k === 'gavel') o.frequency.exponentialRampToValueAtTime(P[0] * .5, t + P[2]);
@@ -365,6 +379,7 @@
   var off = function () { return !!W.__mbOff; };
   ['touchend', 'pointerup', 'click', 'keydown'].forEach(function (t) { D.addEventListener(t, function () { if (AC && AC.state === 'suspended') AC.resume(); }, true); });
   W.mb = W.mb || {};
+  W.mb.ctx = ac;
   W.mb.audio = {
     noiseOn: function () { var c = ac(); if (!c) return; if (!nzG) nzG = chain(c, noiseBuf(c, false), 700, 4200); },
     noiseLevel: function (v) { if (!nzG || !AC) return; nzG.gain.setTargetAtTime(off() ? 0 : v * .5, AC.currentTime, .08); },
