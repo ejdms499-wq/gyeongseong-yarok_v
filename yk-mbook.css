@@ -467,4 +467,7 @@ details.pp-ad[open]>summary span{font-size:0}
 details.pp-ad[open]>summary span::after{content:"접기 ▴";font-size:11.5px}
 details.pp-ad>:not(summary){margin-left:14px;margin-right:14px}
 details.pp-ad[open]{padding-bottom:18px}
-.pp-n26 img,.pp-cmp-in img{filter:grayscale(1) contrast(1.08)}
+.pp-n26 img,.pp-cmp-in img{filter:grayscale(1) contrast(1.08)!important}
+.mb-seg.four{grid-template-columns:repeat(4,1fr)}
+.mb-seg.four button{font-size:11.5px;letter-spacing:0;padding:11px 2px}
+.mb-seg.four button[data-m="n26"]:not(.on){color:var(--red);font-weight:700}

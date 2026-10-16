@@ -129,7 +129,7 @@
       } else {
         var src = cfg.imgBase + a.img, yr = a.date.slice(0, 4);
         h = '<div class="pp-hd"><small>' + (cfg.sec || '사회면') + ' | ' + t0(a.d) + ' | ' + t0(a.day) + '</small>' + (a.mark ? '<i class="stamp">' + a.mark + '</i>' : '') + '</div>' + (a.paper ? '<p class="pp-paper">' + (a.paper === '동아일보' ? '실제 동아일보 기사' : '실제 ' + a.paper + ' 기사') + '</p>' : '') + (a.note ? '<div class="pp-note"><b>알려 두오</b>' + t0(a.note) + '</div>' : '') +
-          '<div class="mb-seg pp-seg three"><button data-m="scan" class="' + (mode === 'scan' ? 'on' : '') + '">원문 지면</button><button data-m="now" class="' + (mode === 'now' ? 'on' : '') + '">' + (W.ykNews26 ? '2026년 뉴스' : '오늘 말로 읽기') + '</button><button data-m="sum" class="' + (mode === 'sum' ? 'on' : '') + '">간추려 읽기</button></div>';
+          '<div class="mb-seg pp-seg ' + (W.ykNews26 ? 'four' : 'three') + '"><button data-m="scan" class="' + (mode === 'scan' ? 'on' : '') + '">원문 지면</button><button data-m="now" class="' + (mode === 'now' ? 'on' : '') + '">오늘 말로</button>' + (W.ykNews26 ? '<button data-m="n26" class="' + (mode === 'n26' ? 'on' : '') + '">2026 뉴스</button>' : '') + '<button data-m="sum" class="' + (mode === 'sum' ? 'on' : '') + '">간추려 읽기</button></div>';
         if (mode === 'scan') {
           var key = String(a.img).replace(/\.[a-z]+$/, '').replace(/_0\d$/, ''), AD = cfg.ads && cfg.ads[String(a.img).replace(/\.[a-z]+$/, '')];
           h += '<div class="pp-scanbox"><button class="pp-scan" type="button" data-zoom="' + src + '" data-cap="' + (a.paper || '동아일보') + ' ' + a.date + ' 원문 지면"><img src="' + src + '" alt="' + (a.paper || '동아일보') + ' ' + a.date + ' 원문 지면"><span>눌러 크게 보기</span></button>' +
@@ -150,7 +150,7 @@
             '<h4>긔록에게 뭇다</h4><p class="pp-cap" style="margin:0 0 10px">이 긔사에 궁금한 것을 긔록과 함께 풀어 보시압. 물음을 누르면 답이 나오오.</p>' +
             (a.qa ? a.qa.map(function (x) { return '<details class="pp-qa"><summary><b>문</b>' + x[0] + '</summary><p><b>답</b>' + x[2] + '</p></details>'; }).join('') : Q.map(function (q, i) { return a.sum[i] ? '<details class="pp-qa"><summary><b>문</b>' + q + '</summary><p><b>답</b>' + a.sum[i] + '</p></details>' : ''; }).join('')) +
             '<p class="pp-warn">※ ' + yr + '년 ' + (a.paper || '동아일보') + ' 원문을 바탕으로 간추린 것입니다.</p></article>';
-        } else if (W.ykNews26) {
+        } else if (mode === 'n26' && W.ykNews26) {
           h += '<div class="pp-n26">' + W.ykNews26({ a: a, arts: A, cur: I, img: src, paper: a.paper || '동아일보', sec: N26.sec, sub: N26.sub }) + '</div>';
         } else {
           h += '<article class="pp-art"><p class="pp-sec">경성야록뉴스 · 사회 › 사건·사고 › 아카이브</p><h3>' + a.title + '</h3>' +
