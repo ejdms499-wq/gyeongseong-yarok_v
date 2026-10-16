@@ -23,7 +23,7 @@
   try { var sv = JSON.parse(localStorage.getItem(C.storageKey) || 'null'); if (sv && Array.isArray(sv.stamps)) store = sv; } catch (e) {}
   function save() { try { localStorage.setItem(C.storageKey, JSON.stringify(store)); } catch (e) {} }
   function visited(id) { return store.stamps.indexOf(id) > -1; }
-  var PASS = [{ id: 'info', kj: '案內所', name: { old: '안내소', now: '안내소' } }].concat(F.halls.map(function (h) { return { id: h.id, kj: { literature: '文學館', music: '唱歌館', stage: '舞臺館', art: '美術館' }[h.id] || '陳列館', name: h.name }; }));
+  var PASS = [{ id: 'info', kj: '안내소', name: { old: '안내소', now: '안내소' } }].concat(F.halls.map(function (h) { return { id: h.id, kj: { literature: '문학관', music: '창가관', stage: '무대관', art: '미술관' }[h.id] || '전시관', name: h.name }; }));
   function stamp(id) {
     if (!visited(id)) { store.stamps.push(id); save(); tone('stamp'); }
     paintPass();
@@ -37,10 +37,10 @@
     b.innerHTML = '<p class="ps-k">관에 들어서면 도장이 찍히오. 네 곳을 다 돌면 — 상뎜 할인권이 나오오.</p>' +
       '<div class="ps-slots">' + PASS.map(function (p) {
         var on = visited(p.id);
-        return '<div class="ps-slot' + (on ? ' on' : '') + '"><b>' + p.kj + '</b><span>' + T(p.name) + '</span>' + (on ? '<i>印</i>' : '<em>아즉</em>') + '</div>';
+        return '<div class="ps-slot' + (on ? ' on' : '') + '"><b>' + p.kj + '</b><span>' + T(p.name) + '</span>' + (on ? '<i>필</i>' : '<em>아즉</em>') + '</div>';
       }).join('') + '</div>' +
       (store.ticket ? '<p class="ps-tk">입장권 개찰 · ' + esc(store.ticket) + '</p>' : '<p class="ps-tk">입장권은 아즉 개찰 전이오.</p>') +
-      (all ? '<div class="ps-coupon"><small>割引券 · 경성야록 상뎜</small><b>네 곳을 다 도랏소</b><p>상뎜에서 이 화면을 보여 주시압.</p><a href="shop.html">상뎜으로 →</a></div>' : '') +
+      (all ? '<div class="ps-coupon"><small>할인권 · 경성야록 상뎜</small><b>네 곳을 다 도랏소</b><p>상뎜에서 이 화면을 보여 주시압.</p><a href="shop.html">상뎜으로 →</a></div>' : '') +
       '<button type="button" class="mb-btn ghost ps-reset" id="psReset">수첩 비우기</button>';
     $('#psReset').onclick = function () { store.stamps = []; save(); paintPass(); $$('.fx-stop.been').forEach(function (s) { s.classList.remove('been'); }); };
   }
@@ -117,7 +117,7 @@
     var tk = $('#tk'), stub = $('#tkStub'), how = $('#gHow'), d = new Date();
     var KJ = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
     function kn(x) { return x < 10 ? KJ[x] : (x < 20 ? '十' : KJ[Math.floor(x / 10)] + '十') + (x % 10 ? KJ[x % 10] : ''); }
-    $('#tkDate').innerHTML = kn(d.getMonth() + 1) + '月<br>' + kn(d.getDate()) + '日';
+    $('#tkDate').innerHTML = (d.getMonth() + 1) + '월<br>' + d.getDate() + '일';
     function punch(go) {
       if (!tk.classList.contains('torn')) {
         tk.classList.add('torn');
@@ -130,7 +130,7 @@
     function enter() {
       var iris = D.createElement('div'); iris.className = 'fx-iris'; D.body.appendChild(iris);
       requestAnimationFrame(function () { iris.classList.add('close'); });
-      setTimeout(function () { wl.classList.add('gone'); D.body.classList.add('in'); iris.classList.remove('close'); iris.classList.add('open'); setTimeout(function () { iris.remove(); }, 1300); }, REDUCED ? 0 : 850);
+      setTimeout(function () { wl.classList.add('gone'); D.body.classList.add('in'); iris.classList.remove('close'); iris.classList.add('open'); setTimeout(function () { iris.remove(); }, 1300); setTimeout(fireShow, 700); }, REDUCED ? 0 : 850);
     }
     var x0 = null, dx = 0;
     stub.addEventListener('pointerdown', function (e) { x0 = e.clientX; dx = 0; e.stopPropagation(); stub.setPointerCapture && stub.setPointerCapture(e.pointerId); });
@@ -147,24 +147,71 @@
   /* ════ 회장 — 관 카드 ════ */
   function worksIn(id) { return F.works.filter(function (w) { return w.hall === id; }).sort(function (a, b) { return a.year - b.year; }); }
   var NUMW = ['', '한', '두', '세', '네', '다섯', '여섯', '닐곱', '여덟', '아홉', '열', '열한', '열두', '열세', '열네', '열다섯', '열여섯', '열닐곱', '열여덟', '열아홉', '스무'];
-  var KJH = { literature: '文學館', music: '唱歌館', stage: '舞臺館', art: '美術館' };
-  var STOPS = [{ id: 'info', kj: '案內所', name: { old: '안내소', now: '안내소' }, kind: { old: '소화 사 년 조선박람회', now: '1929년 조선박람회' }, line: { old: '진짜 박람회의 입장권 · 입장료 · 안내문 · 조감도', now: '실제 박람회의 입장권 · 입장료 · 안내문 · 조감도' }, img: 'ex-poster-bw.png', type: 'info' }]
-    .concat(F.halls.map(function (h) { var n = worksIn(h.id).length; return { id: h.id, kj: KJH[h.id] || '陳列館', name: h.name, kind: h.kind, line: n ? { old: '진열품 ' + (NUMW[n] || n) + ' 점', now: '작품 ' + n + '점' } : { old: '진열 준비 중', now: '진열 준비 중' }, img: 'mj-pav-' + h.id + '.png', type: 'hall' }; }))
+  var KJH = { literature: '전시관', music: '전시관', stage: '전시관', art: '전시관' };
+  var STOPS = [{ id: 'info', kj: '안내소', name: { old: '안내소', now: '안내소' }, kind: { old: '소화 사 년 조선박람회', now: '1929년 조선박람회' }, line: { old: '진짜 박람회의 입장권 · 입장료 · 안내문 · 조감도', now: '실제 박람회의 입장권 · 입장료 · 안내문 · 조감도' }, img: 'ex-poster-bw.png', type: 'info' }]
+    .concat(F.halls.map(function (h) { var n = worksIn(h.id).length; return { id: h.id, kj: KJH[h.id] || '전시관', name: h.name, kind: h.kind, line: n ? { old: '진열품 ' + (NUMW[n] || n) + ' 점', now: '작품 ' + n + '점' } : { old: '진열 준비 중', now: '진열 준비 중' }, img: 'mj-pav-' + h.id + '.png', type: 'hall' }; }))
     .concat([
-      { id: 'dial', kj: '年表', name: { old: '연표', now: '연표' }, kind: { old: '사건이 거러온 해', now: '사건이 걸어온 해' }, line: { old: '다이알을 돌려 백 년을 건너시오', now: '다이얼을 돌려 백 년을 건너세요' }, type: 'dial' },
-      { id: 'tree', kj: '揭示板', name: { old: '사건 족보', now: '사건 족보' }, kind: { old: '사건 → 작품', now: '사건 → 작품' }, line: { old: '사건이 어느 작품으로 니어졋는지', now: '사건이 어떤 작품으로 이어졌는지' }, type: 'link', href: C.treePage },
-      { id: 'exit', kj: '出口', name: { old: '출구', now: '출구' }, kind: { old: '첫닭 울기 전에', now: '새벽이 오기 전에' }, line: { old: '본지로 도라가 다른 사건도 보시오', now: '본지로 돌아가 다른 사건도 보세요' }, type: 'link', href: C.mainPage }
+      { id: 'dial', kj: '연표', name: { old: '연표', now: '연표' }, kind: { old: '사건이 거러온 해', now: '사건이 걸어온 해' }, line: { old: '다이알을 돌려 백 년을 건너시오', now: '다이얼을 돌려 백 년을 건너세요' }, type: 'dial' },
+      { id: 'tree', kj: '게시판', name: { old: '사건 족보', now: '사건 족보' }, kind: { old: '사건 → 작품', now: '사건 → 작품' }, line: { old: '사건이 어느 작품으로 니어졋는지', now: '사건이 어떤 작품으로 이어졌는지' }, type: 'link', href: C.treePage },
+      { id: 'exit', kj: '출구', name: { old: '출구', now: '출구' }, kind: { old: '첫닭 울기 전에', now: '새벽이 오기 전에' }, line: { old: '본지로 도라가 다른 사건도 보시오', now: '본지로 돌아가 다른 사건도 보세요' }, type: 'link', href: C.mainPage }
     ]);
   function cardHtml(s, i) {
     var vis = s.type === 'hall' ? '<img class="hc-bld" src="' + AD + s.img + '" alt="' + esc(s.name.old) + ' 건물 (재현 그림)">'
       : s.type === 'info' ? '<div class="hc-kiosk"><img src="' + AD + 'ex-poster-bw.png" alt=""><img src="' + AD + 'ex-leaflet-cover.jpg" alt=""><img src="' + AD + 'ex-ticket-adult.jpg" alt=""></div>'
       : s.type === 'dial' ? '<div class="hc-dial"><i></i><b>1880</b><b>1926</b><b>1937</b><b>2026</b></div>'
       : s.id === 'tree' ? '<div class="hc-board">' + ['윤심덕 · 김우진', '마리아 참살', '죽첨정', '손긔정 말소', '백백교'].map(function (t, k) { return '<span style="--r:' + ((k % 2 ? 1 : -1) * (2 + k)) + 'deg">' + t + '</span>'; }).join('') + '</div>'
-      : '<div class="hc-arch"><span>出 口</span></div>';
-    return '<div class="hc' + (visited(s.id) ? ' been' : '') + '" data-id="' + s.id + '"><p class="hc-no"><span>第 ' + ['一', '二', '三', '四', '五', '六', '七', '八'][i] + '</span><span>' + s.kj + '</span></p>' +
+      : '<div class="hc-arch"><span>출 구</span></div>';
+    return '<div class="hc' + (visited(s.id) ? ' been' : '') + '" data-id="' + s.id + '"><p class="hc-no"><span>' + ('0' + (i + 1)).slice(-2) + '</span><span>' + s.kj + '</span></p>' +
       '<div class="hc-vis">' + vis + '<i class="hc-glow"></i></div>' +
-      '<h3>' + T(s.name) + '</h3><p class="hc-k">' + T(s.kind) + '</p><p class="hc-l">' + T(s.line) + '</p><b class="hc-been">印</b></div>';
+      '<h3>' + T(s.name) + '</h3><p class="hc-k">' + T(s.kind) + '</p><p class="hc-l">' + T(s.line) + '</p><b class="hc-been">필</b></div>';
   }
+
+  /* ════ 박람회 꼴 — 전구 줄 · 만국기 · 탐조등 · 불꽃 · 확성기 안내 ════ */
+  function sag(x, d) { return d * (1 - Math.pow(2 * x - 1, 2)); }
+  (function () {
+    var b = $('#festBulbs'), f = $('#festFlags'); if (!b) return;
+    var h = '';
+    [[0, 26, 22], [1, 34, 17]].forEach(function (st) {
+      for (var i = 0; i <= st[2]; i++) { var x = i / st[2]; h += '<i style="left:' + (x * 100).toFixed(2) + '%;top:' + (4 + st[0] * 6 + sag(x, st[1])).toFixed(1) + 'px;animation-delay:' + (-(i * 0.37 + st[0]) % 4).toFixed(2) + 's"></i>'; }
+    });
+    b.innerHTML = h;
+    var fh = '', n = 15;
+    for (var k = 0; k < n; k++) { var x = (k + .5) / n, y = 18 + sag(x, 40), sl = Math.atan2(40 * -2 * (2 * x - 1) * 2 / n, 1 / n) * 180 / Math.PI; fh += '<i class="' + (k % 5 === 2 ? 'r' : k % 2 ? 'g' : '') + '" style="left:' + (x * 100).toFixed(2) + '%;top:' + y.toFixed(1) + 'px;--sl:' + (sl * .3).toFixed(1) + 'deg;animation-delay:' + (-k * .23).toFixed(2) + 's"></i>'; }
+    f.innerHTML = fh;
+    var w = $('#festWire'); if (w) w.innerHTML = '<path d="M0,4 Q50,' + (4 + 52) + ' 100,4" /><path d="M0,10 Q50,' + (10 + 68) + ' 100,10" /><path d="M0,18 Q50,' + (18 + 80) + ' 100,18" />';
+    var tk = $('#festTick');
+    if (tk) { var L = ['안내 말씀 드리오 — 본 박람회는 자정에 열고 첫닭이 울면 닫소', '문학관 · 창가관 · 무대관에 사건이 된 소설과 노래와 활동사진이 진열되엿소', '안내소에는 1929년 조선박람회의 진짜 입장권과 안내문이 잇소', '관에 드러설 때마다 수첩에 도장 — 네 곳을 다 돌면 상뎜 할인권', '하늘을 누르시면 불꽃이 오르오'];
+      var one = L.map(function (t) { return '<span>' + t + '</span>'; }).join(''); tk.innerHTML = '<p>' + one + one + '</p>'; }
+    var hd = $('.hub-h'); if (hd) hd.addEventListener('click', function (e) { fire(e.clientX, e.clientY - 40); });
+    var sk = $('#festSky'); if (sk) sk.addEventListener('click', function (e) { fire(e.clientX, e.clientY); });
+  })();
+  var FW = { P: [], raf: 0 };
+  function fire(x, y) {
+    var cv = $('#festFw'); if (!cv || REDUCED) return;
+    var r = cv.getBoundingClientRect(), d = Math.min(2, W.devicePixelRatio || 1);
+    if (cv.width !== Math.round(r.width * d)) { cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d); }
+    var px = (x - r.left) * d, py = (y - r.top) * d, N = 46 + (Math.random() * 20 | 0), red = Math.random() < .35;
+    for (var i = 0; i < N; i++) { var a = i / N * Math.PI * 2 + Math.random() * .1, v = (1.6 + Math.random() * 1.6) * d; FW.P.push({ x: px, y: py, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, dec: .011 + Math.random() * .008, c: red && i % 3 === 0 ? '179,38,30' : '245,244,238', tr: [] }); }
+    tone('stamp');
+    if (!FW.raf) FW.raf = requestAnimationFrame(fwLoop);
+  }
+  function fwLoop() {
+    var cv = $('#festFw'), cx = cv.getContext('2d');
+    cx.globalCompositeOperation = 'destination-out'; cx.fillStyle = 'rgba(0,0,0,.28)'; cx.fillRect(0, 0, cv.width, cv.height);
+    cx.globalCompositeOperation = 'lighter';
+    FW.P = FW.P.filter(function (p) {
+      p.vx *= .975; p.vy = p.vy * .975 + .035; p.x += p.vx; p.y += p.vy; p.life -= p.dec;
+      if (p.life <= 0) return false;
+      cx.fillStyle = 'rgba(' + p.c + ',' + (p.life * .9).toFixed(3) + ')'; cx.beginPath(); cx.arc(p.x, p.y, 1.6 * Math.min(2, W.devicePixelRatio || 1) * (.5 + p.life * .6), 0, 6.3); cx.fill();
+      return true;
+    });
+    if (FW.P.length) FW.raf = requestAnimationFrame(fwLoop); else { FW.raf = 0; cx.clearRect(0, 0, cv.width, cv.height); }
+  }
+  function fireShow() {
+    var cv = $('#festFw'); if (!cv) return; var r = cv.getBoundingClientRect();
+    [[.3, .2, 0], [.72, .14, 650], [.5, .3, 1400], [.2, .12, 2100], [.82, .26, 2600]].forEach(function (q) { setTimeout(function () { fire(r.left + r.width * q[0], r.top + r.height * q[1]); }, q[2]); });
+  }
+
   HUB = Flow($('#hubFlow'), STOPS.map(cardHtml), {
     pull: '가운데 카드를 아래로 끌어 드러가시압 — 옆으로 밀면 다른 관',
     onChange: function (k) { var s = STOPS[k]; $('#hubSay').innerHTML = '이번은 <b>' + esc(s.name.old) + '</b>이오.' + (STOPS[k + 1] ? ' 다음은 ' + esc(STOPS[k + 1].name.old) + '이오.' : ' 종뎜이오.'); },
@@ -188,7 +235,7 @@
     body.innerHTML = '<div class="dl-view" id="dlView"></div>' +
       '<div class="dl-wheel" id="dlWheel"><div class="dl-rot" id="dlRot">' + items.map(function (it, i) {
         return '<span class="dl-t' + (it.ev ? ' ev' : '') + '" style="--a:' + (i * STEP).toFixed(2) + 'deg"><i></i><b>' + it.y + '</b></span>';
-      }).join('') + '</div><div class="dl-hub"><small>年</small><b id="dlY">—</b><em id="dlN"></em></div><i class="dl-needle"></i></div>' +
+      }).join('') + '</div><div class="dl-hub"><small>해</small><b id="dlY">—</b><em id="dlN"></em></div><i class="dl-needle"></i></div>' +
       '<p class="dl-hint">' + T({ old: '바퀴를 손가락으로 돌리시압', now: '바퀴를 손가락으로 돌려 보세요' }) + '</p>';
     var rot = $('#dlRot'), wheel = $('#dlWheel'), ang = 0, tgt = 0, cur = -1, drag = null, raf = 0;
     function show(i) {
@@ -226,7 +273,7 @@
   var openId = null;
   function openHall(id) {
     var h = hallOf(id); if (!h) return; openId = id;
-    $('#hlName').innerHTML = T(h.name); $('#hlKj').textContent = { literature: '文學館', music: '唱歌館', stage: '舞臺館' }[id] || '陳列館';
+    $('#hlName').innerHTML = T(h.name); $('#hlKj').textContent = { literature: '문학관', music: '창가관', stage: '무대관' }[id] || '전시관';
     var body = $('#hlBody'); body.scrollTop = 0;
     var list = worksIn(id);
     if (h.room === 'shelf') roomShelf(body, h, list);
@@ -329,7 +376,7 @@
         '<p class="pp-msg" id="phMsg">' + (w.source ? T(w.source) : '') + '</p>' +
         (w.plot ? '<p class="pp-plot">' + T(w.plot) + '</p>' : '') +
         (w.story ? '<div class="pp-story"><h4>' + T({ old: '판이 도는 동안', now: '판이 도는 동안' }) + '</h4>' + w.story.map(function (p) { return '<p class="st">' + T(p) + '</p>'; }).join('') + '</div>' : '') +
-        (w.notes ? '<dl class="pp-notes">' + w.notes.map(function (n) { return '<div><dt>' + T(n.k) + '</dt><dd>' + T(n.v) + (n.verify ? ' <span class="vf">乙</span>' : '') + '</dd></div>'; }).join('') + '</dl>' : '') +
+        (w.notes ? '<dl class="pp-notes">' + w.notes.map(function (n) { return '<div><dt>' + T(n.k) + '</dt><dd>' + T(n.v) + (n.verify ? ' <span class="vf">확인 중</span>' : '') + '</dd></div>'; }).join('') + '</dl>' : '') +
         (w.perf ? '<p class="pp-perf"><b>' + T(w.perf) + '</b> · ' + T(w.perfSrc) + '</p>' : '') +
         (w.bside ? '<button type="button" class="mb-btn ghost" id="phFlip">' + T({ old: '판을 뒤집으시압 — B면', now: '판 뒤집기 — B면' }) + '</button><div class="pp-b" id="phB"><p class="bk">B면 · 노래 업는 면</p>' + w.bside.lines.map(function (p, k) { return '<p class="bl" style="--d:' + (0.4 + k * 1.3) + 's">' + T(p) + '</p>'; }).join('') + '<p class="bs">' + T(w.bside.src) + '</p></div>' : '') +
         (cs ? '<p class="pp-case"><b>' + T({ old: '사건', now: '사건' }) + '</b> ' + T(cs) + ' · <a href="' + esc(C.caseLink(w.case)) + '">지면으로 →</a></p>' : '');
@@ -427,11 +474,11 @@
     body.innerHTML =
       '<section class="if-p" data-p="num"><ul class="if-facts">' + I.facts.map(function (f) { return '<li class="mb-rv in"><b>' + f.num + '<small>' + T(f.unit) + '</small></b><span>' + T(f.label) + '</span></li>'; }).join('') + '</ul>' +
         '<div class="if-text">' + I.text.map(function (p) { return '<p>' + T(p) + '</p>'; }).join('') + '</div>' +
-        '<button type="button" class="if-pic" data-zoom="' + AD + 'ex-photo-site.jpg" data-cap="회장 실사 전경 · 一九二九"><img src="' + AD + 'ex-photo-site.jpg" alt="1929년 조선박람회 회장 전경 (실물 사진)" loading="lazy"><span>회장 실사 전경 · 一九二九</span></button></section>' +
+        '<button type="button" class="if-pic" data-zoom="' + AD + 'ex-photo-site.jpg" data-cap="회장 실사 전경 · 1929"><img src="' + AD + 'ex-photo-site.jpg" alt="1929년 조선박람회 회장 전경 (실물 사진)" loading="lazy"><span>회장 실사 전경 · 1929</span></button></section>' +
       '<section class="if-p" data-p="tk" hidden><div class="if-tks">' + I.tickets.map(function (t) {
           return '<button type="button" class="if-tk" data-zoom="' + AD + t.img + '" data-cap="' + esc(t.name.old) + ' · ' + esc(t.price.old) + '"><img src="' + AD + t.img + '" alt="' + esc(t.name.old) + ' (실물)" loading="lazy"><b>' + T(t.name) + '</b><em>' + T(t.price) + '</em><small>' + T(t.note) + '</small></button>';
         }).join('') + '</div>' +
-        '<h4>當時 入場料</h4><dl class="if-fee">' + I.fee.map(function (f) { return '<div><dt>' + T(f.who) + '</dt><dd>' + T(f.price) + '</dd></div>'; }).join('') + '</dl></section>' +
+        '<h4>당시 입장료</h4><dl class="if-fee">' + I.fee.map(function (f) { return '<div><dt>' + T(f.who) + '</dt><dd>' + T(f.price) + '</dd></div>'; }).join('') + '</dl></section>' +
       '<section class="if-p" data-p="nt" hidden><p class="if-k">옛 안내문의 동그라미를 누르면 — 그 단락의 오늘말 풀이가 나오오.</p>' +
         '<div class="if-nt"><img src="' + AD + 'ex-notice.png" alt="1929년 조선박람회 안내문 (실물)">' + I.notice.map(function (n, i) { return '<button type="button" class="nt" style="left:' + n.x + '%;top:' + n.y + '%" data-n="' + i + '">' + (i + 1) + '</button>'; }).join('') + '</div>' +
         '<div class="if-ntx" id="ifNtx"><p class="if-k">번호를 누르시압.</p></div></section>' +

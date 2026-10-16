@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<!-- 경성야록 부록 · 京城事件博覽會 — 폰판 (폰에서 fair.html 이 이 쪽으로 넘김 · 컴퓨터판은 fair.html?pc=1)
+<!-- 경성야록 부록 · 경성사건박람회 — 폰판 (폰에서 fair.html 이 이 쪽으로 넘김 · 컴퓨터판은 fair.html?pc=1)
      글 · 작품 · 1929 자료는 컴퓨터판과 같은 fair-data.js 를 그대로 씀. 새로 지어낸 사실 없음. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -11,31 +11,30 @@
 <link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
 <link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
 <link rel="stylesheet" href="yk-mbook.css?v=11">
-<link rel="stylesheet" href="m-fair.css?v=3">
+<link rel="stylesheet" href="m-fair.css?v=4">
 </head>
 <body class="fx">
 
-<div class="mb-bar"><a href="index.html#appendix">‹ 本紙</a><span class="mb-now" data-def="경성사건박람회"></span><button data-open="mbToc" hidden></button><button type="button" class="fx-passbtn" data-open="fxPass"><b id="passN">0</b>/4</button><i class="mb-prog"></i></div>
+<div class="mb-bar"><a href="index.html#appendix">‹ 본지</a><span class="mb-now" data-def="경성사건박람회"></span><button data-open="mbToc" hidden></button><button type="button" class="fx-passbtn" data-open="fxPass"><b id="passN">0</b>/4</button><i class="mb-prog"></i></div>
 
 <!-- 하늘 · 먼 경성 · 안개 (화면 뒤에 고정) -->
 <div class="fx-sky" aria-hidden="true"><i class="fx-stars"></i><i class="fx-far"></i><i class="fx-fog a"></i><i class="fx-fog b"></i></div>
 
 <!-- 불러오기 -->
-<div class="ld" id="ld"><div class="ld-seal"><b>京城<br>事件<br>博覽會</b></div><p>子正 開場 — 회장에 불을 켜는 중이오</p><i class="ld-bar"><b id="ldBar"></b></i></div>
+<div class="ld" id="ld"><div class="ld-seal"><b>경성<br>사건<br>박람회</b></div><p>자정 개장 — 회장에 불을 켜는 중이오</p><i class="ld-bar"><b id="ldBar"></b></i></div>
 
 <!-- 환영 — 넘기는 세 장 -->
 <div class="wl" id="wl">
   <div class="wl-pages" id="wlPages">
     <section class="wl-p p1">
       <div class="wl-art"><img src="assets/expo/mj-gate.jpg" alt="전구로 두른 박람회 정문 (재현 그림)"><span class="rt">그림 · 재현</span></div>
-      <p class="wl-k">京城野錄 附錄 · 子正 開場 · 鷄鳴 閉場</p>
-      <h1><span>京城事件</span><span>博覽會</span></h1>
-      <p class="wl-ko">경성사건박람회</p>
+      <p class="wl-k">경성야록 부록 · 자정에 열고 첫닭이 울면 닫소</p>
+      <h1><span>경성사건</span><span>박람회</span></h1>
       <p class="wl-t">지면에서 끗나지 안은 사건이 소설 · 노래 · 활동사진이 되어 백 년을 건너온 긔록.</p>
       <button type="button" class="wl-next" data-wl="1">다음 장 →</button>
     </section>
     <section class="wl-p p2">
-      <p class="wl-k">觀覽法 · 보는 법</p>
+      <p class="wl-k">관람법 · 보는 법</p>
       <h2>손가락 셋이면<br>다 보오</h2>
       <ol class="wl-how">
         <li><i class="g-swipe"></i><b>옆으로 밀기</b><span>관 카드 · 책 · 음반을 넘겨 고르오</span></li>
@@ -46,12 +45,12 @@
       <button type="button" class="wl-next" data-wl="2">입장권으로 →</button>
     </section>
     <section class="wl-p p3">
-      <p class="wl-k">入場券 · 一九二九 朝鮮博覽會 大人</p>
+      <p class="wl-k">입장권 · 1929 조선박람회 · 어른</p>
       <h2>반권을 뜨드시압</h2>
       <div class="tk" id="tk">
         <div class="tk-main"><img src="assets/expo/ex-ticket-adult.jpg" alt="1929년 조선박람회 대인 입장권 (실물)"></div>
-        <div class="tk-stub" id="tkStub" role="button" tabindex="0" aria-label="반권을 뜯고 입장하기"><span>半<br>券</span><i class="tk-date" id="tkDate"></i></div>
-        <b class="tk-punch">改札</b>
+        <div class="tk-stub" id="tkStub" role="button" tabindex="0" aria-label="반권을 뜯고 입장하기"><span>반<br>권</span><i class="tk-date" id="tkDate"></i></div>
+        <b class="tk-punch">개찰</b>
       </div>
       <p class="g-how" id="gHow">반권을 오른쪽으로 밀어 뜨드시압 — 또는 아래 단추</p>
       <button type="button" class="wl-go" id="wlGo">개찰하고 입장</button>
@@ -63,51 +62,53 @@
 
 <!-- 회장 — 관 카드 -->
 <main class="hub" id="hub">
-  <p class="hub-k">京城事件博覽會 · 會場</p>
+  <div class="fest" aria-hidden="true"><i class="fest-beam a"></i><i class="fest-beam b"></i><svg class="fest-wire" id="festWire" viewBox="0 0 100 100" preserveAspectRatio="none"></svg><div class="fest-bulbs" id="festBulbs"></div><div class="fest-flags" id="festFlags"></div><canvas class="fest-fw" id="festFw"></canvas><div class="fest-sky" id="festSky"></div></div>
+  <p class="hub-k">경성사건박람회 · 회장</p>
   <h2 class="hub-h">어느 관으로<br>드러가시겟소?</h2>
   <p class="hub-say" id="hubSay"></p>
   <div class="hub-flow" id="hubFlow"></div>
+  <div class="fest-tick" aria-label="확성기 안내"><i class="fest-horn"></i><div class="fest-tk" id="festTick"></div></div>
 </main>
 
 <!-- 목차 = 회장 안내도 -->
 <div class="mb-sheet" id="mbToc" role="dialog" aria-label="회장 안내도">
-  <div class="mb-sh-hd"><b><small>案內圖</small>경성사건박람회 회장</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-hd"><b><small>안내도</small>경성사건박람회 회장</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
   <div class="mb-sh-bd"><nav class="mb-toc"></nav></div>
 </div>
 
 <!-- 관 안 (관마다 다시 그림) -->
 <div class="mb-sheet fx-hall" id="shHall" role="dialog" aria-label="전시관">
-  <div class="mb-sh-hd"><b><small id="hlKj">陳列館</small><span id="hlName">관</span></b><button class="mb-sh-x" data-close aria-label="관 밧그로">×</button></div>
+  <div class="mb-sh-hd"><b><small id="hlKj">전시관</small><span id="hlName">관</span></b><button class="mb-sh-x" data-close aria-label="관 밧그로">×</button></div>
   <div class="mb-sh-bd" id="hlBody"></div>
 </div>
 
 <!-- 책 펼치기 -->
 <div class="mb-sheet light fx-book" id="shBook" role="dialog" aria-label="책">
-  <div class="mb-sh-hd"><b><small>文學館 · 펼친 책</small><span id="bkHead">책</span></b><button class="mb-sh-x" data-close aria-label="책 덥기">×</button></div>
+  <div class="mb-sh-hd"><b><small>문학관 · 펼친 책</small><span id="bkHead">책</span></b><button class="mb-sh-x" data-close aria-label="책 덥기">×</button></div>
   <div class="mb-sh-bd" id="bkBody"></div>
 </div>
 
 <!-- 안내소 -->
 <div class="mb-sheet light fx-info" id="shInfo" role="dialog" aria-label="안내소">
-  <div class="mb-sh-hd"><b><small>案內所 · 一九二九 朝鮮博覽會</small>안내소</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-hd"><b><small>안내소 · 1929 조선박람회</small>안내소</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
   <nav class="mb-tabs" id="ifTabs"></nav>
   <div class="mb-sh-bd" id="ifBody"></div>
 </div>
 
 <!-- 연표 다이알 -->
 <div class="mb-sheet fx-dial" id="shDial" role="dialog" aria-label="연표">
-  <div class="mb-sh-hd"><b><small>年表 · 사건이 거러온 해</small>연표</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-hd"><b><small>연표 · 사건이 거러온 해</small>연표</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
   <div class="mb-sh-bd" id="dlBody"></div>
 </div>
 
 <!-- 관람 수첩 -->
 <div class="mb-sheet light fx-pass" id="fxPass" role="dialog" aria-label="관람 수첩">
-  <div class="mb-sh-hd"><b><small>觀覽 印章 手帖</small>관람 수첩</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-hd"><b><small>관람 도장 수첩</small>관람 수첩</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
   <div class="mb-sh-bd" id="psBody"></div>
 </div>
 
 <script src="fair-data.js"></script>
-<script src="m-fair.js?v=3"></script>
+<script src="m-fair.js?v=4"></script>
 <script>window.MB_KO = window.MB_KO || { '경성사건박람회장': '경성사건박람회장' };</script>
 <script src="yk-mbook.js?v=13"></script>
 </body>
