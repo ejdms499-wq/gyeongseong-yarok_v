@@ -17,6 +17,9 @@
   CASES.forEach(function (c) { if (path.indexOf('/' + c.dir + '/') > -1) HERE = c; });
   if (!HERE) return;
   var ROOT = '../';
+  W.YKP_MONO = true;
+  var PROXY = D.createElement('div'); PROXY.className = 'notebook mce-proxy'; PROXY.hidden = true; D.body.appendChild(PROXY);
+  function pressGot() { try { return !!(W.ykPress && W.ykPress.get()[HERE.k]); } catch (e) { return false; } }
 
   function read() { try { return JSON.parse(localStorage.getItem('yk-read') || '{}') || {}; } catch (e) { return {}; } }
   function n() { var o = read(), k = 0; CASES.forEach(function (c) { if (o[c.k]) k++; }); return k; }
@@ -72,16 +75,19 @@
     function cnt() { return BEATS.filter(function (x) { return got[x[0]]; }).length; }
     function paintNb() {
       var c = cnt(), all = c >= BEATS.length; $('#mceNbN').textContent = all ? '취재 끗' : c + ' / ' + BEATS.length;
-      nbBtn.classList.toggle('done', all);
+      nbBtn.classList.toggle('done', all); if (all) PROXY.classList.add('done');
+      if (pressGot()) $('#mceNbN').textContent = '기자증';
       var o = read(), k = n();
       $('#mceBkBd').innerHTML =
         '<ol class="mce-bk">' + BEATS.map(function (x, i) { return '<li><button type="button" data-go="' + x[0] + '" class="' + (got[x[0]] ? 'on' : '') + '"><i>' + (got[x[0]] ? x[1] : i + 1) + '</i><small>' + x[1] + '</small></button></li>'; }).join('') + '</ol>' +
         '<p class="mce-bk-s">' + (all ? '이 사건의 취재를 다 마첫소.' : '장을 지나 내려가면 도장이 저절로 찍히오. 도장을 누르면 그 장으로 가오.') + '</p>' +
         '<div class="mce-bk-4"><p><b>네 사건</b><span>' + k + ' / 4</span></p><div>' + CASES.map(function (cc) { return (o[cc.k] || cc === HERE ? '<span' : '<a href="' + ROOT + cc.dir + '/m.html"') + ' class="' + (o[cc.k] ? 'on' : '') + (cc === HERE ? ' me' : '') + '"><i></i>' + cc.name + (o[cc.k] || cc === HERE ? '</span>' : '</a>'); }).join('') + '</div>' +
         '<p class="mce-bk-t">' + (k >= 4 ? '편집국에서 전보가 왓소 — 출입 암호는 <strong>자정</strong>. <a href="' + ROOT + 'm-newsroom.html">편집국으로 →</a>' : '네 사건을 끗까지 닑으면 편집국에서 전보가 오오.') + '</p></div>' +
+        (pressGot() ? '<button type="button" class="mce-press" id="mcePress">기자증 꺼내 보기 · 보내기</button>' : '<p class="mce-bk-p">도장을 다 찍으면 편집국이 <b>기자증</b>을 내주오.</p>') +
         '<div class="mce-share"><button type="button" id="mceShare">이 사건 알리기</button><button type="button" id="mceHg2">호외 보기</button></div>';
       $('#mceHg2').onclick = function () { closeBook(); setTimeout(openHg, 300); };
       $('#mceShare').onclick = share;
+      var pb = $('#mcePress'); if (pb) pb.onclick = function () { closeBook(); setTimeout(function () { W.ykPress.show(''); }, 320); };
     }
     function openBook() { paintNb(); book.hidden = false; D.documentElement.classList.add('mb-lock'); requestAnimationFrame(function () { book.classList.add('on'); }); tone('tick'); }
     function closeBook() { book.classList.remove('on'); D.documentElement.classList.remove('mb-lock'); setTimeout(function () { book.hidden = true; }, 380); }

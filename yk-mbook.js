@@ -210,8 +210,8 @@
      cfg = { st, audioBase, staticSrc, endLine } · st[i] = { y, no, when, au?, moon, t[], b[](문자열 또는 [옛,오늘]), d[], link? } */
   W.mb.radio = function (cfg) {
     /* 다이얼을 손가락으로 돌림 → 잡음이 줄고 늘다가, 주파수에 닿으면 녹음이 저절로 흘러나옴 */
-    var ST = cfg.st, LO = 550, HI = 1500, built = false, ang = 0, lock = -1, card = -1;
-    var fq = function (a) { return LO + ((a % 360) + 360) % 360 / 360 * (HI - LO); };
+    var ST = cfg.st, LO = 550, HI = 1500, built = false, ang = 0, lock = -1, card = -1, TURNS = 3, MAXA = 360 * TURNS - 1, det = -1, vel = 0, spin = 0;
+    var fq = function (a) { return LO + ((a % 360) + 360) % 360 / 360 * (HI - LO); }, fT = function (T) { return LO + T / (360 * TURNS) * (HI - LO); };
     var A = W.mb.audio, au = null, noise = null, an = null, raf = 0, open = false;
     function build() {
       built = true;
@@ -220,26 +220,36 @@
         '<div class="rx2-top"><span id="rxState">잡음뿐이오</span><span class="rx2-kc"><b id="rxKc">---</b> 키로</span></div></div>' +
         '<div class="rx2-scale"><div class="rd-nums"><span>550</span><span>700</span><span>900</span><span>1100</span><span>1300</span><span>1500</span></div><div class="rd-ticks"></div>' +
         ST.map(function (s) { return '<i class="rx2-st" style="left:' + ((fq(s.ang) - LO) / (HI - LO) * 100) + '%"></i>'; }).join('') + '<i class="rd-needle" id="rxNeedle"></i></div>' +
-        '<div class="rx2-knobwrap"><p class="rx2-hint" id="rxHint">손잡이를 손가락으로 천천히 돌리시압</p><div class="rx2-knob" id="rxKnob"><img src="' + (cfg.dial || '') + '" alt="" draggable="false"><i></i></div></div>' +
-        '<div class="rx2-jump">' + ST.map(function (s, i) { return '<button data-rj="' + i + '">' + s.y + '</button>'; }).join('') + '</div>' +
+        '<div class="rx2-knobwrap"><div class="rx2-meter" aria-hidden="true"><svg viewBox="0 0 120 64"><path d="M10 58 A52 52 0 0 1 110 58" fill="none" stroke="#333" stroke-width="1.5"/><path d="M78 13 A52 52 0 0 1 110 58" fill="none" stroke="#b3261e" stroke-width="3"/>' + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (k) { var a = Math.PI * (1 - k / 10), r1 = 52, r2 = k % 5 ? 47 : 43; return '<line x1="' + (60 + Math.cos(a) * r1).toFixed(1) + '" y1="' + (58 - Math.sin(a) * r1).toFixed(1) + '" x2="' + (60 + Math.cos(a) * r2).toFixed(1) + '" y2="' + (58 - Math.sin(a) * r2).toFixed(1) + '" stroke="#777" stroke-width="1"/>'; }).join('') + '</svg><i id="rxMeter"></i><span>신호</span></div>' +
+        '<p class="rx2-hint" id="rxHint">손잡이를 손가락으로 천천히 돌리시압 · 세 바퀴에 550부터 1500 키로까지<br>신호 바늘이 붉은 칸에 들면 손을 멈추고 조금씩 맞추시압</p>' +
+        '<div class="rx2-knob" id="rxKnob"><img src="' + (cfg.dial || '') + '" alt="" draggable="false"><span class="rx2-knurl"></span><i></i></div><p class="rx2-turn" id="rxTurn"></p></div>' +
         '<div class="rd-card" id="rdCard"><p class="rd-hint">잡음 속 어딘가에, ' + ST.length + ' 개의 목소리가 숨어 잇소.</p></div></div>';
       var kn = $('#rxKnob'), last = null, c0 = null;
       function aAt(t) { var r = kn.getBoundingClientRect(); return Math.atan2(t.clientX - (r.left + r.width / 2), -(t.clientY - (r.top + r.height / 2))) * 180 / Math.PI; }
-      function down(e) { var t = e.touches ? e.touches[0] : e; last = aAt(t); kn.classList.add('grab'); start(); }
-      function move(e) { if (last === null) return; var t = e.touches ? e.touches[0] : e, a = aAt(t), d = a - last; if (d > 180) d -= 360; if (d < -180) d += 360; last = a; setAng(ang + d); if (e.cancelable) e.preventDefault(); }
-      function up() { last = null; kn.classList.remove('grab'); }
+      var lt = 0;
+      function down(e) { var t = e.touches ? e.touches[0] : e; last = aAt(t); lt = performance.now(); vel = 0; cancelAnimationFrame(spin); kn.classList.add('grab'); start(); }
+      function move(e) { if (last === null) return; var t = e.touches ? e.touches[0] : e, a = aAt(t), d = a - last, now = performance.now(); if (d > 180) d -= 360; if (d < -180) d += 360; last = a;
+        /* 손가락이 빠를수록 성글게, 느릴수록 곱게 — 주파수 가까이선 저절로 무거워짐 */
+        var dt = Math.max(8, now - lt), sp = Math.abs(d) / dt, near = Math.max(0, 1 - nearKc() / 40), k = (sp < .08 ? .35 : 1) * (1 - near * .55);
+        lt = now; vel = d * k / dt * 16; setAng(ang + d * k); if (e.cancelable) e.preventDefault(); }
+      function up() { if (last === null) return; last = null; kn.classList.remove('grab'); coast(); }
+      function coast() { cancelAnimationFrame(spin); (function f() { vel *= .9; if (Math.abs(vel) < .15 || ang <= 0 || ang >= MAXA) return; setAng(ang + vel); spin = requestAnimationFrame(f); })(); }
       kn.addEventListener('touchstart', down, { passive: true }); kn.addEventListener('touchmove', move, { passive: false }); kn.addEventListener('touchend', up);
       kn.addEventListener('mousedown', down); W.addEventListener('mousemove', move); W.addEventListener('mouseup', up);
-      $('#rdBody').addEventListener('click', function (e) { var j = e.target.closest('[data-rj]'); if (!j) return; start(); glide(ST[+j.dataset.rj].ang); });
-      setAng(4);
+      setAng(12);
     }
     function glide(to) { var from = ang, t0 = performance.now(); (function f(t) { var k = Math.min(1, (t - t0) / 1400), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; setAng(from + (to - from) * e); if (k < 1) requestAnimationFrame(f); })(t0); }
+    function nearKc() { var f = fT(ang), bd = 1e9; ST.forEach(function (s) { bd = Math.min(bd, Math.abs(fq(s.ang) - f)); }); return bd; }
     function setAng(a) {
-      ang = Math.max(0, Math.min(359, a));
-      $('#rxKnob img').style.transform = 'rotate(' + ang + 'deg)'; var f = fq(ang);
+      ang = Math.max(0, Math.min(MAXA, a));
+      $('#rxKnob img').style.transform = 'rotate(' + ang + 'deg)'; $('#rxKnob .rx2-knurl').style.transform = 'rotate(' + ang + 'deg)'; var f = fT(ang);
+      /* 딸깍 — 5 키로마다 손끗에 걸림 */
+      var dk = Math.round(f / 5); if (dk !== det) { if (det >= 0) { if (navigator.vibrate) try { navigator.vibrate(3); } catch (x) {} if (W.mb.tone) W.mb.tone('type'); } det = dk; }
+      var tn = $('#rxTurn'); if (tn) tn.textContent = (Math.floor(ang / 360) + 1) + ' 바퀴째 · ' + (ang <= 0 ? '왼편 끗' : ang >= MAXA ? '오른편 끗' : '');
       $('#rxNeedle').style.left = ((f - LO) / (HI - LO) * 100) + '%'; $('#rxKc').textContent = Math.round(f);
       var best = -1, bd = 1e9; ST.forEach(function (s, i) { var d = Math.abs(fq(s.ang) - f); if (d < bd) { bd = d; best = i; } });
-      var near = Math.max(0, 1 - bd / 70), on = bd < 14 ? best : -1;
+      var near = Math.max(0, 1 - bd / 70), on = bd < 6 ? best : -1;
+      var mt = $('#rxMeter'); if (mt) mt.style.transform = 'rotate(' + (-62 + 124 * Math.pow(near, 1.6) + (Math.random() - .5) * (1 - near) * 6).toFixed(1) + 'deg)';
       if (A) A.noiseLevel(.42 * (1 - near * .92));
       $('.rx2').style.setProperty('--near', near.toFixed(2));
       if (on !== lock) tuneTo(on);
@@ -249,7 +259,7 @@
     var gap = -1, HILLS = '<svg class="rx2-hills" viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46 L40 24 L76 40 L118 12 L160 38 L196 22 L236 42 L270 28 L300 38 L300 60 L0 60Z" fill="#1c1c1c"/><path d="M0 54 L60 42 L110 50 L160 40 L214 52 L260 44 L300 50 L300 60 L0 60Z" fill="#111"/></svg>';
     function between() {
       if (!cfg.gaps || !cfg.gaps.length) return;
-      var n = ST.length, SP = 360 / n, m = function (a) { return ((a % 360) + 360) % 360; }, g = Math.floor(m(ang - ST[0].ang) / SP) % n; if (g === gap) return; gap = g;
+      var n = ST.length, SP = 360 / n, m = function (a) { return ((a % 360) + 360) % 360; }, g = Math.floor(m(ang / TURNS - ST[0].ang) / SP) % n; if (g === gap) return; gap = g;
       var G = cfg.gaps[g]; if (!G) return;
       $('#rxVis').innerHTML = '<span class="rx2-moon"></span>' + HILLS + '<p class="rx2-btw"><small>' + G[0] + ' ─── ' + G[1] + '</small>' + t0(G.slice ? (G.length > 2 ? G[2] : G) : G) + '</p>';
       $('#rxState').textContent = '주파수 사이 · ' + G[0] + ' → ' + G[1];
@@ -262,7 +272,7 @@
       $('#rxVis').innerHTML = '<span class="rx2-moon" style="left:' + (s.moon || 60) + '%"></span>' + HILLS + (s.au ? '' : '<p class="rx2-nos">이 칸은 소리가 업소 — 지면만 남앗소</p>') + '<h4>' + (s.h || t0(s.t)) + '</h4>' +
         (s.card && cfg.cardBase ? '<button type="button" class="rx2-card" data-zoom="' + cfg.cardBase + s.card + '" data-cap="' + s.y + ' 카드뉴스"><img src="' + cfg.cardBase + s.card + '" alt="' + s.y + ' 카드뉴스"><span>크게</span></button>' : '');
       $('.rx2').classList.add('lock'); st.textContent = s.no + ' · 잡혓소';
-      if (W.mb.tone) W.mb.tone('tick');
+      if (W.mb.tone) W.mb.tone('stamp'); if (navigator.vibrate) try { navigator.vibrate([20, 40, 20]); } catch (x) {}
       if (card !== i) { card = i; showCard(i); }
       if (!W.__mbRd) { W.__mbRd = D.createElement('audio'); W.__mbRd.preload = 'auto'; W.__mbRd.setAttribute('playsinline', ''); D.body.appendChild(W.__mbRd); }
       au = W.__mbRd;

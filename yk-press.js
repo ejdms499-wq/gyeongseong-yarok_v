@@ -243,6 +243,19 @@
   }
   (function () { if (W.YK_KAKAO_KEY === undefined) { var s = D.createElement('script'); s.src = BASE + 'yk-kakao.js'; D.head.appendChild(s); } })();
   /* 인스타 스토리용 세로 그림 (1080 × 1920) */
+  /* 폰판(W.YKP_MONO) — 기자증을 흑백으로 · 붉은 도장만 남김 */
+  function mono(cv) {
+    try {
+      var x = cv.getContext('2d'), d = x.getImageData(0, 0, cv.width, cv.height), a = d.data;
+      for (var i = 0; i < a.length; i += 4) {
+        var r = a[i], g = a[i + 1], b = a[i + 2], l = .299 * r + .587 * g + .114 * b;
+        if (r > 90 && g < r * .55 && b < r * .6) { var k = Math.min(1, .45 + l / 160); a[i] = 179 * k; a[i + 1] = 38 * k; a[i + 2] = 30 * k; }
+        else { var v = Math.max(0, Math.min(255, (l - 18) * 1.12)); a[i] = a[i + 1] = a[i + 2] = v; }
+      }
+      x.putImageData(d, 0, 0);
+    } catch (e) {}
+  }
+  var draw0 = draw; draw = function (cv, nm) { draw0(cv, nm); if (W.YKP_MONO) mono(cv); };
   function story(card, nm) {
     var c = D.createElement('canvas'), x = c.getContext('2d'); c.width = 1080; c.height = 1920;
     var g = x.createLinearGradient(0, 0, 0, 1920); g.addColorStop(0, '#231b14'); g.addColorStop(1, '#0c0907'); x.fillStyle = g; x.fillRect(0, 0, 1080, 1920);
