@@ -18,7 +18,17 @@
   css.textContent = [
     'html.yk-noir{--yn-paper:#f3f2ef;--yn-ink:#0e0e0e;--yn-red:#b3261e;background:#f3f2ef}',
     'html.yk-noir body{background-color:#f3f2ef}',
-    'html.yk-noir img:not(.yn-keep),html.yk-noir video,html.yk-noir picture{filter:grayscale(1) contrast(1.08)!important}',
+    'html.yk-noir:not(#yn) body img:not(.yn-keep):not(.yn-lamp),html.yk-noir:not(#yn) body video,html.yk-noir:not(#yn) body picture,html.yk-noir:not(#yn) body canvas,html.yk-noir:not(#yn) body iframe{filter:grayscale(1) contrast(1.08)!important}',
+    'html.yk-noir:not(#yn) body img.yn-lamp{filter:grayscale(1) contrast(1.08)!important}',
+    /* 장 넘김 종이 · 봉함 · 종이 띠 — 누런색 금지 */
+    'html.yk-noir:not(#yn) body .m-leaf i{background:#f3f2ef!important;box-shadow:inset -30px 0 40px rgba(0,0,0,.12)!important}',
+    'html.yk-noir:not(#yn) body .m-leaf i:before{display:none!important}',
+    'html.yk-noir:not(#yn) body .m-leaf b,html.yk-noir:not(#yn) body .m-leaf em{color:#0e0e0e!important;border-color:#0e0e0e!important}',
+    'html.yk-noir:not(#yn) body .cb-seal{background:rgba(243,242,239,.94)!important;border:1px solid #b3261e!important}',
+    /* 라디오 · 축음기 같은 장치의 주황 불빛도 흑백으로 */
+    'html.yk-noir:not(#yn) body .archive-radio .rx-radio,html.yk-noir:not(#yn) body .archive-radio .rx-stage,html.yk-noir:not(#yn) body .yk-gramo,html.yk-noir:not(#yn) body [class*="radio"] [class*="glow"]{filter:grayscale(1)!important}',
+    'html.yk-noir:not(#yn) body .cb-seal span{color:#333!important}',
+    'html.yk-noir:not(#yn) body *{scrollbar-color:#555 transparent}',
     'html.yk-noir *::before,html.yk-noir *::after{filter:grayscale(1)}',
     'html.yk-noir ::selection{background:#0e0e0e;color:#f3f2ef}',
     'html.yk-noir .ykg-toast{display:none!important}',
@@ -87,28 +97,28 @@
     var bc = D.createElement('style'); bc.id = 'yk-noir-bb';
     bc.textContent = [
       /* 표지: 하얗게 날아간 사진 · 둘째 줄은 이미 바램 */
-      'html.yn-bb .hero-slider{background:#fbfbf9!important}',
-      'html.yn-bb .hero-slider img.hero-slide{filter:grayscale(1) brightness(1.6) contrast(.55)!important}',
-      'html.yn-bb .hero-overlay,html.yn-bb .hero-dark{background:linear-gradient(rgba(251,251,249,0) 35%,rgba(251,251,249,.75) 68%,#fbfbf9 94%)!important;opacity:1!important}',
-      'html.yn-bb .hero-content,html.yn-bb .hero-content *{color:#0e0e0e!important;text-shadow:none!important}',
-      'html.yn-bb .hero-content h1{font-weight:900!important;letter-spacing:-.06em!important;font-size:60px!important;line-height:1!important}',
-      'html.yn-bb .hero-content h1 .yn-fade{color:#c9c9c4!important}',
-      'html.yn-bb .hero-content .hero-meta,html.yn-bb .hero-content .hero-meta *{color:#777!important}',
-      'html.yn-bb .yk-credit.hero{color:#999!important}',
+      'html.yn-bb:not(#yn) body .hero-slider{background:#fbfbf9!important}',
+      'html.yn-bb:not(#yn) body .hero-slider img.hero-slide{filter:grayscale(1) brightness(1.6) contrast(.55)!important}',
+      'html.yn-bb:not(#yn) body .hero-overlay,html.yn-bb:not(#yn) body .hero-dark{background:linear-gradient(rgba(251,251,249,0) 35%,rgba(251,251,249,.75) 68%,#fbfbf9 94%)!important;opacity:1!important}',
+      'html.yn-bb:not(#yn) body .hero-content,html.yn-bb:not(#yn) body .hero-content *{color:#0e0e0e!important;text-shadow:none!important}',
+      'html.yn-bb:not(#yn) body .hero-content h1{font-weight:900!important;letter-spacing:-.06em!important;font-size:60px!important;line-height:1!important}',
+      'html.yn-bb:not(#yn) body .hero-content h1 .yn-fade{color:#c9c9c4!important}',
+      'html.yn-bb:not(#yn) body .hero-content .hero-meta,html.yn-bb:not(#yn) body .hero-content .hero-meta *{color:#777!important}',
+      'html.yn-bb:not(#yn) body .yk-credit.hero{color:#999!important}',
       /* 봉함: 흰 천을 덮은 탁자 */
-      'html.yn-bb .cb-steps li.sealed .cb-seal{background:#eee url(' + BASE + 'assets/noir/cloth.jpg) center 60%/cover!important;background-blend-mode:normal!important;border:0!important;min-height:120px;justify-content:flex-end!important;padding-bottom:12px!important}',
-      'html.yn-bb .cb-steps li.sealed .cb-seal b{background:#fbfbf9!important;color:#b3261e!important;border-color:#b3261e!important}',
-      'html.yn-bb .cb-steps li.sealed .cb-seal span{background:rgba(11,11,11,.78)!important;color:#efece6!important;padding:4px 8px!important}',
+      'html.yn-bb:not(#yn) body .cb-steps li.sealed .cb-seal{background:#eee url(' + BASE + 'assets/noir/cloth.jpg) center 60%/cover!important;background-blend-mode:normal!important;border:0!important;min-height:120px;justify-content:flex-end!important;padding-bottom:12px!important}',
+      'html.yn-bb:not(#yn) body .cb-steps li.sealed .cb-seal b{background:#fbfbf9!important;color:#b3261e!important;border-color:#b3261e!important}',
+      'html.yn-bb:not(#yn) body .cb-steps li.sealed .cb-seal span{background:rgba(11,11,11,.78)!important;color:#efece6!important;padding:4px 8px!important}',
       /* 바래 가는 구간: 흰 바탕 · 사진과 글이 장마다 조금씩 더 옅어짐 (붉은색은 그대로) */
-      'html.yn-bb .bb-dusk{background:#fbfbf9!important}',
-      'html.yn-bb [data-ynw] img{filter:grayscale(1) brightness(calc(1 + var(--w) * .9)) contrast(calc(1 - var(--w) * .55))!important}',
-      'html.yn-bb [data-ynw] p,html.yn-bb [data-ynw] li,html.yn-bb [data-ynw] dd,html.yn-bb [data-ynw] dt,html.yn-bb [data-ynw] h3,html.yn-bb [data-ynw] h2{opacity:calc(1 - var(--w) * .45)}',
+      'html.yn-bb:not(#yn) body .bb-dusk{background:#fbfbf9!important}',
+      'html.yn-bb:not(#yn) body [data-ynw] img{filter:grayscale(1) brightness(calc(1 + var(--w) * .9)) contrast(calc(1 - var(--w) * .55))!important}',
+      'html.yn-bb:not(#yn) body [data-ynw] p,html.yn-bb:not(#yn) body [data-ynw] li,html.yn-bb:not(#yn) body [data-ynw] dd,html.yn-bb:not(#yn) body [data-ynw] dt,html.yn-bb:not(#yn) body [data-ynw] h3,html.yn-bb:not(#yn) body [data-ynw] h2{opacity:calc(1 - var(--w) * .45)}',
       /* 반전 띠: 금지가 풀린 날 */
-      'html.yn-bb .yn-flip{position:relative;background:#080808;color:#efece6;padding:70px 22px 54px;overflow:hidden}',
-      'html.yn-bb .yn-flip:before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:#fff}',
-      'html.yn-bb .yn-flip small{display:block;font:500 10px/1 "Noto Sans KR",sans-serif;letter-spacing:.3em;color:#b3261e}',
-      'html.yn-bb .yn-flip b{display:block;margin-top:14px;font:900 34px/1.15 "Noto Serif KR",serif;letter-spacing:-.05em}',
-      'html.yn-bb .yn-flip span{display:block;margin-top:14px;font:300 14.5px/1.85 "Noto Serif KR",serif;color:#bdb9b0}'
+      'html.yn-bb:not(#yn) body .yn-flip{position:relative;background:#080808;color:#efece6;padding:70px 22px 54px;overflow:hidden}',
+      'html.yn-bb:not(#yn) body .yn-flip:before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:#fff}',
+      'html.yn-bb:not(#yn) body .yn-flip small{display:block;font:500 10px/1 "Noto Sans KR",sans-serif;letter-spacing:.3em;color:#b3261e}',
+      'html.yn-bb:not(#yn) body .yn-flip b{display:block;margin-top:14px;font:900 34px/1.15 "Noto Serif KR",serif;letter-spacing:-.05em}',
+      'html.yn-bb:not(#yn) body .yn-flip span{display:block;margin-top:14px;font:300 14.5px/1.85 "Noto Serif KR",serif;color:#bdb9b0}'
     ].join('\n');
     (D.head || H).appendChild(bc);
     var bbInit = function () {
@@ -202,12 +212,12 @@
   if (path.indexOf('/case-maria/') > -1) {
     H.classList.add('yn-mr');
     addCss('yk-noir-mr', [
-      'html.yn-mr .hero-slider:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle 170px at 50% 30%,rgba(0,0,0,0),rgba(0,0,0,.55) 55%,rgba(5,5,5,.95) 100%)}',
-      'html.yn-mr .hero-content{z-index:2}',
-      'html.yn-mr img.yn-lamp{-webkit-mask-image:radial-gradient(circle var(--lr,150px) at var(--lx,50%) var(--ly,42%),#000 35%,rgba(0,0,0,.14) 100%);mask-image:radial-gradient(circle var(--lr,150px) at var(--lx,50%) var(--ly,42%),#000 35%,rgba(0,0,0,.14) 100%)}',
-      'html.yn-mr .yn-lamp-hint{display:block;margin:8px 0 0;font:500 10px/1.5 "Noto Sans KR",sans-serif;letter-spacing:.2em;color:#8d8a84;text-align:center}',
-      'html.yn-mr .verdict{position:relative}',
-      'html.yn-mr .yn-mujoe{position:absolute;right:18px;top:16px;z-index:3;border:2px solid #b3261e;color:#b3261e;font:900 20px/1 "Noto Serif KR",serif;letter-spacing:.1em;padding:7px 9px;transform:rotate(-8deg);pointer-events:none;background:transparent}'
+      'html.yn-mr:not(#yn) body .hero-slider:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle 170px at 50% 30%,rgba(0,0,0,0),rgba(0,0,0,.55) 55%,rgba(5,5,5,.95) 100%)}',
+      'html.yn-mr:not(#yn) body .hero-content{z-index:2}',
+      'html.yn-mr:not(#yn) body img.yn-lamp{-webkit-mask-image:radial-gradient(circle var(--lr,150px) at var(--lx,50%) var(--ly,42%),#000 35%,rgba(0,0,0,.14) 100%);mask-image:radial-gradient(circle var(--lr,150px) at var(--lx,50%) var(--ly,42%),#000 35%,rgba(0,0,0,.14) 100%)}',
+      'html.yn-mr:not(#yn) body .yn-lamp-hint{display:block;margin:8px 0 0;font:500 10px/1.5 "Noto Sans KR",sans-serif;letter-spacing:.2em;color:#8d8a84;text-align:center}',
+      'html.yn-mr:not(#yn) body .verdict{position:relative}',
+      'html.yn-mr:not(#yn) body .yn-mujoe{position:absolute;right:18px;top:16px;z-index:3;border:2px solid #b3261e;color:#b3261e;font:900 20px/1 "Noto Serif KR",serif;letter-spacing:.1em;padding:7px 9px;transform:rotate(-8deg);pointer-events:none;background:transparent}'
     ]);
     var lampDone = false;
     onReady(function () {
@@ -232,12 +242,12 @@
   if (path.indexOf('/case-jukcheomjeong/') > -1) {
     H.classList.add('yn-jk');
     addCss('yk-noir-jk', [
-      'html.yn-jk .hero-slider img.hero-slide{filter:grayscale(1) brightness(1.12) contrast(.85)!important}',
-      'html.yn-jk .hero-slider:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(rgba(214,214,211,.15) 10%,rgba(214,214,211,.55) 55%,rgba(214,214,211,.2) 100%)}',
-      'html.yn-jk .hero-content{z-index:2}',
-      'html.yn-jk .ww-list>li,html.yn-jk .jk-word{transition:filter .7s ease,opacity .7s ease}',
-      'html.yn-jk .ww-list>li:not(.yn-clear),html.yn-jk .jk-word:not(.yn-clear){filter:blur(2.5px);opacity:.55}',
-      'html.yn-jk .yn-fog-hint{display:block;margin:6px 0 12px;font:500 10px/1.5 "Noto Sans KR",sans-serif;letter-spacing:.2em;color:#8d8a84}'
+      'html.yn-jk:not(#yn) body .hero-slider img.hero-slide{filter:grayscale(1) brightness(1.12) contrast(.85)!important}',
+      'html.yn-jk:not(#yn) body .hero-slider:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(rgba(214,214,211,.15) 10%,rgba(214,214,211,.55) 55%,rgba(214,214,211,.2) 100%)}',
+      'html.yn-jk:not(#yn) body .hero-content{z-index:2}',
+      'html.yn-jk:not(#yn) body .ww-list>li,html.yn-jk:not(#yn) body .jk-word{transition:filter .7s ease,opacity .7s ease}',
+      'html.yn-jk:not(#yn) body .ww-list>li:not(.yn-clear),html.yn-jk:not(#yn) body .jk-word:not(.yn-clear){filter:blur(2.5px);opacity:.55}',
+      'html.yn-jk:not(#yn) body .yn-fog-hint{display:block;margin:6px 0 12px;font:500 10px/1.5 "Noto Sans KR",sans-serif;letter-spacing:.2em;color:#8d8a84}'
     ]);
     var io = null;
     onReady(function () {
@@ -258,9 +268,9 @@
   if (path.indexOf('/case-sonkijeong/') > -1) {
     H.classList.add('yn-sk');
     addCss('yk-noir-sk', [
-      'html.yn-sk .hero-slider .yn-erase{position:absolute;left:50%;top:34%;z-index:1;width:190px;height:110px;margin:-55px 0 0 -95px;background:#f3f2ef;border-radius:40% 55% 45% 60%/60% 40% 55% 45%;transform:rotate(-6deg);box-shadow:0 0 22px 10px #f3f2ef;opacity:var(--eo,1);transition:opacity .4s;pointer-events:auto;touch-action:pan-y}',
-      'html.yn-sk .hero-slider .yn-erase i{position:absolute;left:0;right:0;top:50%;margin-top:-6px;text-align:center;font:500 9.5px/1.2 "Noto Sans KR",sans-serif;font-style:normal;letter-spacing:.2em;color:#777}',
-      'html.yn-sk .hero-content{z-index:2}'
+      'html.yn-sk:not(#yn) body .hero-slider .yn-erase{position:absolute;left:50%;top:34%;z-index:1;width:190px;height:110px;margin:-55px 0 0 -95px;background:#f3f2ef;border-radius:40% 55% 45% 60%/60% 40% 55% 45%;transform:rotate(-6deg);box-shadow:0 0 22px 10px #f3f2ef;opacity:var(--eo,1);transition:opacity .4s;pointer-events:auto;touch-action:pan-y}',
+      'html.yn-sk:not(#yn) body .hero-slider .yn-erase i{position:absolute;left:0;right:0;top:50%;margin-top:-6px;text-align:center;font:500 9.5px/1.2 "Noto Sans KR",sans-serif;font-style:normal;letter-spacing:.2em;color:#777}',
+      'html.yn-sk:not(#yn) body .hero-content{z-index:2}'
     ]);
     onReady(function () {
       var hs = D.querySelector('.hero-slider'); if (!hs || hs.querySelector('.yn-erase')) return;
