@@ -49,6 +49,34 @@
   ].join('\n');
   (D.head || H).appendChild(css);
 
+
+  /* ── 오프닝(폰): 검은 음화 첫 화면 · 흰 종이 시간축 · 붉은 인주 ── */
+  if (/opening\.html$/.test(path)) {
+    var oc = D.createElement('style'); oc.id = 'yk-noir-op';
+    oc.textContent = [
+      'html.yk-noir{--cream:#f3f2ef;--ink:#0e0e0e;--red:#b3261e}',
+      'html.yk-noir #gate{background:#0b0b0b!important;align-items:flex-end!important;justify-content:flex-end!important;text-align:right!important;padding:0 26px 120px!important;overflow:hidden}',
+      'html.yk-noir #gate .yn-gt{position:absolute;left:-6px;top:54px;writing-mode:vertical-rl;font:900 150px/.86 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:-.06em;color:#efece6;pointer-events:none}',
+      'html.yk-noir #gate .yn-gt b{color:#b3261e;font-weight:900}',
+      'html.yk-noir #gate .yn-gk{position:absolute;right:24px;top:26px;font:500 10px/1 "Noto Sans KR",sans-serif;letter-spacing:.3em;color:#77736c}',
+      'html.yk-noir #gate>*:not(.yn-gt):not(.yn-gk){position:relative;z-index:2}',
+      'html.yk-noir #gate .k{display:none!important}',
+      'html.yk-noir #gate .l{background:#efece6!important;margin:18px 0 18px auto!important}',
+      'html.yk-noir #gate .t{color:#efece6!important;letter-spacing:.1em!important}',
+      'html.yk-noir #gate .s{color:#8d8a84!important}',
+      'html.yk-noir #gate .q{color:#8d8a84!important;border-bottom-color:#8d8a8466!important}',
+      'html.yk-noir .skip{color:#0e0e0e}'
+    ].join('\n');
+    (D.head || H).appendChild(oc);
+    var gateT = function () {
+      var g = D.getElementById('gate'); if (!g || g.querySelector('.yn-gt')) return;
+      var t = D.createElement('div'); t.className = 'yn-gt'; t.setAttribute('aria-hidden', 'true'); t.innerHTML = '경성<b>야</b>록';
+      var k = D.createElement('div'); k.className = 'yn-gk'; k.textContent = '京城野錄 · 1920 — 1940';
+      g.insertBefore(t, g.firstChild); g.appendChild(k);
+    };
+    if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', gateT); else gateT();
+  }
+
   /* ── 색 바꾸기: 누런색 · 갈색 → 같은 밝기의 무채색 ── */
   function parse(c) { var m = /rgba?\(([^)]+)\)/.exec(c); if (!m) return null; var p = m[1].split(/[ ,\/]+/).filter(Boolean).map(parseFloat); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; }
   function warm(o) {
@@ -80,12 +108,35 @@
     var bi = cs.backgroundImage;
     if (bi && bi !== 'none') {
       if (/gradient/.test(bi)) { var nb = fixStr(bi); if (nb !== bi) e.style.setProperty('background-image', nb, 'important'); }
+      if (PAPER.test(bi)) { e.style.setProperty('background-image', 'none', 'important'); bi = 'none'; }
       if (/url\(/.test(bi)) { e.style.setProperty('background-blend-mode', 'luminosity', 'important'); var bc = parse(cs.backgroundColor); if (!bc || bc.a === 0) e.style.setProperty('background-color', 'rgb(128,128,128)', 'important'); }
     }
     var sh = cs.textShadow; if (sh && sh !== 'none' && /rgb/.test(sh)) { var ns = fixStr(sh); if (ns !== sh) e.style.setProperty('text-shadow', ns, 'important'); }
     var bs = cs.boxShadow; if (bs && bs !== 'none' && /rgb/.test(bs)) { var nbs = fixStr(bs); if (nbs !== bs) e.style.setProperty('box-shadow', nbs, 'important'); }
   }
   function sweep(root) { root = root || D.body; if (!root) return; one(root); var all = root.getElementsByTagName('*'); for (var i = 0; i < all.length; i++) one(all[i]); }
+
+
+  /* ── 종이 질감(누런 종이 사진 · 얼룩 · 잡티)을 걷어 내고 맑은 흰 종이로 ── */
+  var PAPER = /url\([^)]*(paper|sheet\.|guide_|grain|noise|texture|parch|fiber|stain|v2_bill|feTurbulence|fractalNoise)/i;
+  var extra = D.createElement('style'); extra.id = 'yk-noir-strip';
+  function stripSheets() {
+    var out = [];
+    function walk(rules) {
+      for (var i = 0; i < rules.length; i++) {
+        var r = rules[i];
+        if (r.cssRules && !r.selectorText) { try { if (!r.media || matchMedia(r.media.mediaText).matches) walk(r.cssRules); } catch (e) {} continue; }
+        if (!r.selectorText || !r.style) continue;
+        var bg = (r.style.backgroundImage || '') + ' ' + (r.style.background || '');
+        if (!PAPER.test(bg)) continue;
+        var sel = r.selectorText.split(',').map(function (x) { x = x.trim(); return /^html\b/.test(x) ? x.replace(/^html/, 'html.yk-noir') : 'html.yk-noir ' + x; }).join(',');
+        out.push(sel + '{background-image:none!important}');
+      }
+    }
+    [].forEach.call(D.styleSheets, function (sh) { if (sh.ownerNode === extra) return; try { walk(sh.cssRules); } catch (e) {} });
+    extra.textContent = out.join('\n');
+    if (!extra.parentNode) (D.head || H).appendChild(extra);
+  }
 
   /* ── 표지 그림: 사건 네 개 · 본지 ── */
   var COV = { 'case-maria': 'mr_cover', 'case-jukcheomjeong': 'jk_cover', 'case-sonkijeong': 'sk_cover', 'case-baekbaekgyo': 'bb_cover' };
@@ -112,13 +163,13 @@
   }
 
   function start() {
-    covers(); sweep();
+    stripSheets(); covers(); sweep();
     var q = [], tm = null;
     if ('MutationObserver' in W) new MutationObserver(function (ms) {
       ms.forEach(function (m) { [].forEach.call(m.addedNodes, function (n) { if (n.nodeType === 1) q.push(n); }); });
       if (!tm) tm = setTimeout(function () { tm = null; var l = q.splice(0); l.forEach(function (n) { if (n.isConnected) sweep(n); }); }, 120);
     }).observe(D.body, { childList: true, subtree: true });
-    setTimeout(function () { covers(); sweep(); }, 1500);
+    setTimeout(function () { stripSheets(); covers(); sweep(); }, 1500);
     setTimeout(function () { sweep(); }, 4000);
   }
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', start); else start();
