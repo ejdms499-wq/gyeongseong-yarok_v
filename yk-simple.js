@@ -23,7 +23,6 @@
     'html.yk-simple .ykg-tab,html.yk-simple .ykg-toast,html.yk-simple .ykq-tray,html.yk-simple .ykq-relic,html.yk-simple .yk-find,html.yk-simple .yk-sndnote{display:none!important}',
     'html.yk-simple .m-dock.has-tab{grid-template-columns:repeat(6,1fr)!important}',
     /* 본지 · 컴퓨터 */
-    'html.yk-simple .spread>.topbar nav,html.yk-simple .spread>nav.sections,html.yk-simple .spread>#sec-note,html.yk-simple .secmore{display:none!important}',
     'html.yk-simple.ys-lock .spread>section.reads,html.yk-simple.ys-lock .spread>section.rhg,html.yk-simple.ys-lock .spread>section.ads,html.yk-simple.ys-lock .spread>.iris-out{display:none!important}',
     '.ys-pick{grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:6px 0 14px;padding:12px 0;border-top:3px double currentColor;border-bottom:1px solid currentColor}',
     '.ys-pick b{font:900 clamp(18px,2vw,24px)/1.35 "Noto Serif KR",serif;letter-spacing:-.01em}',
@@ -59,8 +58,7 @@
   function main() {
     var sp = D.querySelector('main.spread') || D.querySelector('.spread');
     if (!sp && !D.querySelector('.m-deck')) return;
-    var unlocked = !!read();
-    H.classList.toggle('ys-lock', !unlocked);
+    var unlocked = true;   /* 1016 · 부록은 처음부터 모두 그대로 (잠그지 않음) */
     /* 한 줄 안내 — 사건 칸 바로 위 (폰은 첫 면 목차 위) */
     var cases = D.getElementById('cases');
     if (cases && !D.querySelector('.ys-pick')) {
@@ -76,7 +74,7 @@
     }
     /* 더 읽을거리 — 본지 맨 끝 (폰은 첫 면 끝) */
     var host = D.querySelector('.yn-front') || (sp && sp.querySelector('footer.foot')) || sp;
-    if (host && !D.querySelector('.ys-more')) {
+    if (false && host && !D.querySelector('.ys-more')) {
       var box = D.createElement('section'); box.className = 'ys-more';
       box.innerHTML = '<h3>더 읽을거리</h3><p>사건 하나를 끝까지 읽고 오면 부록이 열리오.</p><span class="ys-lockmsg">● 아즉 닫혀 잇소 — 위의 사건부터 읽으시압</span><ul>' +
         MORE.map(function (m) { return '<li>' + (unlocked ? '<a href="' + BASE + m[0] + '">' + m[1] + '<small>' + m[2] + '</small></a>' : '<span class="ys-off">' + m[1] + '<small>' + m[2] + '</small></span>') + '</li>'; }).join('') + '</ul>';

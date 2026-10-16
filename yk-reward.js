@@ -123,7 +123,7 @@
     var go = function () {
       paint();
       var seen = false; try { seen = sessionStorage.getItem('yk-tel-shown') === '1'; } catch (e) {}
-      if (done() && !seen) {
+      if (count() >= CASES.length && !seen) {   /* 1016 · 이 창에서 네 사건을 다 읽었을 때만 전보 (예전에 받은 기록만으로는 첫 화면에 뜨지 않음) */
         try { sessionStorage.setItem('yk-tel-shown', '1'); } catch (e) {}
         setTimeout(function () {
           tel('네 사건 긔록을 끗까지 닑은 독자께 —<br>편집국 출입 암호 <strong>' + PASS + '</strong><br>문 압 수위에게만 말하시오 · 남에겐 비밀', '<span>京城野錄 編輯局</span><a href="newsroom.html">편집국으로 →</a>', 0);

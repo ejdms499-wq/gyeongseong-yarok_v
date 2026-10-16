@@ -11,7 +11,7 @@
     /* 새로고침(F5)도 처음부터: 이 창의 경성야록 임시 기록(sessionStorage)도 비움 */
     for (var j = sessionStorage.length - 1; j >= 0; j--) { var sk = sessionStorage.key(j); if (/^(yk|gsyr|yarok)[-_]/.test(sk)) sessionStorage.removeItem(sk); }
     sessionStorage.setItem('yk-sess', '1');
-    var keep = { 'yk-nr-key': 1, 'yk-dpr-base': 1, 'yk-pass': 1 }, rm = [];
+    var keep = { 'yk-nr-key': 1, 'yk-dpr-base': 1 }, rm = [];
     for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (/^(yk|gsyr|yarok)[-_]/.test(k) && !keep[k] && !/^yk-(intro1|dev1-)/.test(k)) rm.push(k);   /* 안내 · 장치 수첩 기록은 남김 (1013) */ }
     rm.forEach(function (k) { localStorage.removeItem(k); });
   } catch (e) {}
