@@ -371,7 +371,7 @@
   if (path.indexOf('/case-sonkijeong/') > -1) {
     H.classList.add('yn-sk');
     addCss('yk-noir-sk', [
-      'html.yn-sk:not(#yn) body .hero-slider .yn-erase{position:absolute;left:50%;top:34%;z-index:1;width:190px;height:110px;margin:-55px 0 0 -95px;background:#f3f2ef;border-radius:40% 55% 45% 60%/60% 40% 55% 45%;transform:rotate(-6deg);box-shadow:0 0 22px 10px #f3f2ef;opacity:var(--eo,1);transition:opacity .4s;pointer-events:auto;touch-action:pan-y}',
+      'html.yn-sk:not(#yn) body .hero-slider .yn-erase{position:absolute;left:50%;top:30%;z-index:1;width:110px;height:64px;margin:-32px 0 0 -55px;background:rgba(243,242,239,.92);border-radius:40% 55% 45% 60%/60% 40% 55% 45%;transform:rotate(-6deg);box-shadow:0 0 14px 6px rgba(243,242,239,.8);opacity:var(--eo,1);transition:opacity .4s;pointer-events:auto;touch-action:pan-y}',
       'html.yn-sk:not(#yn) body .hero-slider .yn-erase i{position:absolute;left:0;right:0;top:50%;margin-top:-6px;text-align:center;font:500 9.5px/1.2 "Noto Sans KR",sans-serif;font-style:normal;letter-spacing:.2em;color:#777}',
       'html.yn-sk:not(#yn) body .hero-content{z-index:2}'
     ]);
