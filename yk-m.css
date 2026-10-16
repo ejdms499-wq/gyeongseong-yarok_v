@@ -103,3 +103,101 @@
   html body .detail-content .sec-head .wm{max-width:100%;overflow:hidden;left:0!important;right:0!important;transform:none!important;text-align:center}
   html body .detail-content img{max-width:100%}
 }
+
+/* ───────── 1016 · 폰 본편 정리 (사건 네 개 공통) ───────── */
+@media (max-width:600px){
+  /* 제호 띠 — 본지와 같은 표지(반달 활자 표) + 같은 글꼴 */
+  html body .m-logo{display:flex;flex-direction:column;align-items:center}
+  html body .m-logo .m-tl{display:flex;align-items:center;justify-content:center;gap:7px}
+  html body .m-logo .m-mk{display:block;width:24px;height:24px;flex:none;color:#1e1913;transition:width .4s,height .4s}
+  html body .m-logo b{font-family:"Noto Serif KR",serif!important;font-weight:900!important;letter-spacing:-.01em!important;padding-left:0!important;font-size:23px}
+  html body .m-hd.mini .m-logo .m-mk{width:19px;height:19px}
+
+  /* 장 머리(第二章 · 제목 · 原文 상자) — 좁은 칸에 한 글자씩 꺾이지 안케: 첫 줄 장+제목, 둘째 줄 출전 */
+  html body .label{flex-wrap:wrap!important;row-gap:8px!important;align-items:center!important;height:auto!important}
+  html body .label>em{flex:1 1 150px!important;min-width:0!important;width:auto!important;max-width:none!important;white-space:normal!important;word-break:keep-all}
+  html body .label>em .hj{white-space:normal!important}
+  html body .label>.yks{flex:1 1 100%!important;margin:0!important;max-width:none!important;width:auto!important}
+  html body .label .yks-t{white-space:normal!important}
+
+  /* 사건 요지의 봉함 — 글귀가 테두리를 넘지 안케 */
+    html body .cb-seal{position:relative!important;inset:auto!important;margin:12px 0 0!important;width:100%!important;padding:12px 12px!important}
+  html body .cb-seal span{white-space:normal!important;text-align:center;line-height:1.6;font-size:12.5px}
+
+  /* 「?」 도장은 폰에서 숨김 (수첩에서 「도장 모두 보이기」를 누르면 보임) */
+  html body:not(.ykg-showq) .ykg-q{opacity:0!important;pointer-events:none!important}
+
+  /* 장치 설명 「?」 단추는 작고 흐리게 (글 우에 크게 얹히지 안케) */
+  html body .bt-q{transform:scale(.75)!important;opacity:.55!important}
+
+  /* 원문 기사 날짜 줄 — 옆으로 잘리던 것을 세 칸씩 줄 바꿈 */
+  html body .report-timeline{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-flow:row!important;row-gap:16px!important;overflow:visible!important;width:auto!important;max-width:100%!important;transform:none!important}
+  html body .report-timeline>li{min-width:0!important;width:auto!important}
+  html body .report-timeline button{width:100%!important;min-width:0!important}
+
+  /* 이날 지면에 오른 말 — 「4 / 6」이 제목에 겹치지 안케 */
+  html body .jk-word em{position:static!important;display:block!important;margin:0 0 8px!important;transform:none!important}
+
+  /* 현장 표(발견 · 자리 · 신고 · 아해) — 네 칸 → 두 칸 */
+  html body .jk-found{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:16px!important}
+
+  /* 호외 머리 — 신문 세로 제목이 한 단어씩 쌓이던 것 → 가로 줄로 */
+  html body .ex-body{display:block!important}
+  html body .ex-lines{width:auto!important;display:flex!important;flex-wrap:wrap;gap:6px 14px;margin:0 0 18px!important;padding:0 0 14px!important;border-bottom:1px solid rgba(239,230,210,.25)}
+  html body .ex-lines li{writing-mode:horizontal-tb!important;width:auto!important;height:auto!important;font-size:15px!important;line-height:1.5!important}
+  html body .ex-body>*{width:auto!important;max-width:100%!important}
+
+  /* 장소 탭(01 초량 거리 · 02 · 03) — 번호와 이름만 */
+  html body .pl-tabs button{padding:10px 6px!important}
+  html body .pl-tabs button small{display:none!important}
+  html body .pl-tabs button strong{display:block!important;width:auto!important;text-align:center;font-size:14px!important;line-height:1.35!important}
+
+  /* 마리아 · 편지 사이 이음 글 */
+  html body .lt-mid p{flex:1 1 auto!important;min-width:0!important;width:auto!important;text-align:center;letter-spacing:.06em!important}
+  html body .lt-mid i{width:22px!important;flex:none}
+
+  /* 백백교 · 인물 카드 표 */
+  html body .w6-dl{width:auto!important;grid-template-columns:80px minmax(0,1fr)!important}
+
+  /* 취재 도장 다 찍은 뒤: 「기자증」 단추를 같은 줄에 작게 (빨간 덩어리로 커지지 안케) */
+  html body .notebook{display:flex!important;align-items:stretch!important;flex-direction:row!important}
+  html body .notebook .nb-cover{padding:0 10px!important}
+  html body .notebook .ykp-open{width:auto!important;padding:0 10px!important;font-size:12px!important;letter-spacing:.06em!important}
+  html body .notebook .ykp-open i{display:none}
+  html body .ykp-seal{display:none!important}
+  /* 마리아 · 그 밤의 시각 셋 — 세 칸 → 한 줄에 하나씩 */
+  html body .ck-three{padding:26px 18px 24px!important}
+  html body .ck-three ol{grid-template-columns:1fr!important}
+  html body .ck-three li{padding:14px 12px!important}
+  html body .ck-three li b{font-size:19px!important}
+  html body .ck-three li span{letter-spacing:.04em!important}
+  /* 마리아 · 편지 사이 이음 (세로 글이 한 자씩 쌓이던 것) */
+  html body .lt-mid{flex-direction:column!important;align-items:center!important;gap:6px}
+  html body .lt-mid p{writing-mode:horizontal-tb!important;flex:none!important}
+  html body .lt-mid i{width:1px!important;height:22px!important}
+  /* 판결 머리 */
+  html body .rv-sheet{width:auto!important;max-width:100%!important}
+  html body .rv-head{flex-wrap:wrap!important;gap:8px 12px!important}
+  html body .rv-head>*:not(b){flex:1 1 120px!important;min-width:0!important;writing-mode:horizontal-tb!important}
+  /* 원문 기사 책 머리(동아일보 | 원문판 | 날짜) */
+  html body .page-head{flex-wrap:wrap!important;gap:4px 10px!important}
+  html body .page-head>*{min-width:0!important}
+  html body .page-head>span{flex:1 1 auto!important}
+  /* 「알려 두오」 쪽지 */
+  html body .sk-artnote{flex-direction:column!important;gap:4px!important}
+  html body .sk-artnote>*{width:auto!important}
+  /* 백백교 인물 카드 — 사진을 우에, 표를 아래 넓게 */
+  html body .w6-photo{float:none!important;width:150px!important;margin:0 auto 16px!important}
+  /* 아래 단추 줄 뒤의 종이 그늘이 단추를 덮지 안케 (백백교에서 단추가 흐려 보이던 것) */
+  html body:after{z-index:0!important}
+  /* 여러 줄 본문 맞춤 · 작은 글 (yk-m.js 의 tidy 가 붙임) */
+  html body .m-left{text-align:left!important}
+  html body .m-small{font-size:12.5px!important;line-height:1.75!important}
+  html body .m-tight{letter-spacing:.04em!important}
+  /* 죽첨정 · 지면에 오른 말 카드 벽 — 두 칸이 옆으로 넘치던 것 → 한 칸 */
+  html body .ww-list{grid-template-columns:1fr!important}
+  html body .ww-list>li{width:auto!important}
+  /* 맨 아래 판권 줄 — 왼쪽이 잘리지 안케 */
+  html body .page-foot{padding-left:20px!important;padding-right:20px!important;flex-wrap:wrap!important;gap:12px!important}
+  html body .page-foot>*{min-width:0!important;max-width:100%!important}
+}

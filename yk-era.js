@@ -354,7 +354,7 @@
       '.yg-press .p-e b{background:#1d1813;color:#efe6d2;clip-path:polygon(0 0,100% 0,96% 30%,100% 55%,94% 80%,100% 100%,0 100%)}',
       '.yg-pn{display:flex;gap:10px;align-items:baseline;margin:-6px 0 16px;padding:8px 10px;background:rgba(58,49,40,.06);font:400 13px/1.7 "Noto Sans KR",sans-serif;color:#3e352c;word-break:keep-all}',
       '.yg-pn b{flex:none;font:800 11.5px/1 "Nanum Myeongjo",serif;letter-spacing:.14em;padding:5px 6px 4px;border:1px solid #3a3128}',
-      '.yg-pn.p-s b{color:#8a2a21;border-color:#8a2a21}.yg-pn.p-e b{background:#1d1813;color:#efe6d2}',
+      '.yg-pn.p-s b{color:#8a2a21;border-color:#8a2a21}.yg-pn.p-e b{background:#1d1813;color:#efe6d2}@media (max-width:600px){.yg-press{height:auto;display:flex;flex-wrap:wrap;gap:8px 6px;padding:26px 0 4px}.yg-press:before{display:none}.yg-press .pl{top:6px}.yg-press button{position:static;transform:none!important;left:auto!important}.yg-press button small{display:none}.yg-press button b{padding:6px 8px 5px;font-size:13px}}',
       '.yg-end{margin-top:14px;padding:16px 4px 4px;border-top:3px double #3a3128;font:800 17px/1.7 "Nanum Myeongjo",serif;word-break:keep-all}',
       '.yg-end small{display:block;margin-top:6px;font:400 13px/1.7 "Noto Sans KR",sans-serif;color:#7b7062}',
       '.yg-mast{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:3px double #3a3128;padding-bottom:8px;margin-bottom:16px;flex-wrap:wrap}',
@@ -600,7 +600,7 @@
       '.ykr-slip p{font:800 15.5px/1.6 "Nanum Myeongjo",serif;word-break:keep-all}',
       '.ykr-slip small{display:block;margin-top:4px;font:400 12px/1.5 "Noto Sans KR",sans-serif;color:#5a5046}',
       '.ykr-slip small:after{content:" ↓";color:#b0261b;font-weight:700}',
-      '@media (max-width:700px){.ykr-pt i{display:none}.ykr-pt b{font-size:11px}.ykr-end small{display:none}}'
+      '@media (max-width:700px){.ykr-pt i{display:none}.ykr-pt b{font-size:11px}.ykr-end small{display:none}.ykr{padding-bottom:30px}.ykr-pt:nth-of-type(2n) b{bottom:auto;top:16px}}'
     ].join('\n');
     D.head.appendChild(st);
   }

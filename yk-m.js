@@ -13,7 +13,7 @@
     var nb = D.querySelector('.notebook'); if (nb) { nb.classList.remove('open'); var c = nb.querySelector('.nb-cover'); if (c) c.setAttribute('aria-expanded', 'false'); }
     /* 폰 전용 제호 띠 — 맨 위에선 크게, 읽기 시작하면 조금 작게. 지금 읽는 장 이름과 읽은 만큼 붉은 줄 */
     var hd = D.createElement('header'); hd.className = 'm-hd';
-    hd.innerHTML = '<a href="../index.html" aria-label="본지로"><span>‹</span>본지</a><div class="m-logo"><b>경성야록</b><small>' + SEC + '</small></div>' + (FACE ? '<span class="m-no">' + FACE.split('').join('<br>') + '</span>' : '<span></span>') + '<i class="m-prog"></i>';
+    hd.innerHTML = '<a href="../index.html" aria-label="본지로"><span>‹</span>본지</a><div class="m-logo"><span class="m-tl"><svg class="m-mk" viewBox="0 0 100 100" aria-hidden="true">        <defs>          <clipPath id="mhC"><circle cx="50" cy="50" r="49"/></clipPath>          <mask id="mhRing"><rect width="100" height="100" fill="#000"/><circle cx="50" cy="50" r="49" fill="#fff"/><circle cx="32.4" cy="50" r="52.6" fill="#000"/></mask>        </defs>        <g clip-path="url(#mhC)" fill="currentColor"><rect x="4.0" y="0" width="2.7" height="100"/><rect x="8.6" y="0" width="2.7" height="100"/><rect x="13.2" y="0" width="2.7" height="100"/><rect x="17.8" y="0" width="2.7" height="100"/><rect x="22.4" y="0" width="2.7" height="100"/><rect x="27.0" y="0" width="2.7" height="100"/><rect x="31.6" y="0" width="2.7" height="100"/><rect x="36.2" y="0" width="2.7" height="100"/><rect x="40.8" y="0" width="2.7" height="100"/><rect x="45.4" y="0" width="2.7" height="100"/></g>        <rect x="47.6" y="0.6" width="3.4" height="98.8" fill="var(--seal)"/>        <g mask="url(#mhRing)" fill="currentColor"><rect x="54" y="1.5" width="46" height="2.5"/><rect x="54" y="6.0" width="46" height="2.5"/><rect x="54" y="10.5" width="46" height="2.5"/><rect x="54" y="15.0" width="46" height="2.5"/><rect x="54" y="19.5" width="46" height="2.5"/><rect x="54" y="24.0" width="46" height="2.5"/><rect x="54" y="28.5" width="46" height="2.5"/><rect x="54" y="33.0" width="46" height="2.5"/><rect x="54" y="37.5" width="46" height="2.5"/><rect x="54" y="42.0" width="46" height="2.5"/><rect x="54" y="46.5" width="46" height="2.5"/><rect x="54" y="51.0" width="46" height="2.5"/><rect x="54" y="55.5" width="46" height="2.5"/><rect x="54" y="60.0" width="46" height="2.5"/><rect x="54" y="64.5" width="46" height="2.5"/><rect x="54" y="69.0" width="46" height="2.5"/><rect x="54" y="73.5" width="46" height="2.5"/><rect x="54" y="78.0" width="46" height="2.5"/><rect x="54" y="82.5" width="46" height="2.5"/><rect x="54" y="87.0" width="46" height="2.5"/><rect x="54" y="91.5" width="46" height="2.5"/><rect x="54" y="96.0" width="46" height="2.5"/></g>      </svg><b>경성야록</b></span><small>' + SEC + '</small></div>' + (FACE ? '<span class="m-no">' + FACE.split('').join('<br>') + '</span>' : '<span></span>') + '<i class="m-prog"></i>';
     D.body.appendChild(hd);
     var hs = D.querySelector('.hero-slide'); if (hs) D.documentElement.style.setProperty('--ykm-hero', 'url("' + hs.src + '")');
     var sub = hd.querySelector('small'), prog = hd.querySelector('.m-prog'), base = sub.textContent, py = scrollY, cur = '';
@@ -70,5 +70,24 @@
       }
     }
     addEventListener('scroll', check, { passive: true });
+
+    /* 1016 · 읽기 좋게 — 여러 줄 본문은 왼쪽 맞춤(제목 · 한두 줄 글귀는 가운데 그대로), 너무 작고 벌어진 긴 글은 조금 키우고 좁힘 */
+    function tidy() {
+      var main = D.querySelector('.detail-content') || D.body;
+      [].forEach.call(main.querySelectorAll('p, li, dd, blockquote'), function (e) {
+        if (e.dataset.mt || e.closest('h1,h2,h3,h4,.label,.m-hd,.notebook,.yke,.ykr,.cb-seal,[class*="title"]')) return;
+        var cs = getComputedStyle(e), fs = parseFloat(cs.fontSize) || 16, lh = parseFloat(cs.lineHeight) || fs * 1.6, r = e.getBoundingClientRect();
+        if (!r.width || cs.writingMode.indexOf('vertical') === 0) return;
+        var txt = (e.textContent || '').replace(/\s+/g, ' ').trim();
+        if (txt.length < 24) return;
+        e.dataset.mt = '1';
+        if (cs.textAlign === 'center' && r.height / lh > 2.6 && r.width > 220) e.classList.add('m-left');
+        var ls = parseFloat(cs.letterSpacing) || 0;
+        if (fs < 12.5 && txt.length > 30) e.classList.add('m-small');
+        if (ls > fs * .14 && txt.length > 30) e.classList.add('m-tight');
+      });
+    }
+    setTimeout(tidy, 1200); setTimeout(tidy, 4000);
+    var tq = null; addEventListener('scroll', function () { clearTimeout(tq); tq = setTimeout(tidy, 400); }, { passive: true });
   });
 })();
