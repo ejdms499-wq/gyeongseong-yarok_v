@@ -77,6 +77,53 @@
     if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', gateT); else gateT();
   }
 
+
+  /* ── 백백교(폰): 「흰색이 지운다」 — 읽을수록 하얗게 바래고, 금지가 풀린 장(제칠장)에서 처음 검게 뒤집힘 ── */
+  if (path.indexOf('/case-baekbaekgyo/') > -1) {
+    H.classList.add('yn-bb');
+    var bc = D.createElement('style'); bc.id = 'yk-noir-bb';
+    bc.textContent = [
+      /* 표지: 하얗게 날아간 사진 · 둘째 줄은 이미 바램 */
+      'html.yn-bb .hero-slider{background:#fbfbf9!important}',
+      'html.yn-bb .hero-slider img.hero-slide{filter:grayscale(1) brightness(1.6) contrast(.55)!important}',
+      'html.yn-bb .hero-overlay,html.yn-bb .hero-dark{background:linear-gradient(rgba(251,251,249,0) 35%,rgba(251,251,249,.75) 68%,#fbfbf9 94%)!important;opacity:1!important}',
+      'html.yn-bb .hero-content,html.yn-bb .hero-content *{color:#0e0e0e!important;text-shadow:none!important}',
+      'html.yn-bb .hero-content h1{font-weight:900!important;letter-spacing:-.06em!important;font-size:60px!important;line-height:1!important}',
+      'html.yn-bb .hero-content h1 .yn-fade{color:#c9c9c4!important}',
+      'html.yn-bb .hero-content .hero-meta,html.yn-bb .hero-content .hero-meta *{color:#777!important}',
+      'html.yn-bb .yk-credit.hero{color:#999!important}',
+      /* 봉함: 흰 천을 덮은 탁자 */
+      'html.yn-bb .cb-steps li.sealed .cb-seal{background:#eee url(' + BASE + 'assets/noir/cloth.jpg) center 60%/cover!important;background-blend-mode:normal!important;border:0!important;min-height:120px;justify-content:flex-end!important;padding-bottom:12px!important}',
+      'html.yn-bb .cb-steps li.sealed .cb-seal b{background:#fbfbf9!important;color:#b3261e!important;border-color:#b3261e!important}',
+      'html.yn-bb .cb-steps li.sealed .cb-seal span{background:rgba(11,11,11,.78)!important;color:#efece6!important;padding:4px 8px!important}',
+      /* 바래 가는 구간: 흰 바탕 · 사진과 글이 장마다 조금씩 더 옅어짐 (붉은색은 그대로) */
+      'html.yn-bb .bb-dusk{background:#fbfbf9!important}',
+      'html.yn-bb [data-ynw] img{filter:grayscale(1) brightness(calc(1 + var(--w) * .9)) contrast(calc(1 - var(--w) * .55))!important}',
+      'html.yn-bb [data-ynw] p,html.yn-bb [data-ynw] li,html.yn-bb [data-ynw] dd,html.yn-bb [data-ynw] dt,html.yn-bb [data-ynw] h3,html.yn-bb [data-ynw] h2{opacity:calc(1 - var(--w) * .45)}',
+      /* 반전 띠: 금지가 풀린 날 */
+      'html.yn-bb .yn-flip{position:relative;background:#080808;color:#efece6;padding:70px 22px 54px;overflow:hidden}',
+      'html.yn-bb .yn-flip:before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:#fff}',
+      'html.yn-bb .yn-flip small{display:block;font:500 10px/1 "Noto Sans KR",sans-serif;letter-spacing:.3em;color:#b3261e}',
+      'html.yn-bb .yn-flip b{display:block;margin-top:14px;font:900 34px/1.15 "Noto Serif KR",serif;letter-spacing:-.05em}',
+      'html.yn-bb .yn-flip span{display:block;margin-top:14px;font:300 14.5px/1.85 "Noto Serif KR",serif;color:#bdb9b0}'
+    ].join('\n');
+    (D.head || H).appendChild(bc);
+    var bbInit = function () {
+      var h1 = D.querySelector('.hero-content h1 .hj') || D.querySelector('.hero-content h1');
+      if (h1 && !h1.querySelector('.yn-fade') && /더 희게/.test(h1.innerHTML)) h1.innerHTML = h1.innerHTML.replace(/더 희게/, '<i class="yn-fade" style="font-style:normal">더 희게</i>');
+      var ws = ['.bb-white', '.bb-who', '.bb-obit', '.bb-ledger', '.bb-house'];
+      ws.forEach(function (sel, i) { var e = D.querySelector(sel); if (e) { e.setAttribute('data-ynw', ''); e.style.setProperty('--w', (i / (ws.length - 1) * .75).toFixed(2)); } });
+      var land = D.getElementById('land');
+      if (land && !D.querySelector('.yn-flip')) {
+        var f = D.createElement('div'); f.className = 'yn-flip';
+        f.innerHTML = '<small>소화 십이 년 사월 십삼일 · 조선일보 호외</small><b>금지가 풀린 날,<br>처음 세상에 나온 지면</b><span>쉰세 날 동안 어느 신문에도 실릴 수 업섯든 일이, 이날 활자로 드러낫소.</span>';
+        land.parentNode.insertBefore(f, land);
+      }
+    };
+    if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', bbInit); else bbInit();
+    setTimeout(bbInit, 1500);
+  }
+
   /* ── 색 바꾸기: 누런색 · 갈색 → 같은 밝기의 무채색 ── */
   function parse(c) { var m = /rgba?\(([^)]+)\)/.exec(c); if (!m) return null; var p = m[1].split(/[ ,\/]+/).filter(Boolean).map(parseFloat); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; }
   function warm(o) {
@@ -102,7 +149,7 @@
   function one(e) {
     if (e.__yn || e.nodeType !== 1) return; e.__yn = 1;
     if (/^(IMG|VIDEO|CANVAS|SCRIPT|STYLE|IFRAME|SOURCE|PICTURE)$/.test(e.tagName)) return;
-    if (e.closest && e.closest('.yn-neg,#ykn,.ykp-veil,.m-dock')) return;
+    if (e.closest && e.closest('.yn-neg,#ykn,.ykp-veil,.m-dock,.yn-flip')) return;
     var cs = getComputedStyle(e);
     for (var i = 0; i < PROPS.length; i++) { var v = cs[PROPS[i][0]]; if (v && v.indexOf('rgb') === 0) { var f = fix(v); if (f) e.style.setProperty(PROPS[i][1], f, 'important'); } }
     var bi = cs.backgroundImage;
