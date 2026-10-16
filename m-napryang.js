@@ -22,7 +22,7 @@
   row.addEventListener('click', function (e) { var a = e.target.closest('a[href]'); if (!a) return; e.preventDefault(); var t = $(a.getAttribute('href')); if (t) W.scrollTo({ top: t.getBoundingClientRect().top + W.scrollY - 92, behavior: 'smooth' }); });
 
   /* ── 대문 — 촛불 여섯을 하나씩 켬 ── */
-  var FL = [[32.35, 34.8, 3.3, 11.89], [43.68, 36.03, 3.3, 12.01], [55.49, 36.76, 3.3, 11.27], [66.0, 34.8, 3.3, 11.64], [72.94, 36.03, 3.3, 10.78], [78.98, 34.8, 3.3, 11.4]];
+  var FL = [[20.35, 30, 3.3, 15], [30.85, 30, 3.3, 15], [38.85, 30, 3.3, 15], [47.35, 30, 3.3, 15], [56.35, 30, 3.3, 15], [66.85, 30, 3.3, 15]];
   $('#gtFl').innerHTML = FL.map(function (f, i) { return '<i style="left:' + (f[0] + f[2] / 2) + '%;top:' + f[1] + '%;height:' + f[3] + '%;animation-delay:' + (-i * .37) + 's"></i>'; }).join('');
   var lit = false;
   function lightUp(go) {
@@ -144,8 +144,8 @@
 
   /* ── 제4화 · 불 꺼진 방 — 손가락이 촛불, 방을 비추면 둘러봄 ── */
   (function () {
-    var rm = $('#rm'), bg = $('#rmBg'), dark = $('#rmDark'), hs = $('#rmHs'), AR = 1456 / 816, found = {}, n = 0;
-    var HS = [[26, 70, 1], [38, 58, 2], [89, 84, 3], [89, 12, 4]];
+    var rm = $('#rm'), bg = $('#rmBg'), dark = $('#rmDark'), hs = $('#rmHs'), AR = 1384 / 791, found = {}, n = 0;
+    var HS = [[24, 72, 1], [29.5, 24, 2], [74.5, 90, 3], [77, 22, 4]];
     hs.innerHTML = HS.map(function (p) { return '<i data-c="' + p[2] + '"></i>'; }).join('');
     var iw = 0, ih = 0, vw = 0, vh = 0, pan = 0;
     function lay() { vw = rm.clientWidth; vh = rm.clientHeight; ih = vh; iw = ih * AR; bg.style.width = iw + 'px'; bg.style.height = ih + 'px'; hs.style.width = iw + 'px'; hs.style.height = ih + 'px'; setPan(pan); }
