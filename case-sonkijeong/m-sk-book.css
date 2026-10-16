@@ -270,3 +270,37 @@
 .rx-track .mk.cut small{position:absolute;left:50%;top:-22px;margin:0;transform:translateX(-50%)}
 .rx-track{margin-top:16px}
 .rx-track .mk.cut small{top:-20px}
+/* 1016 · 폰 높이에 맞춰 — 글과 아래 계기판이 겹치지 안케 (위 · 가운데 · 아래 세 칸) */
+.rx-stage{display:flex;flex-direction:column}
+.rx-hud{position:relative;flex:none;padding-bottom:6px}
+.rx-cap{position:relative;left:auto;right:auto;top:auto;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:0 var(--g);overflow:hidden}
+.rx-low{position:relative;flex:none;padding-top:8px}
+.rx-rt{top:auto;bottom:auto;top:62px}
+.rx-cap h3{font-size:clamp(30px,10.5vw,46px)}
+.rx-stage.fin .rx-cap h3{font-size:clamp(28px,9.5vw,40px)}
+.rx-stage.seoul .rx-cap h3{font-size:clamp(22px,7vw,28px)}
+.rx-cap .b{font-size:clamp(14.5px,4.3vw,17px);line-height:1.75}
+@media (max-height:760px){
+  .rx-cap .k{font-size:10px}
+  .rx-cap h3{margin:4px 0 8px}
+  .rx-board{margin-top:8px}
+  .rx-board li{padding:5px 0;font-size:13.5px}
+  .rx-board li:first-child{font-size:15px}
+  .rx-air{margin-bottom:6px;padding:5px 8px}
+  .rx-km b{font-size:40px}
+  .rx-rank b{font-size:26px}
+  .rx-track{margin-top:12px;height:34px}
+  .rx-clock b{font-size:21px}
+  .rx-wm{font-size:min(36vw,160px)}
+}
+/* 처음 보는 이를 위한 안내 */
+.rx-guide{position:absolute;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));z-index:6;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 16px 10px;border:1px solid rgba(255,255,255,.5);background:rgba(0,0,0,.72);text-align:center;transition:opacity .8s ease;pointer-events:none;white-space:nowrap}
+.rx-guide b{font:700 14px/1.3 var(--sans);color:#fff;letter-spacing:.04em}
+.rx-guide small{font:400 11.5px/1.4 var(--sans);color:#cfcec9}
+.rx-guide i{display:block;width:22px;height:34px;border:2px solid #fff;border-radius:12px;position:relative}
+.rx-guide i::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--red);animation:rxSwipe 1.6s ease-in-out infinite}
+@keyframes rxSwipe{0%{transform:translateY(0);opacity:1}70%{transform:translateY(14px);opacity:0}100%{transform:translateY(0);opacity:0}}
+.rx-guide.gone{opacity:0}
+.rx-prog{position:absolute;right:6px;top:30%;bottom:30%;z-index:6;width:2px;background:rgba(255,255,255,.15)}
+.rx-prog i{position:absolute;left:0;top:0;width:2px;height:0;background:#fff}
+.rx-low .rx-guide{bottom:calc(100% + 12px)}

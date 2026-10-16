@@ -136,7 +136,8 @@
         '<div class="rx-hud"><div class="rx-cl"><small>백림</small><b id="rxBer">15:00</b></div><div class="rx-clock"><small>경긔 시각</small><b id="rxClock">0:00:00</b></div><div class="rx-cl r"><small>경성</small><b id="rxSeo">23:02</b></div></div>' +
         '<b class="rx-wm" id="rxWm"></b>' +
         '<div class="rx-cap" id="rxCap"><p class="k" id="rxK"></p><h3 id="rxT"></h3><p class="b" id="rxB"></p><ol class="rx-board" id="rxBoard"><li><b>1</b>손긔졍<em>2:29:19.2</em></li><li><b>2</b>하퍼 · 영국<em>2:31:23.2</em></li><li><b>3</b>남승룡<em>2:31:42</em></li></ol></div>' +
-        '<div class="rx-low">' +
+        '<div class="rx-prog"><i id="rxProg"></i></div>' +
+        '<div class="rx-low">' + '<div class="rx-guide" id="rxGuide"><i></i><b>화면을 위로 밀어 올리시압</b><small>손가락으로 내리는 만큼 — 그가 달리오</small></div>' +
           '<div class="rx-air" id="rxAir"><span class="sp" aria-hidden="true"></span><canvas id="rxWv" width="240" height="40"></canvas><em id="rxAirT">세종로 스피커 · 중계 중</em></div>' +
           '<div class="rx-run"><div class="rx-km"><b id="rxKm">0.0</b><small>km</small></div><div class="rx-rank" id="rxRank"><small>순위</small><b>—</b></div></div>' +
           '<div class="rx-track"><i class="ln"></i><i class="done" id="rxDone"></i>' +
@@ -217,6 +218,7 @@
       $('#rxBer').textContent = hm(15 * 60, s); $('#rxSeo').textContent = hm(23 * 60 + 2, s);
       var pc = km / 42.195 * 100; $('#rxMe').style.left = pc + '%'; $('#rxDone').style.width = pc + '%';
       var lead = $('#rxLead'); lead.style.left = (km < 28 ? Math.min(100, pc + 7) : 28 / 42.195 * 100) + '%'; lead.classList.toggle('down', km >= 28);
+      $('#rxGuide').classList.toggle('gone', p > .02); $('#rxProg').style.height = (p * 100) + '%';
       var bi = 0; B.forEach(function (x, i) { if (p >= x.p) bi = i; }); beat(bi);
       var bg = bgs[B[bi].bg], nx = B[bi + 1], lp = (p - B[bi].p) / ((nx ? nx.p : 1) - B[bi].p);
       if (bg) bg.style.transform = 'scale(' + (1.04 + Math.max(0, Math.min(1, lp)) * (B[bi].at === 'berlin' ? .34 : .1)).toFixed(3) + ')';
