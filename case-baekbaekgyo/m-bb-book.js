@@ -221,6 +221,7 @@
   /* ════ 第四章 · 그 밤 — 무성영화 · 자막 카드와 흐르는 카메라, 그 밤의 맥박 ════
      장면마다: 옛 활동사진의 자막 카드 → 장면 (카메라가 옆으로 흐름) · 아래 맥박 줄이 장면의 긴장을 따라 뜀 */
   (function () {
+    return; /* m-bb-film.js 로 옮김 */
     var root = $('#ngDoor'); if (!root) return;
     var SC = [
       { img: 'bb_night_house.jpg', alt: '눈 덮인 밤 골목의 한 집', k: '이월 십륙일 밤 · 왕십리', h: '불이 아즉 켜져 잇섯소', b: '왕십리의 한 집에, 불이 아즉 켜져 잇섯소.', dir: 1, bpm: 62, amp: .35 },
@@ -312,6 +313,7 @@
 
   /* ════ 第六章 · 수배지 — 얼굴을 긁어내면 그 아래에 열여섯 개의 일홈, 다 긁으면 수배지가 떠러지고 주머니에 남은 것 ════ */
   (function () {
+    return; /* m-bb-film.js 로 옮김 */
     var wp = $('#wp'), paper = $('#wpPaper'), face = $('#wpFace'), cv = $('#wpCv'), names = $('#wpNames'), bar = $('#wpBar'), nEl = $('#wpN'), cap = $('#mtCap');
     if (!wp) return;
     /* 일홈 열여섯 — 아는 것은 「김두선」 하나, 나머지는 끗내 모르는 일홈 */
@@ -436,6 +438,7 @@
   /* ════ 第九章 · 병 — 칠십사 년이 한 번에 흐름 ════
      내리는 만큼 해가 흐르고(끈김 업이), 창빛이 병 우를 지나가고, 먼지가 내려안즘 · 끗에 병이 비고 재가 떠오름 */
   (function () {
+    return; /* m-bb-film.js 로 옮김 */
     var root = $('#jarStage'); if (!root) return;
     var E = [
       { at: .06, y: 1937, k: '1937 · 소화 십이 년', b: '일본 경찰은 그의 머리를 잘라 포르말린 병에 너헛소.' },
@@ -491,6 +494,7 @@
 
   /* ════ 끗 · 눈 — 내리는 만큼 눈이 짙어지고, 끗내 화면이 하얗게 덥힘 (끈김 업이) ════ */
   (function () {
+    return; /* m-bb-film.js 로 옮김 */
     var root = $('#fnRoot'); if (!root) return;
     var L = [
       { t: '소화 십이 년 · 왕십리에서 용문산까지', c: 'k' },
