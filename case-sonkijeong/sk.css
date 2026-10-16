@@ -1869,3 +1869,6 @@ body.jk-judged .lg-last .lg-w{color:#8a2a1a}
 .bk-cnt em{margin-left:14px;font-style:normal;font-size:13px;letter-spacing:.14em;color:#a99878}
 .bk-play + .bk-grid{margin-top:26px!important}
 @media (prefers-reduced-motion:reduce){.bk-go i{animation:none}}
+
+/* 1016 · 1100~1500px 화면(노트북 · 125% 배율 등): 취재 도장이 축음기 버튼을 덮지 않게 한 칸 우로, 펼쳐도 화면 우를 넘지 않게 */
+@media (min-width:1100px) and (max-width:1500px){.notebook{bottom:112px!important}.notebook .nb-stamps{max-height:calc(100vh / var(--ykz, 1) - 220px);overflow-y:auto}}

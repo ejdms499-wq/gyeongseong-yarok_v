@@ -263,7 +263,7 @@
       var a = ARTS[cur];
       $$('button', tl).forEach(function (b, i) { b.classList.toggle('active', i === cur); });
       tl.style.setProperty('--prog', (cur / (ARTS.length - 1) * 100) + '%');
-      var news = '<div class="news26" aria-label="2026년 뉴스로 다시 쓴 기사"><div class="n26-bar"><b>경성야록</b><span>사회</span><span>사건·사고</span><span>아카이브</span></div><div class="n26-body"><span class="n26-tag">아카이브 단독</span><h4>' + a.title + '</h4><p class="n26-meta">경성야록 사회부 · 원 보도 동아일보 ' + a.date + ' · 2026년 다시 씀</p><p class="n26-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '<div class="n26-keys">' + a.keys.map(function (k) { return '<span>#' + k + '</span>'; }).join('') + '</div><p class="n26-note">※ 1931년 동아일보 원문을 바탕으로 오늘의 기사 형식으로 다시 쓴 것입니다.</p></div></div>';
+      var news = window.ykNews26 ? window.ykNews26({ a: a, arts: ARTS, cur: cur, img: './img/scan/' + a.img, paper: '동아일보', sec: '사회', sub: '사건·사고' }) : ('<div class="news26" aria-label="2026년 뉴스로 다시 쓴 기사"><div class="n26-bar"><b>경성야록</b><span>사회</span><span>사건·사고</span><span>아카이브</span></div><div class="n26-body"><span class="n26-tag">아카이브 단독</span><h4>' + a.title + '</h4><p class="n26-meta">경성야록 사회부 · 원 보도 동아일보 ' + a.date + ' · 2026년 다시 씀</p><p class="n26-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '<div class="n26-keys">' + a.keys.map(function (k) { return '<span>#' + k + '</span>'; }).join('') + '</div><p class="n26-note">※ 1931년 동아일보 원문을 바탕으로 오늘의 기사 형식으로 다시 쓴 것입니다.</p></div></div>');
       book.innerHTML =
         '<div class="page left"><div class="page-head"><strong>동아일보</strong><span>' + H('소화 륙 년 원문판', '1931년 원문판') + '</span><em>' + H(a.d[0], a.d[1]) + '</em></div>' +
         '<div class="page-title"><span class="wm" aria-hidden="true">原文記事</span><h3>' + H('원문 긔사', '원문 기사') + '</h3><small>' + H('동아일보 소화 륙 년 ' + a.d[0] + ' 보도', '동아일보 1931년 ' + a.d[1] + ' 보도') + '</small></div>' +
@@ -354,6 +354,7 @@
     function go(i) { if (i < 0 || i >= ARTS.length || i === cur) return; cur = i; tab = 0; draw(true); play('sfxWhoosh'); }
     tl.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) go(+b.dataset.i); });
     book.parentNode.addEventListener('click', function (e) {
+      var rl = e.target.closest('.n26-rel a[data-i]'); if (rl) { e.preventDefault(); go(+rl.dataset.i); setCmp(0); return; }
       if (e.target.closest('.book-arrow.left')) go(cur - 1);
       else if (e.target.closest('.book-arrow.right')) go(cur + 1);
       var sw = e.target.closest('.plate-switch button');
@@ -447,11 +448,11 @@
     fillLetter();
     $$('.lt-tab', root).forEach(function (b) { b.addEventListener('click', function () { curL = +b.dataset.i; var im = $('.lt-sheet img', root); im.src = './img/letter' + (curL + 1) + '.png'; lens.style.backgroundImage = 'url("' + im.getAttribute('src') + '")'; $$('.lt-tab', root).forEach(function (x) { x.classList.toggle('on', x === b); }); fillLetter(); desk.classList.add('open'); readLetter(); }); });
     var ckN = 0;
-    $$('.lt-check li', root).forEach(function (li) { li.addEventListener('click', function () { if (li.classList.contains('on')) return; li.classList.add('on'); ckN++; $('.lt-ck-n', root).textContent = ckN + ' / ' + CHECK.length; play('sfxBell'); }); });
+    $$('.lt-check li', root).forEach(function (li) { li.addEventListener('click', function () { if (li.classList.contains('on')) return; li.classList.add('on'); ckN++; $('.lt-ck-n', root).textContent = ckN + ' / ' + CHECK.length; }); });
     function readLetter() {
       readT.forEach(clearTimeout); readT = [];
       var lis = $$('.lt-lines li', root); lis.forEach(function (li) { li.classList.remove('on'); });
-      lis.forEach(function (li, k) { readT.push(setTimeout(function () { li.classList.add('on'); if (li.classList.contains('redact')) play('sfxBell'); }, 400 + k * 1100)); });
+      lis.forEach(function (li, k) { readT.push(setTimeout(function () { li.classList.add('on'); }, 400 + k * 1100)); });
     }
     $('.lt-read-go', root).addEventListener('click', function () { if (!desk.classList.contains('open')) desk.classList.add('open'); readLetter(); });
     var src = $('img', sheet).getAttribute('src');
@@ -477,7 +478,7 @@
       var li = $('.lt-finds li[data-i="' + i + '"]', root);
       li.classList.add('got'); li.querySelector(':scope > span').innerHTML = H('— ' + SPOTS[i].d[0], '— ' + SPOTS[i].d[1]);
       $('.lt-count', root).textContent = n + ' / 3';
-      play('sfxBell');
+
       if (n === 3) setTimeout(function () { root.classList.add('matched'); }, 500);
     }
     sheet.addEventListener('mousemove', function (e) { move(e.clientX, e.clientY); });
@@ -590,7 +591,7 @@
 '</div>';
       if (s.au) { au.src = AUD + s.au; au.currentTime = 0; var p = au.play(); if (p && p.catch) p.catch(function () {}); pbtn.disabled = false; }
       else { au.pause(); au.removeAttribute('src'); pbtn.disabled = true; tm.textContent = '녹음 없음 · 지면만 남음'; trk.style.width = '0'; wave(0); }
-      play('sfxBell');
+
     }
     /* 주파수 사이: 앞 칸과 뒤 칸을 잇는 한 줄이 잡음 속에서 떠오름 */
     var GAPS = [
@@ -833,7 +834,7 @@
     var hit = function (r) {
       if (r.classList.contains('alarm')) { var h = r.dataset.h; if (fired[h]) return; fired[h] = 1;
         sec.classList.remove('ring'); void sec.offsetWidth; sec.classList.add('ring'); r.classList.add('rang');
-        if (sOn && inv) { stopTicks(); SND.bell(2.2); } setTimeout(function () { sec.classList.remove('ring'); }, 2600); }
+        if (sOn && inv) { stopTicks(); } setTimeout(function () { sec.classList.remove('ring'); }, 2600); }
       else if (r.classList.contains('warn')) { if (sOn && inv) burst(4); } };
     if ('IntersectionObserver' in window) { var io3 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) hit(e.target); }); }, { rootMargin: '-45% 0px -45% 0px' });
       $$('.ck-row.alarm, .ck-row.warn', sec).forEach(function (r) { io3.observe(r); }); }
@@ -917,7 +918,7 @@
     $('.nb-cover', nb).addEventListener('click', function () { var o = nb.classList.toggle('open'); this.setAttribute('aria-expanded', o); });
     $$('.nb-stamps button', nb).forEach(function (b) { b.addEventListener('click', function () { var s = $('[data-beat="' + b.dataset.beat + '"].sec'); if (s) s.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); });
   }
-  function verdict() { $$('.rv-lines li').forEach(function (li, i) { setTimeout(function () { li.classList.add('on'); }, 500 + i * 900); }); var nL = $$('.rv-lines li').length, f = $('.rv-final'); if (f) setTimeout(function () { f.classList.add('on'); play('sfxBell'); }, 500 + nL * 900); var p = $('.rv-plate'); if (p) p.classList.add('on');
+  function verdict() { $$('.rv-lines li').forEach(function (li, i) { setTimeout(function () { li.classList.add('on'); }, 500 + i * 900); }); var nL = $$('.rv-lines li').length, f = $('.rv-final'); if (f) setTimeout(function () { f.classList.add('on'); }, 500 + nL * 900); var p = $('.rv-plate'); if (p) p.classList.add('on');
     setTimeout(function () {
       document.body.classList.add('mr-judged'); if (window.ykMariaBoard) window.ykMariaBoard(); if (window.ykMariaRepage) window.ykMariaRepage();
       var STP = ['未濟', '未詳', '無'];

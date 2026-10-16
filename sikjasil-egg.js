@@ -297,6 +297,17 @@
     'background:rgba(231,219,194,.96);border:1px solid #3a3128;box-shadow:0 8px 22px -10px rgba(0,0,0,.6);' +
     'font-family:var(--myeongjo,"Nanum Myeongjo",serif);color:#1e1913;opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s}' +
   '.ykq-tray{pointer-events:none}' +
+  /* 1016 · 소지품 상자를 접고 펼 수 잇게 — 접으면 작은 쪽지 한 장 (폰에선 처음부터 접힘) */
+  '.ykq-tray.on{pointer-events:auto;cursor:pointer}' +
+  '.ykq-x{flex:none;width:24px;height:24px;margin-left:2px;padding:0;border:1px solid rgba(58,49,40,.5);background:none;color:#3a3128;font:700 14px/1 serif;cursor:pointer;display:grid;place-items:center}' +
+  '.ykq-tray.mini{gap:7px;padding:5px 6px 5px 9px}' +
+  '.ykq-tray.mini .ykq-tt span,.ykq-tray.mini .ykq-more,.ykq-tray.mini .ykq-open{display:none}' +
+  '.ykq-tray.mini .ykq-tt b{font-size:11.5px}' +
+  '.ykq-tray.mini .ykq-slots{gap:3px}' +
+  '.ykq-tray.mini .ykq-slot{width:20px;height:20px}' +
+  '.ykq-tray.mini .ykq-slot img{max-width:18px;max-height:17px}' +
+  '.ykq-tray.mini .ykq-x{width:20px;height:20px;font-size:12px}' +
+  '.ykq-tray.mini.ready .ykq-tt b:after{content:" · 문 열림";color:#8a2a21}' +
   '.ykq-tray.on{opacity:1;transform:none}' +
   '.ykq-tray.on .ykq-open{pointer-events:auto}' +
   '.ykq-tray .ykq-tt{font-size:11.5px;letter-spacing:.1em;line-height:1.5;max-width:13em}' +
@@ -306,7 +317,7 @@
   '.ykq-slot img{max-width:36px;max-height:34px;filter:grayscale(.8) sepia(.55) contrast(1.12)}' +
   '.ykq-slot.got{border-style:solid;border-color:#3a3128}' +
   '.ykq-more{font-family:var(--serif,"Noto Serif KR",serif);font-weight:700;font-size:12px;color:#6e6250}' +
-  '.ykq-open{margin-left:4px;padding:6px 10px;border:1px solid #8a2a21;background:#1e1913;color:#e7dbc2;cursor:pointer;font-family:inherit;font-weight:800;font-size:12px;letter-spacing:.18em;animation:ykq-glow 2s ease-in-out infinite}' +
+  '.ykq-open{margin-left:4px;padding:6px 10px;border:1px solid #8a2a21;background:#1e1913;color:#e7dbc2;cursor:pointer;font-family:inherit;font-weight:800;font-size:12px;letter-spacing:.18em}' +
   '@keyframes ykq-glow{50%{box-shadow:0 0 0 4px rgba(138,42,33,.25)}}' +
   '.ykq-tray.nudge{animation:ykq-nudge .5s}' +
   '@keyframes ykq-nudge{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}' +
@@ -314,15 +325,15 @@
   '.ykq-rv{position:fixed;inset:0;z-index:2147483002;cursor:pointer;background:radial-gradient(ellipse at 50% 40%,rgba(28,6,3,.9),rgba(0,0,0,.985) 68%);opacity:0;transition:opacity .25s}' +
   '.ykq-rv.on{opacity:1}' +
   '.ykq-rv.out{opacity:0;transition:opacity .55s ease .25s}' +
-  '.ykq-rv::before{content:"";position:absolute;inset:0;background:#8a1a12;mix-blend-mode:screen;opacity:0;animation:ykq-flash .55s steps(2,end) .05s}' +
-  '@keyframes ykq-flash{0%{opacity:.75}30%{opacity:0}45%{opacity:.45}100%{opacity:0}}' +
+  '.ykq-rv::before{content:"";position:absolute;inset:0;background:#8a1a12;mix-blend-mode:screen;opacity:0;animation:ykq-flash .9s ease-out .05s both}' +
+  '@keyframes ykq-flash{0%{opacity:.35}100%{opacity:0}}' +
   '.ykq-rv::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;mix-blend-mode:overlay;' +
     'background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px);animation:ykq-scan .18s steps(3) infinite}' +
   '@keyframes ykq-scan{50%{transform:translateY(2px)}}' +
   '.ykq-big{position:fixed;z-index:2147483003;pointer-events:none;transform-origin:50% 50%;' +
     'transition:left .5s cubic-bezier(.2,1.4,.3,1),top .5s cubic-bezier(.2,1.4,.3,1),width .5s cubic-bezier(.2,1.4,.3,1),opacity .4s}' +
   '.ykq-big img{display:block;width:100%;height:auto;filter:grayscale(.55) sepia(.45) contrast(1.35) brightness(.9) drop-shadow(0 30px 40px rgba(0,0,0,.8))}' +
-  '.ykq-big.shake img{animation:ykq-twitch 1.9s steps(1,end) .45s}' +
+  '.ykq-big.shake img{animation:none}' +   /* 1016 · 번쩍이는 떨림은 뺌 (깜빡임 업시) */
   '@keyframes ykq-twitch{0%{transform:none;filter:grayscale(.55) sepia(.45) contrast(1.35) brightness(.9)}8%{transform:translate(-6px,3px) scale(1.02)}10%{transform:none;filter:grayscale(1) contrast(2) brightness(.35)}' +
     '12%{filter:grayscale(.55) sepia(.45) contrast(1.35) brightness(.9)}34%{transform:translate(4px,-2px) rotate(-1deg)}36%{transform:none}' +
     '58%{filter:grayscale(.2) sepia(.2) saturate(2.4) hue-rotate(-18deg) contrast(1.5) brightness(.8)}61%{filter:grayscale(.55) sepia(.45) contrast(1.35) brightness(.9)}' +
@@ -342,12 +353,20 @@
   var NUM = ['영', '하나', '둘', '셋', '넷', '다섯', '여섯', '일곱', '여덟', '아홉', '열', '열하나'];
   var tray = document.createElement('div');
   tray.className = 'ykq-tray'; tray.setAttribute('aria-live', 'polite');
-  tray.innerHTML = '<div class="ykq-tt"><b>식자공의 소지품</b><span class="ykq-cnt"></span></div><div class="ykq-slots"></div><span class="ykq-more"></span>';
+  tray.innerHTML = '<div class="ykq-tt"><b>식자공의 소지품</b><span class="ykq-cnt"></span></div><div class="ykq-slots"></div><span class="ykq-more"></span><button type="button" class="ykq-x" aria-label="소지품 상자 접기">−</button>';
   document.body.appendChild(tray);
+  var smallScr = window.matchMedia && matchMedia('(max-width:600px)').matches, miniT = null;
+  function setMini(on) { clearTimeout(miniT); tray.classList.toggle('mini', on); var x = tray.querySelector('.ykq-x'); x.textContent = on ? '+' : '−'; x.setAttribute('aria-label', on ? '소지품 상자 펼치기' : '소지품 상자 접기'); try { sessionStorage.setItem('yk-tray-mini', on ? '1' : '0'); } catch (e) {} }
+  try { var sm = sessionStorage.getItem('yk-tray-mini'); setMini(sm ? sm === '1' : smallScr); } catch (e) { setMini(smallScr); }
+  tray.addEventListener('click', function (e) {
+    if (e.target.closest('.ykq-open')) return;
+    if (e.target.closest('.ykq-x')) { e.stopPropagation(); setMini(!tray.classList.contains('mini')); return; }
+    if (tray.classList.contains('mini')) { setMini(false); if (smallScr) miniT = setTimeout(function () { setMini(true); }, 6000); }
+  });
   function byId(id) { for (var i = 0; i < RELICS.length; i++) if (RELICS[i].id === id) return RELICS[i]; }
   function drawTray() {
     var a = got().filter(byId), n = a.length;
-    tray.classList.toggle('on', n > 0);
+    tray.classList.toggle('on', n > 0); tray.classList.toggle('ready', n >= NEED);
     tray.querySelector('.ykq-cnt').textContent =
       n >= RELICS.length ? '열한 가지를 다 차잣소' :
       n >= NEED ? NUM[n] + ' 가지 · 식자실 문이 열렷소' :
@@ -363,11 +382,11 @@
     if (n >= NEED && !ob) {
       ob = document.createElement('button'); ob.type = 'button'; ob.className = 'ykq-open'; ob.textContent = '식자실 문을 연다';
       ob.addEventListener('click', function () { openGate(true); });
-      tray.appendChild(ob);
+      tray.insertBefore(ob, tray.querySelector('.ykq-x'));
     }
   }
   function nudgeTray() {
-    tray.classList.add('on'); tray.classList.remove('nudge'); void tray.offsetWidth; tray.classList.add('nudge');
+    tray.classList.add('on'); var wasMini = tray.classList.contains('mini'); setMini(false); if (wasMini || smallScr) { clearTimeout(miniT); miniT = setTimeout(function () { setMini(true); }, 5000); } tray.classList.remove('nudge'); void tray.offsetWidth; tray.classList.add('nudge');
     tray.querySelector('.ykq-cnt').textContent = (touchPlay ? '지면의 물건 넷을 눌러 모으시오 (' : '물건이 모자라오 · 지면을 스처 보시오 (') + NUM[got().length] + ' / 넷)';
   }
 
@@ -438,6 +457,7 @@
     rv.addEventListener('click', finish);
     function finish() {
       if (done) return; done = true; clearTimeout(timer);
+      var wasMini = tray.classList.contains('mini'); setMini(false);
       tray.classList.add('on'); drawTray();
       var idx = Math.min(a.length, NEED) - 1, slotEl = tray.querySelectorAll('.ykq-slot')[idx], to = slotEl.getBoundingClientRect();
       var keep = slotEl.innerHTML; if (a.length <= NEED) slotEl.innerHTML = '';
@@ -448,6 +468,7 @@
         big.remove(); rv.remove(); document.documentElement.classList.remove('ykq-lock');
         if (a.length <= NEED) slotEl.innerHTML = keep;
         drawTray(); revealing = false;
+        if (wasMini || smallScr) miniT = setTimeout(function () { setMini(true); }, 3500);
         if (a.length === NEED) setTimeout(function () { openGate(true); }, 500);   // 넷째를 줍는 순간 문이 열림
       }, 800);
     }

@@ -44,22 +44,3 @@
 @keyframes ghost-corner{0%{opacity:0;transform:translate(55vw,45vh) scale(.2) rotate(-45deg)}20%{opacity:1}60%{opacity:1;transform:translate(-10%,-95%) scale(1.1) rotate(20deg)}100%{opacity:0;transform:translate(-100vw,-130vh) scale(.65) rotate(65deg)}}
 @keyframes ghost-retreat{0%{opacity:0;transform:translate(-70%,-30%) scale(2.8)}20%{opacity:1;transform:translate(-65%,-40%) scale(2.4)}55%{opacity:.85;transform:translate(-80%,-55%) scale(.9) rotate(-8deg)}100%{opacity:0;transform:translate(-90%,-70%) scale(.03) rotate(-18deg)}}
 @media(prefers-reduced-motion:reduce){#ghost-apparition-overlay.active[data-action] .ghost-figure{animation:ghost-still 2.4s both}}
-
-/* ── 점프 스케어 (1013) — 웹 · 모바일 공통 · 모든 등장 방식에 우선 ──
-   0 → 0.15초 : 화면 중앙에 투명 → 선명 · 0.82배 → 1.12배로 튀어나옴
-   0.15 → 0.95초 : 머무르며 1.12 → 1.2배로 아주 조금 더 다가옴 (작은 떨림)
-   0.95 → 1.15초 : 0.2초 안에 사라짐 */
-#ghost-apparition-overlay.active .ghost-figure,
-#ghost-apparition-overlay.active[data-action] .ghost-figure{animation:ghost-jump 1.15s linear both!important}
-#ghost-apparition-overlay.active .ghost-veil{animation:ghost-jump-veil 1.15s linear both!important}
-@keyframes ghost-jump{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(.82);animation-timing-function:cubic-bezier(.05,.9,.2,1)}
-  13%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}
-  18%{transform:translate(-50.6%,-49.6%) scale(1.14)}
-  23%{transform:translate(-49.5%,-50.4%) scale(1.15)}
-  28%{transform:translate(-50%,-50%) scale(1.16)}
-  82.6%{opacity:1;transform:translate(-50%,-50%) scale(1.2);animation-timing-function:cubic-bezier(.6,0,.9,.4)}
-  100%{opacity:0;transform:translate(-50%,-50%) scale(1.24)}}
-@keyframes ghost-jump-veil{0%{opacity:0}10%,82.6%{opacity:1}100%{opacity:0}}
-@media(prefers-reduced-motion:reduce){#ghost-apparition-overlay.active[data-action] .ghost-figure,#ghost-apparition-overlay.active .ghost-figure{animation:ghost-jump-still 1.15s linear both!important}}
-@keyframes ghost-jump-still{0%{opacity:0;transform:translate(-50%,-50%)}13%,82.6%{opacity:1;transform:translate(-50%,-50%)}100%{opacity:0;transform:translate(-50%,-50%)}}

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  경성야록 · 첫 화면 파일 (index.html)
+  ※ 서버에서는 이 파일을 첫 화면(시작 페이지)으로 열면 됩니다.
+
+  역할: 페이지의 뼈대(빈 상자)만 있는 파일입니다.
+        실제 신문 지면(메인)의 글·사진·칸은 app.js가 data.js의 내용을 읽어
+        아래 <main id="front"> 상자 안에 그려 넣습니다.
+
+  연결된 파일 (모두 이 파일이 있는 폴더 기준 상대 경로)
+    · styles.css : 디자인 전부 (아래 link 태그)
+    · data.js    : 글·사진 경로·칸 구성 데이터 (맨 아래 script, app.js보다 먼저)
+    · app.js     : 동작 전부 (맨 아래 script)
+    · images/, assets/ : 사진·스캔 (경로는 data.js · app.js · styles.css 안에 적혀 있음)
+
+  화면 순서: 오프닝(#mf, 약 12초) → 메인 신문 지면(#front)
+    · 주소 끝이 #main 이면 오프닝 없이 메인이 바로 뜹니다. 예) index.html#main
+    · 한 번 오프닝을 본 브라우저는 다음부터 오프닝 중간(멈춤 장면)부터 시작합니다.
+
+  파일 이름 뒤의 ?v=20261002g 는 브라우저가 옛 파일을 기억하지 않고 새로 받게 하는 꼬리표입니다.
+  파일을 고치면 숫자를 바꿔 주세요. (없어도 동작은 같습니다)
+  ============================================================
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>경성야록 : 자정의 호외</title>
+<!--
+  [폰트 · 외부에서 불러오는 것은 이것 하나뿐] 구글 폰트 (인터넷 연결 필요)
+    · Noto Serif KR (굵기 400 · 700 · 900) : 본문 · 제목 · 한자 전부 (styles.css의 serif 변수)
+    · Song Myung : 대표 사진 오른쪽 어두운 판의 큰 제목 · 부제 (styles.css .hp-title, .hp-sub)
+  인터넷이 막힌 환경에서는 컴퓨터에 있는 명조(바탕 등)로 대신 보입니다. 화면이 깨지지는 않습니다.
+  ※ fonts/fonts.css 파일은 이 프로젝트에 없습니다.
+  ※ assets/fonts/ 의 재건사 글꼴(jaegeonsa.woff2, .ttf)은 현재 어디에서도 불러오지 않습니다 (보관용).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Song+Myung&display=swap" rel="stylesheet">
+<!--
+  디자인 파일: styles.css (같은 폴더)
+-->
+<link rel="stylesheet" href="styles.css?v=20261002g">
+</head>
+<body>
+
+</div>
+
+<!--
+  [기능: 글자 번짐 · 질감] 아래 SVG 필터는 styles.css에서 filter:url(#이름) 으로 씁니다.
+    · inkbleed : 제호 · 면 제목 등 활자 가장자리가 살짝 번진 느낌
+    · inkspread: 먹칠 줄 · 벽돌 블록의 번진 가장자리
+    · lp       : 대표 사진 옆 큰 제목의 거친 활판 느낌
+    · windwarp : 삽화의 바람 흔들림 (상세 화면)
+-->
+<!-- 공용 SVG 필터: 잉크 번짐 · 바람 떨림 · 녹 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="inkbleed"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="7" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="1.1" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="inkbleed2"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="1" seed="7" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="1.1" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="inkspread"><feTurbulence type="fractalNoise" baseFrequency=".06" numOctaves="2" seed="2" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="lp"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter>
+  <filter id="windwarp"><feTurbulence type="fractalNoise" baseFrequency=".012 .04" numOctaves="2" seed="5" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/></filter>
+</svg>
+
+<!--
+  [오프닝] 처음 들어오면 메인보다 먼저 뜨는 화면입니다. app.js의 '오프닝' 구역이 움직입니다.
+  끝나면 이 상자는 숨겨지고 메인(#front)이 보입니다. 오른쪽 아래 '건너뛰기'로 바로 메인으로 갈 수 있습니다.
+  오프닝 필름 칸에 쓰는 이미지: assets/scans/ 안의 당시 지면 스캔 (app.js MF_FALLBACK · MF_TARGET 목록)
+-->
+<!-- ========== 오프닝: 동아일보 자료실 마이크로필름 ========== -->
+<div id="mf" aria-label="오프닝: 동아일보 자료실에서 마이크로필름을 되감아 1937년 지면을 찾는 장면">
+  <canvas id="mfCanvas" aria-hidden="true"></canvas>
+  <div class="mf-search" id="mfSearch">
+    <p class="mf-head"><b>東亞日報 資料室</b><span id="mfDate"></span></p>
+    <div class="mf-box" aria-hidden="true"><svg viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="#e8e2cc" stroke-width="1.6"/><path d="M13 13l5 5" stroke="#e8e2cc" stroke-width="1.8"/></svg><span class="mf-field" id="mfField"></span><i class="mf-caret"></i></div>
+    <div class="mf-entry" id="mfEntry"><button type="button" id="mfGo">되감기</button><button type="button" id="mfMute">소리 없이 되감기</button></div>
+  </div>
+  <div class="mf-mark" id="mfMark" hidden aria-label="검색어 교주(敎主)"></div>
+  <div class="mf-counter" id="mfCounter" hidden aria-hidden="true"></div>
+  <p class="mf-phrase" id="mfPhrase" hidden>사건은 끝나지 않는다. 되감길 뿐.</p>
+</div>
+<button type="button" class="mf-skip" id="mfSkip" hidden>건너뛰기</button>
+
+<!--
+  [상단 머리줄 · 상세 · 목록 화면용] 메인 화면에서는 숨겨집니다(hidden).
+  메인 신문의 머리줄은 app.js renderFront()가 지면 안에 따로 그립니다
+  (京城夜錄 제호 · 納涼特輯 도장 · 第二面/第三面 · 날짜 · 면 바로가기 · 검색 · 메뉴).
+-->
+<!-- ========== 상단 머리 + 네비게이션 (메인·상세·목록 공통) ========== -->
+<header id="top" hidden>
+  <div class="tp-in">
+    <button class="tp-brand" id="homeBtn" aria-label="경성야록 메인으로">
+      <span class="tp-title">京城夜錄</span>
+      
+    </button>
+    <p class="tp-tag" id="tpTag"></p>
+    <div class="tp-date"><small id="tpEdition"></small><b id="tpDate"></b></div>
+    <nav class="tp-nav" id="tpNav" aria-label="면 바로 가기"></nav>
+    <button class="tp-icon" id="searchBtn" aria-label="검색"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 L21 21"/></svg></button>
+    <button class="tp-icon" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+
+<!--
+  ============================================================
+  [메인 신문 지면] 이 상자는 비어 있고, app.js renderFront()가 아래 구조를 그려 넣습니다.
+  1280×720 크기의 양면 신문을 화면에 맞게 통째로 줄였다 늘립니다 (app.js fitBoard).
+  가로가 좁은 화면(폭 900px 미만 등)에서는 칸이 위아래로 쌓이고 스크롤됩니다.
+
+    #bdStage            검은 바탕 + 아주 옅게 흐르는 배경 글씨
+     └ .bd.spread       양면 종이
+        ├ section.sheet.left  (왼쪽 · 第二面)
+        │   ├ header.pg-band   상단 머리줄: 京城夜錄 제호 · 納涼特輯 도장 · 第二面 · 날짜
+        │   ├ .fp-society      사회면 칸: 면 제목 │ 대표 사진 + 어두운 제목 판 │ 작은 카드 2개
+        │   ├ .fp-fraud        사기면 칸: 면 제목 │ 대표 사진 + 어두운 제목 판 │ 작은 카드 2개
+        │   └ .bd-ap.ap-left   아래 줄 부록(附錄): 소설 · 영화
+        └ section.sheet.right (오른쪽 · 第三面)
+            ├ header.pg-band   상단 머리줄: 第三面 · 날짜 · 면 바로가기 · 검색 · 메뉴
+            ├ .fp-culture      문화예술면 칸: 대표(당시 지면 조각) + 檢閱 도장 + 작은 카드 2개
+            ├ .fp-people       인물면 칸: 인물 4명 타원 사진
+            └ .bd-ap.ap-right  아래 줄 부록: 책 · '기록은 지금도 이어진다' 연표
+
+  메인에 쓰이는 이미지 (index.html 기준 경로)
+    사회면 대표   images/social-1933-05-17.jpg
+    사회면 카드   assets/illust/jukcheom_map_ahyeon.jpg (당시 지도) · 마리아 카드는 사진 없음(빈 타원)
+    사기면 대표   images/fraud-1940-03-14.jpg
+    사기면 카드   assets/illust/dokkaebi.jpg · assets/scans/poison-12days/02.jpg 의 광고 부분
+    문화예술 대표 assets/scans/sohn-gijeong/05.jpg 의 일부 · 카드 assets/scans/sohn-gijeong/07.jpg 의 일부
+    인물면        images/person-hyeon-jingeon.jpg · person-lee-gilyong.jpg · person-yun-simdeok.jpg · person-jang-jinhong.jpg
+    종이 뒷면 비침 assets/scans/_body/body-a.jpg · body-d.jpg (styles.css)
+  하단 버튼은 이 파일 아래쪽 #modernBtn(왼쪽 아래) · #muteBtn(오른쪽 아래)입니다.
+  ============================================================
+-->
+<!-- ========== 메인: 다섯 면 고르기 ========== -->
+<main id="front" hidden aria-label="어느 면을 펼칠까요"></main>
+
+<!--
+  [링크 이동 후 화면 · 메인 아님] 메인의 칸 · 카드 · 인물을 누르면 아래 화면 중 하나로 바뀝니다.
+  주소 끝: #a/사건id (상세) · #list/면id (목록) · #appendix (부록). 브라우저 뒤로 가기로 메인에 돌아옵니다.
+-->
+<!-- ========== 사건 상세 (공용 틀) ========== -->
+<article id="detail" hidden aria-label="사건 상세"></article>
+
+<!-- ========== 목록: 그 면의 옛 신문 지면 ========== -->
+<section id="list" hidden aria-label="면 지면 목록">
+  <div class="ls-head"><button class="ls-back" id="listBack">‹ 기사로 돌아가기</button><p id="listTitle"></p></div>
+  <div class="bookbox" id="bookBox"><div class="book" id="book"></div></div>
+  <nav class="pager" aria-label="다른 면 넘기기">
+    <button id="nextBtn" aria-label="다음 면 (왼쪽으로 넘기기)">‹ 다음 면</button>
+    <span id="pgInfo" aria-live="polite"></span>
+    <button id="prevBtn" aria-label="앞 면 (오른쪽으로 넘기기)">앞 면 ›</button>
+  </nav>
+</section>
+
+<!-- ========== 부록 카드 목록 ========== -->
+<section id="appendixView" hidden aria-label="부록"></section>
+
+<!-- 전구 조명 (마우스·손가락 주변만 밝게) -->
+<div id="lamp" hidden aria-hidden="true"><i></i></div>
+
+<!--
+  [기능: 메뉴] 메인 머리줄 오른쪽 ☰ 버튼을 누르면 열립니다 (app.js openPop).
+  면 목록 · 전체 기록 목록 · 연도별 · 라디오 경성 · 소개 · 처음부터 다시(오프닝) · 소리 끄기
+-->
+<!-- 메뉴 -->
+<div id="menu" class="sheet-pop" hidden role="dialog" aria-modal="true" aria-label="메뉴">
+  <div class="pop-in">
+    <button class="pop-close" data-close aria-label="메뉴 닫기">×</button>
+    <p class="mn-h">면</p>
+    <div class="mn-faces" id="mnFaces"></div>
+    <p class="mn-h">메뉴</p>
+    <div class="mn-list">
+      <button data-panel="records">전체 기록 목록 <small>면별 · 풀버전 / 속보 예정</small></button>
+      <button data-panel="years">연도별 <small>1924~1937 연표</small></button>
+      <button data-panel="radio">라디오 경성 <small>기록을 듣다</small></button>
+      <button data-panel="about">소개 <small>기획 의도 · 출처 원칙 · 팀</small></button>
+    </div>
+    <div class="mn-foot"><button id="replay">처음부터 다시</button><button id="menuMute">소리 끄기</button></div>
+  </div>
+</div>
+
+<!--
+  [기능: 검색 · 기록 창] 메인 머리줄의 돋보기 버튼 → 검색 창 (app.js openPanel('search')).
+  사건 제목 · 연도 · 인물 이름을 한글이나 한자로 찾을 수 있고, 결과를 누르면 그 기록으로 이동합니다.
+-->
+<!-- 기록 · 연도 · 라디오 · 소개 · 검색 · 號外 속보 창 -->
+<div id="panel" class="sheet-pop" hidden role="dialog" aria-modal="true" aria-labelledby="pnTitle">
+  <div class="pop-in">
+    <button class="pop-close" data-close aria-label="닫기">×</button>
+    <h2 id="pnTitle"></h2>
+    <div id="pnBody"></div>
+  </div>
+</div>
+
+<!--
+  [기능: 면 전환 연출] 메인에서 면을 누르면 종이가 안쪽부터 검게 젖어들며 다음 화면으로 바뀝니다 (app.js Blood).
+  #fadeVeil = 부드럽게 어두워지는 전환막, #scanFlash = 상세 · 목록 화면에서 가끔 0.08초 옛 지면이 스치는 효과
+-->
+<!-- 검은 피 전환 -->
+<canvas id="blood" hidden aria-hidden="true"></canvas>
+<div id="fadeVeil" hidden aria-hidden="true"></div>
+<div id="scanFlash" aria-hidden="true"></div>
+
+<!--
+  [하단 버튼]
+    · #muteBtn  : 오른쪽 아래 '소리 끄기 / 소리 켜기' (app.js toggleSound)
+    · #modernBtn: 왼쪽 아래 '한자로 보기 / 한글로 보기'. 누르면 화면 전체 글자를 한자로 고정하고,
+                  다시 누르면 한글로 돌아옵니다 (app.js setModern). 버튼 글자는 data.js labels.modernOn · modernOff 에서 옵니다.
+                  (태그 안의 '現代語로 보기'는 첫 순간에만 있고, app.js가 바로 '한자로 보기'로 바꿉니다)
+-->
+<button id="muteBtn" class="mute" hidden aria-pressed="false">소리 끄기</button>
+<button id="modernBtn" class="modern-btn" hidden aria-pressed="false">現代語로 보기</button>
+
+<!--
+  [순서 중요] data.js를 먼저, app.js를 나중에 불러와야 합니다 (app.js가 data.js의 window.YAROK 를 읽음).
+-->
+<script src="data.js?v=20261002g"></script>
+<script src="app.js?v=20261002g"></script>
+</body>
+</html>

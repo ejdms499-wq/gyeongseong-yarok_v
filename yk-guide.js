@@ -20,10 +20,19 @@
   ];
   var isCase = function (k) { return function () { return $('.notebook') && $('.hogoe-tab') && location.pathname.indexOf(k) > -1; }; };
   var PAGES = {
+    cmap: { test: function () { return $('#vp') && $('#stage') && $('#card'); }, steps: [
+      { t: ['경성 사건 지도', '경성 사건 지도'], b: ['1927년에 진짜로 박은 「경성부관내도」 우에, 경성야록의 사건을 점으로 찍엇소. 그 때의 자리와 지금의 자리를 나란히 보시압.', '1927년에 실제로 만든 「경성부관내도」 위에 경성야록의 사건을 점으로 찍었어요. 그때의 자리와 지금의 자리를 나란히 볼 수 있어요.'] },
+      { sel: '#vp', t: ['점을 누르시압', '점을 눌러 보세요'], b: ['붉은 점은 본편, 테두리 점은 단신이오. 지도는 끌면 움즉이고, 마우스 휠로 크게 보오.', '붉은 점은 본편, 테두리 점은 단신이에요. 지도는 끌어서 옮기고, 마우스 휠로 크게 볼 수 있어요.'] },
+      { sel: '.tools', t: ['경성 · 전도 · 전체', '경성 · 전도 · 전체'], b: ['「전도」를 누르면 지도 구석의 조선 전도로 가오. 부산 · 대구 · 경주 · 인천처럼 경성 밧게서 난 일은 거긔 찍혀 잇소.', '「전도」를 누르면 지도 구석의 조선 전도로 가요. 부산 · 대구 · 경주 · 인천처럼 경성 밖에서 일어난 일은 거기에 찍혀 있어요.'] },
+      { sel: '#card', t: ['그 때 · 지금', '그때 · 지금'], b: ['점을 고르면 여긔 그 때 일홈과 지금(2026)의 자리가 나란히 나오오. 「지금 지도에서 찾아보기」는 오늘의 지도를 열어 주오.', '점을 고르면 여기에 그때 이름과 지금(2026)의 자리가 나란히 나와요. 「지금 지도에서 찾아보기」를 누르면 오늘의 지도가 열려요.'] },
+      { sel: '.list .tab', t: ['본편 · 단신', '본편 · 단신'], b: ['목록을 본편과 단신으로 갈라 볼 수 잇소. 단신은 정긔 독자 전용 — 錢으로 열어야 닑히오.', '목록을 본편과 단신으로 나눠 볼 수 있어요. 단신은 정기 독자 전용이라 錢을 내야 읽을 수 있어요.'] },
+      { sel: '.ykg-tab', t: ['다시 보려면', '다시 보려면'], b: ['우에 걸린 책갈피 「보는 법」을 누르면 언제든 다시 보오.', '위에 걸린 책갈피 「보는 법」을 누르면 언제든 다시 볼 수 있어요.'] }
+    ]},
     main: { test: function () { return $('nav.sections') && $('#cases'); }, steps: [
       { t: ['경성야록 보는 법', '경성야록 보는 법'], b: ['이 신문은 읽기만 하는 지면이 아니오. 여기저기 손을 대고 누르는 장치가 숨어 잇소. 몃 장만 넘겨 보시압.', '읽기만 하는 신문이 아닙니다. 곳곳에 마우스를 대고 누르는 장치가 숨어 있어요. 아홉 장만 넘겨 보세요.'] },
       { sel: '.masthead .hj, header .hj', t: ['옛 글자에 손을 대면', '옛 글자에 마우스를 대면'], b: ['옛 맞춤법 글자에 마우스를 대면 오늘 말로 바뀌오. 이 사이트의 모든 글자가 그러하오.', '옛 맞춤법 글자에 마우스를 대면 오늘 말로 바뀝니다. 사이트의 모든 글자가 그렇습니다.'] },
       { sel: 'nav.sections', t: ['지면 목차', '지면 목차'], b: ['사회 · 경제 · 문화예술 — 면을 고르면 그 면의 사건만 모여 보이오.', '사회 · 경제 · 문화예술 — 면을 고르면 그 면의 사건만 모아 보여 줍니다.'] },
+      { sel: '.find2', t: ['글로 · 지도로 차저보기', '글로 · 지도로 찾아보기'], b: ['목차 끗 칸은 찻는 곳이오. 「글로」는 말로 긔록을 찻고, 「지도로」는 1927년 경성 지도 우에서 사건이 난 자리를 찻소. 점을 누르면 그 자리가 지금 어대인지도 나오오.', '목차 끝 칸은 찾는 곳이에요. 「글로」는 낱말로 기록을 찾고, 「지도로」는 1927년 경성 지도 위에서 사건이 일어난 자리를 찾아요. 점을 누르면 그 자리가 지금 어디인지도 나와요.'] },
       { sel: '#cases', t: ['사건 기사', '사건 기사'], b: ['기사를 누르면 사건 지면으로 드러가오. 손긔졍 사진은 붓으로 문질러 볼 수도 잇소.', '기사를 누르면 사건 페이지로 들어갑니다. 손기정 사진은 붓으로 문질러 볼 수도 있어요.'] },
       { sel: '.ykq-relic', reveal: true, t: ['식자공의 소지품', '식자공의 소지품'], b: ['엇던 식자공이 지면 우에 물건을 떨어뜨리고 갓소. 긔사 우에 마우스를 머물면 슬며시 떠오르니, 보이면 누르시압. 주운 것은 왼쪽 아래 쟁반에 모이고, 넷을 모으면 어대선가 문이 열리오. (이건 하나를 미리 보여 드린 것이오.)', '어느 식자공이 지면 위에 물건을 떨어뜨리고 갔어요. 기사 위에 마우스를 머물면 슬며시 떠오르니, 보이면 눌러 보세요. 주운 것은 왼쪽 아래 쟁반에 모이고, 넷을 모으면 어딘가의 문이 열립니다. (이건 하나를 미리 보여 드린 거예요.)'] },
       { sel: 'section.reads', t: ['부록 · 편집국', '부록 · 편집국'], b: ['밤에만 여는 박람회와, 긔자만 드나드는 편집국이오. 편집국 문은 암호로 잠겨 잇소 — 암호는 사건 넷을 끗까지 읽은 독자에게 전보로 가오.', '밤에만 여는 박람회와, 기자만 드나드는 편집국이에요. 편집국 문은 암호로 잠겨 있어요 — 암호는 사건 넷을 끝까지 읽은 독자에게 전보로 갑니다.'] },
@@ -166,17 +175,18 @@
   /* ── 전체 안내: 사이트 한 바퀴 (어느 면에서든 책갈피 → 「경성야록 전체 안내」) ── go: 그 면으로 가는 길 */
   var FULL = [
     { t: ['경성야록 전체 안내', '경성야록 전체 안내'], b: ['경성야록은 1920~30년대 동아일보에 실린 실화 사건을, 자정에 다시 펴 보는 신문이오. 이 안내는 신문 전체의 지도요. 면마다 장치가 다르니, 그 면에 드러가서는 우의 「보는 법」 책갈피를 다시 누르시압.', '경성야록은 1920~30년대 동아일보에 실린 실제 사건을 자정에 다시 펼쳐 보는 신문이에요. 이 안내는 사이트 전체 지도예요. 페이지마다 장치가 다르니, 각 페이지에 들어가면 위의 「보는 법」 책갈피를 다시 눌러 보세요.'] },
-    { t: ['읽는 법 세 가지', '읽는 법 세 가지'], b: ['① 옛 맞춤법 글자에 마우스를 대면 오늘 말로 바뀌오. ② 장치 귀퉁이의 작은 「？」를 누르면 그 장치 보는 법만 한 장 나오오. ③ ▸ 표는 누르는 곳, ↓ 표는 천천히 내려 읽는 곳이오.', '① 옛 맞춤법 글자에 마우스를 대면 오늘 말로 바뀌어요. ② 장치 귀퉁이의 작은 「？」를 누르면 그 장치 설명만 한 장 나와요. ③ ▸ 표는 누르는 곳, ↓ 표는 천천히 내려 읽는 곳이에요.'] },
+    { t: ['읽는 법 세 가지', '읽는 법 세 가지'], b: ['① 옛 맞춤법 글자에 마우스를 대면 오늘 말로 바뀌오. ② 장치에 마우스를 대면 귀퉁이에 작은 「？」 도장이 떠오르오. 누르면 그 장치 보는 법만 한 장 나오오. ③ ▸ 표는 누르는 곳, ↓ 표는 천천히 내려 읽는 곳이오.', '① 옛 맞춤법 글자에 마우스를 대면 오늘 말로 바뀌어요. ② 장치에 마우스를 대면 귀퉁이에 작은 「？」가 떠올라요. 그걸 누르면 그 장치 설명만 한 장 나와요. ③ ▸ 표는 누르는 곳, ↓ 표는 천천히 내려 읽는 곳이에요.'] },
     { go: 'index.html', t: ['一 · 본지 (첫 화면)', '1 · 본지 (첫 화면)'], b: ['신문 펼침면 한 장이오. 사회 · 경제 · 문화예술 면을 골라 보고, 긔사를 누르면 사건 본편으로 드러가오. 사진마다 움직이는 장치가 숨어 잇소. 전화긔로 보면 一~六 면을 옆으로 넘기는 신문이 되오.', '신문 펼침면 한 장이에요. 사회 · 경제 · 문화예술 면을 골라 보고, 기사를 누르면 사건 본편으로 들어가요. 사진마다 움직이는 장치가 숨어 있어요. 휴대폰으로 보면 1~6면을 옆으로 넘기는 신문이 돼요.'] },
     { go: 'case-jukcheomjeong/index.html', t: ['二 · 사건 본편 네 편', '2 · 사건 본편 4편'], b: ['죽첨정 골목의 어린 주검 · 부산 마리아 참살사건 · 손긔졍, 지워진 가슴 · 백백교 사건. 장마다 장치가 다르고, 다 지나면 취재 수첩에 도장이 찍히오. 호외 카드 · 축음긔 · 출처는 모든 본편에 잇소.', '죽첨정 골목의 어린 주검 · 부산 마리아 참살사건 · 손기정, 지워진 가슴 · 백백교 사건. 장마다 장치가 다르고, 끝까지 읽으면 취재 수첩에 도장이 찍혀요. 호외 카드 · 축음기 · 출처는 모든 본편에 있어요.'] },
     { t: ['네 편을 다 읽으면', '4편을 다 읽으면'], b: ['자정의 전보가 오오. 전보 속 암호는 편집국 문을 여는 열쇠요. 읽는 차례는 마음대로이나, 처음이라면 본지 → 사건 넷 → 편집국 순을 권하오.', '자정의 전보가 와요. 전보 속 암호가 편집국 문을 여는 열쇠예요. 읽는 순서는 자유지만, 처음이라면 본지 → 사건 4편 → 편집국 순서를 추천해요.'] },
-    { go: 'newsroom.html', t: ['三 · 자정의 편집국', '3 · 자정의 편집국'], b: ['긔자만 드나드는 방이오. 녯 긔사를 원고로 너흐면 오늘 말 풀이 · 라듸오 원고 · 삽화로 엮어 주오. 문은 전보의 암호로 열리오.', '기자만 드나드는 방이에요. 옛 기사를 넣으면 현대어 풀이 · 라디오 원고 · 삽화로 만들어 줘요. 문은 전보의 암호로 열려요.'] },
-    { go: 'fair.html', t: ['四 · 경성사건박람회', '4 · 경성사건박람회'], b: ['전차를 타고 정문부터 출구까지 도는 부록 박람회요. 사건에서 태어난 소설 · 노래 · 무대를 관마다 걸어 두엇소.', '전차를 타고 정문부터 출구까지 도는 부록 박람회예요. 사건에서 나온 소설 · 노래 · 무대를 관마다 전시해 뒀어요.'] },
-    { go: 'hogoe.html', t: ['五 · 독자 호외 인쇄소', '5 · 독자 호외 인쇄소'], b: ['활자 서랍 · 종이 · 잉크를 고르고 몃 마디 적으면, 윤전긔가 당신만의 호외 한 장을 찍어 주오. 찍은 호외는 본지 빨랫줄에 널리오.', '활자 · 종이 · 잉크를 고르고 몇 마디 적으면, 윤전기가 나만의 호외 한 장을 찍어 줘요. 찍은 호외는 본지 빨랫줄에 걸려요.'] },
-    { go: 'shop.html', t: ['六 · 광고칸의 세 문 — 상뎜', '6 · 광고칸의 세 문 — 상점'], b: ['본지 맨 아래 광고칸은 문이 셋이오. 첫째 「오려 가시오」는 그 시절 진짜 광고를 진렬한 상뎜 — 마음에 드는 광고를 오려 스크랩첩에 모으시압.', '본지 맨 아래 광고칸에는 문이 셋 있어요. 첫째 「오려 가시오」는 그 시절 진짜 광고를 모아 둔 상점 — 마음에 드는 광고를 오려서 스크랩첩에 모아 보세요.'] },
-    { go: 'seek.html', t: ['七 · 둘째 문 — 사람을 차즘', '7 · 둘째 문 — 사람을 찾음'], b: ['녯 심인 광고를 비튼 B급 광고면이오. 사진 속 이불을 흔들고, 단서를 모으고, 부고에 향을 피우시압. 차저낸 만큼 「심인계 실적」이 오르오. 유성긔에선 병맛 행진곡이 흐르오.', '옛 「사람 찾음」 광고를 비튼 B급 광고면이에요. 사진 속 이불을 흔들고, 단서를 모으고, 부고에 향을 피워 보세요. 찾아낸 만큼 「심인계 실적」이 올라가요. 배경 음악은 병맛 행진곡이에요.'] },
-    { go: 'napryang.html', t: ['八 · 셋째 문 — 납량란 「자정의 백물어」', '8 · 셋째 문 — 납량란 「자정의 백물어」'], b: ['불을 끄고 소리를 켜고 보시압. 봉투 여섯 장 · 촛불 여섯 자루 — 한 장을 다 보면 초를 하나 끄오. 여섯을 다 끈 뒤의 일은 — 말하지 안켓소. 끝까지 가 본 이는 심인 광고면을 다시 보시압.', '불을 끄고 소리를 켜고 보세요. 봉투 6장 · 촛불 6개 — 한 장을 다 보면 초를 하나 꺼요. 6개를 다 끈 뒤의 일은 — 말하지 않을게요. 끝까지 간 사람은 심인 광고 페이지를 다시 가 보세요.'] },
-    { t: ['九 · 숨은 것 — 식자실', '9 · 숨은 것 — 식자실'], b: ['본지 긔사 우에 마우스를 머물면 식자공이 떨어뜨린 소지품이 떠오르오. 넷을 모으면 1934년 경성 활판 인쇄소 「식자실」의 문이 열리오 — 10분 동안 귀신을 피해 수수께끼를 푸는 3D 놀이요. 24번 서랍을 풀면 지하 자료실 · 암실까지 이어지오.', '본지 기사 위에 마우스를 머물면 식자공이 떨어뜨린 소지품이 나타나요. 4개를 모으면 1934년 경성 인쇄소 「식자실」 문이 열려요 — 10분 동안 귀신을 피하며 수수께끼를 푸는 3D 게임이에요. 24번 서랍을 풀면 지하 자료실 · 암실까지 이어져요.'] },
+    { go: 'case-map.html', t: ['三 · 사건 긔록 — 경성 사건 지도', '3 · 사건 기록 — 경성 사건 지도'], b: ['1927년 경성 지도 우에 모든 사건을 점으로 찍엇소. 점을 누르면 그 자리가 지금 어대인지 나오오. 본지 목차 끗 「지도로 차저보기」나 우의 「사건 긔록」으로 드러가오.', '1927년 경성 지도 위에 모든 사건을 점으로 찍었어요. 점을 누르면 그 자리가 지금 어디인지 나와요. 본지 목차 끝 「지도로 찾아보기」나 위쪽 「사건 기록」으로 들어가요.'] },
+    { go: 'newsroom.html', t: ['四 · 자정의 편집국', '4 · 자정의 편집국'], b: ['긔자만 드나드는 방이오. 녯 긔사를 원고로 너흐면 오늘 말 풀이 · 라듸오 원고 · 삽화로 엮어 주오. 문은 전보의 암호로 열리오.', '기자만 드나드는 방이에요. 옛 기사를 넣으면 현대어 풀이 · 라디오 원고 · 삽화로 만들어 줘요. 문은 전보의 암호로 열려요.'] },
+    { go: 'fair.html', t: ['五 · 경성사건박람회', '5 · 경성사건박람회'], b: ['전차를 타고 정문부터 출구까지 도는 부록 박람회요. 사건에서 태어난 소설 · 노래 · 무대를 관마다 걸어 두엇소.', '전차를 타고 정문부터 출구까지 도는 부록 박람회예요. 사건에서 나온 소설 · 노래 · 무대를 관마다 전시해 뒀어요.'] },
+    { go: 'hogoe.html', t: ['六 · 독자 호외 인쇄소', '6 · 독자 호외 인쇄소'], b: ['활자 서랍 · 종이 · 잉크를 고르고 몃 마디 적으면, 윤전긔가 당신만의 호외 한 장을 찍어 주오. 찍은 호외는 본지 빨랫줄에 널리오.', '활자 · 종이 · 잉크를 고르고 몇 마디 적으면, 윤전기가 나만의 호외 한 장을 찍어 줘요. 찍은 호외는 본지 빨랫줄에 걸려요.'] },
+    { go: 'shop.html', t: ['七 · 광고칸의 세 문 — 상뎜', '7 · 광고칸의 세 문 — 상점'], b: ['본지 맨 아래 광고칸은 문이 셋이오. 첫째 「오려 가시오」는 그 시절 진짜 광고를 진렬한 상뎜 — 마음에 드는 광고를 오려 스크랩첩에 모으시압.', '본지 맨 아래 광고칸에는 문이 셋 있어요. 첫째 「오려 가시오」는 그 시절 진짜 광고를 모아 둔 상점 — 마음에 드는 광고를 오려서 스크랩첩에 모아 보세요.'] },
+    { go: 'seek.html', t: ['八 · 둘째 문 — 사람을 차즘', '8 · 둘째 문 — 사람을 찾음'], b: ['녯 심인 광고를 비튼 B급 광고면이오. 사진 속 이불을 흔들고, 단서를 모으고, 부고에 향을 피우시압. 차저낸 만큼 「심인계 실적」이 오르오. 유성긔에선 병맛 행진곡이 흐르오.', '옛 「사람 찾음」 광고를 비튼 B급 광고면이에요. 사진 속 이불을 흔들고, 단서를 모으고, 부고에 향을 피워 보세요. 찾아낸 만큼 「심인계 실적」이 올라가요. 배경 음악은 병맛 행진곡이에요.'] },
+    { go: 'napryang.html', t: ['九 · 셋째 문 — 납량란 「자정의 백물어」', '9 · 셋째 문 — 납량란 「자정의 백물어」'], b: ['불을 끄고 소리를 켜고 보시압. 봉투 여섯 장 · 촛불 여섯 자루 — 한 장을 다 보면 초를 하나 끄오. 여섯을 다 끈 뒤의 일은 — 말하지 안켓소. 끝까지 가 본 이는 심인 광고면을 다시 보시압.', '불을 끄고 소리를 켜고 보세요. 봉투 6장 · 촛불 6개 — 한 장을 다 보면 초를 하나 꺼요. 6개를 다 끈 뒤의 일은 — 말하지 않을게요. 끝까지 간 사람은 심인 광고 페이지를 다시 가 보세요.'] },
+    { t: ['十 · 숨은 것 — 식자실', '10 · 숨은 것 — 식자실'], b: ['본지 긔사 우에 마우스를 머물면 식자공이 떨어뜨린 소지품이 떠오르오. 넷을 모으면 1934년 경성 활판 인쇄소 「식자실」의 문이 열리오 — 10분 동안 귀신을 피해 수수께끼를 푸는 3D 놀이요. 24번 서랍을 풀면 지하 자료실 · 암실까지 이어지오.', '본지 기사 위에 마우스를 머물면 식자공이 떨어뜨린 소지품이 나타나요. 4개를 모으면 1934년 경성 인쇄소 「식자실」 문이 열려요 — 10분 동안 귀신을 피하며 수수께끼를 푸는 3D 게임이에요. 24번 서랍을 풀면 지하 자료실 · 암실까지 이어져요.'] },
     { t: ['식자실 조작', '식자실 조작'], b: ['컴퓨터 — WASD 이동 · 마우스 시점 · E 조사 · Tab 수첩 · F 손전등. 전화긔 — 왼쪽 조이스틱 이동 · 화면 끌어 시점 · 손 단추로 줍기. 소리를 켜면 쇠 긁는 소리가 먼저 귀신을 알리오.', '컴퓨터 — WASD 이동 · 마우스 시점 · E 조사 · Tab 수첩 · F 손전등. 휴대폰 — 왼쪽 조이스틱 이동 · 화면 드래그로 시점 · 손 버튼으로 줍기. 소리를 켜면 쇠 긁는 소리가 귀신을 먼저 알려 줘요.'] },
     { t: ['그 밧게 숨은 것', '그 밖에 숨은 것'], b: ['지면 맨 끗 판권 줄에 거꾸로 박힌 활자가 하나 잇다는 소문이오. 납량란에선 꺼진 초를 두고 떠낫다 도라와 보시압.', '지면 맨 끝 판권 줄에 거꾸로 박힌 활자가 하나 있다는 소문이에요. 납량란에선 꺼진 초를 두고 나갔다가 다시 돌아와 보세요.'] },
     { t: ['길을 일흐면', '길을 잃으면'], b: ['어느 면에서든 우에 걸린 책갈피 「보는 법」을 누르면 — 「이 면 보는 법」과 「경성야록 전체 안내」를 고를 수 잇소. 모든 면 맨 아래엔 「본지로 도라가기」가 잇소. 그럼 — 자정의 지면으로.', '어느 페이지에서든 위에 걸린 책갈피 「보는 법」을 누르면 — 「이 페이지 보는 법」과 「경성야록 전체 안내」를 고를 수 있어요. 모든 페이지 맨 아래엔 「본지로 돌아가기」가 있어요. 그럼 — 자정의 신문으로.'] }
@@ -190,7 +200,7 @@
   function vis(s) { if (!s.sel || s.sel === '.ykg-tab') return true; if (s.q2) return !!D.querySelector('.ykg-q'); var e = $(s.sel); if (!e) return false; var r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; }
   /* 부분 안내(？)가 잇다는 것도 전체 안내에 넣음 */
   if (!(page === 'jk' || page === 'maria' || page === 'sk' || page === 'bb')) {
-    var QS = { sel: '.ykg-q:not(.in)', q2: 1, t: ['귀퉁이의 ？', '귀퉁이의 ？'], b: ['먼저 이것 하나 — 장치마다 귀퉁이에 작은 「？」 도장이 부터 잇소. 마우스를 대면 일홈이, 누르면 그 장치 보는 법 한 장만 나오오. 이 안내를 다 기억하지 안아도 — 궁금할 때 그것만 누르시압.', '먼저 이것 하나 — 장치마다 귀퉁이에 작은 「？」 도장이 붙어 있어요. 마우스를 대면 이름이, 누르면 그 장치 설명 한 장만 나옵니다. 이 안내를 다 기억하지 않아도 — 궁금할 때 그것만 누르세요.'] };
+    var QS = { sel: '.ykg-q:not(.in)', q2: 1, t: ['귀퉁이의 ？', '귀퉁이의 ？'], b: ['먼저 이것 하나 — 장치에 마우스를 대면 귀퉁이에 작은 「？」 도장이 떠오르오. 평소엔 숨어 잇서 지면이 깨끗하오. 도장에 마우스를 대면 일홈이, 누르면 그 장치 보는 법 한 장만 나오오. 이 안내를 다 기억하지 안아도 — 궁금할 때 그것만 누르시압.', '먼저 이것 하나 — 장치에 마우스를 대면 귀퉁이에 작은 「？」 도장이 떠올라요. 평소엔 숨어 있어 화면이 깨끗해요. 도장에 마우스를 대면 이름이, 누르면 그 장치 설명 한 장만 나옵니다. 이 안내를 다 기억하지 않아도 — 궁금할 때 그것만 누르세요.'] };
     var SS = PAGES[page].steps;
     SS.splice(SS.length && !SS[0].sel ? 1 : 0, 0, QS);   // 첫 장(인사) 바로 다음 — 초반에 알려 둠
   }
@@ -296,6 +306,7 @@
     });
     refreshCount();
   }
+  try { if (localStorage.getItem('yk-showq') === '1') D.body.classList.add('ykg-showq'); } catch (e) {}
   var menu = null;
   function closeMenu() { if (menu) { menu.remove(); menu = null; } }
   function drawBook() {
@@ -311,6 +322,7 @@
       }).join('') + '</ul>' +
       '<div class="ykg-bf"><button type="button" data-m="page">' + H('이 면 안내 처음부터', '이 페이지 안내 처음부터') + '</button>' +
       '<button type="button" data-m="full">' + H('경성야록 전체 안내', '경성야록 전체 안내') + '</button>' +
+      '<button type="button" data-m="qall">' + (D.body.classList.contains('ykg-showq') ? H('？ 도장 다시 숨기기', '？ 표시 다시 숨기기') : H('？ 도장 모두 보이기', '？ 표시 모두 보이기')) + '</button>' +
       '<button type="button" data-m="reset" class="ykg-rs">' + H('수첩 · 첫 안내 지우기', '수첩 · 첫 안내 기록 지우기') + '</button></div>';
     hjBind(menu);
   }
@@ -324,6 +336,7 @@
     menu.addEventListener('click', function (ev) {
       var sb = ev.target.closest('.ykg-show'); if (sb) { var s = devList()[+sb.dataset.k]; closeMenu(); if (s) start(s); return; }
       var b = ev.target.closest('button[data-m]'); if (!b) return; var m = b.dataset.m;
+      if (m === 'qall') { var on = D.body.classList.toggle('ykg-showq'); try { localStorage.setItem('yk-showq', on ? '1' : '0'); } catch (e) {} drawBook(); return; }
       if (m === 'reset') { found = {}; saveFound(); try { localStorage.removeItem('yk-intro1'); } catch (e) {} refreshCount(); drawBook(); return; }
       closeMenu(); start(m === 'full' ? 'full' : undefined);
     });
@@ -444,19 +457,25 @@
     var SKIP = { '.ykg-tab': 1, '#cbar': 1, '#snd': 1, '.masthead .hj, header .hj': 1, '.sb-tab': 1, '#lit': 1, '#ep1 .sf': 1, '.sp-grid .vt': 1, '#staff': 1, '#adCrew .sk-go': 1, '#adReader .sk-go': 1, '.sk-upb': 1, '.sk-foot .more': 1, '#skNp': 1 };
     var qs = D.createElement('style');
     qs.textContent =
-      '.ykg-q{position:absolute;top:-10px;right:-10px;z-index:40;width:21px;height:21px;padding:0;border-radius:50%;border:1px solid rgba(58,49,40,.5);background:rgba(236,226,203,.82);color:#3a3128;' +
-        'font:700 11px/1 "Noto Serif KR","Nanum Myeongjo",serif;display:grid;place-items:center;cursor:help;opacity:.42;transition:opacity .4s,transform .4s,background .3s;box-shadow:0 1px 3px rgba(0,0,0,.18)}' +
-      '.ykg-q:before{content:"";position:absolute;inset:2px;border-radius:50%;border:1px dotted rgba(58,49,40,.35)}' +
-      '.ykg-q:hover,.ykg-q:focus-visible{opacity:1;transform:rotate(-8deg);background:#ece2cb;outline:none}' +
+      '.ykg-q{position:absolute;top:-10px;right:-10px;z-index:40;width:23px!important;height:23px!important;padding:0!important;border-radius:50%!important;border:1px solid #1e1913!important;background:#1e1913!important;color:#efe5cc!important;' +
+        'font:800 12.5px/1 "Noto Serif KR","Nanum Myeongjo",serif!important;display:grid!important;place-items:center;text-indent:0!important;cursor:help;opacity:.92;transition:opacity .3s,transform .3s,background .3s,border-color .3s;box-shadow:0 0 0 2px rgba(239,229,204,.85),0 2px 5px rgba(0,0,0,.28)}' +
+      'html body button.ykg-q.ykg-q{padding:0!important;margin:0!important;gap:0!important;line-height:1!important;min-height:0!important;flex-direction:row!important;justify-content:center!important;align-items:center!important}' +
+      '.ykg-q:before{content:"";position:absolute;inset:2px;border-radius:50%;border:1px solid rgba(239,229,204,.38)}' +
+      '.ykg-q:hover,.ykg-q:focus-visible{opacity:1;transform:rotate(-8deg) scale(1.08);background:#8a2a21!important;border-color:#8a2a21!important;outline:none}' +
       '.ykg-q:after{content:attr(data-t);position:absolute;right:calc(100% + 8px);top:50%;transform:translate(6px,-50%);white-space:nowrap;padding:4px 10px 3px;background:#1e1913;color:#ece2cb;' +
         'font:700 11.5px/1.3 "Nanum Myeongjo","Noto Serif KR",serif;letter-spacing:.12em;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}' +
       '.ykg-q:hover:after,.ykg-q:focus-visible:after{opacity:1;transform:translate(0,-50%)}' +
-      '.ykg-q.dk{background:rgba(11,9,7,.6);border-color:rgba(234,223,196,.35);color:#eadfc4}.ykg-q.dk:before{border-color:rgba(234,223,196,.25)}' +
-      '.ykg-q.dk:hover{background:rgba(11,9,7,.9)}.ykg-q.dk:after{background:#eadfc4;color:#1e1913}' +
-      '.ykg-q{position:absolute!important;margin:0!important;flex:none!important;min-width:0!important;letter-spacing:0!important}.ykg-q:not(.in){top:-10px!important;right:-10px!important;left:auto!important}.ykg-q.in{top:6px!important;right:6px!important;left:auto!important;bottom:auto!important}body.ykg-quiet .ykg-q{opacity:0;pointer-events:none}';
+      '.ykg-q.dk{background:#eadfc4!important;border-color:#eadfc4!important;color:#1e1913!important;box-shadow:0 0 0 2px rgba(11,9,7,.7),0 2px 6px rgba(0,0,0,.5)}.ykg-q.dk:before{border-color:rgba(30,25,19,.3)}' +
+      '.ykg-q.dk:hover{background:#8a2a21!important;border-color:#8a2a21!important;color:#eadfc4!important}.ykg-q.dk:after{background:#eadfc4;color:#1e1913}' +
+      '.ykg-q{position:absolute!important;margin:0!important;flex:none!important;min-width:0!important;letter-spacing:0!important}.ykg-q:not(.in){top:-10px!important;right:-10px!important;left:auto!important}.ykg-q.in{top:6px!important;right:6px!important;left:auto!important;bottom:auto!important}body.ykg-quiet .ykg-q{opacity:0;pointer-events:none}' +
+      /* 1014 · 평소엔 숨김 → 그 장치에 마우스를 대면 귀퉁이에 떠오름 · 수첩에서 「모두 보이기」 · 안내 중엔 보임 */
+      'html .ykg-q{opacity:0!important;transform:scale(.6);pointer-events:none;transition:opacity .3s,transform .3s cubic-bezier(.3,1.4,.5,1),background .3s,border-color .3s!important}' +
+      'html :hover>.ykg-q,html :focus-within>.ykg-q,html body.ykg-showq .ykg-q,html.ykg-run .ykg-q{opacity:.96!important;transform:none;pointer-events:auto}' +
+      'html .ykg-q:hover,html .ykg-q:focus-visible{opacity:1!important;transform:rotate(-8deg) scale(1.08)}' +
+      '@media (hover:none){html .ykg-q{opacity:.7!important;transform:scale(.85);pointer-events:auto}}';
     D.head.appendChild(qs);
     /* 심인 광고면은 종이가 밝아서 ？가 묻힘 → 먹색으로 또렷하게 */
-    if (page === 'seek') { var qx = D.createElement('style'); qx.textContent = '.ykg-q{opacity:1!important;width:25px!important;height:25px!important;background:#1e1913!important;color:#f1e6cc!important;border:1px solid #1e1913!important;font-size:13px!important;box-shadow:0 0 0 3px rgba(241,230,204,.9),0 2px 6px rgba(0,0,0,.35)!important}.ykg-q:before{border-color:rgba(241,230,204,.45)!important}.ykg-q:hover{background:#5a2e22!important;border-color:#5a2e22!important}'; D.head.appendChild(qx); }
+    if (page === 'seek') { var qx = D.createElement('style'); qx.textContent = '.ykg-q{width:25px!important;height:25px!important;background:#1e1913!important;color:#f1e6cc!important;border:1px solid #1e1913!important;font-size:13px!important;box-shadow:0 0 0 3px rgba(241,230,204,.9),0 2px 6px rgba(0,0,0,.35)!important}.ykg-q:before{border-color:rgba(241,230,204,.45)!important}.ykg-q:hover{background:#5a2e22!important;border-color:#5a2e22!important}'; D.head.appendChild(qx); }
     var dark = page === 'np';
     function fixedUp(e) { while (e && e !== D.body) { var p = getComputedStyle(e).position; if (p === 'fixed' || p === 'sticky') return true; e = e.parentElement; } return false; }
     function mark() {

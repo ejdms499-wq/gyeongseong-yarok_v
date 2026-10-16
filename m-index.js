@@ -45,7 +45,13 @@
       dock.appendChild(b);
     });
     D.body.appendChild(dock);
-    var hint = D.createElement('div'); hint.className = 'm-hint'; hint.innerHTML = '옆으로 밀어 <b>면을 넘기시압</b> →'; D.body.appendChild(hint);
+    var hint = D.createElement('div'); hint.className = 'm-hint'; hint.innerHTML = '옆으로 밀어 <b>넘기시압</b> →'; pages[0].appendChild(hint);
+    /* 1016 · 「보는 법」 책갈피를 고르개 맨 끗 칸으로 옮겨 담음 (따로 떠 잇지 안케) */
+    (function grabTab(n) {
+      var t = D.querySelector('.ykg-tab');
+      if (t) { if (t.parentNode !== dock) { dock.appendChild(t); dock.classList.add('has-tab'); } return; }
+      if (n < 40) setTimeout(function () { grabTab(n + 1); }, 250);
+    })(0);
 
     function go(i) { deck.scrollTo({ left: i * deck.clientWidth, behavior: 'smooth' }); }
 

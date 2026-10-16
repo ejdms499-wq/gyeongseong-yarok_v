@@ -1,0 +1,179 @@
+/* 경성야록 — 예전 오프닝 보관본: styles.css에서 떼어 보관한 스타일 */
+
+/* ---------- 시작 화면 (gate): 어둠 · 전구 · 누런 쪽지 · 벽시계 ----------
+   겹침 순서: 쪽지(1) → 전구와 어둠막(2) → 벽시계(3) → 깜빡임(4) → 전구 꺼짐(5)
+   다크 모드와 상관없이 늘 어둡고, 쪽지는 늘 누런 종이색 */
+#gate{--ny:58vh;--rx:260px;--ry:260px;--nt:40vh;
+  position:fixed;inset:0;z-index:50;overflow:hidden;background:#060504;color:#1e1b16;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(15vh + 64px) 16px 24px}
+#gate button{cursor:pointer}
+
+/* 쪽지 */
+.g-note{position:relative;z-index:1;width:min(360px,100%);padding:30px 30px 46px;text-align:center;transform:rotate(-2.2deg);
+  background:
+    radial-gradient(ellipse 40% 30% at 18% 82%,rgba(120,78,28,.22),transparent 70%),
+    radial-gradient(ellipse 30% 22% at 86% 14%,rgba(120,78,28,.18),transparent 70%),
+    linear-gradient(180deg,transparent 48.6%,rgba(90,62,24,.16) 49.6%,rgba(255,240,200,.12) 50.6%,transparent 51.6%),
+    linear-gradient(160deg,#d6c38f 0%,#c9b47c 55%,#b89e62 100%);
+  box-shadow:inset 0 0 38px rgba(80,52,16,.55),inset 0 0 6px rgba(60,38,10,.5);
+  /* 닳은 가장자리 */
+  clip-path:polygon(0% 2%,6% 0%,14% 1.2%,23% .2%,31% 1.6%,44% .4%,55% 1.4%,63% 0%,74% 1.1%,86% .2%,94% 1.5%,100% .6%,99.2% 12%,100% 24%,98.9% 37%,99.8% 51%,98.8% 63%,100% 77%,99.1% 89%,99.7% 98.6%,91% 100%,82% 98.8%,70% 100%,58% 98.9%,47% 99.8%,36% 98.7%,24% 100%,13% 98.9%,4% 99.9%,.4% 97%,1.2% 86%,0% 73%,.9% 60%,.1% 47%,1.1% 34%,0% 21%,.8% 10%)}
+.g-to{margin:0 0 14px;font-size:.78rem;font-weight:700;letter-spacing:.5em;padding-left:.5em;color:#3a2f1c;border-bottom:1px solid rgba(40,30,14,.5);padding-bottom:10px}
+.g-msg{margin:0 0 26px;font-size:.95rem;line-height:1.85;color:#241d12;letter-spacing:.02em;text-shadow:0 0 .4px rgba(20,14,6,.7)}
+
+/* '호외 받기' 딱지 + 붉은 號外 도장 */
+.g-ticket{position:relative;display:inline-block;border:0;padding:15px 40px 15px 34px;margin:0 0 4px;color:#1a150d;transform:rotate(1.6deg);
+  background:linear-gradient(170deg,#e0cf9c,#cdb77f 70%,#bfa56c);
+  clip-path:polygon(1% 4%,30% 0%,62% 3%,99% 0%,100% 50%,98.5% 97%,66% 100%,34% 96.5%,0% 100%,1.5% 52%);
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.45));transition:transform .35s ease,filter .35s ease}
+.tk-ko{font-size:1.25rem;font-weight:900;letter-spacing:.32em;padding-left:.32em}
+.tk-seal{position:absolute;right:4px;top:50%;margin-top:-17px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  border:2px solid #a3261b;border-radius:3px;color:#a3261b;font-size:.72rem;font-weight:900;line-height:1;writing-mode:vertical-rl;letter-spacing:.05em;
+  transform:rotate(-12deg);opacity:.88;mix-blend-mode:multiply;filter:url(#inkbleed)}
+.g-ticket:hover,.g-ticket:focus-visible{transform:translateY(-5px) rotate(-.6deg) scale(1.03);filter:drop-shadow(0 9px 7px rgba(0,0,0,.55))}
+.g-ticket:focus-visible{outline:2px solid #a3261b;outline-offset:4px}
+
+/* '소리 없이 보기': 쪽지 구석 연필 글씨 */
+.g-pencil{position:absolute;right:10px;bottom:2px;border:0;background:none;padding:12px 10px;min-height:44px;
+  font-family:"Nanum Pen Script",var(--serif);font-size:1.3rem;line-height:1;color:#4d4b46;opacity:.85;transform:rotate(-5deg);
+  text-decoration:underline;text-decoration-color:rgba(77,75,70,.45);text-underline-offset:4px}
+.g-pencil:hover,.g-pencil:focus-visible{opacity:1;color:#2d2b27}
+
+/* 전구 + 어둠막 (위쪽 가운데를 축으로 같이 흔들림) */
+.g-lamp{position:absolute;left:50%;top:0;width:300vmax;height:220vh;margin-left:-150vmax;z-index:2;pointer-events:none;transform-origin:50% 0;animation:gSway 9s ease-in-out infinite alternate}
+.g-dark{position:absolute;inset:0;transition:opacity .7s ease}
+.g-dark.a{background:radial-gradient(ellipse var(--rx) var(--ry) at 50% var(--ny),rgba(6,5,4,0) 0%,rgba(6,5,4,.2) 50%,rgba(6,5,4,.86) 82%,rgba(6,5,4,.975) 100%)}
+.g-dark.b{opacity:0;background:radial-gradient(ellipse calc(var(--rx) * 1.3) calc(var(--ry) * 1.3) at 50% var(--ny),rgba(6,5,4,0) 0%,rgba(6,5,4,.08) 50%,rgba(6,5,4,.78) 82%,rgba(6,5,4,.95) 100%)}
+#gate.bright .g-dark.a{opacity:0}
+#gate.bright .g-dark.b{opacity:1}
+/* 전구에서 쪽지로 떨어지는 옅은 빛줄기 */
+.g-beam{position:absolute;left:50%;top:calc(15vh + 40px);width:calc(var(--rx) * 1.25);height:calc(var(--nt) - 15vh);transform:translateX(-50%);
+  background:linear-gradient(180deg,rgba(255,206,130,.07),rgba(255,206,130,.035));clip-path:polygon(46% 0,54% 0,100% 100%,0 100%);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 35%,#000 65%,transparent);mask-image:linear-gradient(90deg,transparent,#000 35%,#000 65%,transparent);
+  filter:blur(6px);mix-blend-mode:screen;transition:opacity .7s}
+#gate.bright .g-beam{background:linear-gradient(180deg,rgba(255,206,130,.12),rgba(255,206,130,.05))}
+.g-bulb{position:absolute;left:50%;top:0}
+.g-bulb .cord{position:absolute;left:-1px;top:0;width:2px;height:15vh;background:linear-gradient(#000,#2b2419)}
+.g-bulb .cap{position:absolute;left:-8px;top:15vh;width:16px;height:14px;border-radius:2px 2px 3px 3px;background:linear-gradient(90deg,#2a2218,#6b5a3e 45%,#2a2218)}
+.g-bulb .glass{position:absolute;left:-15px;top:calc(15vh + 12px);width:30px;height:40px;border-radius:50% 50% 48% 48% / 42% 42% 58% 58%;
+  background:radial-gradient(circle at 50% 58%,#fff6d8 0%,#ffcf7a 30%,rgba(214,140,50,.75) 62%,rgba(120,70,20,.35) 100%);
+  box-shadow:0 0 18px 6px rgba(255,190,100,.45),0 0 60px 20px rgba(255,170,80,.16);animation:gFlkGlass 11.3s infinite}
+.g-bulb .halo{position:absolute;left:-140px;top:calc(15vh - 110px);width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,196,110,.20),rgba(255,196,110,0) 65%);mix-blend-mode:screen;transition:transform .7s}
+#gate.bright .g-bulb .halo{transform:scale(1.35)}
+#gate.bright .g-bulb .glass{filter:brightness(1.18)}
+@keyframes gSway{from{transform:rotate(-2.2deg)}to{transform:rotate(2.2deg)}}
+
+/* 가끔 꺼질 듯 깜빡임 (화면 전체가 잠깐 어두워짐) */
+.g-flick{position:absolute;inset:0;z-index:4;pointer-events:none;background:#000;opacity:0;animation:gFlk 11.3s infinite}
+@keyframes gFlk{0%,88%,100%{opacity:0}88.6%{opacity:.55}89.1%{opacity:.08}89.8%{opacity:.72}90.6%{opacity:.1}91.4%{opacity:0}96%{opacity:0}96.4%{opacity:.35}96.9%{opacity:0}}
+@keyframes gFlkGlass{0%,88%,100%{filter:none}88.6%{filter:brightness(.45)}89.1%{filter:none}89.8%{filter:brightness(.3)}90.6%{filter:brightness(.9)}91.4%{filter:none}96.4%{filter:brightness(.6)}96.9%{filter:none}}
+
+/* 어둠 속 벽시계 */
+.g-clock{position:absolute;left:clamp(14px,4vw,48px);bottom:calc(clamp(14px,5vh,48px) + env(safe-area-inset-bottom,0px));z-index:3;width:clamp(64px,9vw,112px);pointer-events:none;
+  filter:brightness(.34) sepia(.35) drop-shadow(0 0 10px rgba(0,0,0,.8));opacity:.9}
+.g-clock svg{display:block;width:100%;height:auto}
+.g-clock .gc-h,.g-clock .gc-m,.g-clock .gc-s{transform-box:view-box;transform-origin:60px 60px}
+.g-clock .gc-h{transform:rotate(359.5deg)}
+.g-clock .gc-m{transform:rotate(354deg)}
+.g-clock .gc-s{animation:gSec 60s steps(60) infinite}
+@keyframes gSec{to{transform:rotate(360deg)}}
+/* 누르면 분침이 12시로 '딱' */
+#gate.noon .gc-m{transform:rotate(360deg);transition:transform .14s cubic-bezier(.3,1.9,.6,1)}
+#gate.noon .gc-h{transform:rotate(360deg);transition:transform .14s ease-out}
+
+/* 전구가 꺼지면 완전한 암흑 */
+.g-off{position:absolute;inset:0;z-index:5;pointer-events:none;background:#000;opacity:0;transition:opacity .08s}
+#gate.off .g-off{opacity:1}
+#gate.off,#gate.noon{pointer-events:none}
+
+@media (max-width:480px){
+  #gate{padding-top:calc(13vh + 60px)}
+  .g-note{padding:26px 22px 44px}
+  .g-msg{font-size:.9rem}
+}
+@media (prefers-reduced-motion:reduce){
+  .g-lamp,.g-flick,.g-bulb .glass,.g-clock .gc-s{animation:none!important}
+  .g-off{transition:opacity .5s}
+}
+
+
+/* =========================================================
+   오프닝
+   ========================================================= */
+#opening{position:fixed;inset:0;z-index:40;background:#050403;overflow:hidden;user-select:none;-webkit-user-select:none}
+#opening.op-shake{animation:opShake .38s}
+@keyframes opShake{25%{transform:translate(-2px,1px)}60%{transform:translate(2px,-1px)}}
+.op-layer{position:absolute;inset:0;pointer-events:none}
+.op-p{position:absolute;left:0;top:0;background-repeat:no-repeat;box-shadow:0 12px 34px rgba(0,0,0,.7);will-change:transform,opacity}
+.op-light{position:absolute;left:-150vmax;top:-150vmax;width:300vmax;height:300vmax;z-index:5;pointer-events:none;mix-blend-mode:multiply;will-change:transform;
+  background:radial-gradient(circle 42vmax at 50% 50%,#fffaf0 0%,#f2e6cc 36%,#9a8664 62%,#0b0907 100%)}
+.op-light.off{background:#000}
+/* 2026 ─ ─ 1924 */
+.op-line{position:absolute;inset:0;z-index:2;opacity:0;transition:opacity .5s}
+.op-line.on{opacity:1}
+.op-track{position:absolute;left:0;top:46%;width:100%;height:0;transition:transform 1.3s cubic-bezier(.6,0,.3,1)}
+.op-y{position:absolute;top:0;translate:-50% -50%;font-weight:900;font-size:clamp(46px,7.4vw,96px);letter-spacing:.04em;color:#e6d6ae;opacity:0;white-space:nowrap;
+  text-shadow:0 0 3px rgba(233,225,205,.45);filter:url(#inkbleed2)}
+.op-y.y0{left:50%}.op-y.y1{left:84%}
+.op-y.on{opacity:1;animation:opPress .34s cubic-bezier(.3,1.6,.5,1)}
+.op-y.fade{opacity:.25;filter:blur(3px);transition:opacity .9s,filter .9s}
+@keyframes opPress{0%{opacity:0;scale:1.5;filter:blur(3px)}60%{opacity:1;scale:.97}100%{scale:1}}
+.op-path{position:absolute;top:0;left:calc(50% + 1.5em);right:calc(16% + 1.5em);border-top:3px dotted #cbb88c;transform-origin:0 0;transform:scaleX(0);font-size:clamp(46px,7.4vw,96px);transition:transform 1.5s cubic-bezier(.5,0,.3,1)}
+.op-path.on{transform:scaleX(1)}
+.op-cap{position:absolute;left:0;right:0;top:calc(46% + clamp(56px,7.5vw,100px));margin:0;text-align:center;font-size:clamp(13px,1.5vw,17px);letter-spacing:.14em;color:#d7c7a0;padding:0 16px}
+.op-cap i{font-style:normal;opacity:0;transition:opacity .2s}
+.op-cap i.on{opacity:1}
+/* 낡은 벽시계 문자판 */
+.op-dial{position:absolute;left:50%;top:46%;width:min(64vmin,480px);aspect-ratio:1;translate:-50% -50%;z-index:3;opacity:0;scale:1.6;transition:opacity .7s,scale .9s cubic-bezier(.2,.8,.2,1)}
+.op-dial.on{opacity:1;scale:1}
+.op-dial svg{display:block;width:100%;height:100%;overflow:visible}
+.op-hand{transform-box:view-box;transform-origin:200px 200px}
+.op-year{position:absolute;left:50%;top:67%;translate:-50% -50%;font-weight:900;font-size:min(6vmin,44px);letter-spacing:.06em;color:#211a10;white-space:nowrap;filter:url(#inkbleed2)}
+.op-year.flip{animation:opPress .3s cubic-bezier(.3,1.6,.5,1)}
+/* 號外 도장 */
+#opStamp{position:absolute;left:50%;top:46%;z-index:4;translate:-50% -50%;margin:0;writing-mode:vertical-rl;font-weight:900;font-size:clamp(78px,15vmin,150px);line-height:1;letter-spacing:.06em;
+  color:#b3261b;border:.07em solid #b3261b;padding:.12em .08em;opacity:0;transform:rotate(-8deg) scale(2.4);filter:url(#inkbleed2);
+  -webkit-mask-image:var(--grain);mask-image:var(--grain);-webkit-mask-size:140px;mask-size:140px;text-shadow:0 0 1px #b3261b}
+#opStamp.hit{animation:stampHit .2s cubic-bezier(.5,0,.8,1) forwards}
+@keyframes stampHit{to{opacity:.95;transform:rotate(-8deg) scale(1)}}
+
+/* =========================================================
+   건너뛰기: 호외 방울 + 종이 꼬리표
+   ========================================================= */
+#skipWrap{position:fixed;right:clamp(12px,3vw,36px);top:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));width:132px;z-index:48;pointer-events:none;
+  transform:translateY(-110%);transform-origin:50% 0;transition:transform 1.3s cubic-bezier(.3,1.2,.5,1);animation:skSway 5.5s ease-in-out infinite alternate}
+#skipWrap.down{transform:none}
+#skipWrap.up{transform:translateY(-118%);transition:transform .9s cubic-bezier(.6,0,.9,.5)}
+@keyframes skSway{from{rotate:-.7deg}to{rotate:.7deg}}
+.sk-cord{position:absolute;left:50%;top:0;bottom:118px;width:1.6px;margin-left:-.8px;background:linear-gradient(#0a0806,#5a554c 80%,#8a7448)}
+#skipBell{position:absolute;left:50%;bottom:0;translate:-50% 0;pointer-events:auto;border:0;background:none;padding:0 6px;min-width:108px;min-height:48px;
+  display:flex;flex-direction:column;align-items:center;cursor:pointer;color:#17120a;-webkit-tap-highlight-color:transparent}
+#skipBell:focus-visible{outline:2px solid #e6c878;outline-offset:6px;border-radius:6px}
+.sk-bell{position:relative;width:34px;height:34px;border-radius:50% 50% 44% 44%/58% 58% 42% 42%;transform-origin:50% -6px;
+  background:radial-gradient(circle at 35% 30%,#fff1c2 0%,#e0b45e 22%,#9c6f27 60%,#4a3310 100%);
+  box-shadow:0 0 14px 4px rgba(255,200,110,.28),0 0 40px 12px rgba(255,180,90,.10),inset 0 -3px 5px rgba(0,0,0,.45);animation:skBell 3.3s ease-in-out infinite}
+.sk-bell::before{content:"";position:absolute;left:50%;top:-7px;width:10px;height:8px;margin-left:-5px;border:2px solid #8a6a2e;border-bottom:0;border-radius:6px 6px 0 0}
+.sk-bell i{position:absolute;left:50%;bottom:-4px;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:#2a1d0a;box-shadow:inset 1px 1px 2px rgba(255,220,150,.4)}
+@keyframes skBell{0%,100%{rotate:-5deg}50%{rotate:5deg}}
+.sk-tag{position:relative;margin-top:10px;padding:13px 12px 10px;min-width:104px;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.15;text-align:center;
+  background:linear-gradient(170deg,#e3d2a0,#d2bd84 60%,#bfa468);transform-origin:50% -10px;transition:transform .35s ease;
+  clip-path:polygon(50% 0,100% 12%,98% 55%,100% 100%,62% 98%,30% 100%,0 99%,2% 50%,0 12%);filter:drop-shadow(0 3px 3px rgba(0,0,0,.6));animation:skTag 3.3s ease-in-out infinite}
+.sk-tag::before{content:"";position:absolute;left:50%;top:4px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#2b2216;box-shadow:0 0 0 2px #b59b62}
+.sk-tag em{font-style:normal;font-weight:900;font-size:12px;letter-spacing:.32em;padding-left:.32em;color:#a3261b}
+.sk-tag b{font-size:20px;font-weight:900;letter-spacing:.04em;color:#120d06}
+.sk-tag small{font-size:12px;font-weight:700;color:#3a2f1c;letter-spacing:.04em}
+@keyframes skTag{0%,100%{rotate:3deg}50%{rotate:-3deg}}
+#skipBell:hover .sk-bell,#skipBell:focus-visible .sk-bell{animation:skTrem .07s linear infinite;box-shadow:0 0 22px 8px rgba(255,210,120,.5),0 0 60px 20px rgba(255,180,90,.2),inset 0 -3px 5px rgba(0,0,0,.45)}
+#skipBell:hover .sk-tag,#skipBell:focus-visible .sk-tag{transform:translateY(-6px) rotate(-3deg)}
+#skipBell:hover .sk-tag b,#skipBell:focus-visible .sk-tag b{animation:skInk .9s ease-out}
+@keyframes skTrem{0%{rotate:-3deg}50%{rotate:3deg}100%{rotate:-3deg}}
+@keyframes skInk{0%{text-shadow:0 0 0 #120d06}35%{text-shadow:0 0 6px rgba(18,13,6,.9),0 1px 2px #120d06;letter-spacing:.08em}100%{text-shadow:0 0 .4px #120d06}}
+#skipBell.ring .sk-bell{animation:skRing .7s ease-in-out}
+@keyframes skRing{0%{rotate:0}15%{rotate:-38deg}35%{rotate:32deg}55%{rotate:-22deg}75%{rotate:12deg}100%{rotate:0}}
+#skipBell.ring .sk-tag.drop{animation:skDrop .8s cubic-bezier(.5,0,.9,.6) forwards}
+@keyframes skDrop{0%{transform:none}20%{transform:translateY(-4px) rotate(-8deg)}100%{transform:translateY(70vh) rotate(38deg);opacity:0}}
+.sk-hint{position:absolute;right:-4px;bottom:-40px;margin:0;white-space:nowrap;font-family:"Nanum Pen Script",var(--serif);font-size:19px;color:#e2d2a8;opacity:0;filter:blur(3px);transition:opacity 1s,filter 1s;text-shadow:0 1px 3px #000}
+.sk-hint.show{opacity:.92;filter:blur(0)}
+@media (max-width:600px){#skipWrap{width:118px}.sk-hint{font-size:16px}}
+

@@ -79,7 +79,15 @@
   html body .hogoe-tab img{width:30px!important;height:30px!important}
   html body .hogoe-tab .ht-text,html body .hogoe-tab .ht-label{display:none!important}
   html body .bgm-toggle{right:12px!important;bottom:calc(10px + env(safe-area-inset-bottom))!important;width:40px!important;height:40px!important;z-index:70!important}
-  html body .ykg-tab{left:auto!important;top:auto!important;bottom:calc(58px + env(safe-area-inset-bottom))!important;right:10px!important;transform:scale(.72)!important;transform-origin:100% 100%}
+  /* 1016 · 「보는 법」도 아래 한 줄 단추 칸으로 (글 우에 걸려 잇지 안케) · 「숨은 장치」 쪽지는 폰에선 띄우지 안음 */
+  html body .ykg-tab{left:auto!important;top:auto!important;right:108px!important;bottom:calc(10px + env(safe-area-inset-bottom))!important;transform:none!important;animation:none!important;clip-path:none!important;width:44px!important;height:38px!important;padding:0!important;gap:1px!important;justify-content:center;z-index:70!important;
+    background:#2a2318!important;border:1px solid #6b5a40!important;color:#e7dbc2!important;box-shadow:0 4px 10px -4px rgba(0,0,0,.5)!important}
+  html body .ykg-tab:before,html body .ykg-tab:after{display:none!important}
+  html body .ykg-tab>i:first-child{display:none}
+  html body .ykg-tab b{flex-direction:row!important;font-size:11px;letter-spacing:0}
+  html body .ykg-tab .ykg-cnt{font-size:9px!important;margin:0!important}
+  html body .ykg-book{left:8px!important;right:8px!important;width:auto!important;top:auto!important;bottom:calc(58px + env(safe-area-inset-bottom))!important;max-height:62vh!important}
+  html body .ykg-toast{display:none!important}
   html body:after{content:"";position:fixed;left:0;right:0;bottom:0;height:calc(60px + env(safe-area-inset-bottom));background:linear-gradient(rgba(231,219,194,0),rgba(231,219,194,.92) 45%);z-index:65;pointer-events:none}
   html body .page-foot{padding-bottom:90px!important}
   html body .co-grid{display:block!important}

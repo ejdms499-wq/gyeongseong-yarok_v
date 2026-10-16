@@ -94,6 +94,7 @@
     var mark = function () {
       var o = get(); if (o[here[0]]) return;
       o[here[0]] = 1; put(o);
+      try { W.dispatchEvent(new CustomEvent('yk:read', { detail: here[0] })); } catch (e) {}   /* 1014 · 독자 입장 시 錢 적립 (yk-auth.js) */
       var n = count();
       if (n >= CASES.length) tel('「' + here[1] + '」까지, <b>네 사건을 다 읽엇소.</b><br>본지로 도라가면 편집국에서 보낸 전보가 와 잇소.', '<span class="ykr-dots" style="color:#1e1913">' + dots() + '</span><a href="../index.html">본지로 →</a>', 0);
       else tel('「' + here[1] + '」 긔록을 끗까지 읽엇소. 네 사건 중 <b>' + NUM[n - 1] + '</b>.<br>넷을 다 읽으면 <b>편집국 출입 암호</b>를 보내 드리오.', '<span class="ykr-dots" style="color:#1e1913">' + dots() + '</span><span>' + n + ' / 4</span>', 9000);

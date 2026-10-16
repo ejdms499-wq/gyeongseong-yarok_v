@@ -142,8 +142,8 @@
       var a = ARTS[cur];
       $$('button', tl).forEach(function (b, i) { b.classList.toggle('active', i === cur); });
       tl.style.setProperty('--prog', (cur / (N - 1) * (100 - 100 / N)) + '%');
-      var news = '<div class="news26" aria-label="2026년 뉴스로 다시 쓴 기사"><div class="n26-bar"><b>경성야록</b><span>사회</span><span>사건</span><span>아카이브</span></div><div class="n26-body"><span class="n26-tag">아카이브 단독</span><h4>' + a.title + '</h4><p class="n26-meta">경성야록 사회부 · 원 보도 ' + a.paper + ' ' + a.date + ' · 2026년 다시 씀</p>' +
-        '<p class="n26-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '<div class="n26-keys">' + a.keys.map(function (k) { return '<span>#' + k + '</span>'; }).join('') + '</div><p class="n26-note">※ 1937년 ' + a.paper + ' 원문을 바탕으로 오늘의 기사 형식으로 다시 쓴 것입니다.</p></div></div>';
+      var news = window.ykNews26 ? window.ykNews26({ a: a, arts: ARTS, cur: cur, img: IMG + 'scan/' + a.img, paper: a.paper, sec: '사회', sub: '사건·사고' }) : ('<div class="news26" aria-label="2026년 뉴스로 다시 쓴 기사"><div class="n26-bar"><b>경성야록</b><span>사회</span><span>사건</span><span>아카이브</span></div><div class="n26-body"><span class="n26-tag">아카이브 단독</span><h4>' + a.title + '</h4><p class="n26-meta">경성야록 사회부 · 원 보도 ' + a.paper + ' ' + a.date + ' · 2026년 다시 씀</p>' +
+        '<p class="n26-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '<div class="n26-keys">' + a.keys.map(function (k) { return '<span>#' + k + '</span>'; }).join('') + '</div><p class="n26-note">※ 1937년 ' + a.paper + ' 원문을 바탕으로 오늘의 기사 형식으로 다시 쓴 것입니다.</p></div></div>');
       book.innerHTML =
         '<div class="page left"><div class="page-head"><strong>' + a.paper + '</strong><span>' + H('소화 십이 년 원문판', '1937년 원문판') + '</span><em>' + H(a.d[0], a.d[1]) + '</em></div>' +
         '<div class="page-title"><span class="wm" aria-hidden="true">原文記事</span><h3>' + H('원문 긔사', '원문 기사') + '</h3><small>' + H(a.paper + ' 소화 십이 년 ' + a.d[0] + ' 보도', a.paper + ' 1937년 ' + a.d[1] + ' 보도') + '</small></div>' +
@@ -169,6 +169,7 @@
     function go(i) { if (i < 0 || i >= N || i === cur) return; cur = i; tab = 0; draw(true); play('sfxWhoosh'); }
     tl.addEventListener('click', function (e) { var b = e.target.closest('button[data-i]'); if (b) go(+b.dataset.i); });
     book.parentNode.addEventListener('click', function (e) {
+      var rl = e.target.closest('.n26-rel a[data-i]'); if (rl) { e.preventDefault(); go(+rl.dataset.i); setCmp(0); return; }
       if (e.target.closest('.book-arrow.left')) go(cur - 1);
       else if (e.target.closest('.book-arrow.right')) go(cur + 1);
       var sw = e.target.closest('.plate-switch button');
@@ -207,7 +208,7 @@
         b.classList.add('seen'); seen[i] = 1;
         slip.classList.remove('show'); void slip.offsetWidth;
         slip.innerHTML = '<p class="sl-h">任命狀</p><p class="sl-to">' + H('某 殿', '아무개 귀하') + '</p><p class="sl-b">' + H('독립이 되는 날,<br>그대를 <b>' + b.dataset.post + '</b>에 임함.', '독립이 되는 날,<br>그대를 <b>' + b.dataset.postko + '</b>에 임명한다.') + '</p><p class="sl-f">' + H('大元', '대원') + '</p><span class="sl-void" aria-hidden="true">' + H('無效', '무효') + '</span>';
-        slip.classList.add('show'); play('sfxBell');
+        slip.classList.add('show');
         if (Object.keys(seen).length >= 5) sec.classList.add('all');
       });
     });
@@ -377,7 +378,7 @@
         '</div>';
       if (s.au) { au.src = AUD + s.au; au.currentTime = 0; var p = au.play(); if (p && p.catch) p.catch(function () {}); pbtn.disabled = false; }
       else { au.pause(); au.removeAttribute('src'); pbtn.disabled = true; tm.textContent = '녹음 없음 · 지면만 남음'; trk.style.width = '0'; wave(0); }
-      play('sfxBell');
+
     }
     var gap = -1;
     function between() {

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<title>경성야록 — 어느 판으로 읽으시겠소</title>
+<link rel="icon" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@600;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<!--
+  경성야록 · 판 고르기 (1014)
+  - 오프닝이 끝나면 여긔로 옴 → 讀者版(이야기 그대로) / 敎室版(수업 모드 · 견습 긔자)
+  - 고른 판은 localStorage 'yk-class' 로 남김 (1 = 교실판) · 본지로는 opening 이 넘겨준 #press / #night 를 그대로 이어 감
+-->
+<style>
+:root{--ink:#1d1813;--paper:#efe7d6;--seal:#b0261b;--my:"Nanum Myeongjo","Noto Serif KR","Batang",serif;--sa:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;background:#120e0b}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 16px 30px;color:var(--paper);font-family:var(--my);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background:radial-gradient(ellipse 60% 50% at 50% 38%,rgba(255,200,120,.12),transparent 70%),linear-gradient(rgba(14,10,8,.72),rgba(14,10,8,.9)),url(assets/mission/mode.jpg) center/cover fixed,#120e0b}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.65));z-index:0}
+main{position:relative;z-index:1;width:min(1040px,100%);opacity:0;transform:translateY(10px);animation:in 1.1s .15s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes in{to{opacity:1;transform:none}}
+.k{text-align:center;font:500 11px/1 var(--sa);letter-spacing:.55em;color:rgba(239,231,214,.55)}
+h1{margin:16px 0 8px;text-align:center;font:800 clamp(26px,3.6vw,40px)/1.35 var(--my);letter-spacing:.03em;word-break:keep-all}
+h1 em{font-style:normal;color:#e6a093}
+.sub{text-align:center;font:400 14px/1.8 var(--sa);color:rgba(239,231,214,.66);word-break:keep-all}
+.eds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,3vw,40px);margin-top:clamp(28px,4vw,46px)}
+.ed{all:unset;box-sizing:border-box;position:relative;display:flex;flex-direction:column;cursor:pointer;color:var(--ink);padding:26px 28px 22px;min-height:340px;
+  background:linear-gradient(rgba(246,240,226,.35),rgba(246,240,226,.35)),url(assets/mission/paper.jpg) center/cover,#efe7d6;
+  box-shadow:0 2px 0 rgba(0,0,0,.25),0 24px 50px rgba(0,0,0,.55);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.ed:nth-child(1){transform:rotate(-1.4deg)}.ed:nth-child(2){transform:rotate(1.1deg)}
+.ed:after{content:"";position:absolute;inset:9px;border:1px solid rgba(29,24,19,.32);pointer-events:none}
+.ed:hover,.ed:focus-visible{transform:rotate(0) translateY(-8px);box-shadow:0 2px 0 rgba(0,0,0,.25),0 34px 70px rgba(0,0,0,.65)}
+.ed:focus-visible{outline:2px solid #e6a093;outline-offset:6px}
+.ed .top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px double var(--ink);padding-bottom:10px}
+.ed .top small{font:500 10.5px/1 var(--sa);letter-spacing:.3em;color:#6b6257}
+.ed .hj{font:900 clamp(38px,4.6vw,52px)/1 "Noto Serif KR",serif;letter-spacing:.12em}
+.ed .ko{margin-top:4px;font:800 14px/1 var(--my);letter-spacing:.5em;color:var(--seal)}
+.ed h2{margin-top:18px;font:800 clamp(18px,1.9vw,21px)/1.55 var(--my);word-break:keep-all}
+.ed ul{list-style:none;margin-top:14px;border-top:1px solid rgba(29,24,19,.25)}
+.ed li{display:flex;gap:10px;padding:8px 0;border-bottom:1px dotted rgba(29,24,19,.3);font:400 13.5px/1.6 var(--sa);color:#3e352c;word-break:keep-all}
+.ed li b{flex:none;font:800 12px/1.6 var(--my);color:var(--seal);letter-spacing:.06em}
+.ed .go{margin-top:auto;padding-top:18px;display:flex;justify-content:space-between;align-items:center;font:700 14px/1 var(--sa);letter-spacing:.06em}
+.ed .go i{font-style:normal;display:inline-block;transition:transform .3s}
+.ed:hover .go i,.ed:focus-visible .go i{transform:translateX(6px)}
+.ed .for{font:500 11.5px/1 var(--sa);color:#6b6257;letter-spacing:.04em}
+.ed.cls{background:linear-gradient(rgba(29,24,19,.0),rgba(29,24,19,0)),url(assets/mission/paper.jpg) center/cover,#e9dfc8}
+.ed .pick{position:absolute;right:22px;top:58px;display:grid;place-items:center;width:84px;height:84px;border:3px double var(--seal);border-radius:50%;color:var(--seal);font:900 26px/1 "Noto Serif KR",serif;transform:rotate(-14deg) scale(1.6);opacity:0;transition:opacity .25s,transform .35s cubic-bezier(.2,1.5,.4,1)}
+.ed.on .pick{opacity:1;transform:rotate(-14deg) scale(1)}
+.foot{margin-top:30px;text-align:center;font:400 12px/1.7 var(--sa);color:rgba(239,231,214,.5)}
+.foot a{color:rgba(239,231,214,.75)}
+#veil{position:fixed;inset:0;background:#0d0a08;opacity:0;pointer-events:none;transition:opacity .5s ease;z-index:5}
+#veil.on{opacity:1}
+@media (max-width:760px){.eds{grid-template-columns:1fr}.ed{min-height:0}.ed:nth-child(n){transform:none}body{justify-content:flex-start}}
+@media (prefers-reduced-motion:reduce){main{animation:none;opacity:1;transform:none}.ed,.ed .pick{transition:none}}
+</style>
+</head>
+<body>
+<main>
+  <p class="k">京 城 野 錄 · 讀 法</p>
+  <h1>오늘 밤, <em>어느 판</em>으로 읽으시겠소?</h1>
+  <p class="sub">같은 지면이오. 혼자 사건을 쫓을지, 교실에서 함께 바로잡을지 — 판만 다르오.</p>
+  <div class="eds">
+    <button type="button" class="ed rd" data-mode="0" autofocus>
+      <span class="top"><span><span class="hj" style="display:block">讀者版</span><span class="ko" style="display:block">독자판</span></span><small>京城野錄 · 本紙</small></span>
+      <h2>경성의 밤, 원문 지면을 따라 사건을 직접 풀어 가오.</h2>
+      <ul><li><b>이야기</b>사건을 처음부터 끗까지, 기획한 그대로</li><li><b>원문</b>그날의 지면을 넘기며 수수께끼를 쫏소</li><li><b>여운</b>다 읽은 뒤, 그해의 신문을 펴 보오</li></ul>
+      <span class="go"><span class="for">처음 오신 분 · 혼자 읽는 분</span><span>이 판으로 펴기 <i>→</i></span></span>
+      <span class="pick" aria-hidden="true">選</span>
+    </button>
+    <button type="button" class="ed cls" data-mode="1">
+      <span class="top"><span><span class="hj" style="display:block">敎室版</span><span class="ko" style="display:block">교실판</span></span><small>京城野錄 · 授業</small></span>
+      <h2>견습 긔자가 되어, 지난 지면을 바로잡고 호외를 찍소.</h2>
+      <ul><li><b>교열</b>빨간 연필로 확인 안 된 말 · 편견에 줄 긋기</li><li><b>조판</b>「바로잡습니다」 호외 한 장 — 인쇄해 칠판에</li><li><b>수업</b>선생님 진행 줄 · 결제 업시 모든 긔록 열림</li></ul>
+      <span class="go"><span class="for">선생님 · 학생 · 모둠 활동</span><span>이 판으로 펴기 <i>→</i></span></span>
+      <span class="pick" aria-hidden="true">選</span>
+    </button>
+  </div>
+  <p class="foot">판은 언제든 바꿀 수 잇소 — <a href="class.html">수업 안내</a> · <a href="about.html">야록 소개</a></p>
+</main>
+<div id="veil"></div>
+<script>
+(function(){
+  var h=(location.hash||'').replace('#','');
+  var NEXT='index.html#yarok='+(/^(press|night)$/.test(h)?h:'press');
+  function choose(b){
+    var m=b.getAttribute('data-mode');
+    try{ if(m==='1') localStorage.setItem('yk-class','1'); else localStorage.removeItem('yk-class'); sessionStorage.setItem('ykop-seen','1'); }catch(e){}
+    [].forEach.call(document.querySelectorAll('.ed'),function(x){ x.classList.toggle('on',x===b); x.disabled=true; });
+    setTimeout(function(){ document.getElementById('veil').classList.add('on'); },520);
+    setTimeout(function(){ location.replace(NEXT); },1050);
+  }
+  [].forEach.call(document.querySelectorAll('.ed'),function(b){ b.addEventListener('click',function(){ choose(b); }); });
+  document.addEventListener('keydown',function(e){ if(e.key==='1') choose(document.querySelector('.rd')); if(e.key==='2') choose(document.querySelector('.cls')); });
+})();
+</script>
+</body>
+</html>

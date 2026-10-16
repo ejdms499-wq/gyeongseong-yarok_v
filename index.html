@@ -275,7 +275,7 @@ if(location.hash.indexOf('#yarok=')===0)document.documentElement.classList.add('
 @media (prefers-reduced-motion:reduce){ .mol-stamp{animation:none} .tl-dot::before{transition:none} }
 </style>
 <meta charset="UTF-8">
-<script src="yk-zoom.js?v=12" data-yk-main></script>
+<script src="yk-zoom.js?v=14" data-yk-main></script>
 <script src="yk-light.js?v=3"></script><!-- 화면 배율 120% -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -753,6 +753,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .lead-body,.wide-body{grid-template-columns:1fr}
   .vhead{writing-mode:horizontal-tb;border-left:0;padding:0;font-size:26px}
   .sections{grid-template-columns:repeat(3,1fr)}.sections .idx,.sections .search-inline{display:none}
+  .sections .find2{grid-column:1/-1;border-left:0;border-top:1px solid rgba(58,49,40,.45)}.sections .find2 .search-inline{display:flex}.sections .find2>a{padding:10px 18px}
 }
 
 
@@ -2255,7 +2256,7 @@ html::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
 <link rel="stylesheet" href="nr-main.css?v=5">
 <link rel="stylesheet" href="hg-main.css?v=3">
 <link rel="stylesheet" href="ad-banner.css?v=3">
-<link rel="stylesheet" href="m-index.css?v=11">
+<link rel="stylesheet" href="m-index.css?v=12">
 
 <style id="yk-vhead-font">/* 1013 · 죽첨정 세로 제목 : 지면의 명조와 같은 결로 (따로 놀던 굵은 글꼴 → 나눔명조) */
 .front .c1 .vc,.front .c1 .vc.big,.front .c1 .vc.sub{font-family:"Nanum Myeongjo","Noto Serif KR","Batang",serif!important}
@@ -2263,6 +2264,20 @@ html::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
 .front .c1 .vc.big i{line-height:1.12}
 .front .c1 h2.vhead.gloss .vc.big{color:#2a2119}
 .front .c1 h2.vhead .vc i{transition:color .6s ease}
+
+
+
+/* 1014 · 지면 목차 끝칸: 글로 · 지도로 */
+.sections .find2{display:flex;align-items:stretch;border-left:1px solid rgba(58,49,40,.45)}
+.sections .find2>a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 16px;color:var(--ink);text-decoration:none;transition:background .3s}
+.sections .find2>a+a{border-left:1px dashed rgba(58,49,40,.35)}
+.sections .find2>a:hover{background:rgba(30,25,19,.06)}
+.sections .find2 .search-inline{margin:0;border-left:0}
+.sections .find2 .map-inline small{color:var(--seal)}
+.sections .find2 small{font-size:12.5px;letter-spacing:.1em;color:var(--fade)}
+.sections .find2>.ykg-q{top:-11px!important;bottom:auto!important;right:auto!important;left:-11px!important}
+.yk-find .yf-map{display:inline-flex;align-items:center;gap:8px;margin:10px 0 2px;font-size:13px;letter-spacing:.08em;color:#8a2a21;text-decoration:none;border-bottom:1px solid rgba(138,42,33,.4);padding-bottom:2px}
+.yk-find .yf-map:hover{border-bottom-color:#8a2a21}
 </style>
 </head>
 
@@ -2272,7 +2287,7 @@ html::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
   <div class="topbar">
     <span class="kicker"><span class="hj" data-ko="미스터리 아카이브">괴사 문고</span> · <b><span class="hj" data-ko="납량특집">납량 특집</span></b></span>
     <nav aria-label="주 메뉴">
-      <a href="#"><span class="hj l" data-ko="사건 기록">사건 긔록</span></a><a href="#"><span class="hj l" data-ko="신문 아카이브">신문 문고</span></a><a href="fair.html"><span class="hj l" data-ko="부록 박람회">부록 박람회</span></a><!-- 부록 박람회 회장 거리(fair.html)로 --><a href="newsroom.html"><span class="hj l" data-ko="편집국">편집국</span></a><!-- 야록 편집국 (AI 재구성 원고) --><a href="#"><span class="hj l" data-ko="경성야록 소개">야록 소개</span></a>
+      <a href="case-map.html"><span class="hj l" data-ko="사건 기록">사건 긔록</span></a><!-- 경성 사건 지도 --><a href="#"><span class="hj l" data-ko="신문 아카이브">신문 문고</span></a><a href="fair.html"><span class="hj l" data-ko="부록 박람회">부록 박람회</span></a><!-- 부록 박람회 회장 거리(fair.html)로 --><a href="newsroom.html"><span class="hj l" data-ko="편집국">편집국</span></a><!-- 야록 편집국 (AI 재구성 원고) --><a href="about.html"><span class="hj l" data-ko="경성야록 소개">야록 소개</span></a><a href="class.html"><span class="hj l" data-ko="수업 안내">수업 안내</span></a>
       <a href="#" class="search" aria-label="검색"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M11 11l4 4"/></svg></a>
     </nav>
   </div>
@@ -2313,7 +2328,7 @@ html::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
   <nav class="sections" id="filters" aria-label="지면 분류">
     <div class="idx"><span class="hj" data-ko="지면">지면</span><br><span class="hj" data-ko="목차">목차</span></div>
     <button aria-pressed="true" data-f="all"><b>全面</b><small>온 지면<sup data-c="all"></sup></small></button><button aria-pressed="false" data-f="사회"><b>社會</b><small>사회<sup data-c="사회"></sup></small></button><button aria-pressed="false" data-f="경제"><b>經濟</b><small>경제<sup data-c="경제"></sup></small></button><button aria-pressed="false" data-f="문화예술"><b>文化藝術</b><small>문화예술<sup data-c="문화예술"></sup></small></button>
-    <a class="search-inline" href="#"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.5"/><path d="M11 11l4 4"/></svg><small><span class="hj l" data-ko="기록 검색">긔록 차저보기</span></small></a>
+    <div class="find2"><a class="search-inline" href="#"><svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.5"/><path d="M11 11l4 4"/></svg><small><span class="hj l" data-ko="글로 찾아보기">글로 차저보기</span></small></a><a class="map-inline" href="case-map.html"><svg width="20" height="18" viewBox="0 0 20 18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M1 3.5l5.5-2 7 2.5 5.5-2v13l-5.5 2-7-2.5-5.5 2z"/><path d="M6.5 1.5v13M13.5 4v13"/><circle cx="10" cy="8" r="1.6" fill="#8a2a21" stroke="none"/></svg><small><span class="hj l" data-ko="지도로 찾아보기">지도로 차저보기</span></small></a></div><!-- 1014 · 글로(색인함) / 지도로(경성 사건 지도) -->
   </nav>
   <p class="sec-note" id="sec-note" hidden style="display:none">이 면의 긔록은 단신 띠에 니어 잇슴.</p>
 
@@ -2385,7 +2400,7 @@ html::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
         </div></div>
         <div class="text">
           <h3><span class="hj l" data-ko="황금정 &#x27;도깨비 집&#x27; 소동">황금정 '독갑이 집' 소동</span></h3>
-          <p class="desc"><span class="hj l" data-ko="깊은 밤, 보이지 않는 무언가가 대문을 두드리고 큰 소리를 냈다. 동네에는 도깨비 장난이라는 소문이 파다했다. 그 뒤로 이어진 비슷한 기사 중에는 집값을 떨어뜨리려고 몰래 돌을 던진 부동산 사기꾼의 이야기도 있다.">깁흔 밤에 보이지 안는 무엇이 대문을 두다리며 큰 소리를 내는지라, 동리에는 독갑이의 작란이라는 소문이 자자하얏더라. 그 뒤로 니어진 비슷한 긔사 중에는 집갑슬 떨어트리려고 몰래 돌을 던진 가옥 사긔한의 이약이도 잇더라.</span></p>
+          <p class="desc"><span class="hj l" data-ko="깊은 밤, 보이지 않는 무언가가 대문을 두드리고 큰 소리를 냈다. 동네에는 도깨비 장난이라는 소문이 파다했다.">깁흔 밤에 보이지 안는 무엇이 대문을 두다리며 큰 소리를 내는지라, 동리에는 독갑이의 작란이라는 소문이 자자하얏더라.</span></p>
           <div class="links"><a href="#" class="more soon"><span class="hj l" data-ko="자세히 보기">자세히 보시압</span></a></div>
         </div>
       </div>
@@ -2455,7 +2470,7 @@ html::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
         </div></div>
         <div class="text">
           <h3><span class="hj l" data-ko="조선은행 평양지점 78만 원 도난 사건">조선은행 평양지점 칠십팔만 원 도난</span></h3>
-          <p class="desc"><span class="hj l" data-ko="거액의 현금이 감쪽같이 사라져 주가 폭락까지 불러왔다.">거액의 현금이 감쪽가치 업서진바 주가 폭락까지 초래하얏다 한다.</span></p>
+          <p class="desc"><span class="hj l" data-ko="금고의 거액 현금이 감쪽같이 사라졌다고 한다.">금고의 거액 현금이 감쪽가치 업서젓다 한다.</span></p>
           <div class="links"><a href="#" class="more soon"><span class="hj l" data-ko="자세히 보기">자세히 보시압</span></a></div>
         </div>
       </div>
@@ -2522,7 +2537,7 @@ html::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
         </div></div>
         <div class="text">
           <h3><span class="hj l" data-ko="&#x27;쌀 투기왕&#x27; 반복창의 몰락">'미두왕' 반복창의 몰락</span></h3>
-          <p class="desc"><span class="hj l" data-ko="인천 쌀 거래소 중개점의 평범한 점원이 쌀 투기판에 뛰어든 지 1년 만에 40만 원을 벌어 ‘미두왕’이 됐다. 1921년 조선호텔에서 호화 결혼식을 올린 그는 2년 뒤 사기 혐의로 붙잡혔다.">인천 미두취인소 중매점의 일개 점원이 미두판에 뛰여든 지 일 년 만에 사십만 원을 모하 미두왕이 되엿더라. 대정 십 년 조선호텔에서 호화로운 혼례를 지낸 그는 이 년 후 사긔 혐의로 붓잡혓다 한다.</span></p>
+          <p class="desc"><span class="hj l" data-ko="인천 쌀 거래소 중개점의 평범한 점원이 쌀 투기판에 뛰어든 지 1년 만에 40만 원을 벌어 ‘미두왕’이 됐다. 1921년 조선호텔에서 호화 결혼식을 올린 그는 이듬해부터 재산을 잃고 사기 사건에 휘말렸다.">인천 미두취인소 중매점의 일개 점원이 미두판에 뛰여든 지 일 년 만에 사십만 원을 모하 미두왕이 되엿더라. 대정 십 년 조선호텔에서 호화로운 혼례를 지낸 그는 이듬해부터 재산을 일코 사긔 사건에 휘말렷다 한다.</span></p>
           <div class="links"><a href="#" class="more soon"><span class="hj l" data-ko="자세히 보기">자세히 보시압</span></a></div>
         </div>
       </div>
@@ -2572,7 +2587,7 @@ html::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
           </div></div>
           <div class="text">
             <h3><span class="hj l" data-ko="금관만 남았다 — 경주 금관총 유물 도난 사건">금관만 남엇다 — 경주 금관총 유물 도난</span></h3>
-            <p class="desc"><span class="hj l" data-ko="1927년 조선총독부박물관 경주분관에 도둑이 들어, 금관만 남기고 허리띠와 귀걸이 같은 순금 유물이 감쪽같이 사라졌다. 이듬해 5월 유물 보따리가 경주경찰서장 관사 대문 앞에 놓여 있었지만, 범인은 끝내 잡히지 않았다.">소화 이 년 총독부박물관 경주분관에 도적이 드러 금관만 남기고 요대와 귀거리 가튼 순금 유물이 감쪽가치 업서젓더라. 이듬해 오월에 유물 보퉁이가 경주경찰서장 관사 대문 압헤 노혀 잇섯스나 범인은 끗내 잡히지 아니하얏다 한다.</span></p>
+            <p class="desc"><span class="hj l" data-ko="1927년 조선총독부박물관 경주분관에 도둑이 들어, 금관만 남기고 허리띠 같은 순금 유물이 감쪽같이 사라졌다. 이듬해 5월 유물 보따리가 경주경찰서장 관사 대문 앞에 놓여 있었지만, 범인은 끝내 잡히지 않았다.">소화 이 년 총독부박물관 경주분관에 도적이 드러 금관만 남기고 요대 가튼 순금 유물이 감쪽가치 업서젓더라. 이듬해 오월에 유물 보퉁이가 경주경찰서장 관사 대문 압헤 노혀 잇섯스나 범인은 끗내 잡히지 아니하얏다 한다.</span></p>
             <div class="links"><a href="#" class="more soon"><span class="hj l" data-ko="자세히 보기">자세히 보시압</span></a></div>
           </div>
         </div>
@@ -3671,7 +3686,7 @@ document.querySelectorAll('.hj').forEach(el=>{
     '<div class="yf-plate"><b>긔록 차저보기</b><span>각면 긔록 색인 · 제일집 '+sino(items.length)+' 건</span><button type="button" class="yf-close">닷기 ✕</button></div>'+
     '<label class="yf-field"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.5"/><path d="M11 11l4 4"/></svg>'+
     '<input class="yf-input" type="search" placeholder="사람 · 곳 · 해 · 물건, 무엇이든 적으시오" aria-label="찾을 말"></label>'+
-    '<div class="yf-tags"><em>이를테면</em></div><p class="yf-whisper"></p><p class="yf-count" aria-live="polite"></p><div class="yf-list"></div></div>';
+    '<a class="yf-map" href="case-map.html">곳으로 찾고 싶으면 — 경성 사건 지도 →</a>'+'<div class="yf-tags"><em>이를테면</em></div><p class="yf-whisper"></p><p class="yf-count" aria-live="polite"></p><div class="yf-list"></div></div>';
   document.body.appendChild(box);
   var input=box.querySelector('.yf-input'), list=box.querySelector('.yf-list'), count=box.querySelector('.yf-count'), whisper=box.querySelector('.yf-whisper');
   ['미신','독','도난','정간','사진','경성'].forEach(function(t){ var b=document.createElement('button'); b.type='button'; b.textContent=t;
@@ -3809,7 +3824,53 @@ document.querySelectorAll('.hj').forEach(el=>{
     for(var i=0;i<KEY.length;i++) if(t.indexOf(KEY[i][0])>-1) return href(KEY[i][1]); return ''; };
 })();
 </script>
-<script src="sikjasil-egg.js?v=2"></script>
+<script id="yk-dansin-link-js">
+/* 1014 · 단신(dansin.html) 연결 — 면을 바꾸면 나오는 칸 · 단신 띠 · 지면 색인에서 열린 단신으로 바로
+   열리지 않은 사건(독갑이 집 · 평양지점 · 청양 등)은 그대로 구독 안내 */
+(function(){
+  var KEY=[['현해탄','hyeonhaetan'],['윤심덕','hyeonhaetan'],['현진건','hyeonjingeon'],['김정필','kim-jeongpil'],['독살','kim-jeongpil'],['반복창','bankbokchang'],['미두왕','bankbokchang'],['장진홍','jangjinhong'],['금관','geumgwanchong'],['보육학교','jungang-boyuk']];
+  function idOf(s){ s=String(s||'').replace(/긔/g,'기'); for(var i=0;i<KEY.length;i++) if(s.indexOf(KEY[i][0])>-1) return KEY[i][1]; return null; }
+  function url(id){ return 'dansin.html?id='+id; }
+  function nav(id){ var u=url(id); if(window.ykLightGo) window.ykLightGo(u); else location.href=u; }
+  /* 1014 · 단신은 정긔 독자만: 구독(錢) 하면 열림 (yk-paywall.js) */
+  var TITLE={'kim-jeongpil':'「독살 미인」이라 불린 피고인, 김정필','jangjinhong':'이름조차 쓰지 못한 폭탄 — 장진홍 의거','jungang-boyuk':'33인의 교장, 의혹 한가운데에 서다','bankbokchang':'한 해 만의 사십만 원 — 「미두왕」 반복창','hyeonhaetan':'현해탄, 1926년 8월 4일 새벽','hyeonjingeon':'소설가이자 사회부장, 현진건','geumgwanchong':'금관만 남았다 — 경주 금관총 유물 도난'};
+  function go(id){ if(window.ykPay) window.ykPay.gate(id, TITLE[id], function(){ nav(id); }); else nav(id); }
+  /* ① 면을 바꾸면 나오는 칸 */
+  document.querySelectorAll('#cases .alt').forEach(function(alt){
+    var h=alt.querySelector('h3'); if(!h) return;
+    var hj=h.querySelector('.hj'), id=idOf(h.textContent+' '+(hj&&hj.dataset.ko||''));
+    if(!id) return;
+    alt.querySelectorAll('a.more.soon').forEach(function(a){
+      var n=a.cloneNode(true); n.classList.remove('soon'); n.href=url(id);
+      n.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); go(id); });
+      a.parentNode.replaceChild(n,a);
+    });
+    h.style.cursor='pointer'; h.setAttribute('role','link'); h.tabIndex=0; h.title='단신 읽기';
+    h.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); go(id); });
+    h.addEventListener('keydown',function(e){ if(e.key==='Enter') go(id); });
+  });
+  /* ② 지면 색인 */
+  document.querySelectorAll('.ix-col li a').forEach(function(a){
+    var tt=a.querySelector('.tt .hj'); var id=idOf(a.textContent+' '+(tt&&tt.dataset.ko||''));
+    if(id && /#$/.test(a.getAttribute('href')||'#')){ a.href=url(id); a.addEventListener('click',function(e){ e.preventDefault(); go(id); }); }
+  });
+  /* ③ 단신 띠 (면을 고를 때마다 새로 그려짐) */
+  function band(){
+    document.querySelectorAll('.yk-dansin a').forEach(function(a){
+      if(a.dataset.dl) return; a.dataset.dl=1;
+      var id=idOf(a.textContent+' '+(a.title||''));
+      if(id){ a.href=url(id); a.classList.add('open'); a.title=(a.title||'')+' — 정긔 독자 전용'; a.addEventListener('click',function(e){ e.preventDefault(); go(id); }); }
+      else { a.classList.add('shut'); a.title=(a.title||'')+' — 아즉 실리지 못한 긔록'; }
+    });
+  }
+  var b=document.querySelector('.yk-dansin'); if(b) new MutationObserver(band).observe(b,{childList:true}); band();
+  var st=document.createElement('style');
+  st.textContent='.yk-dansin a.open{cursor:pointer}.yk-dansin a.open b{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}.yk-dansin a.shut{cursor:default;opacity:.72}';
+  document.head.appendChild(st);
+})();
+</script>
+
+<script src="sikjasil-egg.js?v=3"></script>
 <script id="yk-sohn-brush-js">
 (function () {
   var desk = document.querySelector('.c3 .visual.desk'); if (!desk) return;
@@ -3886,11 +3947,15 @@ document.querySelectorAll('.hj').forEach(el=>{
   document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.sec-btn, [data-sec], .secmore')) hardReset(); }, true);
 })();
 </script>
-<script src="m-index.js?v=4"></script>
-<script src="yk-reward.js?v=7"></script>
+<script src="m-index.js?v=5"></script>
+<script src="yk-reward.js?v=8"></script>
+<script src="yk-config.js?v=1"></script>
+<script src="yk-auth.js?v=2"></script>
+<script src="yk-class.js?v=3"></script>
+<script src="yk-paywall.js?v=2"></script>
 <script src="nr-store.js?v=1"></script>
 <script src="nr-main.js?v=5"></script>
 <script src="hg-main.js?v=3"></script>
-<script src="yk-guide.js?v=38"></script>
+<script src="yk-guide.js?v=39"></script>
 </body>
 </html>

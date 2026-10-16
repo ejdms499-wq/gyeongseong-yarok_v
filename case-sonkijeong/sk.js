@@ -125,10 +125,10 @@
       var a = ARTS[cur];
       $$('button', tl).forEach(function (b, i) { b.classList.toggle('active', i === cur); });
       tl.style.setProperty('--prog', (cur / (N - 1) * 66.667) + '%');
-      var news = '<div class="news26" aria-label="2026년 뉴스로 다시 쓴 기사"><div class="n26-bar"><b>경성야록</b><span>문화</span><span>스포츠</span><span>아카이브</span></div><div class="n26-body"><span class="n26-tag">아카이브 단독</span><h4>' + a.title + '</h4><p class="n26-meta">경성야록 문화부 · 원 보도 ' + a.paper + ' ' + a.date + ' · 2026년 다시 씀</p>' +
-        '<p class="n26-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '<div class="n26-keys">' + a.keys.map(function (k) { return '<span>#' + k + '</span>'; }).join('') + '</div><p class="n26-note">※ 1936년 ' + a.paper + ' 원문을 바탕으로 오늘의 기사 형식으로 다시 쓴 것입니다.</p></div></div>';
+      var news = window.ykNews26 ? window.ykNews26({ a: a, arts: ARTS, cur: cur, img: IMG + 'scan/' + a.img, paper: a.paper, sec: '스포츠', sub: '올림픽' }) : ('<div class="news26" aria-label="2026년 뉴스로 다시 쓴 기사"><div class="n26-bar"><b>경성야록</b><span>문화</span><span>스포츠</span><span>아카이브</span></div><div class="n26-body"><span class="n26-tag">아카이브 단독</span><h4>' + a.title + '</h4><p class="n26-meta">경성야록 문화부 · 원 보도 ' + a.paper + ' ' + a.date + ' · 2026년 다시 씀</p>' +
+        '<p class="n26-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '<div class="n26-keys">' + a.keys.map(function (k) { return '<span>#' + k + '</span>'; }).join('') + '</div><p class="n26-note">※ 1936년 ' + a.paper + ' 원문을 바탕으로 오늘의 기사 형식으로 다시 쓴 것입니다.</p></div></div>');
       book.innerHTML =
-        '<div class="page left"><div class="page-head"><strong>' + a.paper + '</strong>' + (a.paper === '동아일보' ? '<span class="src-tag da">실제 동아일보 기사</span>' : '<span class="src-tag ot">당대 다른 신문</span>') + '<span>' + H('소화 십일 년 원문판', '1936년 원문판') + '</span><em>' + H(a.d[0], a.d[1]) + '</em></div>' +
+        '<div class="page left"><div class="page-head"><strong>' + a.paper + '</strong>' + (a.paper === '동아일보' ? '<span class="src-tag da">실제 동아일보 기사</span>' : '<span class="src-tag ot">실제 ' + a.paper + ' 기사</span>') + '<span>' + H('소화 십일 년 원문판', '1936년 원문판') + '</span><em>' + H(a.d[0], a.d[1]) + '</em></div>' +
         '<div class="page-title"><span class="wm" aria-hidden="true">原文記事</span><h3>' + H('원문 긔사', '원문 기사') + '</h3><small>' + H(a.paper + ' 소화 십일 년 ' + a.d[0] + ' 보도', a.paper + ' 1936년 ' + a.d[1] + ' 보도') + '</small></div>' +
         '<div class="plate-switch"><button type="button" class="active">' + H('소화 십일 년 지면', '1936년 지면') + '</button><button type="button">2026년 뉴스</button></div>' +
         '<figure class="plate plate-cmp">' + news + '<img class="plate-scan" alt="' + a.date + ' ' + a.paper + ' 원문 지면" src="' + IMG + 'scan/' + a.img + '"><div class="plate-line"><span class="plate-handle">‹ ›</span></div><input class="plate-range" type="range" min="0" max="100" value="100" aria-label="원문 지면과 2026년 뉴스 비교"><span class="plate-hint">' + H('손잡이를 왼편으로 당기면 2026년 뉴스로 바뀌오', '손잡이를 왼쪽으로 당기면 2026년 뉴스로 바뀝니다') + '</span></figure>' +
@@ -152,6 +152,7 @@
     function go(i) { if (i < 0 || i >= N || i === cur) return; cur = i; tab = 0; draw(true); play('sfxWhoosh'); }
     tl.addEventListener('click', function (e) { var b = e.target.closest('button[data-i]'); if (b) go(+b.dataset.i); });
     book.parentNode.addEventListener('click', function (e) {
+      var rl = e.target.closest('.n26-rel a[data-i]'); if (rl) { e.preventDefault(); go(+rl.dataset.i); setCmp(0); return; }
       if (e.target.closest('.book-arrow.left')) go(cur - 1);
       else if (e.target.closest('.book-arrow.right')) go(cur + 1);
       var sw = e.target.closest('.plate-switch button');
@@ -198,7 +199,7 @@
     function show(c) { steps.forEach(function (li) { li.classList.toggle('on', c >= +li.dataset.at); }); }
     function finish() {
       if (done) return; done = true; show(1); meter.style.width = '100%';
-      sec.classList.add('printed'); play('sfxBell');
+      sec.classList.add('printed');
     }
     function move(e) {
       size(); if (done) return;
@@ -360,7 +361,7 @@
         '</div>';
       if (s.au) { au.src = AUD + s.au; au.currentTime = 0; var p = au.play(); if (p && p.catch) p.catch(function () {}); pbtn.disabled = false; }
       else { au.pause(); au.removeAttribute('src'); pbtn.disabled = true; tm.textContent = '녹음 없음 · 지면만 남음'; trk.style.width = '0'; wave(0); }
-      play('sfxBell');
+
     }
     var gap = -1;
     function between() {

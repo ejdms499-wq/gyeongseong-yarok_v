@@ -2983,3 +2983,6 @@ figure.lantern{position:relative}.lantern{overflow:hidden}
 #night .n6-stick > .bt-mark{left:50%!important;right:auto!important;top:auto!important;bottom:calc(2.6% - 4px)!important;transform:translateX(-50%)}
 #night .n6-stick > .bt-q{left:auto!important;right:22px!important;top:22px!important;bottom:auto!important}
 #night .n6-hint{visibility:hidden}
+
+/* 1016 · 1100~1500px 화면(노트북 · 125% 배율 등): 취재 도장이 축음기 버튼을 덮지 않게 한 칸 우로, 펼쳐도 화면 우를 넘지 않게 */
+@media (min-width:1100px) and (max-width:1500px){.notebook{bottom:112px!important}.notebook .nb-stamps{max-height:calc(100vh / var(--ykz, 1) - 220px);overflow-y:auto}}

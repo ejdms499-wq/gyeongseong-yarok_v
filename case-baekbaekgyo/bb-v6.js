@@ -59,7 +59,7 @@
       var li = rung(n); $('.g', li).innerHTML = H(GIVE[n]); li.classList.add('on');
       $('.sl-b', slip).innerHTML = H('독립이 이루어지는 날,<br>그대를 <b>' + POST[n] + '</b>에 임명함.', '독립이 이루어지는 날,<br>그대를 <b>' + POST[n] + '</b>에 임명한다.');
       slip.classList.remove('new'); void slip.offsetWidth; slip.classList.add('new'); slip.dataset.lv = n + 1;
-      play('sfxBell', .28); n++;
+ n++;
       if (n < GIVE.length) { label(); return; }
       wrap.classList.add('done'); btn.disabled = true;
       gv.innerHTML = H('더 바칠 것이 업소', '더 바칠 것이 없다');
@@ -223,7 +223,7 @@
       var r = fig.getBoundingClientRect();
       var x = (e.clientX - r.left) / r.width * 100, y = (e.clientY - r.top) / r.height * 100;
       if (y < 18 || y > 96) return;
-      mark(x.toFixed(2), y.toFixed(2), false); sec.classList.add('counting'); play('sfxBell', .12);
+      mark(x.toFixed(2), y.toFixed(2), false); sec.classList.add('counting');
       if (n >= 5) setTimeout(selfCount, 900);
     });
   })();

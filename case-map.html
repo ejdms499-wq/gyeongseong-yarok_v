@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<title>경성야록 — 사건 긔록 · 경성 사건 지도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@400;600;900&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<!--
+  경성야록 · 사건 긔록 = 경성 사건 지도 (1014)
+  - 바탕: 경성부관내도(1927) · 서울역사아카이브 H-TRNS-67478-785 (assets/illust/map_1927.jpg, 1386×2000)
+  - 점 자리(x,y)는 지도 원본 픽셀 기준. 경성 밖 사건은 지도 오른쪽 아래 「조선 전도」 위에 찍음
+  - 본편 네 사건은 바로 읽기, 단신은 yk-paywall.js 로 잠금 (한 장 5錢 · 월정 구독 100錢)
+  - 점을 더하려면 아래 PTS 에 한 줄 더 넣으면 됨
+-->
+<style>
+:root{--ink:#1d1813;--paper:#ebe2cf;--paper2:#e3d8c2;--rule:#3a3128;--fade:#7b7062;--seal:#8a2a21;--gold:#e4c48a;
+  --my:"Nanum Myeongjo","Noto Serif KR","Batang",serif;--se:"Noto Serif KR","Nanum Myeongjo",serif;--sa:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#2a231c}
+body{min-height:100vh;color:var(--ink);font-family:var(--my);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,#3a3027,#1d1813 70%)}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.sheet{position:relative;max-width:1320px;margin:22px auto 34px;background:var(--paper);box-shadow:0 30px 80px #000a;padding:24px clamp(14px,3vw,40px) 30px;
+  background-image:repeating-linear-gradient(0deg,rgba(60,45,30,.03) 0 1px,transparent 1px 3px),radial-gradient(ellipse at 50% 30%,#efe7d6,#e2d6bf)}
+.sheet:after{content:"";position:absolute;inset:10px;border:1px solid rgba(58,49,40,.28);pointer-events:none}
+.mast{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;border-bottom:3px double var(--rule);padding-bottom:10px;flex-wrap:wrap}
+.mast .k{font:500 11px/1 var(--sa);letter-spacing:.42em;color:var(--fade)}
+.mast h1{margin-top:8px;font:800 clamp(22px,2.6vw,30px)/1 var(--my);letter-spacing:.2em}
+.mast h1 small{font:700 14px var(--my);letter-spacing:.3em;color:var(--seal);margin-left:10px}
+.mast nav{display:flex;gap:16px;font:500 12.5px var(--sa);letter-spacing:.12em}
+.mast nav a{text-decoration:none;border-bottom:1px solid transparent}
+.mast nav a:hover{border-bottom-color:var(--ink)}
+.intro{margin:12px 0 16px;font:400 14.5px/1.8 var(--my);color:#3e352c;word-break:keep-all}
+.intro b{color:var(--seal)}
+
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:22px;align-items:start}
+/* ── 지도 ── */
+.vp{position:relative;height:min(78vh,860px);min-height:460px;overflow:hidden;background:#d9ccb2;border:1px solid var(--rule);
+  touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.vp.drag{cursor:grabbing}
+.stage{position:absolute;left:0;top:0;width:1386px;height:2000px;transform-origin:0 0;will-change:transform}
+.stage.fly{transition:transform .75s cubic-bezier(.25,.7,.2,1)}
+.stage>img{display:block;width:1386px;height:2000px;pointer-events:none;filter:sepia(.18) contrast(1.02)}
+.inset{position:absolute;left:1036px;top:1104px;width:290px;height:462px;border:2px dashed rgba(138,42,33,.55);pointer-events:none}
+.inset span{position:absolute;left:-2px;bottom:100%;transform-origin:0 100%;transform:scale(calc(1/var(--z)));white-space:nowrap;
+  background:var(--seal);color:#f3ecdc;font:500 11px/1 var(--sa);letter-spacing:.18em;padding:5px 8px}
+.pin{position:absolute;width:0;height:0;border:0;background:none;cursor:pointer;z-index:2}
+.pin i{position:absolute;left:0;top:0;transform:translate(-50%,-50%) scale(calc(1/var(--z)));transform-origin:50% 50%;
+  display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--seal);color:#f3ecdc;
+  font:800 12px/1 var(--my);box-shadow:0 0 0 2px #f3ecdc,0 3px 10px rgba(0,0,0,.45);transition:background .2s,box-shadow .2s}
+.pin.dan i{background:#f3ecdc;color:var(--seal);box-shadow:0 0 0 2px var(--seal),0 3px 10px rgba(0,0,0,.35)}
+.pin em{position:absolute;left:0;top:0;transform:translate(16px,-50%) scale(calc(1/var(--z)));transform-origin:-16px 50%;
+  white-space:nowrap;font:700 12.5px/1 var(--my);letter-spacing:.06em;color:var(--ink);background:rgba(243,236,220,.92);padding:4px 7px;
+  border:1px solid rgba(58,49,40,.35);pointer-events:none}
+.pin.l em{transform:translate(calc(-100% - 16px),-50%) scale(calc(1/var(--z)));transform-origin:calc(100% + 16px) 50%}
+.pin.far em{display:none}
+.vp.near .pin.far em{display:block}
+.pin:hover i,.pin:focus-visible i{box-shadow:0 0 0 2px #f3ecdc,0 0 0 5px var(--ink),0 3px 10px rgba(0,0,0,.45)}
+.pin.on{z-index:3}
+.pin.on i{background:var(--ink);color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 0 0 6px rgba(29,24,19,.55),0 4px 14px rgba(0,0,0,.5)}
+.pin.on em{background:var(--ink);color:var(--paper);border-color:var(--ink);display:block}
+.pin:focus{outline:none}
+.tools{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px;z-index:5}
+.tools button{width:38px;height:38px;border:1px solid var(--rule);background:rgba(243,236,220,.95);font:700 18px/1 var(--my);cursor:pointer}
+.tools button:hover{background:var(--ink);color:var(--paper)}
+.tools button.w{width:auto;padding:0 10px;font:500 12px/1 var(--sa);letter-spacing:.12em}
+.legend{position:absolute;left:10px;bottom:10px;z-index:5;display:flex;gap:14px;align-items:center;background:rgba(243,236,220,.94);border:1px solid rgba(58,49,40,.4);
+  padding:7px 11px;font:500 11.5px/1 var(--sa);letter-spacing:.08em;color:#4a4036}
+.legend b{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--seal);vertical-align:-2px;margin-right:6px;box-shadow:0 0 0 1.5px #f3ecdc}
+.legend b.d{background:#f3ecdc;box-shadow:0 0 0 1.5px var(--seal)}
+.credit{display:flex;gap:14px;align-items:flex-start;margin-top:12px;padding:12px 14px;border:1px solid var(--rule);background:rgba(243,236,220,.7)}
+.credit .ck{flex:none;font:800 12px/1 var(--my);letter-spacing:.3em;color:#f3ecdc;background:var(--ink);padding:6px 8px 6px 10px}
+.credit p{font:400 13px/1.7 var(--sa);color:#3e352c;word-break:keep-all}
+.credit p b{display:block;font-weight:700;color:var(--ink)}
+.credit p small{display:block;font-size:11.5px;color:var(--fade)}
+.mapsrc{position:absolute;right:10px;bottom:10px;z-index:5;background:rgba(243,236,220,.94);border:1px solid rgba(58,49,40,.4);padding:6px 9px;font:500 11px/1 var(--sa);letter-spacing:.06em;color:#4a4036;pointer-events:none}
+@media (max-width:520px){.mapsrc{display:none}}
+
+/* ── 오른쪽: 긔록 ── */
+.side{display:flex;flex-direction:column;gap:16px}
+.card{position:relative;background:#f3ecdc;padding:18px 18px 16px;box-shadow:0 2px 0 rgba(58,49,40,.2),0 12px 26px rgba(40,30,20,.16)}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font:500 11.5px var(--sa);letter-spacing:.14em;color:var(--fade)}
+.card .meta .sec{color:#f3ecdc;background:var(--seal);padding:3px 8px;letter-spacing:.2em}
+.card .meta .sec.dan{background:transparent;color:var(--seal);box-shadow:inset 0 0 0 1px var(--seal)}
+.card h2{margin-top:10px;font:800 20px/1.4 var(--my);letter-spacing:.02em;word-break:keep-all}
+.card .sum{margin-top:8px;font:400 14px/1.8 var(--my);color:#3e352c;word-break:keep-all}
+.tt{display:grid;grid-template-columns:1fr 1fr;margin-top:14px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.tt div{padding:10px 10px 11px}
+.tt div+div{border-left:1px solid rgba(58,49,40,.35);background:rgba(29,24,19,.04)}
+.tt small{display:block;font:500 10.5px/1 var(--sa);letter-spacing:.3em;color:var(--fade);margin-bottom:7px}
+.tt div+div small{color:var(--seal)}
+.tt p{font:700 13.5px/1.6 var(--my);word-break:keep-all}
+.tt p span{display:block;font:400 12px/1.6 var(--sa);color:#5a5046;margin-top:3px}
+.acts{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:14px}
+.acts .go{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:9px 14px;
+  font:700 13.5px var(--my);letter-spacing:.08em;text-decoration:none;cursor:pointer}
+.acts .go:hover{background:#2c241c}
+.acts .go.lock:before{content:"";width:9px;height:11px;border:1.5px solid currentColor;border-top-width:5px;border-radius:2px 2px 1px 1px;opacity:.85}
+.acts .now{font:500 12.5px var(--sa);color:var(--seal);text-decoration:none;border-bottom:1px solid rgba(138,42,33,.4)}
+.acts .now:hover{border-bottom-color:var(--seal)}
+.card .hint{font:400 13.5px/1.8 var(--my);color:#4a4036}
+.card .hint b{color:var(--seal)}
+
+.list h3{display:flex;align-items:center;gap:10px;font:800 13.5px/1 var(--my);letter-spacing:.28em;margin:2px 0 8px}
+.list h3:after{content:"";flex:1;height:1px;background:rgba(58,49,40,.35)}
+.list ol{list-style:none;border-top:1px solid var(--rule)}
+.list li{border-bottom:1px solid rgba(58,49,40,.22)}
+.list li button{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;width:100%;padding:9px 4px;border:0;background:none;text-align:left;cursor:pointer}
+.list li button:hover{background:rgba(29,24,19,.05)}
+.list li button.on{background:var(--ink);color:var(--paper)}
+.list li .n{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--seal);color:#f3ecdc;font:800 11.5px/1 var(--my)}
+.list li .n.d{background:transparent;color:var(--seal);box-shadow:inset 0 0 0 1.5px var(--seal)}
+.list li button.on .n.d{color:var(--gold);box-shadow:inset 0 0 0 1.5px var(--gold)}
+.list li .t{font:700 14px/1.35 var(--my);letter-spacing:.02em;word-break:keep-all}
+.list li .t small{display:block;font:400 11.5px/1.4 var(--sa);color:var(--fade);letter-spacing:.04em;margin-top:2px}
+.list li button.on .t small{color:#cbbfa8}
+.list li .y{font:500 11.5px var(--sa);color:var(--fade);letter-spacing:.06em}
+.list li button.on .y{color:#cbbfa8}
+.list li.nomap .n{opacity:.45}
+.list .tab{display:flex;gap:0;margin-bottom:10px;border:1px solid var(--rule)}
+.list .tab button{flex:1;padding:8px 6px;border:0;background:none;font:700 12.5px var(--my);letter-spacing:.12em;cursor:pointer}
+.list .tab button+button{border-left:1px solid var(--rule)}
+.list .tab button.on{background:var(--ink);color:var(--paper)}
+
+#vp>.ykg-q{right:auto!important;left:8px!important;top:8px!important}
+.tools>.ykg-q{top:auto!important;bottom:-30px!important;right:8px!important}
+.list .tab{position:relative}
+@media (max-width:960px){
+  .wrap{grid-template-columns:minmax(0,1fr)}
+  .vp{height:62vh;min-height:380px}
+}
+@media (max-width:520px){
+  .sheet{margin:0;padding:18px 14px 24px}
+  .mast nav{gap:12px}
+  .legend{gap:10px;font-size:10.5px}
+}
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="mast">
+    <div><p class="k">京 城 野 錄 · 事 件 記 錄</p><h1>사건 긔록<small>경성 사건 지도</small></h1></div>
+    <nav><a href="index.html">본지로</a><a href="fair.html">부록 박람회</a><a href="reader-room.html">독자의 방</a></nav>
+  </header>
+  <p class="intro">1927년 「경성부관내도」 위에 경성야록이 다룬 사건을 점으로 찍엇소. 점을 누르면 <b>그때의 자리</b>와 <b>지금(2026)의 자리</b>를 나란히 보여 드리오. 경성 밖에서 일어난 일은 지도 오른쪽 아래 「조선 전도」 위에 찍혀 잇소.</p>
+
+  <div class="wrap">
+    <div>
+      <div class="vp" id="vp" aria-label="1927년 경성부관내도 (끌어서 옮기고, 휠이나 두 손가락으로 크게 볼 수 있음)">
+        <div class="stage" id="stage">
+          <img src="assets/illust/map_1927.jpg" alt="경성부관내도 (1927)" draggable="false">
+          <div class="inset"><span>조선 전도 · 경성 밖의 사건</span></div>
+        </div>
+        <div class="tools">
+          <button id="zin" aria-label="크게">+</button>
+          <button id="zout" aria-label="작게">−</button>
+          <button id="zcity" class="w">경성</button>
+          <button id="zfar" class="w">전도</button>
+          <button id="zall" class="w">전체</button>
+        </div>
+        <div class="legend"><span><b></b>본편</span><span><b class="d"></b>단신 · 정긔 독자</span></div>
+      </div>
+      <div class="credit"><span class="ck">出處</span><p><b>지도 출처 · 「경성부관내도(京城府管內圖)」 1927년 · 서울역사아카이브 소장 (자료번호 H-TRNS-67478-785)</b>지도는 원본 그대로 쓰고, 사건 점만 경성야록이 더하엿소.<small>점의 자리는 지도 위 지명을 보고 짚은 것이라 몇 걸음 어긋날 수 잇소. 「지금」 자리는 오늘의 행정 지명에 맞춰 적은 것이오.</small></p></div>
+    </div>
+
+    <aside class="side">
+      <section class="card" id="card" aria-live="polite">
+        <p class="hint">지도의 점이나 아래 목록을 누르시오.<br><b>붉은 점</b>은 본편 네 사건, <b>테두리 점</b>은 지면에서 밀려난 단신이오.</p>
+      </section>
+      <section class="list">
+        <div class="tab" role="tablist">
+          <button class="on" data-f="all">모두</button><button data-f="main">본편</button><button data-f="dan">단신</button>
+        </div>
+        <h3>사건 목록</h3>
+        <ol id="list"></ol>
+      </section>
+    </aside>
+  </div>
+</main>
+
+<script src="dansin-data.js?v=1"></script>
+<script src="yk-config.js?v=1"></script>
+<script src="yk-auth.js?v=2"></script>
+<script src="yk-class.js?v=3"></script>
+<script src="yk-paywall.js?v=2"></script>
+<script>
+(function(){
+  'use strict';
+  /* ── 사건 자리 ──
+     x,y: 지도 원본 픽셀 / far: 조선 전도(경성 밖) 위의 점
+     then: 그때 이름 / now: 지금(2026) 자리 / q: 지금 지도에서 찾을 말 (없으면 링크 안 냄) */
+  var PTS = [
+    { id:'jk', kind:'main', n:1, name:'죽첨정', title:'죽첨정 골목의 어린 주검', year:'1933', date:'1933년 5월',
+      x:407, y:843,
+      sum:'1933년 5월 16일 아침, 죽첨정 삼정목 금화장 부근 식산은행 쓰레기 매립지에서 작은 주검 하나가 나왔소. 서대문경찰서의 수사가 시작되엇소.',
+      then:'죽첨정 삼정목', thenSub:'금화장 부근 · 식산은행 쓰레기 매립지',
+      now:'서울 서대문구 충정로3가 일대', nowSub:'지하철 충정로역 근처',
+      q:'충정로3가', link:'case-jukcheomjeong/index.html' },
+    { id:'sk', kind:'main', n:2, name:'동아일보사', title:'손기정, 지워진 가슴', year:'1936', date:'1936년 8월',
+      x:641, y:684,
+      sum:'1936년 8월, 베를린 마라톤 우승자 손기정의 사진에서 가슴의 일장긔가 지워졋소. 그 지면이 나온 곳이 세종로 동아일보사요.',
+      then:'세종로 · 동아일보사', thenSub:'광화문 네거리 모퉁이',
+      now:'서울 종로구 세종대로 152 · 일민미술관', nowSub:'1926년에 지은 동아일보 사옥 건물이 지금도 서 잇소',
+      q:'일민미술관', link:'case-sonkijeong/index.html' },
+    { id:'bb1', kind:'main', n:3, name:'하왕십리', title:'백백교, 희게 더 희게', sub:'이월 십륙일 밤', year:'1937', date:'1937년 2월 16일',
+      x:1232, y:868, out:true,
+      sum:'1937년 2월 16일 밤, 하왕십리의 한 집. 집안의 재산과 누이를 교주에게 빼앗긴 청년 유곤용이, 아버지 집에서 교주를 만낫소.',
+      then:'고양군 한지면 하왕십리', thenSub:'1927년엔 경성부 밖이라 지도에 이름이 업소 · 대강의 자리',
+      now:'서울 성동구 하왕십리동 일대', nowSub:'1936년에 경성부로 들어옴',
+      q:'하왕십리동', link:'case-baekbaekgyo/index.html' },
+    { id:'bb2', kind:'main', n:3, name:'인현정', title:'백백교, 희게 더 희게', sub:'새벽의 인현동', year:'1937', date:'1937년 2월',
+      x:852, y:792,
+      sum:'경찰이 인현동의 집을 덮쳐 이경득과 이순분을 붙잡앗소. 장부 속의 일이 그제야 열리기 시작햇소. 교주는 쉰 날 남짓 지나 양평 용문산 기슭에서 숨진 채 발견되엇소.',
+      then:'인현정', thenSub:'황금정(을지로) 남쪽',
+      now:'서울 중구 인현동', nowSub:'충무로 인쇄 골목 일대',
+      q:'중구 인현동', link:'case-baekbaekgyo/index.html' },
+    { id:'maria', kind:'main', n:4, name:'부산 초량', title:'부산 마리아 참살사건', year:'1931', date:'1931년 8월',
+      x:1199, y:1506, far:true,
+      sum:'부산 초량동 철도국 관사에서 스무 살 조선인 가정부가 숨진 채 발견되엇소. 일본인 주인들은 이름이 어렵다며 그를 「마리아」라 불럿소.',
+      then:'부산부 초량정 · 철도국 관사', thenSub:'조선 전도 위 부산',
+      now:'부산 동구 초량동', nowSub:'지금 부산역이 잇는 동네',
+      q:'부산 동구 초량동', link:'case-maria/index.html' },
+
+    { id:'kim-jeongpil', kind:'dan', n:'甲', name:'명천·청진', title:'「독살 미인」이라 불린 피고인, 김정필', year:'1924', date:'1924년',
+      x:1256, y:1202, far:true,
+      then:'함경북도 명천 → 청진 → 경성', thenSub:'조선 전도 위 함경북도',
+      now:'함경북도 (북한)', nowSub:'지금은 가 볼 수 업는 땅이오' },
+    { id:'hyeonhaetan', kind:'dan', n:'乙', name:'현해탄', title:'현해탄, 1926년 8월 4일 새벽', year:'1926', date:'1926년 8월 4일',
+      x:1222, y:1530, far:true,
+      then:'관부연락선 · 현해탄', thenSub:'부산과 시모노세키 사이 뱃길',
+      now:'대한해협 (부산 ↔ 일본 시모노세키)', nowSub:'바다 위라 주소가 업소' },
+    { id:'jangjinhong', kind:'dan', n:'丙', name:'대구', title:'이름조차 쓰지 못한 폭탄 — 장진홍 의거', year:'1927', date:'1927년',
+      x:1186, y:1466, far:true, left:true,
+      then:'대구 · 조선은행 대구지점', thenSub:'조선 전도 위 대구',
+      now:'대구 중구 중앙로 · 하나은행 자리', nowSub:'매일신문 보도 기준',
+      q:'대구 중앙로 하나은행' },
+    { id:'geumgwanchong', kind:'dan', n:'丁', name:'경주', title:'금관만 남았다 — 경주 금관총 유물 도난', year:'1927', date:'1927 – 1928',
+      x:1210, y:1470, far:true,
+      then:'경주 · 총독부박물관 경주분관', thenSub:'조선 전도 위 경주',
+      now:'경주문화원 (옛 경주박물관)', nowSub:'경상북도 경주시',
+      q:'경주문화원' },
+    { id:'bankbokchang', kind:'dan', n:'戊', name:'인천', title:'한 해 만의 사십만 원 — 「미두왕」 반복창', year:'1919', date:'1919 – 1923',
+      x:1116, y:1386, far:true,
+      then:'인천 · 미두취인소', thenSub:'조선 전도 위 인천',
+      now:'인천 중구 옛 개항장 일대', nowSub:'',
+      q:'인천 중구 개항장' },
+    { id:'hyeonjingeon', kind:'dan', n:'己', name:'사회부', title:'소설가이자 사회부장, 현진건', year:'1900–43', date:'1900 – 1943',
+      x:656, y:694, left:true,
+      then:'세종로 · 동아일보 사회부', thenSub:'손기정 사진이 나간 바로 그 편집국',
+      now:'서울 종로구 세종대로 152 · 일민미술관', nowSub:'옛 동아일보 사옥',
+      q:'일민미술관' },
+    { id:'jungang-boyuk', kind:'dan', n:'庚', name:'중앙보육학교', title:'33인의 교장, 의혹 한가운데에 서다', year:'1934', date:'1934년',
+      nomap:true,
+      then:'경성 · 중앙보육학교', thenSub:'학교 자리가 지면에 나오지 안아 점을 찍지 안앗소',
+      now:'—', nowSub:'' }
+  ];
+  /* 단신 요지 · 연도는 dansin-data.js 에서 그대로 */
+  function dan(id){ return (window.YK_DANSIN||[]).filter(function(x){return x.id===id;})[0]||{}; }
+  PTS.forEach(function(p){ if(p.kind==='dan'){ var d=dan(p.id); if(d.title)p.title=d.title; if(d.year)p.date=d.year; p.sum=d.lead||''; } });
+
+  var vp=document.getElementById('vp'), st=document.getElementById('stage'), card=document.getElementById('card'), list=document.getElementById('list');
+  var W=1386, H=2000, z=1, tx=0, ty=0, ZMIN=.2, ZMAX=3;
+  function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  /* ── 보기 맞춤 ── */
+  function clamp(){
+    var vw=vp.clientWidth, vh=vp.clientHeight, sw=W*z, sh=H*z, m=60;
+    tx = sw<=vw ? (vw-sw)/2 : Math.min(m, Math.max(vw-sw-m, tx));
+    ty = sh<=vh ? (vh-sh)/2 : Math.min(m, Math.max(vh-sh-m, ty));
+  }
+  function apply(fly){
+    clamp();
+    st.classList.toggle('fly', !!fly);
+    st.style.transform='translate('+tx+'px,'+ty+'px) scale('+z+')';
+    st.style.setProperty('--z', z);
+    vp.classList.toggle('near', z>=1.1);
+  }
+  function fitBox(x0,y0,x1,y1,fly){
+    var vw=vp.clientWidth, vh=vp.clientHeight;
+    z=Math.max(ZMIN,Math.min(ZMAX, Math.min(vw/(x1-x0), vh/(y1-y0))));
+    ZMIN=Math.min(ZMIN,z);
+    tx=vw/2-(x0+x1)/2*z; ty=vh/2-(y0+y1)/2*z; apply(fly);
+  }
+  function center(x,y,zz,fly){
+    var vw=vp.clientWidth, vh=vp.clientHeight; z=Math.max(ZMIN,Math.min(ZMAX,zz));
+    tx=vw/2-x*z; ty=vh/2-y*z; apply(fly);
+  }
+  function zoomAt(f,cx,cy,fly){
+    var nz=Math.max(ZMIN,Math.min(ZMAX,z*f)); if(nz===z)return;
+    tx=cx-(cx-tx)*nz/z; ty=cy-(cy-ty)*nz/z; z=nz; apply(fly);
+  }
+  var CITY=[330,500,1000,980], FAR=[1030,1070,1330,1570];
+  function allView(fly){ var vw=vp.clientWidth, vh=vp.clientHeight; ZMIN=Math.min(vw/W,vh/H)*.98; fitBox(0,0,W,H,fly); }
+
+  /* ── 점 ── */
+  var pinEls={};
+  PTS.forEach(function(p){
+    if(p.nomap)return;
+    var b=document.createElement('button');
+    b.className='pin'+(p.kind==='dan'?' dan':'')+(p.far?' far':'')+(p.left?' l':'');
+    b.style.left=p.x+'px'; b.style.top=p.y+'px';
+    b.setAttribute('aria-label',p.title+' · '+p.name);
+    b.innerHTML='<i>'+esc(p.n)+'</i><em>'+esc(p.name)+'</em>';
+    b.addEventListener('click',function(e){e.stopPropagation(); pick(p.id,true);});
+    b.addEventListener('pointerdown',function(e){e.stopPropagation();});
+    st.appendChild(b); pinEls[p.id]=b;
+  });
+
+  /* ── 목록 ── */
+  var filter='all';
+  function drawList(){
+    var rows=PTS.filter(function(p){return filter==='all'||p.kind===filter;});
+    list.innerHTML=rows.map(function(p){
+      return '<li class="'+(p.nomap?'nomap':'')+'"><button data-id="'+p.id+'"><span class="n'+(p.kind==='dan'?' d':'')+'">'+esc(p.n)+'</span>'+
+        '<span class="t">'+esc(p.kind==='main'?p.title:shortOf(p))+'<small>'+esc((p.sub?p.sub+' · ':'')+p.then)+'</small></span><span class="y">'+esc(p.year)+'</span></button></li>';
+    }).join('');
+    mark();
+  }
+  function shortOf(p){ var d=dan(p.id); return d.short||p.title; }
+  list.addEventListener('click',function(e){ var b=e.target.closest('button[data-id]'); if(!b)return; pick(b.dataset.id,true);
+    if(innerWidth<=960){ var r=vp.getBoundingClientRect(); if(r.top<0||r.top>innerHeight*.5) vp.scrollIntoView({behavior:'smooth',block:'start'}); } });
+  [].forEach.call(document.querySelectorAll('.tab button'),function(b){
+    b.onclick=function(){ filter=b.dataset.f; [].forEach.call(document.querySelectorAll('.tab button'),function(x){x.classList.toggle('on',x===b);});
+      drawList();
+      Object.keys(pinEls).forEach(function(id){ var p=byId(id); pinEls[id].style.display=(filter==='all'||p.kind===filter)?'':'none'; });
+    };
+  });
+  function byId(id){ return PTS.filter(function(p){return p.id===id;})[0]; }
+
+  /* ── 고르기 ── */
+  var cur=null;
+  function mark(){
+    Object.keys(pinEls).forEach(function(id){ pinEls[id].classList.toggle('on', id===cur); });
+    [].forEach.call(list.querySelectorAll('button[data-id]'),function(b){ b.classList.toggle('on', b.dataset.id===cur); });
+  }
+  function pick(id,fly){
+    var p=byId(id); if(!p)return; cur=id; mark();
+    if(!p.nomap) center(p.x, p.y, p.far?2.4:1.7, fly);
+    var isDan=p.kind==='dan';
+    var sum=p.sum;
+    var mapA=p.q?'<a class="now" target="_blank" rel="noopener" href="https://map.kakao.com/?q='+encodeURIComponent(p.q)+'">지금 지도에서 찾아보기 ↗</a>':'';
+    var goA=isDan
+      ? '<button class="go lock" data-dan="'+esc(p.id)+'">긔록 읽기 · 정긔 독자</button>'
+      : '<a class="go" href="'+esc(p.link)+'">사건 읽으러 가기 →</a>';
+    card.innerHTML=
+      '<p class="meta"><span class="sec'+(isDan?' dan':'')+'">'+(isDan?'단신':'본편')+'</span><span>'+esc(p.date)+'</span>'+(p.far?'<span>경성 밖</span>':'')+'</p>'+
+      '<h2>'+esc(p.title)+'</h2>'+
+      (sum?'<p class="sum">'+esc(sum)+'</p>':'')+
+      '<div class="tt"><div><small>그 때</small><p>'+esc(p.then)+(p.thenSub?'<span>'+esc(p.thenSub)+'</span>':'')+'</p></div>'+
+      '<div><small>지 금 · 2026</small><p>'+esc(p.now)+(p.nowSub?'<span>'+esc(p.nowSub)+'</span>':'')+'</p></div></div>'+
+      '<div class="acts">'+goA+mapA+'</div>';
+    var lb=card.querySelector('[data-dan]');
+    if(lb) lb.onclick=function(){
+      var go=function(){ location.href='dansin.html?id='+encodeURIComponent(p.id); };
+      if(window.ykPay) window.ykPay.gate(p.id, p.title, go); else go();
+    };
+    try{ history.replaceState(null,'','#'+id); }catch(e){}
+  }
+
+  /* ── 끌기 · 휠 · 두 손가락 ── */
+  var pts={}, last=null, moved=false;
+  vp.addEventListener('pointerdown',function(e){
+    if(e.target.closest('.tools,.legend'))return;
+    vp.setPointerCapture(e.pointerId); pts[e.pointerId]={x:e.clientX,y:e.clientY}; moved=false; st.classList.remove('fly'); vp.classList.add('drag');
+  });
+  vp.addEventListener('pointermove',function(e){
+    if(!pts[e.pointerId])return;
+    var ids=Object.keys(pts), r=vp.getBoundingClientRect();
+    if(ids.length===1){
+      var o=pts[e.pointerId]; tx+=e.clientX-o.x; ty+=e.clientY-o.y; if(Math.abs(e.clientX-o.x)+Math.abs(e.clientY-o.y)>2)moved=true;
+      pts[e.pointerId]={x:e.clientX,y:e.clientY}; apply(false);
+    }else if(ids.length>=2){
+      var a=pts[ids[0]], b=pts[ids[1]]; var d0=Math.hypot(a.x-b.x,a.y-b.y);
+      pts[e.pointerId]={x:e.clientX,y:e.clientY};
+      a=pts[ids[0]]; b=pts[ids[1]]; var d1=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d0>0) zoomAt(d1/d0,(a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top,false); moved=true;
+    }
+  });
+  function up(e){ delete pts[e.pointerId]; if(!Object.keys(pts).length)vp.classList.remove('drag'); }
+  vp.addEventListener('pointerup',up); vp.addEventListener('pointercancel',up);
+  vp.addEventListener('wheel',function(e){ e.preventDefault(); var r=vp.getBoundingClientRect(); zoomAt(e.deltaY<0?1.18:1/1.18, e.clientX-r.left, e.clientY-r.top, false); },{passive:false});
+  function mid(){ return [vp.clientWidth/2, vp.clientHeight/2]; }
+  document.getElementById('zin').onclick=function(){ var m=mid(); zoomAt(1.4,m[0],m[1],true); };
+  document.getElementById('zout').onclick=function(){ var m=mid(); zoomAt(1/1.4,m[0],m[1],true); };
+  document.getElementById('zcity').onclick=function(){ fitBox(CITY[0],CITY[1],CITY[2],CITY[3],true); };
+  document.getElementById('zfar').onclick=function(){ fitBox(FAR[0],FAR[1],FAR[2],FAR[3],true); };
+  document.getElementById('zall').onclick=function(){ allView(true); };
+  var rt; addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(function(){ apply(false); },120); });
+
+  /* ── 시작 ── */
+  function start(){
+    allView(false);
+    drawList();
+    var h=decodeURIComponent((location.hash||'').slice(1));
+    if(h && byId(h)) pick(h,false);
+    else fitBox(CITY[0],CITY[1],CITY[2],CITY[3],false);
+  }
+  if(document.readyState==='complete') start(); else addEventListener('load',start);
+})();
+</script>
+<script src="yk-guide.js?v=39"></script>
+</body>
+</html>

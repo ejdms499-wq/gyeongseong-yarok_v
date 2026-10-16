@@ -28,13 +28,24 @@
   .m-dock button b{font-size:16px;line-height:1}
   .m-dock button small{font-size:9.5px;letter-spacing:.06em;opacity:.8;white-space:nowrap}
   .m-dock button.on{background:#e7dbc2;color:#1e1913;border-color:#e7dbc2}
-  .m-hint{position:fixed;z-index:61;left:50%;bottom:calc(70px + env(safe-area-inset-bottom));transform:translateX(-50%);background:rgba(20,17,9,.88);color:#e7dbc2;font-size:12.5px;letter-spacing:.12em;padding:9px 14px;white-space:nowrap;transition:opacity .8s,transform .8s;animation:mHint 2.2s ease-in-out infinite}
-  .m-hint b{font-weight:700}
-  .m-hint.gone{opacity:0;pointer-events:none;transform:translate(-50%,10px)}
-  @keyframes mHint{50%{transform:translateX(calc(-50% + 8px))}}
+  /* 1016 · 「옆으로 넘기시압」은 떠다니지 안코 一面 귀퉁이 접힌 자리 옆에 작게 한 줄 (움직이지 안음) */
+  .m-hint{position:absolute;z-index:4;right:24px;top:calc(19px + env(safe-area-inset-top));padding:2px 0 2px 10px;background:rgba(231,219,194,.92);color:#6e6250;font-size:11px;letter-spacing:.14em;white-space:nowrap;pointer-events:none;transition:opacity .8s}
+  .m-hint b{font-weight:700;color:#3a3128}
+  .m-hint.gone{opacity:0}
 
-  /* 떠 있는 것들은 면 고르개 위로 */
-  html.m-deck-on .ykg-tab{bottom:calc(66px + env(safe-area-inset-bottom))!important;top:auto!important;right:6px!important;left:auto!important;transform:scale(.7)!important;transform-origin:100% 100%}
+  /* 1016 · 폰에서 화면에 떠 잇는 것은 아래 면 고르개 하나뿐 — 「보는 법」 책갈피는 고르개 맨 끗 칸으로 들어감 */
+  html.m-deck-on .m-dock.has-tab{grid-template-columns:repeat(6,1fr) 1.15fr}
+  html.m-deck-on .m-dock .ykg-tab{position:static!important;left:auto!important;top:auto!important;transform:none!important;animation:none!important;clip-path:none!important;box-shadow:none!important;width:auto!important;height:44px;padding:0!important;gap:2px!important;justify-content:center;
+    background:#2a2318!important;border:1px solid #6b5a40!important;color:#e7dbc2!important;z-index:auto!important}
+  html.m-deck-on .m-dock .ykg-tab:before,html.m-deck-on .m-dock .ykg-tab:after{display:none!important}
+  html.m-deck-on .m-dock .ykg-tab>i:first-child{display:none}
+  html.m-deck-on .m-dock .ykg-tab b{flex-direction:row!important;font-size:12px;letter-spacing:.04em}
+  html.m-deck-on .m-dock .ykg-tab .ykg-cnt{font-size:9.5px!important;margin:0!important;opacity:.75}
+  html.m-deck-on .m-dock .ykg-tab.all{border-color:#e7dbc2!important}
+  /* 장치 수첩은 고르개 바로 우에서 펼쳐짐 */
+  html.m-deck-on .ykg-book{left:8px!important;right:8px!important;width:auto!important;top:auto!important;bottom:calc(66px + env(safe-area-inset-bottom))!important;max-height:62vh!important}
+  /* 「이 면에 숨은 장치」 쪽지는 폰에선 띄우지 안음 (고르개의 보는법 칸에 수가 나옴) */
+  html.m-deck-on .ykg-toast{display:none!important}
 
   /* ── 一面 : 제호 + 죽첨정 ── */
   .m-pg1 .topbar{display:flex!important;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.1em;padding:0 0 8px!important;margin:0!important;border-bottom:1px solid #3a3128}
@@ -43,6 +54,10 @@
   .m-pg1 header.masthead .side{display:none!important}
   .m-pg1 header.masthead .title{margin:0 auto!important}
   .m-pg1 .tagline{font-size:12px!important;letter-spacing:.14em!important;padding:8px 0!important;margin:0 0 10px!important;text-align:center;border-bottom:1px solid #3a3128}
+  /* 1016 · 머리글 한 줄은 한 줄로 (오프닝 끗 글자가 이 자리에 그대로 내려앉도록) */
+  html body .m-pg1 .tagline p{font-size:min(17px,calc((100vw - 70px) / 20))!important;letter-spacing:.04em!important;white-space:nowrap;margin:0!important;line-height:1.5}
+  html body .m-pg1 .tagline p .hj{letter-spacing:.04em!important}
+  html body .m-pg1 .tagline>span{font-size:11px!important;letter-spacing:.2em!important;margin-top:4px!important}
   .m-pg1 header.masthead+.tagline{border-top:0}
 
   /* 기사 공통 */
@@ -103,6 +118,11 @@
   html body .yf-plate{flex-wrap:wrap}
   html body .yf-list{max-height:52vh!important}
 
-  /* 식자공의 소지품 상자 — 면 고르개 위로 */
-  html.m-deck-on .ykq-tray{bottom:calc(62px + env(safe-area-inset-bottom))!important}
+  /* 식자공의 소지품 상자 — 면 고르개 바로 우, 왼쪽에 작게 (누르면 펼침 · 접힘) */
+  html.m-deck-on .ykq-tray{left:8px!important;bottom:calc(64px + env(safe-area-inset-bottom))!important;max-width:calc(100vw - 16px)}
+  /* 지면에 흘린 물건 — 폰에선 글 우에 겹치지 안케, 긔사 끗에 작게 놓임 · 깜빡이는 붉은 점 업슴 */
+  html.m-deck-on article.case>.ykq-relic,html.m-deck-on .rd-appx>.ykq-relic,html.m-deck-on .rd-parlor>.ykq-relic{position:relative!important;display:block!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;width:54px!important;margin:14px 6px 0 auto;transform:rotate(-6deg)!important}
+  html.m-deck-on .ykq-relic{max-width:54px}
+  html.m-deck-on .ykq-relic::after{display:none!important}
+  html.m-deck-on body:has(.ykg-book) .ykq-tray{visibility:hidden}
 }

@@ -1,0 +1,61 @@
+<!-- 경성야록 — 예전 오프닝 보관본: index.html에서 떼어 보관한 마크업 -->
+<!-- ========== 시작 화면: 어둠 속 전구 하나, 그 아래 누런 쪽지, 구석의 11시 59분 벽시계 ========== -->
+<div id="gate">
+  <!-- 전구 빛이 비추는 쪽지 -->
+  <div class="g-note" id="gNote">
+    <p class="g-to">讀者에게 告함</p>
+    <p class="g-msg">이 시안은 소리와 함께 봐야 합니다.<br>조용한 곳에서 이어폰을 끼고 들어가세요.</p>
+    <button class="g-ticket" id="start" aria-label="호외 받기 (소리와 함께 시작)">
+      <span class="tk-ko">호외 받기</span><span class="tk-seal" aria-hidden="true">號外</span>
+    </button>
+    <button class="g-pencil" id="startMute">소리 없이 보기</button>
+  </div>
+  <!-- 매달린 전구 (천천히 흔들림 · 가끔 깜빡임). 어둠막도 전구와 같이 흔들려 빛이 쪽지 위에서 살짝 움직임 -->
+  <div class="g-lamp" aria-hidden="true">
+    <div class="g-dark a"></div><div class="g-dark b"></div>
+    <div class="g-beam"></div>
+    <div class="g-bulb"><i class="cord"></i><i class="cap"></i><i class="glass"></i><i class="halo"></i></div>
+  </div>
+  <!-- 어둠 속 옛 벽시계: 11시 59분, 초침만 소리 없이 -->
+  <div class="g-clock" aria-hidden="true">
+    <svg viewBox="0 0 120 150">
+      <defs>
+        <radialGradient id="gcFace" cx=".45" cy=".4" r=".7"><stop offset="0" stop-color="#d9c99e"/><stop offset=".7" stop-color="#bba676"/><stop offset="1" stop-color="#6e5a33"/></radialGradient>
+        <linearGradient id="gcWood" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a2f18"/><stop offset=".5" stop-color="#2c1a0c"/><stop offset="1" stop-color="#1a0f06"/></linearGradient>
+      </defs>
+      <!-- 팔각 나무 틀 + 아래 추 상자 -->
+      <path d="M36 4 H84 L116 36 V84 L84 116 H36 L4 84 V36 Z" fill="url(#gcWood)" stroke="#120a04" stroke-width="2"/>
+      <rect x="38" y="112" width="44" height="34" rx="3" fill="url(#gcWood)" stroke="#120a04" stroke-width="2"/>
+      <circle cx="60" cy="60" r="46" fill="#5b4a2c" stroke="#7a6232" stroke-width="3"/>
+      <circle cx="60" cy="60" r="42" fill="url(#gcFace)"/>
+      <!-- 얼룩 -->
+      <ellipse cx="44" cy="80" rx="12" ry="7" fill="#6b4f22" opacity=".28"/><ellipse cx="78" cy="42" rx="7" ry="5" fill="#6b4f22" opacity=".2"/>
+      <g class="gc-ticks"></g>
+      <g font-family="serif" font-size="9" fill="#2a2214" text-anchor="middle" dominant-baseline="central">
+        <text x="60" y="27">XII</text><text x="93" y="60">III</text><text x="60" y="93">VI</text><text x="27" y="60">IX</text>
+      </g>
+      <g class="gc-h"><path d="M58.4 62 L60 36 L61.6 62 Z" fill="#17120a"/></g>
+      <g class="gc-m"><path d="M59.1 64 L60 23 L60.9 64 Z" fill="#17120a"/></g>
+      <g class="gc-s"><line x1="60" y1="68" x2="60" y2="22" stroke="#7d1d15" stroke-width=".8"/></g>
+      <circle cx="60" cy="60" r="2.4" fill="#17120a"/>
+      <!-- 금 간 유리 -->
+      <g stroke="#f4ecd6" stroke-width=".5" fill="none" opacity=".45"><path d="M30 34 L47 52 L44 66 L58 78"/><path d="M47 52 L63 49 L80 30"/><path d="M44 66 L30 74"/></g>
+      <!-- 추 창 -->
+      <circle cx="60" cy="134" r="6" fill="#8a6a2e" opacity=".6"/>
+    </svg>
+  </div>
+  <div class="g-flick" aria-hidden="true"></div>
+  <div class="g-off" aria-hidden="true"></div>
+
+<!-- ========== 오프닝 (20초 자동 재생) ========== -->
+<div id="opening" hidden aria-label="오프닝: 1924년부터 1937년까지 실제로 보도된 사건들"></div>
+
+<!-- 건너뛰기: 호외 방울 + 종이 꼬리표 -->
+<div id="skipWrap" hidden>
+  <i class="sk-cord" aria-hidden="true"></i>
+  <button id="skipBell" type="button" aria-label="오프닝 건너뛰기">
+    <span class="sk-bell" aria-hidden="true"><i></i></span>
+    <span class="sk-tag" aria-hidden="true"><em>號外</em><b>바로 받기</b><small>건너뛰기 ›</small></span>
+  </button>
+  <p class="sk-hint" aria-hidden="true">방울을 흔들면 호외가 바로 옵니다 · Esc</p>
+</div>

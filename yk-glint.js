@@ -28,6 +28,7 @@
     '.ykgl-sweep:after{content:"";position:absolute;top:-10%;bottom:-10%;left:-40%;width:35%;transform:skewX(-14deg);' +
       'background:linear-gradient(90deg,transparent,rgba(255,214,150,.22),rgba(255,230,180,.32),rgba(255,214,150,.22),transparent);mix-blend-mode:soft-light;animation:ykglS 2.2s cubic-bezier(.45,0,.3,1) forwards}' +
     '@keyframes ykglS{to{left:110%}}' +
+    '#places .pr-chart.ykgl{cursor:zoom-in}' +
     '@media (prefers-reduced-motion:reduce){.ykgl,.ykgl:before,.ykgl-dot,.plate-line.ykgl{animation:none!important}.ykgl-sweep{display:none}}' +
     '@media print{.ykgl{box-shadow:none!important}.ykgl-dot,.ykgl-sweep{display:none}}';
   D.head.appendChild(css);
@@ -43,7 +44,8 @@
     ['.report-history .plate-line', 'hdl', 'drag'],
     ['.case-brief .cb-seal', 'seal', 'click'],
     ['.jn-tab:not(.on)', 'jn', 'click'],
-    ['.archive-radio .rx-radio', 'rx', 'click']
+    ['.archive-radio .rx-radio', 'rx', 'click'],
+    ['#places .pr-chart', 'map', 'click']           /* 1014 · 아현동 지도 — 누르면 크게 */
   ];
   function apply() {
     LIST.forEach(function (L) {
@@ -56,7 +58,7 @@
         }
         if (!el.__ykgl) {
           el.__ykgl = 1;
-          var done = function () { used[(L[1] === 'hdl' || L[1] === 'arw' || L[1] === 'rx' || L[1] === 'seal') ? L[1] + '*' : k] = 1; off(el); if (L[1] === 'hdl' || L[1] === 'arw' || L[1] === 'rx' || L[1] === 'seal') apply(); };
+          var done = function () { used[/^(hdl|arw|rx|seal|map|adh)$/.test(L[1]) ? L[1] + '*' : k] = 1; off(el); if (/^(hdl|arw|rx|seal|map|adh)$/.test(L[1])) apply(); };
           el.addEventListener('click', done);
           if (L[2] === 'drag') { el.addEventListener('pointerdown', done); var r = el.parentElement && el.parentElement.querySelector('.plate-range'); if (r) r.addEventListener('input', done); }
         }

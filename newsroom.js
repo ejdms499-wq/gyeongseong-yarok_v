@@ -107,6 +107,13 @@
   }
   (function () {
     var R = window.ykReward, el = $('#gateHint'); if (!R || !el) return;
+    /* 1016 · 취재 도장을 네 사건 다 모은 특파원은 기자증을 내보이고 들어감 (yk-press.js) */
+    var pc = {}; try { pc = JSON.parse(localStorage.getItem('yk-press') || '{}') || {}; } catch (e) {}
+    if (['jk', 'maria', 'sk', 'bb'].every(function (k) { return pc[k]; })) {
+      el.innerHTML = '특파원 기자증이 잇소. <button type="button" id="gateFill">기자증 내보이기</button>';
+      $('#gateFill').addEventListener('click', function () { PASSW.value = R.PASS; PASSW.focus(); });
+      return;
+    }
     el.innerHTML = R.done()
       ? '전보로 받은 암호가 잇소. <button type="button" id="gateFill">전보 꺼내 보기</button>'
       : '암호는 네 사건 긔록을 끗까지 읽은 독자에게 전보로 가오 <span class="ykr-dots">' + R.dots() + '</span> ' + R.count() + ' / 4';

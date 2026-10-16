@@ -138,14 +138,36 @@
     { w: ['「유력한 혐의자」', '「유력한 혐의자」'], d: '6.2', fix: ['그 집 가장은 아해보다 먼저, 이미 숨진 이엿소.', '그 집 가장은 아이보다 먼저, 이미 숨진 사람이었다.'] }
   ];
 
+  /* 1014 · 그림 크게 보기 (누르면 펼침 · 한 번 더 누르면 더 크게 · Esc/바깥 누르면 닫힘) */
+  function zoomImg(src, cap) {
+    var v = document.getElementById('jkZoom');
+    if (!v) {
+      v = document.createElement('div'); v.id = 'jkZoom'; v.setAttribute('role', 'dialog'); v.setAttribute('aria-modal', 'true');
+      v.innerHTML = '<button type="button" class="jz-x" aria-label="닫기">닫기 ✕</button><div class="jz-in"><img alt=""></div><p class="jz-cap"></p>';
+      document.body.appendChild(v);
+      var close = function () { v.classList.remove('on'); };
+      v.addEventListener('click', function (e) { if (e.target.closest('.jz-in img')) { v.classList.toggle('big'); return; } close(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+      var st = document.createElement('style');
+      st.textContent = '#jkZoom{position:fixed;inset:0;z-index:300;background:rgba(10,8,6,.86);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:5vh 4vw;opacity:0;pointer-events:none;transition:opacity .35s}' +
+        '#jkZoom.on{opacity:1;pointer-events:auto}#jkZoom .jz-in{max-width:min(1200px,92vw);max-height:80vh;overflow:auto;box-shadow:0 30px 80px #000}' +
+        '#jkZoom img{display:block;max-width:min(1200px,92vw);max-height:80vh;cursor:zoom-in;filter:sepia(.15)}#jkZoom.big img{max-width:none;max-height:none;width:min(2200px,180vw);cursor:zoom-out}' +
+        '#jkZoom .jz-cap{font:400 13px/1.6 "Noto Sans KR",sans-serif;color:#d9ccb2;letter-spacing:.04em;text-align:center}' +
+        '#jkZoom .jz-x{position:absolute;right:22px;top:16px;border:0;background:none;color:#d9ccb2;font:500 13px "Noto Sans KR",sans-serif;letter-spacing:.1em;cursor:pointer}' +
+        '#places .pr-chart,#places .duo-cell{cursor:zoom-in}#places .pl-frame-wrap.one{display:block}';
+      document.head.appendChild(st);
+    }
+    v.classList.remove('big'); v.querySelector('img').src = src; v.querySelector('.jz-cap').textContent = (cap || '') + ' · 그림을 누르면 더 크게';
+    requestAnimationFrame(function () { v.classList.add('on'); });
+  }
   (function () {
     var root = $('#places'); if (!root) return;
     var cur = 0;
     root.innerHTML =
-      '<div class="pl-tabs">' + PLACES.map(function (p, i) {
+      '<div class="pl-tabs"' + (PLACES.length > 1 ? '' : ' hidden style="display:none"') + '>' + PLACES.map(function (p, i) {
         return '<button type="button" data-i="' + i + '"><span>0' + (i + 1) + '</span><strong>' + p.name + '<small>' + H(p.sub[0], p.sub[1]) + '</small></strong></button>';
       }).join('') + '</div>' +
-      '<div class="pl-frame-wrap"><button type="button" class="pl-arrow left" aria-label="앞 사진">←</button><div class="pl-frame"></div><button type="button" class="pl-arrow right" aria-label="다음 사진">→</button></div>' +
+      (PLACES.length > 1 ? '<div class="pl-frame-wrap"><button type="button" class="pl-arrow left" aria-label="앞 사진">←</button><div class="pl-frame"></div><button type="button" class="pl-arrow right" aria-label="다음 사진">→</button></div>' : '<div class="pl-frame-wrap one"><div class="pl-frame"></div></div>') +
       '<article class="pl-record"></article>';
     function draw() {
       var p = PLACES[cur];
@@ -160,10 +182,10 @@
         '<p>' + H(p.text[0], p.text[1]) + '</p></div>' +
         '<figure class="pr-photo pr-chart"><img alt="아현동 일대 지도 (1936)" src="' + (p.map || p.then) + '"><span class="pr-seal" aria-hidden="true">' + p.seal + '</span></figure>' +
         '<span class="pr-src">' + p.src + '</span>';
-      $('.pl-arrow.left', root).disabled = cur === 0;
-      $('.pl-arrow.right', root).disabled = cur === PLACES.length - 1;
+      if ($('.pl-arrow.left', root)) { $('.pl-arrow.left', root).disabled = cur === 0; $('.pl-arrow.right', root).disabled = cur === PLACES.length - 1; }
     }
     root.addEventListener('click', function (e) {
+      var zi = e.target.closest('.pr-chart img, .duo-cell img'); if (zi) { zoomImg(zi.src, zi.closest('.pr-chart') ? PLACES[cur].src : zi.alt); return; }
       var t = e.target.closest('.pl-tabs button'); if (t) { cur = +t.dataset.i; draw(); return; }
       if (e.target.closest('.pl-arrow.left') && cur > 0) { cur--; draw(); }
       if (e.target.closest('.pl-arrow.right') && cur < PLACES.length - 1) { cur++; draw(); }
@@ -200,9 +222,9 @@
       var a = ARTS[cur];
       $$('button', tl).forEach(function (b, i) { b.classList.toggle('active', i === cur); });
       tl.style.setProperty('--prog', (cur / N * 100) + '%');
-      var news = '<div class="news26" aria-label="2026년 뉴스로 다시 쓴 기사"><div class="n26-bar"><b>경성야록</b><span>사회</span><span>사건·사고</span><span>아카이브</span></div><div class="n26-body"><span class="n26-tag">아카이브 단독</span><h4>' + a.title + '</h4><p class="n26-meta">경성야록 사회부 · 원 보도 동아일보 ' + a.date + ' · 2026년 다시 씀</p>' +
+      var news = window.ykNews26 ? window.ykNews26({ a: a, arts: ARTS, cur: cur, img: IMG + 'articles-toned/' + a.img, paper: '동아일보', sec: '사회', sub: '사건·사고', fix: '이 보도에 나온 가족은 이후 사건과 무관한 것으로 밝혀졌습니다.' }) : ('<div class="news26" aria-label="2026년 뉴스로 다시 쓴 기사"><div class="n26-bar"><b>경성야록</b><span>사회</span><span>사건·사고</span><span>아카이브</span></div><div class="n26-body"><span class="n26-tag">아카이브 단독</span><h4>' + a.title + '</h4><p class="n26-meta">경성야록 사회부 · 원 보도 동아일보 ' + a.date + ' · 2026년 다시 씀</p>' +
         (a.mark ? '<p class="n26-alert">정정 · 이 보도에 나온 가족은 이후 사건과 무관한 것으로 밝혀졌습니다.</p>' : '') +
-        '<p class="n26-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '<div class="n26-keys">' + a.keys.map(function (k) { return '<span>#' + k + '</span>'; }).join('') + '</div><p class="n26-note">※ 1933년 동아일보 원문을 바탕으로 오늘의 기사 형식으로 다시 쓴 것입니다.</p></div></div>';
+        '<p class="n26-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') + '<div class="n26-keys">' + a.keys.map(function (k) { return '<span>#' + k + '</span>'; }).join('') + '</div><p class="n26-note">※ 1933년 동아일보 원문을 바탕으로 오늘의 기사 형식으로 다시 쓴 것입니다.</p></div></div>');
       book.innerHTML =
         '<div class="page left"><div class="page-head"><strong>동아일보</strong><span>' + H('소화 팔 년 원문판', '1933년 원문판') + '</span><em>' + H(a.d[0], a.d[1]) + '</em></div>' +
         '<div class="page-title"><span class="wm" aria-hidden="true">原文記事</span><h3>' + H('원문 긔사', '원문 기사') + '</h3><small>' + H('동아일보 소화 팔 년 ' + a.d[0] + ' 보도', '동아일보 1933년 ' + a.d[1] + ' 보도') + '</small></div>' +
@@ -234,6 +256,7 @@
     book.parentNode.addEventListener('click', function (e) {
       if (e.target.closest('.book-arrow.left')) go(cur - 1);
       else if (e.target.closest('.book-arrow.right')) go(cur + 1);
+      var rl = e.target.closest('.n26-rel a[data-i]'); if (rl) { e.preventDefault(); go(+rl.dataset.i); setCmp(0); return; }
       var sw = e.target.closest('.plate-switch button');
       if (sw) setCmp(sw.previousElementSibling ? 0 : 100);
       var rt = e.target.closest('.report-tabs button');
@@ -385,7 +408,7 @@
         '</div>';
       if (s.au) { au.src = AUD + s.au; au.currentTime = 0; var p = au.play(); if (p && p.catch) p.catch(function () {}); pbtn.disabled = false; }
       else { au.pause(); au.removeAttribute('src'); pbtn.disabled = true; tm.textContent = '소리 없는 칸 · 다이얼을 돌려 보세요'; trk.style.width = '0'; wave(0); }
-      play('sfxBell');
+
     }
     var gap = -1;
     function between() {
