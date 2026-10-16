@@ -130,6 +130,16 @@
       lp.addEventListener('pointerup', up); lp.addEventListener('pointercancel', up);
       el.addEventListener('click', function (e) { if (!el.classList.contains('tap')) { el.classList.add('tap'); t0 = performance.now(); clearTimeout(el._w); el._w = setTimeout(function () { el.classList.remove('tap'); }, 12000); buzz(8); return; } if (e.target.closest('.mv-lp')) return; man = 1; var r = el.getBoundingClientRect(); place(e.clientX - r.left, e.clientY - r.top); buzz(8); setTimeout(function () { man = null; }, 2500); });
     }
+    /* 첫 화면 — 제호 바로 아래, 움직이는 사진 한 장 (들어오자마자 손으로) */
+    (function () {
+      var src = $('#front .mv-sohn'), logo = $('.mm-logo'); if (!src || !logo || $('.mm-hero')) return;
+      var h = D.createElement('div'); h.className = 'mm-hero';
+      var k = src.cloneNode(true); k._mv = 0; k.removeAttribute('data-seen'); k.classList.remove('tap', 'on');
+      [].forEach.call(k.querySelectorAll('.egg-relic,.mv-hint'), function (x) { x.remove(); });
+      h.appendChild(k);
+      h.insertAdjacentHTML('beforeend', '<a class="mm-hero-go" href="case-sonkijeong/m.html"><small>오늘 밤의 지면 · 문화예술면 03</small><b>손긔정 군과 지워진 표지</b><span>사진을 누르면 움직이고, 여긔를 누르면 지면이 열리오 →</span></a>');
+      logo.parentNode.insertBefore(h, logo.nextSibling);
+    })();
     W.mmMv = scan; scan();
     /* 다른 긔사 — 봉해 둔 긔사 · 정긔 독자 전용 */
     D.addEventListener('click', function (e) {

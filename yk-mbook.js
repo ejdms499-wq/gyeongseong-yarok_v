@@ -64,6 +64,60 @@
   }
   W.mb.zoom = showZoom;
 
+  /* ── 읽는 길 — 긴 사건을 폰에서 끗까지: 이어 닑기 · 장마다 자리와 남은 시간 · 장 지도 차례 · 장 끗의 다음 장 예고 ── */
+  function readingPath(chsAll, toc) {
+    var chs = chsAll.filter(function (s) { return s.id && !/^(next|colophon)$/.test(s.id) && !s.classList.contains('mb-cover'); });
+    if (chs.length < 6) return;
+    var KEY = location.pathname.replace(/[^a-z0-9]+/gi, '-'), PK = 'yk-pos' + KEY, SK = 'yk-seen' + KEY, N = chs.length;
+    var mins = chs.map(function (c) { var t = (c.innerText || c.textContent || '').replace(/\s+/g, ''); return Math.max(1, Math.round(t.length / 360)); });
+    var left = function (i) { var m = 0; for (var k = i; k < N; k++) m += mins[k]; return m; };
+    var seen = {}; try { seen = JSON.parse(localStorage.getItem(SK) || '{}') || {}; } catch (e) {}
+    /* 장 첫머리 — 몃째 장 · 이 장 몃 분 · 남은 이야기 */
+    chs.forEach(function (c, i) {
+      if (!c.querySelector(':scope > .mb-chp')) {
+        var p = D.createElement('p'); p.className = 'mb-chp';
+        p.innerHTML = '<span><b>' + (i + 1) + '</b> / ' + N + '</span><i><em style="width:' + ((i + 1) / N * 100).toFixed(1) + '%"></em></i><span>이 장 약 ' + mins[i] + '분 · 남은 이약이 약 ' + left(i) + '분</span>';
+        c.insertBefore(p, c.firstChild);
+      }
+      /* 장 끗 — 다음 장 예고 */
+      var nx = chs[i + 1];
+      if (nx && !c.querySelector(':scope > .mb-nextch')) {
+        var b = D.createElement('button'); b.type = 'button'; b.className = 'mb-nextch'; b.setAttribute('data-goto', nx.id);
+        b.innerHTML = '<small>다음 장 · ' + (i + 2) + ' / ' + N + '</small><b>' + (nx.getAttribute('data-ch') || '') + '</b><i>↓</i>';
+        c.appendChild(b);
+      }
+    });
+    /* 지나간 장은 기록 → 차례에 도장 */
+    var io = 'IntersectionObserver' in W ? new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { seen[e.target.id] = 1; try { localStorage.setItem(SK, JSON.stringify(seen)); } catch (x) {} } }); }, { rootMargin: '0px 0px -60% 0px' }) : null;
+    if (io) chs.forEach(function (c) { io.observe(c); });
+    function paintToc() {
+      if (!toc) return; var y = W.scrollY, cur = -1; chs.forEach(function (c, i) { if (c.getBoundingClientRect().top < 120) cur = i; });
+      var html = '<p class="mb-toc-sum">' + Object.keys(seen).filter(function (k) { return chs.some(function (c) { return c.id === k; }); }).length + ' / ' + N + '장 닑음 · 남은 이약이 약 ' + left(Math.max(0, cur)) + '분</p>';
+      toc.innerHTML = html + chsAll.map(function (s) { var i = chs.indexOf(s), on = i === cur, sn = i > -1 && seen[s.id];
+        return '<a href="#' + s.id + '" data-goto="' + s.id + '" class="' + (on ? 'on ' : '') + (sn ? 'seen' : '') + '"><b>' + (s.getAttribute('data-no') || '') + '</b><span>' + s.getAttribute('data-ch') + '<small>' + (s.getAttribute('data-sub') || '') + (i > -1 ? ' · 약 ' + mins[i] + '분' : '') + '</small></span>' + (i > -1 ? '<em>' + (on ? '지금' : sn ? '닑음' : '') + '</em>' : '') + '</a>'; }).join('');
+    }
+    W.addEventListener('mb:open', function (e) { if (e.detail === 'mbToc') paintToc(); });
+    paintToc();
+    /* 이어 닑기 */
+    var saveT = 0;
+    W.addEventListener('scroll', function () { clearTimeout(saveT); saveT = setTimeout(function () {
+      var y = W.scrollY, h = D.documentElement.scrollHeight - innerHeight, cur = -1; chs.forEach(function (c, i) { if (c.getBoundingClientRect().top < 120) cur = i; });
+      try { if (y > h - 400) localStorage.removeItem(PK); else if (cur > -1) localStorage.setItem(PK, JSON.stringify({ id: chs[cur].id, y: y, t: Date.now() })); } catch (e) {}
+    }, 800); }, { passive: true });
+    var sv = null; try { sv = JSON.parse(localStorage.getItem(PK) || 'null'); } catch (e) {}
+    if (sv && sv.y > 1500 && !location.hash && W.scrollY < 200) {
+      var tgt = D.getElementById(sv.id), k = chs.indexOf(tgt);
+      if (tgt && k > 0) {
+        var bn = D.createElement('div'); bn.className = 'mb-resume';
+        bn.innerHTML = '<div><small>지난번 ' + (k + 1) + ' / ' + N + '장까지 닑엇소</small><b>' + (tgt.getAttribute('data-ch') || '') + '</b></div><button type="button" class="go">이어서 →</button><button type="button" class="x" aria-label="처음부터">처음부터</button>';
+        D.body.appendChild(bn); requestAnimationFrame(function () { requestAnimationFrame(function () { bn.classList.add('on'); }); });
+        var off = function () { bn.classList.remove('on'); setTimeout(function () { bn.remove(); }, 400); };
+        bn.querySelector('.go').onclick = function () { off(); W.scrollTo({ top: tgt.getBoundingClientRect().top + W.scrollY - 50, behavior: 'smooth' }); };
+        bn.querySelector('.x').onclick = off; setTimeout(off, 12000);
+      }
+    }
+  }
+
   /* ── 위 띠 · 목차 ── */
   function init() {
     var bar = $('.mb-bar'), prog = $('.mb-prog'), now = $('.mb-now'), cover = $('.mb-cover');
@@ -87,6 +141,8 @@
     }
     W.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
     onScroll();
+    readingPath(chs, toc);
+    var tb = bar && bar.querySelector('[data-open="mbToc"]'); if (tb && !tb.querySelector('.mb-burger')) { tb.setAttribute('aria-label', '차례'); tb.innerHTML = '<i class="mb-burger"><i></i></i>'; }
 
     /* 나타나기 — 화면에 조금이라도 들어오면 (긴 칸도 막히지 않게) */
     var rv = $$('.mb-rv');
@@ -342,9 +398,9 @@
     scan(D.body);
     var bar = D.querySelector('.mb-bar'), toc = bar && bar.querySelector('[data-open="mbToc"]');
     if (bar && toc) {
-      var b = D.createElement('button'); b.type = 'button'; b.className = 'mb-ko'; b.innerHTML = '<b>가</b>오늘말'; b.setAttribute('aria-label', '오늘 말로 바꾸기');
+      var b = D.createElement('button'); b.type = 'button'; b.className = 'mb-ko'; b.innerHTML = '<b>가</b>'; b.setAttribute('aria-label', '옛말 · 오늘 말 바꾸기');
       bar.insertBefore(b, toc);
-      b.addEventListener('click', function () { all = !all; b.classList.toggle('on', all); b.innerHTML = all ? '<b>가</b>옛말' : '<b>가</b>오늘말'; D.querySelectorAll('.hj[data-ko]').forEach(function (sp) { flip(sp, all); }); });
+      b.addEventListener('click', function () { all = !all; b.classList.toggle('on', all); b.innerHTML = '<b>가</b>'; D.querySelectorAll('.hj[data-ko]').forEach(function (sp) { flip(sp, all); }); });
     }
     var tmr; var mo = new MutationObserver(function (ms) {
       clearTimeout(tmr); tmr = setTimeout(function () { var seen = []; ms.forEach(function (m) { var t = m.target; if (t.nodeType === 1 && seen.indexOf(t) < 0 && !t.closest('.hj')) { seen.push(t); } }); seen.forEach(scan); }, 30);
@@ -471,7 +527,7 @@
   var NUM = { '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9 }, UNIT = { '章': '장', '話': '화', '號': '호', '回': '회', '面': '면', '日': '일', '年': '년', '月': '월' };
   function hn(x) { var n = 0, cur = 0; for (var q = 0; q < x.length; q++) { var ch = x[q]; if (ch === '十') { n += (cur || 1) * 10; cur = 0; } else if (ch === '百') { n += (cur || 1) * 100; cur = 0; } else if (NUM[ch]) cur = NUM[ch]; else if (ch === '〇' || ch === '零') cur = cur * 10; } return n + cur; }
   var RN = /第?([一二三四五六七八九十百〇]+)([章話號回])/g;
-  function de(t) { if (!t || !RX.test(t)) { RX.lastIndex = 0; return t; } RX.lastIndex = 0; t = t.replace(RN, function (m, a, u) { return hn(a) + UNIT[u]; }).replace(/序章/g, '서장'); if (!RX.test(t)) { RX.lastIndex = 0; return t; } RX.lastIndex = 0; return t.replace(RX, function (m) { if (H.w[m]) return H.w[m]; var o = '', k = 0; while (k < m.length) { var hit = null; for (var j = 0; j < WK.length; j++) { var w = WK[j]; if (w.length > 1 && m.substr(k, w.length) === w) { hit = w; break; } } if (hit) { o += H.w[hit]; k += hit.length; } else { o += CM[m[k]] || m[k]; k++; } } return o; }); }
+  function de(t) { RX.lastIndex = 0; if (!t || !RX.test(t)) { RX.lastIndex = 0; return t; } RX.lastIndex = 0; t = t.replace(RN, function (m, a, u) { return hn(a) + UNIT[u]; }).replace(/序章/g, '서장'); if (!RX.test(t)) { RX.lastIndex = 0; return t; } RX.lastIndex = 0; return t.replace(RX, function (m) { if (H.w[m]) return H.w[m]; var o = '', k = 0; while (k < m.length) { var hit = null; for (var j = 0; j < WK.length; j++) { var w = WK[j]; if (w.length > 1 && m.substr(k, w.length) === w) { hit = w; break; } } if (hit) { o += H.w[hit]; k += hit.length; } else { o += CM[m[k]] || m[k]; k++; } } return o; }); }
   W.mbDeHan = de;
   var SKIP = /^(SCRIPT|STYLE|TEXTAREA|NOSCRIPT|CANVAS|svg|SVG)$/, ATTR = ['alt', 'title', 'aria-label', 'data-ko', 'data-old', 'placeholder', 'data-cap'];
   function walk(root) {

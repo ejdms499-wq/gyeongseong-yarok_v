@@ -477,3 +477,13 @@ html,body.mm{background:var(--paper)}
 .mm-ft-b{display:inline-block}
 .egg-tray{opacity:0;transform:translateY(140%);pointer-events:none;transition:opacity .4s,transform .45s cubic-bezier(.2,.8,.2,1)}
 .egg-tray.show{opacity:1;transform:none;pointer-events:auto}
+/* 첫 화면 움직이는 사진 */
+.mm-hero{margin:4px 0 22px}
+.mm-hero>.mv{aspect-ratio:1/1;background:#0e0e0d;isolation:isolate}
+.mm-hero .mv-no{display:none}
+.mm-hero .mv-count{top:10px;right:10px}
+.mm-hero-go{display:block;margin-top:12px;color:#ecebe7;text-decoration:none}
+.mm-hero-go small{display:block;font:500 10.5px/1 var(--sans);letter-spacing:.18em;color:#e07a72}
+.mm-hero-go b{display:block;margin-top:8px;font:800 21px/1.35 var(--serif);color:#fff}
+.mm-hero-go span{display:block;margin-top:6px;font:400 12.5px/1.5 var(--sans);color:#8f8e89}
+.mm-logo{padding-bottom:14px!important}

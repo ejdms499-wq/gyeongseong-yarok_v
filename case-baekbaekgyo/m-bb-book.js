@@ -537,7 +537,7 @@
 
   /* ════ 호외 세 장 — 옆으로 넘김 ════ */
   (function () {
-    var tr = $('#hgTrack'), n = $('#hgN'), k = $$('img', tr).length;
+    var tr = $('#hgTrack'), n = $('#hgN'); if (!tr) return; var k = $$('img', tr).length;
     tr.addEventListener('scroll', function () { var i = Math.round(tr.scrollLeft / tr.clientWidth); n.textContent = (i + 1) + ' / ' + k + (i ? '' : ' · 옆으로 넘기시압'); }, { passive: true });
   })();
 

@@ -432,7 +432,7 @@
       built = true;
       var h = '<section class="lt-sec desk"><div class="lt-hd"><b>鑑定書 · 필적 감정</b><span id="ltN">0 / 3</span></div>' +
         '<p class="lt-hint">확대경을 손가락으로 끌어, 편지 우를 천천히 살피시압. 같은 손의 버릇이 세 군데 숨어 잇소.</p>' +
-        '<figure class="lt-sheet" id="ltSheet"><img src="./img/letter1.png" alt="붓으로 쓴 괴투서 (재현 그림)" draggable="false">' +
+        '<figure class="lt-sheet" id="ltSheet"><img src="./img/letter1_m.png" alt="붓으로 쓴 괴투서 (재현 그림)" draggable="false">' +
         SPOTS.map(function (s, i) { return '<span class="lt-mark" data-s="' + i + '" style="left:' + s.x + '%;top:' + s.y + '%"><em>' + t0(s.t) + '</em></span>'; }).join('') +
         '<span class="lt-lens" id="ltLens"><i></i></span><span class="lt-match">筆跡<br>一致</span><span class="rt">그림 · 재현</span></figure>' +
         '<ul class="lt-found">' + SPOTS.map(function (s, i) { return '<li data-s="' + i + '"><b>' + t0(s.t) + '</b><span>— 아즉 차지 못함</span></li>'; }).join('') + '</ul></section>';
