@@ -443,3 +443,28 @@ html.mb-lock,html.mb-lock body{overflow:hidden}
 /* 원문 카드 정렬 */
 .mb-doc{align-items:center}
 .mb-doc strong{font-size:14.5px;line-height:1.55;word-break:keep-all}
+/* 1016 · 지면 — 원문을 당기면 2026년 뉴스 · 아래칸 광고는 눌러야 펼쳐짐 */
+.pp-scanbox{position:relative}
+.pp-cmp{position:absolute;inset:0;z-index:3;pointer-events:none}
+.pp-cmp-in{position:absolute;inset:0;overflow:hidden auto;background:#fff;clip-path:inset(0 0 0 var(--x));transition:clip-path .35s ease;pointer-events:auto;box-shadow:inset 1px 0 0 #ddd;-webkit-overflow-scrolling:touch}
+.pp-cmp.drag .pp-cmp-in,.pp-cmp.drag .pp-cmp-h{transition:none}
+.pp-cmp-in .news26{min-height:100%}
+.pp-cmp-h{position:absolute;top:0;bottom:0;left:min(var(--x),calc(100% - 18px));width:44px;margin-left:-22px;pointer-events:auto;touch-action:none;transition:left .35s ease;-webkit-tap-highlight-color:transparent}
+.pp-cmp-h i{position:absolute;left:21px;top:0;bottom:0;width:2px;background:var(--red)}
+.pp-cmp-h span{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:54px;padding:8px 0;border-radius:3px;background:var(--red);color:#fff;font:700 10.5px/1.35 var(--sans);letter-spacing:.04em;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.pp-cmp-h span::before{content:"‹ ";}
+.pp-cmp.open .pp-cmp-h span::before{content:"‹ › "}
+.pp-cmp.hint .pp-cmp-h{animation:ppHint 1.2s ease-in-out 2}
+@keyframes ppHint{50%{transform:translateX(-34px)}}
+.pp-n26{margin:4px calc(var(--g) * -1) 0;border-top:1px solid #ddd}
+details.pp-ad{padding:0;border:2px dashed var(--red);background:#fff}
+details.pp-ad>summary{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 14px;list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+details.pp-ad>summary::-webkit-details-marker{display:none}
+details.pp-ad>summary b{font:700 15px/1.2 var(--serif);color:var(--red)}
+details.pp-ad>summary span{font:500 11.5px/1 var(--sans);color:var(--mute)}
+details.pp-ad>summary span::after{content:" ▾"}
+details.pp-ad[open]>summary span{font-size:0}
+details.pp-ad[open]>summary span::after{content:"접기 ▴";font-size:11.5px}
+details.pp-ad>:not(summary){margin-left:14px;margin-right:14px}
+details.pp-ad[open]{padding-bottom:18px}
+.pp-n26 img,.pp-cmp-in img{filter:grayscale(1) contrast(1.08)}

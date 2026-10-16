@@ -110,6 +110,7 @@
 
   W.mb.paper = function (cfg) {
     var A = cfg.arts, WD = cfg.words || [], got = {}, I = 0, mode = 'scan';
+    var N26 = cfg.n26 || { sec: '사회', sub: '사건·사고' };
     function paintN() {
       var n = Object.keys(got).length;
       $$('.mbWordN').forEach(function (el) { el.textContent = n; });
@@ -128,19 +129,20 @@
       } else {
         var src = cfg.imgBase + a.img, yr = a.date.slice(0, 4);
         h = '<div class="pp-hd"><small>' + (cfg.sec || '사회면') + ' | ' + t0(a.d) + ' | ' + t0(a.day) + '</small>' + (a.mark ? '<i class="stamp">' + a.mark + '</i>' : '') + '</div>' + (a.paper ? '<p class="pp-paper">' + (a.paper === '동아일보' ? '실제 동아일보 기사' : '실제 ' + a.paper + ' 기사') + '</p>' : '') + (a.note ? '<div class="pp-note"><b>알려 두오</b>' + t0(a.note) + '</div>' : '') +
-          '<div class="mb-seg pp-seg three"><button data-m="scan" class="' + (mode === 'scan' ? 'on' : '') + '">원문 지면</button><button data-m="now" class="' + (mode === 'now' ? 'on' : '') + '">오늘 말로 읽기</button><button data-m="sum" class="' + (mode === 'sum' ? 'on' : '') + '">간추려 읽기</button></div>';
+          '<div class="mb-seg pp-seg three"><button data-m="scan" class="' + (mode === 'scan' ? 'on' : '') + '">원문 지면</button><button data-m="now" class="' + (mode === 'now' ? 'on' : '') + '">' + (W.ykNews26 ? '2026년 뉴스' : '오늘 말로 읽기') + '</button><button data-m="sum" class="' + (mode === 'sum' ? 'on' : '') + '">간추려 읽기</button></div>';
         if (mode === 'scan') {
           var key = String(a.img).replace(/\.[a-z]+$/, '').replace(/_0\d$/, ''), AD = cfg.ads && cfg.ads[String(a.img).replace(/\.[a-z]+$/, '')];
           h += '<div class="pp-scanbox"><button class="pp-scan" type="button" data-zoom="' + src + '" data-cap="' + (a.paper || '동아일보') + ' ' + a.date + ' 원문 지면"><img src="' + src + '" alt="' + (a.paper || '동아일보') + ' ' + a.date + ' 원문 지면"><span>눌러 크게 보기</span></button>' +
+            (W.ykNews26 ? '<div class="pp-cmp" id="ppCmp" style="--x:100%"><div class="pp-cmp-in">' + W.ykNews26({ a: a, arts: A, cur: I, paper: a.paper || '동아일보', sec: N26.sec, sub: N26.sub }) + '</div><button type="button" class="pp-cmp-h" id="ppCmpH" aria-label="당겨서 2026년 뉴스 보기"><i></i><span>당겨 보기<br>2026</span></button></div>' : '') +
             (AD ? '<button type="button" class="pp-cut" style="top:' + (AD.top * 100) + '%;height:' + (AD.h * 100) + '%" data-goad>아래칸 · 그날의 광고 ▾</button>' : '') + '</div>' +
             '<p class="pp-cap">원 긔사 · ' + (a.paper || '동아일보') + ' · ' + cfg.era + ' ' + t0(a.d) + ' — 테두리 친 곳이 그날 실린 긔사이오.' + (AD ? ' 붉은 절취선 안은 가튼 장 맨 아래칸의 광고요.' : '') + '</p>';
           if (AD) {
             var y = a.date.slice(0, 4), m = +a.date.slice(5, 7), dd = +a.date.slice(8, 10);
-            h += '<section class="pp-ad" id="ppAd"><h4>아래칸 · 그날의 광고</h4><p class="pp-ad-k">그날, 가튼 장 아래칸 · ' + y + '년 ' + m + '월 ' + dd + '일 · 동아일보</p>' +
+            h += '<details class="pp-ad" id="ppAd"><summary><b>아래칸 · 그날의 광고</b><span>눌러 펼치기</span></summary><p class="pp-ad-k">그날, 가튼 장 아래칸 · ' + y + '년 ' + m + '월 ' + dd + '일 · 동아일보</p>' +
               '<button type="button" class="pp-adimg" data-zoom="' + AD.img + '" data-cap="' + y + '년 ' + m + '월 ' + dd + '일 지면 맨 아래칸 광고"><img src="' + AD.img + '" alt="' + y + '년 ' + m + '월 ' + dd + '일 지면 아래칸 광고" loading="lazy"><span>눌러 크게 보기</span></button>' +
               '<p class="pp-ad-cap">' + (AD.cap || (y + '년 ' + m + '월 ' + dd + '일 지면, 그 맨 아래칸이오. 가튼 날 가튼 장에 실린 진짜 광고들이오.')) + '</p>' +
               '<p class="pp-ad-say">' + (AD.say || '가튼 장 우에선 사건을 쫏고, 아래칸에선 물건을 팔앗소.') + '</p>' +
-              (cfg.shop ? '<a class="pp-ad-go" href="' + cfg.shop + (AD.sk || key) + '">그 시절 광고 상뎜으로 →</a>' : '') + '</section>';
+              (cfg.shop ? '<a class="pp-ad-go" href="' + cfg.shop + (AD.sk || key) + '">그 시절 광고 상뎜으로 →</a>' : '') + '</details>';
           }
         } else if (mode === 'sum') {
           var Q = ['이 보도의 요뎜은 무엇이오?', '그때 형편은 엇더하엿소?', '긔록에서 눈여겨볼 대목은 어대요?'];
@@ -148,6 +150,8 @@
             '<h4>긔록에게 뭇다</h4><p class="pp-cap" style="margin:0 0 10px">이 긔사에 궁금한 것을 긔록과 함께 풀어 보시압. 물음을 누르면 답이 나오오.</p>' +
             (a.qa ? a.qa.map(function (x) { return '<details class="pp-qa"><summary><b>문</b>' + x[0] + '</summary><p><b>답</b>' + x[2] + '</p></details>'; }).join('') : Q.map(function (q, i) { return a.sum[i] ? '<details class="pp-qa"><summary><b>문</b>' + q + '</summary><p><b>답</b>' + a.sum[i] + '</p></details>' : ''; }).join('')) +
             '<p class="pp-warn">※ ' + yr + '년 ' + (a.paper || '동아일보') + ' 원문을 바탕으로 간추린 것입니다.</p></article>';
+        } else if (W.ykNews26) {
+          h += '<div class="pp-n26">' + W.ykNews26({ a: a, arts: A, cur: I, img: src, paper: a.paper || '동아일보', sec: N26.sec, sub: N26.sub }) + '</div>';
         } else {
           h += '<article class="pp-art"><p class="pp-sec">경성야록뉴스 · 사회 › 사건·사고 › 아카이브</p><h3>' + a.title + '</h3>' +
             '<p class="pp-by">경성야록 아카이브팀 기자 · 입력 2026.' + a.date.slice(5) + ' 06:00 · 원 보도 ' + (a.paper || '동아일보') + ' ' + a.date + '</p>' +
@@ -173,14 +177,27 @@
         setTimeout(function () { $$('.pp-chips .chip', bd).forEach(function (c, i) { setTimeout(function () { c.classList.add('got'); }, i * 260); }); }, 250);
         paintN();
       }
+      var cmp = $('#ppCmp', bd);
+      if (cmp) {
+        var hd = $('#ppCmpH', cmp), drag = false;
+        var setX = function (x) { x = Math.max(0, Math.min(100, x)); cmp.style.setProperty('--x', x + '%'); cmp.classList.toggle('open', x < 92); };
+        var pos = function (e) { var r = cmp.getBoundingClientRect(); setX((e.clientX - r.left) / r.width * 100); };
+        hd.addEventListener('pointerdown', function (e) { drag = true; cmp.classList.add('drag', 'moved'); if (hd.setPointerCapture) hd.setPointerCapture(e.pointerId); e.preventDefault(); });
+        hd.addEventListener('pointermove', function (e) { if (drag) pos(e); });
+        var end = function () { drag = false; cmp.classList.remove('drag'); };
+        hd.addEventListener('pointerup', end); hd.addEventListener('pointercancel', end);
+        hd.addEventListener('click', function (e) { e.stopPropagation(); });
+        if (!W.__ppHint) { W.__ppHint = 1; setTimeout(function () { if (!cmp.classList.contains('moved')) { cmp.classList.add('hint'); setTimeout(function () { cmp.classList.remove('hint'); }, 2400); } }, 900); }
+      }
       tabs();
       var on = $('#ppTabs .on'); if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest' });
     }
     D.addEventListener('click', function (e) {
       var t = e.target.closest('#ppTabs button'); if (t) { I = +t.dataset.i; render(); return; }
       var m = e.target.closest('.pp-seg button'); if (m) { mode = m.dataset.m; render(); return; }
+      var rl = e.target.closest('#ppBody .n26-rel a[data-i]'); if (rl) { e.preventDefault(); I = +rl.dataset.i; render(); return; }
       if (e.target.closest('#ppBody [data-next]')) { I = Math.min(A.length - 1, I + 1); render(); return; }
-      if (e.target.closest('#ppBody [data-goad]')) { e.preventDefault(); e.stopPropagation(); var ad = $('#ppAd'), bd = $('#ppBody'); if (ad) bd.scrollTo({ top: ad.offsetTop - 10, behavior: 'smooth' }); }
+      if (e.target.closest('#ppBody [data-goad]')) { e.preventDefault(); e.stopPropagation(); var ad = $('#ppAd'), bd = $('#ppBody'); if (ad) ad.open = true; if (ad) bd.scrollTo({ top: ad.offsetTop - 10, behavior: 'smooth' }); }
     });
     W.addEventListener('mb:open', function (e) { if (e.detail === 'shPaper') render(); });
     paintN();

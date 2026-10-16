@@ -95,51 +95,154 @@
     v.addEventListener('ended', function () { f.classList.remove('on'); });
   });
 
-  /* ════ 序 · 그 밤 — 백림의 킬로와 세종로의 비가 번갈아 ════ */
+  /* ════ 序 · 그 밤 — 내리는 만큼 달림 (백림의 길 ↔ 세종로의 비) ════
+     킬로 · 시각은 근거의 구간 기록에서 (8km 26분 · 15km 49분 45초 · 28km 자바라 낙오 · 31km 1시간 46분 · 결승 2시간 29분 19초 2)
+     경성 시각 = 출발(밤 열한 시 이 분) + 지난 시간 · 백림 시각 = 오후 세 시 + 지난 시간 */
   (function () {
+    var root = $('#race'); if (!root) return;
+    var MJ = './img/mj/';
+    /* 그림 — 미드저니 새 그림(앞)이 잇으면 그것, 업스면 잇는 그림(뒤) */
+    var BG = {
+      seoul: [MJ + 'sk_sejong_rain.jpg', MJ + 'sk_radio.jpg'],
+      horn: [MJ + 'sk_horn.jpg', MJ + 'sk_radio.jpg'],
+      start: [MJ + 'sk_run_start.jpg', './img/film/sk_start.jpg'],
+      road: [MJ + 'sk_run_road.jpg', MJ + 'sk_road.jpg'],
+      road2: [MJ + 'sk_run_road2.jpg', MJ + 'sk_road.jpg'],
+      dark: [MJ + 'sk_run_alone.jpg', MJ + 'sk_road.jpg'],
+      stadium: [MJ + 'sk_run_stadium.jpg', MJ + 'sk_stadium.jpg'],
+      cheer: [MJ + 'sk_umbrella.jpg', MJ + 'sk_radio.jpg']
+    };
+    var K = [[0, 0], [.08, 0], [.24, 8], [.38, 15], [.47, 17.5], [.56, 17.5], [.70, 28], [.77, 31], [.90, 42.195], [1, 42.195]];
+    var T = [[0, 0], [8, 26 * 60], [15, 49 * 60 + 45], [17.5, 58 * 60], [31, 106 * 60], [42.195, 2 * 3600 + 29 * 60 + 19.2]];
     var B = [
-      { at: 'seoul', time: '밤 열한 시 이 분', km: 0, t: '세종로', b: '사옥의 스피커로 라듸오 중계가 세종로에 울렷소.' },
-      { at: 'berlin', time: '백림 시각 · 오후 세 시', km: 0, wm: '出發', t: '출발', b: '오십륙 명이 출발선에 섯소. 그 가운데, 조선의 두 청년.' },
-      { at: 'berlin', time: '선두 자바라 · 이십륙 분', km: 8, wm: '八', t: '8km', b: '손 군은 넷재, 영국의 하퍼와 나란히 달렷소.' },
-      { at: 'berlin', time: '자바라 · 사십구 분', km: 15, wm: '十五', t: '15km', b: '선두와는 이 분 십 초 차. 그는 아즉 서두르지 아넛소.' },
-      { at: 'seoul', time: '밤 열두 시', km: 17.5, t: '세종로', b: '손 군이 넷재로 십칠 킬로 반을 지날 즈음 — 중계가 끈혓소.', cut: 1 },
-      { at: 'berlin', time: '선두로 · 한 시간 사십륙 분', km: 31, wm: '卅一', t: '31km', b: '이십팔 킬로에서 자바라가 넘어지고, 손 군이 압으로 나섯소.' },
-      { at: 'berlin', time: '두 시간 이십구 분 십구 초 이', km: 42.195, wm: '決勝', t: '42.195km', b: '일착 손긔졍. 삼착 남승룡 — 조선의 두 청년이 함께 시상대에 올랏소.', fin: 1 },
-      { at: 'seoul', time: '새벽 한 시 반', km: 42.195, t: '세종로', b: '사옥 이층 창문에서 한 녀자가 외첫소. 「손긔졍 군이 우승을 차지햇고 — 」 사람들은 우산을 내던젓소.', hot: 1 }
+      { p: 0, at: 'seoul', bg: 'seoul', k: '경성 · 세종로', t: '세종로', b: '사옥의 스피커로 라듸오 중계가 세종로에 울렷소.', rain: 1 },
+      { p: .08, at: 'berlin', bg: 'start', wm: '出發', k: '백림 · 올림픽 스타디움', t: '출발', b: '오십륙 명이 출발선에 섯소. 그 가운데, 조선의 두 청년.' },
+      { p: .20, at: 'berlin', bg: 'road', wm: '八', k: '선두 자바라 · 이십륙 분', t: '8km', b: '손 군은 넷재, 영국의 하퍼와 나란히 달렷소.', rank: 4 },
+      { p: .34, at: 'berlin', bg: 'road2', wm: '十五', k: '자바라 · 사십구 분', t: '15km', b: '선두와는 이 분 십 초 차. 그는 아즉 서두르지 아넛소.', rank: 4 },
+      { p: .46, at: 'seoul', bg: 'horn', k: '경성 · 세종로 · 밤 열두 시', t: '중계가 끈혓소', b: '손 군이 넷재로 십칠 킬로 반을 지날 즈음 — 중계가 끈혓소.', cut: 1, rain: 1, rank: 4 },
+      { p: .56, at: 'berlin', bg: 'dark', wm: '·', k: '백림 · 세종로에는 들리지 안는 길', t: '　', b: '', mute: 1, rank: 4 },
+      { p: .68, at: 'berlin', bg: 'road', wm: '廿八', k: '이십팔 킬로', t: '28km', b: '자바라가 넘어젓소.', fall: 1, rank: 4 },
+      { p: .76, at: 'berlin', bg: 'road2', wm: '卅一', k: '선두로 · 한 시간 사십륙 분', t: '31km', b: '손 군이 압으로 나섯소.', rank: 1, heart: 1 },
+      { p: .89, at: 'berlin', bg: 'stadium', wm: '決勝', k: '두 시간 이십구 분 십구 초 이', t: '42.195km', b: '일착 손긔졍. 삼착 남승룡 — 조선의 두 청년이 함께 시상대에 올랏소.', rank: 1, fin: 1, roar: .5 },
+      { p: .955, at: 'seoul', bg: 'cheer', k: '경성 · 세종로 · 새벽 한 시 반', t: '「손긔졍 군이 —」', b: '사옥 이층 창문에서 한 녀자가 외첫소. 「손긔졍 군이 우승을 차지햇고 — 」 사람들은 우산을 내던젓소.', rain: 1, hot: 1, roar: 1, rank: 1 }
     ];
-    var rail = $('#rcRail'), list = $('#rcList'); if (!rail) return;
-    rail.innerHTML = '<div class="rc-km"><b id="rcKm">0</b><small>km</small></div><div class="rc-mid"><div class="rc-bar"><i id="rcBar"></i><em id="rcRun"></em></div><p id="rcT">세종로 · 밤 열한 시 이 분</p></div>';
-    list.innerHTML = B.map(function (x, i) {
-      return '<li class="rc-sc ' + x.at + (x.hot ? ' hot' : '') + (x.fin ? ' fin' : '') + '" data-i="' + i + '">' + (x.wm ? '<span class="wm">' + x.wm + '</span>' : '<span class="wm s">京城</span>') +
-        '<p class="k">' + (x.at === 'seoul' ? '경성 · 세종로' : '백림') + ' · ' + x.time + '</p><h3>' + x.t + '</h3><p class="b">' + x.b + '</p></li>';
-    }).join('');
-    var sc = $$('.rc-sc', list), cur = -1, shown = 0, anim;
-    function count(to) { cancelAnimationFrame(anim); var from = shown, t0_ = performance.now(); (function f(t) { var k = Math.min(1, (t - t0_) / 900); shown = from + (to - from) * k; $('#rcKm').textContent = to % 1 && k === 1 ? to : Math.round(shown); if (k < 1) anim = requestAnimationFrame(f); })(t0_); }
-    function set(i) {
-      if (i === cur) return; cur = i; var x = B[i];
-      sc.forEach(function (el, k) { el.classList.toggle('now', k === i); if (k <= i) el.classList.add('seen'); });
-      count(x.km); $('#rcBar').style.width = (x.km / 42.195 * 100) + '%'; $('#rcRun').style.left = (x.km / 42.195 * 100) + '%';
-      $('#rcT').textContent = (x.at === 'seoul' ? '경성 · 세종로' : '백림') + ' · ' + x.time;
-      $('#c0').classList.toggle('seoul', x.at === 'seoul');
-      if (x.cut && A()) { A().noiseOn(); A().noiseLevel(.35); setTimeout(function () { A().noiseLevel(0); }, 1400); }
-      if (x.hot) tone('stamp');
+    var used = {}; B.forEach(function (x) { used[x.bg] = 1; });
+    root.innerHTML =
+      '<div class="rx-stage" id="rxStage">' +
+        '<div class="rx-bgs">' + Object.keys(used).map(function (k) { return '<i class="rx-bg" data-bg="' + k + '" style="background-image:url(' + BG[k][1] + ')"></i>'; }).join('') + '</div>' +
+        '<i class="rx-speed" aria-hidden="true"></i><i class="rx-vig" aria-hidden="true"></i><span class="rx-rt">그림 · 재현</span>' +
+        '<div class="rx-hud"><div class="rx-cl"><small>백림</small><b id="rxBer">15:00</b></div><div class="rx-clock"><small>경긔 시각</small><b id="rxClock">0:00:00</b></div><div class="rx-cl r"><small>경성</small><b id="rxSeo">23:02</b></div></div>' +
+        '<b class="rx-wm" id="rxWm"></b>' +
+        '<div class="rx-cap" id="rxCap"><p class="k" id="rxK"></p><h3 id="rxT"></h3><p class="b" id="rxB"></p><ol class="rx-board" id="rxBoard"><li><b>1</b>손긔졍<em>2:29:19.2</em></li><li><b>2</b>하퍼 · 영국<em>2:31:23.2</em></li><li><b>3</b>남승룡<em>2:31:42</em></li></ol></div>' +
+        '<div class="rx-low">' +
+          '<div class="rx-air" id="rxAir"><span class="sp" aria-hidden="true"></span><canvas id="rxWv" width="240" height="40"></canvas><em id="rxAirT">세종로 스피커 · 중계 중</em></div>' +
+          '<div class="rx-run"><div class="rx-km"><b id="rxKm">0.0</b><small>km</small></div><div class="rx-rank" id="rxRank"><small>순위</small><b>—</b></div></div>' +
+          '<div class="rx-track"><i class="ln"></i><i class="done" id="rxDone"></i>' +
+            [8, 15, 17.5, 28, 31].map(function (k) { return '<span class="mk' + (k === 17.5 ? ' cut' : '') + '" style="left:' + (k / 42.195 * 100) + '%"><i></i><small>' + (k === 17.5 ? '중계 끈김' : k) + '</small></span>'; }).join('') +
+            '<span class="fl" style="left:100%"><small>결승</small></span>' +
+            '<em class="ld" id="rxLead"><small>선두 자바라</small></em><em class="me" id="rxMe"><small>손</small></em></div>' +
+        '</div>' +
+      '</div>';
+    var st = $('#rxStage'), bgs = {}, cur = -1, p = 0, inside = false;
+    $$('.rx-bg', st).forEach(function (el) { bgs[el.dataset.bg] = el; });
+    /* 미드저니 그림이 잇으면 바꿔 끼움 */
+    Object.keys(used).forEach(function (k) { var im = new Image(); im.onload = function () { bgs[k].style.backgroundImage = 'url(' + BG[k][0] + ')'; bgs[k].classList.add('mj'); }; im.src = BG[k][0]; });
+
+    function lerpK(q) { for (var i = 1; i < K.length; i++) if (q <= K[i][0]) { var a = K[i - 1], b = K[i], t = (q - a[0]) / Math.max(1e-6, b[0] - a[0]); return a[1] + (b[1] - a[1]) * t; } return 42.195; }
+    function secAt(km) { for (var i = 1; i < T.length; i++) if (km <= T[i][0]) { var a = T[i - 1], b = T[i], t = (km - a[0]) / (b[0] - a[0]); return a[1] + (b[1] - a[1]) * t; } return T[T.length - 1][1]; }
+    var z = function (n) { return (n < 10 ? '0' : '') + n; };
+    function hm(base, s) { var m = Math.floor(base + s / 60), h = Math.floor(m / 60) % 24; return z(h) + ':' + z(m % 60); }
+
+    /* 소리 — 발소리 · 군중 · 끈김 */
+    var ctx = function () { return W.mb.ctx; }, roarG = null, lastStep = 0, vel = 0, lastY = W.scrollY, lastT = performance.now();
+    function step(fin) {
+      var c = ctx(); if (!c || W.mb.muted && W.mb.muted()) return;
+      try {
+        var len = .07, buf = c.createBuffer(1, c.sampleRate * len, c.sampleRate), d = buf.getChannelData(0);
+        for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+        var s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+        f.type = 'lowpass'; f.frequency.value = fin ? 900 : 520; g.gain.value = .55;
+        s.buffer = buf; s.connect(f); f.connect(g); g.connect(c.destination); s.start();
+      } catch (e) {}
     }
-    var tk = false;
-    function onScroll() {
-      tk = false; var r0 = list.getBoundingClientRect(), vis = r0.top < W.innerHeight * .6 && r0.bottom > W.innerHeight * .3;
-      rail.classList.toggle('on', vis);
-      var mid = W.innerHeight * .55, best = -1, bd = 1e9;
-      sc.forEach(function (el, k) { var r = el.getBoundingClientRect(), d = Math.abs(r.top + r.height / 2 - mid); if (r.bottom > 0 && r.top < W.innerHeight && d < bd) { bd = d; best = k; } });
-      if (best >= 0) set(best);
-      var wet = vis && cur >= 0 && B[cur].at === 'seoul'; if (W.mb.rain) W.mb.rain(wet);
+    function roar(v) {
+      var c = ctx(); if (!c) return;
+      try {
+        if (!roarG) {
+          var len = 2, buf = c.createBuffer(1, c.sampleRate * len, c.sampleRate), d = buf.getChannelData(0);
+          for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+          var s = c.createBufferSource(), f = c.createBiquadFilter(), f2 = c.createBiquadFilter(); roarG = c.createGain();
+          s.buffer = buf; s.loop = true; f.type = 'bandpass'; f.frequency.value = 900; f.Q.value = .6; f2.type = 'lowpass'; f2.frequency.value = 2400;
+          roarG.gain.value = 0; s.connect(f); f.connect(f2); f2.connect(roarG); roarG.connect(c.destination); s.start();
+        }
+        roarG.gain.setTargetAtTime((W.mb.muted && W.mb.muted()) ? 0 : v * .16, c.currentTime, v ? 1.2 : .8);
+      } catch (e) {}
     }
-    W.addEventListener('scroll', function () { if (!tk) { tk = true; requestAnimationFrame(onScroll); } }, { passive: true });
-    onScroll();
+    /* 스피커 소리결 */
+    var wv = $('#rxWv'), wx = wv.getContext('2d'), live = true, ph = 0;
+    function wave() {
+      if (!inside) return; ph += .18; wx.clearRect(0, 0, 240, 40); wx.strokeStyle = live ? '#e9e8e4' : '#555'; wx.lineWidth = 1.4; wx.beginPath();
+      for (var x = 0; x <= 240; x += 3) { var a = live ? (Math.sin(x * .09 + ph) * .5 + Math.sin(x * .23 - ph * 1.7) * .35) * (8 + Math.random() * 7) : 0; x ? wx.lineTo(x, 20 + a) : wx.moveTo(x, 20 + a); }
+      wx.stroke(); requestAnimationFrame(wave);
+    }
+
+    function beat(i) {
+      if (i === cur) return; var prev = cur; cur = i; var x = B[i];
+      Object.keys(bgs).forEach(function (k) { bgs[k].classList.toggle('on', k === x.bg); });
+      st.className = 'rx-stage ' + x.at + (x.mute ? ' mute' : '') + (x.fin ? ' fin' : '') + (x.hot ? ' hot' : '') + (x.cut ? ' cut' : '') + (i > 4 ? ' after' : '');
+      var cap = $('#rxCap'); cap.classList.remove('in'); void cap.offsetWidth;
+      $('#rxK').textContent = x.k; $('#rxT').textContent = x.t; $('#rxB').textContent = x.b; cap.classList.add('in');
+      var wm = $('#rxWm'); wm.textContent = x.wm || (x.at === 'seoul' ? '京城' : ''); wm.classList.remove('in'); void wm.offsetWidth; wm.classList.add('in');
+      $('#rxRank b').textContent = x.rank || '—'; $('#rxRank').classList.toggle('one', x.rank === 1);
+      if (W.mb.rain) W.mb.rain(!!x.rain && inside);
+      if (A()) A().heart(!!x.heart);
+      roar(x.roar || 0);
+      live = i < 4;
+      $('#rxAir').classList.toggle('dead', i >= 4 && i < 9);
+      $('#rxAirT').textContent = i < 4 ? '세종로 스피커 · 중계 중' : i < 9 ? '세종로 스피커 · 끈김 — 소식 업슴' : '세종로 · 이층 창문의 외침';
+      if (x.cut && prev < i && A()) { A().noiseOn(); A().noiseLevel(.5); setTimeout(function () { A().noiseLevel(.04); }, 1500); setTimeout(function () { A().noiseLevel(0); }, 3200); }
+      if (x.fall && prev < i) tone('stamp');
+      if (x.fin && prev < i) { tone('gavel'); }
+      if (x.hot && prev < i) { if (W.mb.sfx) W.mb.sfx('bell'); }
+    }
+    function frame() {
+      var r = root.getBoundingClientRect(), h = W.innerHeight, span = r.height - (h - 48);
+      p = Math.max(0, Math.min(1, (48 - r.top) / Math.max(1, span)));
+      var km = lerpK(p), s = secAt(km);
+      $('#rxKm').textContent = km >= 42.19 ? '42.195' : km.toFixed(1);
+      var hh = Math.floor(s / 3600), mm = Math.floor(s % 3600 / 60), ss = s % 60;
+      $('#rxClock').textContent = hh + ':' + z(mm) + ':' + (km >= 42.19 ? '19.2' : z(Math.floor(ss)));
+      $('#rxBer').textContent = hm(15 * 60, s); $('#rxSeo').textContent = hm(23 * 60 + 2, s);
+      var pc = km / 42.195 * 100; $('#rxMe').style.left = pc + '%'; $('#rxDone').style.width = pc + '%';
+      var lead = $('#rxLead'); lead.style.left = (km < 28 ? Math.min(100, pc + 7) : 28 / 42.195 * 100) + '%'; lead.classList.toggle('down', km >= 28);
+      var bi = 0; B.forEach(function (x, i) { if (p >= x.p) bi = i; }); beat(bi);
+      var bg = bgs[B[bi].bg], nx = B[bi + 1], lp = (p - B[bi].p) / ((nx ? nx.p : 1) - B[bi].p);
+      if (bg) bg.style.transform = 'scale(' + (1.04 + Math.max(0, Math.min(1, lp)) * (B[bi].at === 'berlin' ? .34 : .1)).toFixed(3) + ')';
+    }
+    function loop() {
+      if (!inside) return;
+      var now = performance.now(), y = W.scrollY, v = Math.abs(y - lastY) / Math.max(1, now - lastT); lastY = y; lastT = now;
+      vel = vel * .85 + v * .15; st.style.setProperty('--v', Math.min(1, vel * 1.6).toFixed(3));
+      var b = B[Math.max(0, cur)], running = b.at === 'berlin' && vel > .05 && p < .95;
+      var gap = 330 - Math.min(110, lerpK(p) * 2.6);
+      if (running && now - lastStep > gap) { lastStep = now; step(b.fin); }
+      requestAnimationFrame(loop);
+    }
+    W.addEventListener('scroll', function () { if (inside) frame(); }, { passive: true });
+    W.addEventListener('resize', frame);
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        inside = e.isIntersecting;
+        if (inside) { frame(); loop(); wave(); if (B[Math.max(0, cur)].rain && W.mb.rain) W.mb.rain(true); }
+        else { if (W.mb.rain) W.mb.rain(false); if (A()) A().heart(false); roar(0); }
+      });
+    }, { threshold: 0 }).observe(root);
+    frame();
   })();
 
   /* ════ 第一章 · 네 날의 지면 (공통 장치) ════ */
   var ADB = '../assets/ads/day/sk_';
-  W.mb.paper({ arts: ARTS, imgBase: './img/scan/', era: '소화 십일 년', sec: '문화예술면', shop: '../shop.html#ad-sk-',
+  W.mb.paper({ arts: ARTS, imgBase: './img/scan/', era: '소화 십일 년', sec: '문화예술면', n26: { sec: '스포츠', sub: '올림픽' }, shop: '../shop.html#ad-sk-',
     ads: { '19360811': { top: .76, h: .23, img: ADB + '19360811_band.jpg' },
       '19360812p': { top: .75, h: .245, img: ADB + '19360812_band.jpg', sk: '19360812', cap: '「조선의 두 아들」을 노래한 팔월 십이일 지면, 그 맨 아래칸이오. 일본말로 쓴 화장품 광고(「ユキワリソ」 · 「お顔ふき容器 進呈」)가 칸을 채웟소.', say: '가튼 장 우에선 조선의 아들을 노래하고, 아래칸은 일본말이 채웟소.' },
       '19360813': { top: .82, h: .16, img: ADB + '19360813_band.jpg' } } });
