@@ -372,3 +372,8 @@ html,body.mm{background:var(--paper)}
 .mm-plan{display:block;padding:12px 8px;text-align:center}
 .mm-plan b{display:block;margin:4px 0 2px;font-size:22px}
 .mm-plan span{font-size:11px}
+/* 백백교 — 컴퓨터판과 같은 당시 지면 사진. 사진은 늘이지 않고 제 비율 그대로, 우는 물음 · 아래는 설명 */
+.mm-case>.mv-loupe{background:#0b0b0b}
+.mv-loupe .mv-bg{inset:auto;left:0;right:0;top:24%;aspect-ratio:418/305;background-size:100% 100%;animation:none;filter:grayscale(1) contrast(1.08) brightness(.95);box-shadow:0 0 0 1px #2a2a2a}
+.mv-loupe .mv-ask{left:86px;right:14px;top:20px;font-size:18px;line-height:1.45}
+.mv-loupe .mv-cap{z-index:5}

@@ -118,14 +118,15 @@
     /* 확대경 — 혼자 더듬다가, 손가락을 대면 따라옴 */
     function loupe(el) {
       var lp = $('.mv-lp', el), inn = $('.mv-lp>div', el), Z = 2.4, R = 60, man = null, t0 = performance.now(), x = 0, y = 0;
-      function place(px, py) { var w = el.clientWidth, h = el.clientHeight; x = Math.max(R, Math.min(w - R, px)); y = Math.max(R, Math.min(h - R, py));
-        lp.style.transform = 'translate(' + x + 'px,' + y + 'px)'; inn.style.backgroundSize = (w * Z) + 'px ' + (h * Z) + 'px'; inn.style.backgroundPosition = (-(x * Z - R)) + 'px ' + (-(y * Z - R)) + 'px'; }
+      var bg = $('.mv-bg', el);
+      function place(px, py) { var bx = bg.offsetLeft, by = bg.offsetTop, w = bg.offsetWidth, h = bg.offsetHeight; x = Math.max(bx + R, Math.min(bx + w - R, px)); y = Math.max(by + R * .6, Math.min(by + h - R * .6, py));
+        lp.style.transform = 'translate(' + x + 'px,' + y + 'px)'; inn.style.backgroundSize = (w * Z) + 'px ' + (h * Z) + 'px'; inn.style.backgroundPosition = (-((x - bx) * Z - R)) + 'px ' + (-((y - by) * Z - R)) + 'px'; }
       (function f(t) { if (el.isConnected) requestAnimationFrame(f); if (!el.classList.contains('on') || man) return;
-        var k = (t - t0) / 1000, w = el.clientWidth, h = el.clientHeight; place(w * (.5 + .32 * Math.sin(k * .37)), h * (.62 + .2 * Math.sin(k * .53 + 1.3))); })(t0);
+        var k = (t - t0) / 1000, w = bg.offsetWidth, h = bg.offsetHeight; place(bg.offsetLeft + w * (.5 + .36 * Math.sin(k * .37)), bg.offsetTop + h * (.55 + .25 * Math.sin(k * .53 + 1.3))); })(t0);
       function pos(e) { var r = el.getBoundingClientRect(); place(e.clientX - r.left, e.clientY - r.top); }
       lp.addEventListener('pointerdown', function (e) { man = 1; lp.setPointerCapture && lp.setPointerCapture(e.pointerId); pos(e); buzz(8); e.preventDefault(); });
       lp.addEventListener('pointermove', function (e) { if (man) { pos(e); e.preventDefault(); } });
-      function up() { if (!man) return; man = null; t0 = performance.now() - 1000 * Math.asin(Math.max(-1, Math.min(1, (x / el.clientWidth - .5) / .32))) / .37; }
+      function up() { if (!man) return; man = null; t0 = performance.now() - 1000 * Math.asin(Math.max(-1, Math.min(1, ((x - bg.offsetLeft) / bg.offsetWidth - .5) / .36))) / .37; }
       lp.addEventListener('pointerup', up); lp.addEventListener('pointercancel', up);
       el.addEventListener('click', function (e) { if (e.target.closest('.mv-lp')) return; man = 1; var r = el.getBoundingClientRect(); place(e.clientX - r.left, e.clientY - r.top); buzz(8); setTimeout(function () { man = null; }, 2500); });
     }
