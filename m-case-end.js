@@ -101,8 +101,15 @@
       paintNb(); var all = cnt() >= BEATS.length;
       $('i', stp).textContent = label; stp.classList.remove('on'); void stp.offsetWidth; stp.classList.add('on');
       nbBtn.classList.remove('pop'); void nbBtn.offsetWidth; nbBtn.classList.add('pop');
-      buzz(all ? [30, 60, 30, 60, 90] : [25, 40, 15]); tone('stamp');
+      buzz(all ? [30, 60, 30, 60, 90] : [25, 40, 15]); tone('stamp'); if (W.__mceDock) W.__mceDock(true, 2400);
     }
+    /* 아래 두 단추는 내려 읽는 동안 숨고 — 올려 밀거나, 도장이 찍히거나, 맨 끝에 닿으면 잠깐 나옴 */
+    var lastY = W.scrollY, hideT = 0;
+    function dock(show, ms) { D.body.classList.toggle('mce-dock', !!show); clearTimeout(hideT); if (show && ms) hideT = setTimeout(function () { if (!nearEnd()) D.body.classList.remove('mce-dock'); }, ms); }
+    function nearEnd() { return W.scrollY + innerHeight > D.documentElement.scrollHeight - 600; }
+    W.addEventListener('scroll', function () { var y = W.scrollY, d = y - lastY; if (Math.abs(d) < 8) return; lastY = y; if (nearEnd() || y < 200) dock(true); else if (d < -30) dock(true, 2600); else if (d > 0) dock(false); }, { passive: true });
+    dock(true, 3000);
+    W.__mceDock = dock;
     paintNb();
     if ('IntersectionObserver' in W) {
       var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; var x = BEATS.filter(function (b) { return b[0] === e.target.id; })[0]; if (x) { stamp(x[0], x[1]); io2.unobserve(e.target); } }); }, { rootMargin: '0px 0px -55% 0px' });

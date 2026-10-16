@@ -221,7 +221,7 @@
         '<div class="rx2-scale"><div class="rd-nums"><span>550</span><span>700</span><span>900</span><span>1100</span><span>1300</span><span>1500</span></div><div class="rd-ticks"></div>' +
         ST.map(function (s) { return '<i class="rx2-st" style="left:' + ((fq(s.ang) - LO) / (HI - LO) * 100) + '%"></i>'; }).join('') + '<i class="rd-needle" id="rxNeedle"></i></div>' +
         '<div class="rx2-knobwrap"><div class="rx2-meter" aria-hidden="true"><svg viewBox="0 0 120 64"><path d="M10 58 A52 52 0 0 1 110 58" fill="none" stroke="#333" stroke-width="1.5"/><path d="M78 13 A52 52 0 0 1 110 58" fill="none" stroke="#b3261e" stroke-width="3"/>' + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (k) { var a = Math.PI * (1 - k / 10), r1 = 52, r2 = k % 5 ? 47 : 43; return '<line x1="' + (60 + Math.cos(a) * r1).toFixed(1) + '" y1="' + (58 - Math.sin(a) * r1).toFixed(1) + '" x2="' + (60 + Math.cos(a) * r2).toFixed(1) + '" y2="' + (58 - Math.sin(a) * r2).toFixed(1) + '" stroke="#777" stroke-width="1"/>'; }).join('') + '</svg><i id="rxMeter"></i><span>신호</span></div>' +
-        '<p class="rx2-hint" id="rxHint">손잡이를 손가락으로 천천히 돌리시압 · 세 바퀴에 550부터 1500 키로까지<br>신호 바늘이 붉은 칸에 들면 손을 멈추고 조금씩 맞추시압</p>' +
+        '<p class="rx2-hint" id="rxHint"><b>손잡이를 천천히 돌리시압</b>신호 바늘이 붉은 칸에 들면<br>손을 늦추고 조금씩 맞추시압</p>' +
         '<div class="rx2-knob" id="rxKnob"><img src="' + (cfg.dial || '') + '" alt="" draggable="false"><span class="rx2-knurl"></span><i></i></div><p class="rx2-turn" id="rxTurn"></p></div>' +
         '<div class="rd-card" id="rdCard"><p class="rd-hint">잡음 속 어딘가에, ' + ST.length + ' 개의 목소리가 숨어 잇소.</p></div></div>';
       var kn = $('#rxKnob'), last = null, c0 = null;

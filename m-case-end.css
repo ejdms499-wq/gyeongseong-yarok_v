@@ -135,3 +135,9 @@
 .mce-press{display:block;width:100%;margin-top:16px;height:54px;border:0;background:var(--red,#b3261e);color:#fff;font:800 15px/54px var(--serif);letter-spacing:.06em}
 .mce-bk-p{margin-top:14px;text-align:center;font:400 13px/1.6 var(--serif);color:#9a9994}
 .mce-bk-p b{color:#fff}
+/* 아래 두 단추 — 읽는 동안엔 숨음 */
+.mce-nb,.mce-tab{transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .35s}
+body:not(.mce-dock) .mce-nb,body:not(.mce-dock) .mce-tab{transform:translateY(160%)!important;opacity:0;pointer-events:none}
+.mce-nb,.mce-tab{height:44px!important}
+.mce-nb{padding:0 12px 0 9px}
+.mce-tab img{width:28px;height:34px}
