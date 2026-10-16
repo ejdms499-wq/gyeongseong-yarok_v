@@ -108,6 +108,8 @@
       start: [MJ + 'sk_run_start.jpg', './img/film/sk_start.jpg'],
       road: [MJ + 'sk_run_road.jpg', MJ + 'sk_road.jpg'],
       road2: [MJ + 'sk_run_road2.jpg', MJ + 'sk_road.jpg'],
+      road3: [MJ + 'sk_run_road3.jpg', MJ + 'sk_road.jpg'],
+      road4: [MJ + 'sk_run_road4.jpg', MJ + 'sk_road.jpg'],
       dark: [MJ + 'sk_run_alone.jpg', MJ + 'sk_road.jpg'],
       stadium: [MJ + 'sk_run_stadium.jpg', MJ + 'sk_stadium.jpg'],
       cheer: [MJ + 'sk_umbrella.jpg', MJ + 'sk_radio.jpg']
@@ -121,8 +123,8 @@
       { p: .34, at: 'berlin', bg: 'road2', wm: '十五', k: '자바라 · 사십구 분', t: '15km', b: '선두와는 이 분 십 초 차. 그는 아즉 서두르지 아넛소.', rank: 4 },
       { p: .46, at: 'seoul', bg: 'horn', k: '경성 · 세종로 · 밤 열두 시', t: '중계가 끈혓소', b: '손 군이 넷재로 십칠 킬로 반을 지날 즈음 — 중계가 끈혓소.', cut: 1, rain: 1, rank: 4 },
       { p: .56, at: 'berlin', bg: 'dark', wm: '·', k: '백림 · 세종로에는 들리지 안는 길', t: '　', b: '', mute: 1, rank: 4 },
-      { p: .68, at: 'berlin', bg: 'road', wm: '廿八', k: '이십팔 킬로', t: '28km', b: '자바라가 넘어젓소.', fall: 1, rank: 4 },
-      { p: .76, at: 'berlin', bg: 'road2', wm: '卅一', k: '선두로 · 한 시간 사십륙 분', t: '31km', b: '손 군이 압으로 나섯소.', rank: 1, heart: 1 },
+      { p: .68, at: 'berlin', bg: 'road3', wm: '廿八', k: '이십팔 킬로', t: '28km', b: '자바라가 넘어젓소.', fall: 1, rank: 4 },
+      { p: .76, at: 'berlin', bg: 'road4', wm: '卅一', k: '선두로 · 한 시간 사십륙 분', t: '31km', b: '손 군이 압으로 나섯소.', rank: 1, heart: 1 },
       { p: .89, at: 'berlin', bg: 'stadium', wm: '決勝', k: '두 시간 이십구 분 십구 초 이', t: '42.195km', b: '일착 손긔졍. 삼착 남승룡 — 조선의 두 청년이 함께 시상대에 올랏소.', rank: 1, fin: 1, roar: .5 },
       { p: .955, at: 'seoul', bg: 'cheer', k: '경성 · 세종로 · 새벽 한 시 반', t: '「손긔졍 군이 —」', b: '사옥 이층 창문에서 한 녀자가 외첫소. 「손긔졍 군이 우승을 차지햇고 — 」 사람들은 우산을 내던젓소.', rain: 1, hot: 1, roar: 1, rank: 1 }
     ];
