@@ -444,4 +444,26 @@
 <script src="shop-new.js?v=4"></script>
 <script src="shop-dev.js?v=3"></script>
 <script src="yk-guide.js?v=39"></script>
+<!-- 1016 · 폰 정리: 스크랩첩 단추를 오른쪽 가장자리 세로 띠로(광고 그림을 가리지 안케) · 내려가면 「목차」 단추로 상점 안내에 바로 돌아감 · 빠진 것 업슴 -->
+<style>
+@media (max-width:600px){
+  .sb-tab{right:0!important;bottom:96px!important;flex-direction:column!important;gap:4px!important;padding:10px 7px 10px 9px!important;border-left-width:3px!important;opacity:.92}
+  .sb-tab b{writing-mode:vertical-rl;font-size:12px!important;letter-spacing:.2em!important}
+  .sb-tab .sb-n{font-size:11px}
+  .m-toc{position:fixed;right:0;bottom:40px;z-index:7999;padding:9px 8px 8px 10px;border:0;border-left:3px solid #5a4630;background:#e7dbc2;color:#2a1f15;font:700 12px/1 "Noto Serif KR",serif;letter-spacing:.06em;box-shadow:0 8px 18px -8px #000;opacity:0;pointer-events:none;transform:translateX(8px);transition:opacity .4s,transform .4s}
+  .m-toc.on{opacity:.95;pointer-events:auto;transform:none}
+  .sp-jump{scroll-margin-top:70px}
+}
+</style>
+<script>
+(function(){ if(!(window.matchMedia&&matchMedia('(max-width:600px)').matches))return;
+  function go(){ var nav=document.querySelector('.sp-jump'); if(!nav)return;
+    var b=document.createElement('button'); b.type='button'; b.className='m-toc'; b.textContent='↑ 목차'; b.setAttribute('aria-label','상점 안내(목차)로');
+    b.addEventListener('click',function(){ nav.scrollIntoView({behavior:'smooth',block:'start'}); });
+    document.body.appendChild(b);
+    addEventListener('scroll',function(){ b.classList.toggle('on', nav.getBoundingClientRect().bottom < -200); },{passive:true});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go); else go();
+})();
+</script>
 </body></html>

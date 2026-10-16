@@ -361,5 +361,21 @@
 <!-- 순서 중요: 데이터 → 동작 -->
 <script src="expo-data.js"></script>
 <script src="expo.js"></script>
+<!-- 1016 · 폰에서 작은 글씨를 읽을 만한 크기로 (내용은 그대로) -->
+<style>
+@media (max-width:600px){
+  body{-webkit-text-size-adjust:100%}
+}
+</style>
+<script>
+(function(){ if(!(window.matchMedia&&matchMedia('(max-width:600px)').matches))return;
+  function up(){ [].forEach.call(document.querySelectorAll('body *'),function(e){
+      if(e.dataset.mfs||!e.childNodes.length)return; var own=false; for(var i=0;i<e.childNodes.length;i++){ if(e.childNodes[i].nodeType===3&&e.childNodes[i].textContent.trim().length>1){own=true;break;} } if(!own)return;
+      var cs=getComputedStyle(e), f=parseFloat(cs.fontSize); if(cs.position==='fixed')return;
+      var t=e.textContent.trim().length; if(f<12.5&&t>6){ e.style.fontSize=(f<10?11.5:12.5)+'px'; e.dataset.mfs='1'; var ls=parseFloat(cs.letterSpacing)||0; if(ls>2) e.style.letterSpacing='.08em'; }
+  }); }
+  setTimeout(up,1500); setTimeout(up,4000); var q; addEventListener('scroll',function(){clearTimeout(q);q=setTimeout(up,500);},{passive:true}); document.addEventListener('click',function(){setTimeout(up,900);},true);
+})();
+</script>
 </body>
 </html>
