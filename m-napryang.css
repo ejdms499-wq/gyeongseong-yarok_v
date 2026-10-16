@@ -342,3 +342,7 @@ body.blackout::after{content:"";position:fixed;inset:0;z-index:290;background:#0
 .mir p{font:400 17px/1.7 var(--serif);color:#3a3a38;text-align:center;opacity:0;transition:opacity 2s ease}
 .mir p.in{opacity:1}
 .mir p.r{position:absolute;bottom:calc(36px + env(safe-area-inset-bottom));font-size:12px;color:#5a1a15}
+/* 가독성 — 불이 꺼져도 글은 읽히게 */
+.rm-cl li{color:#6f6e6a}
+.mute p{color:#8a8984}
+.mir p{color:#a3a29d}

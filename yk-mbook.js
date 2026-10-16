@@ -64,12 +64,30 @@
   }
   W.mb.zoom = showZoom;
 
+  /* ── 처음 온 이에게 한 번만 — 이 지면을 닑는 법 세 줄 ── */
+  function firstTip() {
+    try { if (localStorage.getItem('yk-tip1')) return; } catch (e) { return; }
+    setTimeout(function () {
+    var hasKo = D.querySelector('.hj[data-ko]'), hasMv = D.querySelector('.mv'), isCase = /\/case-/.test(location.pathname);
+    var L = [];
+    if (hasKo || isCase) L.push(['가', '<b>손가락을 대면</b> 그 단락이 오늘 말로 바뀌오. 위의 「가」는 전부 바꾸기.']);
+    if (hasMv || isCase) L.push(['◐', '<b>사진은 누르면</b> 움직이오. 신문이 살아 잇소.']);
+    if (isCase) L.push(['도', '<b>장을 지나면</b> 아래 기자수첩에 도장이 찍히오. 다 모으면 기자증.']);
+    L.push(['☰', '<b>오른쪽 우 ☰</b>는 장 지도 — 닑은 장 · 남은 시간이 보이오.']);
+      var t = D.createElement('div'); t.className = 'mb-tip';
+      t.innerHTML = '<p class="k">처음 오셧소 · 이 지면을 닑는 법</p><ul>' + L.map(function (x) { return '<li><i>' + x[0] + '</i><span>' + x[1] + '</span></li>'; }).join('') + '</ul><button type="button">알앗소</button>';
+      D.body.appendChild(t); requestAnimationFrame(function () { requestAnimationFrame(function () { t.classList.add('on'); }); });
+      var off = function () { t.classList.remove('on'); setTimeout(function () { t.remove(); }, 450); try { localStorage.setItem('yk-tip1', '1'); } catch (e) {} };
+      t.querySelector('button').onclick = off;
+    }, 1600);
+  }
+
   /* ── 읽는 길 — 긴 사건을 폰에서 끗까지: 이어 닑기 · 장마다 자리와 남은 시간 · 장 지도 차례 · 장 끗의 다음 장 예고 ── */
   function readingPath(chsAll, toc) {
     var chs = chsAll.filter(function (s) { return s.id && !/^(next|colophon)$/.test(s.id) && !s.classList.contains('mb-cover'); });
     if (chs.length < 6) return;
     var KEY = location.pathname.replace(/[^a-z0-9]+/gi, '-'), PK = 'yk-pos' + KEY, SK = 'yk-seen' + KEY, N = chs.length;
-    var mins = chs.map(function (c) { var t = (c.innerText || c.textContent || '').replace(/\s+/g, ''); return Math.max(1, Math.round(t.length / 360)); });
+    var mins = chs.map(function (c) { var t = (c.innerText || c.textContent || '').replace(/\s+/g, ''); return Math.max(1, Math.round(t.length / 360 + c.querySelectorAll('.mb-dev,[data-open]').length * 2)); });
     var left = function (i) { var m = 0; for (var k = i; k < N; k++) m += mins[k]; return m; };
     var seen = {}; try { seen = JSON.parse(localStorage.getItem(SK) || '{}') || {}; } catch (e) {}
     /* 장 첫머리 — 몃째 장 · 이 장 몃 분 · 남은 이야기 */
@@ -142,6 +160,7 @@
     W.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
     onScroll();
     readingPath(chs, toc);
+    firstTip();
     var tb = bar && bar.querySelector('[data-open="mbToc"]'); if (tb && !tb.querySelector('.mb-burger')) { tb.setAttribute('aria-label', '차례'); tb.innerHTML = '<i class="mb-burger"><i></i></i>'; }
 
     /* 나타나기 — 화면에 조금이라도 들어오면 (긴 칸도 막히지 않게) */
@@ -566,4 +585,16 @@
     D.addEventListener('touchend', end, { passive: true, capture: true }); D.addEventListener('touchcancel', end, { passive: true, capture: true });
   }
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', init); else init();
+})(window, document);
+
+/* ════ 공통 ⑤ 그림은 화면 가까이 올 때 불러옴 (data-lbg) ════ */
+(function (W, D) {
+  'use strict';
+  function go() {
+    var L = [].slice.call(D.querySelectorAll('[data-lbg]'));
+    if (!('IntersectionObserver' in W)) { L.forEach(function (e) { e.style.backgroundImage = 'url(' + e.getAttribute('data-lbg') + ')'; }); return; }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; var t = e.target; t.style.backgroundImage = 'url(' + t.getAttribute('data-lbg') + ')'; t.removeAttribute('data-lbg'); io.unobserve(t); }); }, { rootMargin: '900px 0px' });
+    L.forEach(function (e) { io.observe(e); });
+  }
+  if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', go); else go();
 })(window, document);

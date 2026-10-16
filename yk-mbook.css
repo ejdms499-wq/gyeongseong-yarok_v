@@ -555,3 +555,12 @@ details.pp-ad[open]{padding-bottom:18px}
 .dark .mb-dev{background:var(--night)!important;color:var(--nink)!important;box-shadow:inset 0 0 0 1px #333}
 .dark .mb-dev .kk{color:var(--nmute)!important}.dark .mb-dev span.d{color:#b9b8b3!important}.dark .mb-dev .go{border-color:#333!important}
 .dark .mb-dev .ph{filter:grayscale(1) contrast(1.1) brightness(.75)!important}
+/* 처음 온 이 — 닑는 법 */
+.mb-tip{position:fixed;left:10px;right:10px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9400;padding:18px 18px 14px;background:#0b0b0b;color:#ecebe7;border-top:3px solid var(--red);box-shadow:0 20px 50px rgba(0,0,0,.55);transform:translateY(120%);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.mb-tip.on{transform:none}
+.mb-tip .k{font:500 10.5px/1 var(--sans);letter-spacing:.2em;color:#e07a72}
+.mb-tip ul{list-style:none;margin:12px 0 0;padding:0}
+.mb-tip li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;padding:7px 0;font:400 13.5px/1.6 var(--sans);color:#cfcfca}
+.mb-tip li i{display:grid;place-items:center;width:26px;height:26px;border:1px solid #555;font:700 13px/1 var(--serif);font-style:normal;color:#fff}
+.mb-tip li b{color:#fff}
+.mb-tip button{display:block;width:100%;margin-top:10px;height:46px;border:0;background:#fff;color:#0b0b0b;font:800 14px/46px var(--serif);letter-spacing:.1em}

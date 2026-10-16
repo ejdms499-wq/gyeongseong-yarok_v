@@ -236,7 +236,7 @@
 
   /* ── 초를 끌 때마다 — 어둠이 한 겹씩, 그리고 세는 목소리 ── */
   var SAY = ['', '하나.', '둘. — 방금, 숨소리가 하나 더 들렷소.', '셋. …세는 목소리가 당신 것이 아니오.', '넷. 뒤를 도라보지 마시오.', '다섯. 저것도 — 초를 세고 잇소.'];
-  function dim() { var k = Object.keys(out).length; D.documentElement.style.setProperty('--np-dim', (k * .075).toFixed(3)); }
+  function dim() { var k = Object.keys(out).length; D.documentElement.style.setProperty('--np-dim', (k * .045).toFixed(3)); }
   function scare(k, after) {
     var o = $('#snf'), t = $('#snfT'); dim();
     if (calm) { after(); return; }
