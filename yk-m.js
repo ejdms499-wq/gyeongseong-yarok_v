@@ -88,6 +88,9 @@
       });
     }
     setTimeout(tidy, 1200); setTimeout(tidy, 4000);
+    /* 1016c · 시계 설명글은 작은 시계 띠 밖으로 (내용은 그대로) */
+    var lg = D.querySelector('.clock .ck-face-wrap .ck-legend');
+    if (lg) { lg.classList.add('yk-moved'); var fw = lg.parentNode; fw.parentNode.insertBefore(lg, fw.nextSibling); }
     var tq = null; addEventListener('scroll', function () { clearTimeout(tq); tq = setTimeout(tidy, 400); }, { passive: true });
   });
 })();
