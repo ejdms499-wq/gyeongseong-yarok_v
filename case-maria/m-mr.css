@@ -7,3 +7,50 @@
   html body .lt-mid{min-width:0!important}
   html body .lt-check li{flex-wrap:wrap}
 }
+
+/* 1016 · 「수첩 속의 사람들」 폰 전용 판 — 두 쪽 펼친 수첩 대신, 위에 인물 줄(옆으로 넘김) · 아래로 「인물 조사 → 취재 일지」 한 장 */
+@media (max-width:600px){
+  html body #board .jn-desk{min-height:0!important;padding:22px 16px 26px!important;background:#0b0b0b!important}
+  html body #board .jn-head{text-align:left!important;margin:0 0 16px!important}
+  html body #board .jn-head *{writing-mode:horizontal-tb!important}
+  /* 덮인 수첩 — 화면 가운데 크게, 등불 효과 없이 */
+  html body #board:not(.jn-open) .jn-folder{position:relative!important;left:auto!important;top:auto!important;transform:rotate(-2deg)!important;width:86%!important;margin:10px auto 0!important;display:block!important;opacity:1!important}
+  html body #board .jn-folder img{-webkit-mask-image:none!important;mask-image:none!important}
+  html body #board .jn-open-hint{display:block!important;text-align:center;margin:14px 0 0!important;font-size:14px!important;letter-spacing:.2em!important;color:#efece6!important}
+  html body #board.jn-open .jn-folder,html body #board.jn-open .jn-open-hint{display:none!important}
+  /* 펼친 수첩 */
+  html body #board .jn-book:before,html body #board .jn-book:after,html body #board .jn-page:before,html body #board .jn-page:after{display:none!important}
+  html body #board .jn-book{display:flex!important;flex-direction:column!important;min-height:0!important;padding:0!important;background:#f3f2ef!important;color:#0e0e0e!important;box-shadow:0 18px 40px -16px #000!important}
+  html body #board .jn-tabs{order:-1;position:sticky!important;top:calc(62px + env(safe-area-inset-top))!important;right:auto!important;z-index:5;display:flex!important;flex-direction:row!important;gap:6px!important;overflow-x:auto;scrollbar-width:none;padding:10px 12px!important;background:#0b0b0b;margin:0!important}
+  html body #board .jn-tabs::-webkit-scrollbar{display:none}
+  html body #board .jn-tab{flex:none!important;background-image:none!important;opacity:1!important;filter:none!important;writing-mode:horizontal-tb!important;transform:none!important;width:auto!important;height:auto!important;padding:8px 12px!important;font-size:13.5px!important;letter-spacing:.04em!important;border:1px solid #444!important;background:transparent!important;color:#bdb9b0!important;white-space:nowrap}
+  html body #board .jn-tab.on{background:#efece6!important;color:#0e0e0e!important;border-color:#efece6!important}
+  html body #board .jn-page{display:block!important;background:#f3f2ef!important;width:auto!important;max-width:none!important;padding:20px 18px 22px!important;min-height:0!important;box-shadow:none!important;transform:none!important}
+  html body #board .jn-page.jn-r{border-top:1px dashed #9a978f}
+  html body #board .jn-page *{writing-mode:horizontal-tb!important}
+  html body #board .nb-hd{display:flex!important;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 10px;border-bottom:2px solid #0e0e0e;padding-bottom:8px;margin-bottom:14px}
+  html body #board .nb-hd span{font-size:16px!important;font-weight:900}
+  html body #board .nb-hd em{font-size:11.5px!important;font-style:normal;color:#666}
+  html body #board .nb-who{display:grid!important;grid-template-columns:104px minmax(0,1fr)!important;gap:14px!important;align-items:end}
+  html body #board .nb-photo{width:104px!important;height:130px!important;margin:0!important}
+  html body #board .nb-photo img{width:100%!important;height:100%!important;object-fit:cover!important}
+  html body #board .nb-name h4{font-size:22px!important;line-height:1.3!important}
+  html body #board .nb-name p,html body #board .nb-name em{font-size:12px!important}
+  html body #board .nb-f{display:block!important;margin-top:14px!important}
+  html body #board .nb-f>div{display:grid!important;grid-template-columns:72px minmax(0,1fr)!important;gap:10px!important;padding:8px 0!important;border-bottom:1px dotted #9a978f}
+  html body #board .nb-f dt{font-size:11.5px!important;color:#666;letter-spacing:.06em}
+  html body #board .nb-f dd{font-size:14px!important;line-height:1.65!important;margin:0!important}
+  html body #board .nb-foot{font-size:11px!important;line-height:1.6!important;margin-top:12px!important;color:#666}
+  html body #board .nb-log{display:block!important;width:auto!important;margin:0!important;padding:0!important}
+  html body #board .nb-log li{display:block!important;width:auto!important;padding:10px 0 10px 14px!important;border-left:2px solid #0e0e0e;margin:0 0 6px!important}
+  html body #board .nb-log time{display:block!important;font-size:12px!important;font-weight:700;color:#b3261e;margin-bottom:3px}
+  html body #board .nb-log p{width:auto!important;font-size:14.5px!important;line-height:1.75!important;margin:0!important}
+  html body #board .nb-q{display:block!important;margin-top:14px!important;padding:12px!important;background:#e4e3df;font-size:14px!important;line-height:1.7!important}
+  html body #board .nb-q b{display:block;color:#b3261e;font-size:12px;margin-bottom:4px}
+  html body #board .nb-go{display:flex!important;flex-wrap:wrap;gap:6px!important;align-items:center;margin-top:14px!important}
+  html body #board .nb-go button{padding:7px 10px!important;font-size:13px!important}
+  html body #board .nb-rf{display:flex!important;flex-wrap:wrap;gap:12px!important;align-items:center;margin-top:14px!important;position:static!important}
+  html body #board .nb-clip{width:100%!important;max-width:none!important;margin:0!important;transform:none!important;position:static!important}
+  html body #board .nb-clip img{width:100%!important;height:auto!important}
+  html body #board .nb-stamp{position:static!important;transform:rotate(-6deg)!important}
+}

@@ -21,6 +21,7 @@
     'html.yk-noir img:not(.yn-keep),html.yk-noir video,html.yk-noir picture{filter:grayscale(1) contrast(1.08)!important}',
     'html.yk-noir *::before,html.yk-noir *::after{filter:grayscale(1)}',
     'html.yk-noir ::selection{background:#0e0e0e;color:#f3f2ef}',
+    'html.yk-noir .ykg-toast{display:none!important}',
     /* 본지(메인) 첫 면 머리 — 검은 음화 */
     'html.yk-noir .m-pg1 .yn-neg{position:relative;margin:-14px -16px 14px;padding:18px 18px 22px;background:#0b0b0b url(' + BASE + 'assets/noir/street.jpg) center 30%/cover;color:#efece6!important;overflow:hidden}',
     'html.yk-noir .m-pg1 .yn-neg:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(11,11,11,.35),rgba(11,11,11,.82) 70%,#0b0b0b);filter:none}',
@@ -140,7 +141,7 @@
     'html.yk-noir .yn-hd{letter-spacing:.04em!important}',
     'html.yk-noir .yn-vert{writing-mode:horizontal-tb!important;text-orientation:mixed!important;height:auto!important}'
   ]);
-  var SKIPLIN = '.m-hd,.m-dock,.m-deck>.m-pg,.notebook,.ykg-book,.ykp-veil,.yke .yg-press,.ykr,.report-timeline,.m-in>.m-mh,nav,button,.cb-steps,.yn-flip,.ck-face-wrap,.ykq-tray,[class*="track"],[class*="slider"],[class*="tabs"],[class*="chips"],[class*="dots"],[class*="strip"]';
+  var SKIPLIN = '.jn-desk,.m-hd,.m-dock,.m-deck>.m-pg,.notebook,.ykg-book,.ykp-veil,.yke .yg-press,.ykr,.report-timeline,.m-in>.m-mh,nav,button,.cb-steps,.yn-flip,.ck-face-wrap,.ykq-tray,[class*="track"],[class*="slider"],[class*="tabs"],[class*="chips"],[class*="dots"],[class*="strip"]';
   function textLen(e) { return (e.textContent || '').replace(/\s+/g, '').length; }
   function linearize() {
     var vw = innerWidth;
@@ -186,7 +187,7 @@
     var lampDone = false;
     onReady(function () {
       [].forEach.call(D.querySelectorAll('.detail-content img'), function (im) {
-        if (im.__ynl || im.closest('.m-hd,.notebook,.ck-face-wrap,.yke,.ykr,.scan,[class*="scan"],[class*="paper"],[class*="news"]')) return;
+        if (im.__ynl || im.closest('.jn-desk,.m-hd,.notebook,.ck-face-wrap,.yke,.ykr,.scan,[class*="scan"],[class*="paper"],[class*="news"]')) return;
         var r = im.getBoundingClientRect(); if (r.width < 220 || r.height < 140) return;
         if (/scan|articles|19\d\d|letter|da_|bgg_/.test(im.getAttribute('src') || '')) return;   /* 원문 지면 · 편지는 다 보이게 */
         if (lum(im.parentElement) > 70) return;
