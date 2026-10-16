@@ -497,3 +497,59 @@
 .lg2-led li.hd span:first-child::after{content:"장부";font-size:10px}
 .j2-pic .a{filter:grayscale(1) contrast(1.1) brightness(calc(.75 - var(--dust) * .25)) blur(3.2px)!important}
 .j2-tag .hole{top:24px;margin-top:0}
+
+/* 수배지 — 얼굴 자리에 맞춤 (그림의 빈 칸: 가로 33.4~65.9% · 세로 32.5~67.4%) */
+.mt-poster .face{left:33.4%!important;top:32.5%!important;width:32.6%!important;height:34.9%!important;aspect-ratio:auto!important}
+.mt-poster .ring{top:50%!important}
+.ch-m .ch-hold{color:#111}
+
+/* ════════ 1016 · 3차 — 그 밤(흐르는 카메라) · 병(흐르는 칠십사 년) ════════ */
+.cm-st{position:sticky;top:48px;height:calc(100svh - 48px);overflow:hidden;background:#000}
+.cm-sc{position:absolute;inset:0;overflow:hidden;opacity:0}
+.cm-sc img{position:absolute;left:0;top:0;height:100%;max-width:none;width:auto;transform-origin:50% 50%;will-change:transform;filter:grayscale(1) contrast(1.22) brightness(.74)!important}
+.cm-grain{position:absolute;inset:-50%;z-index:2;pointer-events:none;opacity:.14;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:cmGrain 1.2s steps(6) infinite}
+@keyframes cmGrain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-2%)}60%{transform:translate(-2%,-4%)}80%{transform:translate(4%,2%)}100%{transform:translate(0,0)}}
+.cm-vig{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 90% 70% at 50% 46%,rgba(0,0,0,0) 45%,rgba(0,0,0,.7) 100%)}
+.cm-black{position:absolute;inset:0;z-index:3;background:#000;opacity:1;pointer-events:none}
+.cm-st.paper .cm-sc img{filter:grayscale(1) contrast(.55) brightness(1.55)!important;transition:filter 2.4s ease}
+.cm-ban{position:absolute;left:50%;top:40%;z-index:4;white-space:nowrap;padding:10px 20px;border:4px solid var(--red);color:var(--red);font:900 44px/1 var(--serif);letter-spacing:.2em;transform:translate(-50%,-50%) rotate(-9deg) scale(2);opacity:0;transition:opacity .35s ease,transform .45s cubic-bezier(.3,1.6,.5,1)}
+.cm-st.stamped .cm-ban{opacity:.95;transform:translate(-50%,-50%) rotate(-9deg) scale(1)}
+.cm-bar{position:absolute;left:0;right:0;height:9%;z-index:5;background:#000}
+.cm-bar.t{top:0}.cm-bar.b{bottom:0}
+.cm-hd{position:absolute;left:var(--g);right:var(--g);top:14px;z-index:6;display:flex;justify-content:space-between;font:500 10px/1 var(--sans);letter-spacing:.24em;color:#8a8984}
+.cm-hd span:first-child{color:var(--red)}
+.cm-hd b{color:#fff;font-weight:700}
+.cm-rt{position:absolute;right:10px;top:calc(9% + 10px);z-index:6;font:500 9px/1 var(--sans);letter-spacing:.18em;padding:4px 5px;background:rgba(0,0,0,.6);color:#bbb}
+.cm-sub{position:absolute;left:var(--g);right:var(--g);bottom:calc(9% + 20px);z-index:6;text-align:center;opacity:0;pointer-events:none}
+.cm-sub .k{font:500 11px/1.4 var(--sans);letter-spacing:.16em;color:#e07a72}
+.cm-sub h3{margin:6px 0 10px;font:900 32px/1.2 var(--serif);letter-spacing:-.02em;color:#fff;text-shadow:0 2px 18px #000,0 0 2px #000}
+.cm-sub .b{font:400 15.5px/1.8 var(--serif);color:#f2f1ec;text-shadow:0 1px 12px #000,0 0 3px #000,0 0 1px #000}
+.cm-st.paper .cm-sub h3{color:#111;text-shadow:none}
+.cm-st.paper .cm-sub .b{color:#222;text-shadow:none}
+.cm-hint{position:absolute;left:0;right:0;top:46%;z-index:6;text-align:center;font:500 12px/1 var(--sans);letter-spacing:.3em;color:#777;transition:opacity 1s}
+
+.jm-st{position:sticky;top:48px;height:calc(100svh - 48px);overflow:hidden;background:#050505;--p:0}
+.jm-pic{position:absolute;inset:0}
+.jm-pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform,opacity}
+.jm-pic .a{filter:grayscale(1) contrast(1.15) brightness(.62) blur(2.6px)!important}
+.jm-pic .e{opacity:0;filter:grayscale(1) contrast(.95) brightness(.9)!important}
+.jm-sun{position:absolute;inset:-10% -40%;background:linear-gradient(100deg,rgba(255,255,255,0) 35%,rgba(255,255,255,.16) 48%,rgba(255,255,255,.04) 56%,rgba(255,255,255,0) 66%);mix-blend-mode:screen;pointer-events:none}
+.jm-dust{position:absolute;inset:0;opacity:0;mix-blend-mode:screen;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 -.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.jm-cv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.jm-vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 50% 42%,rgba(0,0,0,0) 30%,rgba(0,0,0,.82) 100%)}
+.jm-rt{position:absolute;right:10px;top:10px;z-index:4;font:500 9px/1 var(--sans);letter-spacing:.18em;padding:4px 5px;background:rgba(0,0,0,.6);color:#bbb}
+.jm-year{position:absolute;left:0;right:0;top:7%;z-index:3;text-align:center;pointer-events:none}
+.jm-year b{display:block;font:200 min(26vw,120px)/1 var(--serif);letter-spacing:-.02em;color:rgba(255,255,255,.88);font-variant-numeric:tabular-nums}
+.jm-year small{display:block;margin-top:8px;font:500 11px/1 var(--sans);letter-spacing:.28em;color:#9a9994}
+.jm-cap{position:absolute;left:var(--g);right:var(--g);bottom:calc(64px + env(safe-area-inset-bottom));z-index:3;text-align:center;opacity:0;pointer-events:none}
+.jm-cap .k{font:500 11px/1 var(--sans);letter-spacing:.22em;color:#e07a72;margin-bottom:12px}
+.jm-cap .b{font:400 19px/1.75 var(--serif);color:#f0efea;text-shadow:0 2px 16px #000,0 0 3px #000}
+.jm-cap[data-i="0"] .b{font-weight:700;font-size:21px}
+.jm-rule{position:absolute;left:var(--g);right:var(--g);bottom:calc(30px + env(safe-area-inset-bottom));z-index:3;height:1px;background:#333}
+.jm-rule i{position:absolute;left:0;top:0;height:1px;background:#ddd}
+.jm-rule span{position:absolute;top:-3px;width:1px;height:7px;background:#777}
+.jm-year b{transition:filter .8s ease,opacity .8s ease}
+.jm-year b.roll{filter:blur(7px);opacity:.45}
+.cm-st.paper .cm-sc img{filter:grayscale(1) contrast(.7) brightness(1.25)!important}
+.cm-st.paper .cm-sub .b{color:#111;font-weight:500;background:rgba(255,255,255,.55);padding:2px 6px}
+.cm-st.paper .cm-sub .k{color:var(--red)}

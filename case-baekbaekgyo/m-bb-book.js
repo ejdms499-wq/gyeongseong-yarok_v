@@ -132,40 +132,6 @@
     });
   })();
 
-  /* ════ 序 · 주문 — 소리와 함께, 점점 빨라지고 겹쳐짐 ════ */
-  (function () {
-    var box = $('#bbChant'), b = $('#chantBtn'), sp = $$('.ch-t span', box), echo = $('#chEcho'), au = null, raf = 0, T = [];
-    var WORDS = ['백백백', '의의의', '적적적', '감응감감응', '하시옵숭성'];
-    /* 소리 파일의 바퀴 — 시작 초 · 길이 (네 바퀴, 갈수록 빨라짐) */
-    var RD = [[0, 9.4], [8.6, 7.2], [15.2, 5.6], [20.2, 4.8]];
-    echo.innerHTML = Array.apply(null, Array(16)).map(function (_, i) { return '<p style="--i:' + i + '">' + WORDS.join(' ') + ' ' + WORDS.join(' ') + '</p>'; }).join('');
-    function stop() {
-      cancelAnimationFrame(raf); T.forEach(clearTimeout); T = [];
-      box.classList.remove('play', 'r1', 'r2', 'r3', 'r4', 'end'); sp.forEach(function (s) { s.classList.remove('on'); });
-      b.querySelector('b').textContent = '주문 듯기';
-      if (W.__mbResume && !W.__mbOff && W.mb.bgm) { W.__mbResume = false; W.mb.bgm.play().catch(function () {}); }
-    }
-    function tick() {
-      if (!au || au.paused) return;
-      var t = au.currentTime, r = -1;
-      RD.forEach(function (x, i) { if (t >= x[0]) r = i; });
-      if (t > 25) { box.classList.add('end'); }
-      ['r1', 'r2', 'r3', 'r4'].forEach(function (c, i) { box.classList.toggle(c, r === i); });
-      if (r >= 0) { var x = RD[r], k = Math.floor((t - x[0]) / x[1] * 5); sp.forEach(function (s, i) { s.classList.toggle('on', i === k); }); }
-      box.style.setProperty('--sh', (r < 0 ? 0 : r * .6 + (t > 22 ? 1 : 0)).toFixed(2));
-      raf = requestAnimationFrame(tick);
-    }
-    b.addEventListener('click', function () {
-      if (!au) { au = new Audio('../case/audio/baekbaekgyo/bb_chant.mp3'); au.preload = 'auto'; au.addEventListener('ended', function () { box.classList.add('done'); stop(); setTimeout(function () { box.classList.remove('done'); }, 4200); }); }
-      if (!au.paused) { au.pause(); au.currentTime = 0; stop(); return; }
-      try { W.dispatchEvent(new CustomEvent('mb:audio')); } catch (e) {}
-      au.currentTime = 0; au.volume = W.mb.muted && W.mb.muted() ? 0 : 1;
-      var p = au.play(); if (p && p.catch) p.catch(function () {});
-      box.classList.add('play'); b.querySelector('b').textContent = '멈추기'; raf = requestAnimationFrame(tick);
-    });
-    watch(box, function () {}, function () { if (au && !au.paused) { au.pause(); stop(); } });
-  })();
-
   /* ════ 第一章 · 흰 종이 — 눌러 들추면 부고, 다시 누르면 흰 칠이 덥힘 ════ */
   (function () {
     var p = $('#obPaper'), hint = $('#obHint'), st = 0, busy = false, T = [];
@@ -252,71 +218,67 @@
     });
   })();
 
-  /* ════ 第四章 · 그 밤 — 창호 너머의 활동사진 ════
-     내리는 만큼 문이 열리고 닷힘 · 틈은 틈만큼만 · 막힌 복수에서 문이 쾅 닷힘 · 보도 금지는 닷힌 문에 도장 */
+  /* ════ 第四章 · 그 밤 — 한 컷씩 흐르는 카메라 ════
+     넓은 장면을 화면 높이에 맞추고, 내리는 만큼 카메라가 옆으로 흘러감 · 장면 사이는 검게 잠겻다 열림(컷)
+     「틈」은 문틈만큼만 보임 · 마지막은 지면이 하얗게 바래고 도장 */
   (function () {
     var root = $('#ngDoor'); if (!root) return;
     var SC = [
-      { img: 'bb_night_house.jpg', alt: '눈 덮인 밤 골목의 한 집', no: '一', k: '이월 십륙일 밤 · 왕십리', h: '불이 아즉 켜져 잇섯소', b: '왕십리의 한 집에, 불이 아즉 켜져 잇섯소.', open: [.3, .78, 1] },
-      { img: 'bb_door2.jpg', alt: '창호 앞에서 마주 선 두 그림자', no: '二', k: '밤 · 만남', h: '따지러 온 사내', b: '유곤용의 조부와 부친은 재산을 모다 바첫고, 누이동생은 교주에게 바쳐졋소. 뒤늦게 이를 안 그는 삼만 원을 바치겟다 하고 인삼과 록용을 보내어 — 이 밤, 하왕십리 부친의 집에서 교주를 맛낫소.', open: [.2, .86, 1] },
-      { img: 'bb_door.jpg', alt: '창호에 비친 손 그림자', no: '三', k: '그 순간', h: '틈', b: '그는 틈을 엿보앗소.', open: [.25, .85, .13], fx: 'heart' },
-      { img: 'bb_door3.jpg', alt: '창호 너머로 엉킨 그림자들', no: '四', k: '그 순간', h: '막힌 복수', b: '복수하려 하엿소. 그러나 수행원들에게 막혓고 — 교주는 그 길로 달아낫소.', open: [.12, .62, 1], slam: 1 },
-      { img: 'bb_flee.jpg', alt: '어두운 골목으로 멀어지는 흰 옷의 뒷모습', no: '五', k: '그 길로', h: '사라진 교주', b: '그날 밤, 교주는 사라졋소. 경찰이 그를 쫏앗소.', open: [.2, .86, 1], pan: 1 },
-      { img: 'bb_raid.jpg', alt: '등불 아래 문 앞에 선 경찰들', no: '六', k: '새벽 · 인현동', h: '인현동', b: '경찰이 인현동의 집을 덥쳣소. 이경득과 이순분이 붓잡혓소. 장부 속의 일이, 그제야 열리기 시작하엿소.', open: [.08, .88, 1], fast: 1 },
-      { img: 'bb_ban.jpg', alt: '등불 아래 펼쳐진 신문 원고', no: '七', k: '사흘 뒤 · 이월 십구일', h: '보도 금지', b: '이 일을 신문에 싯는 것이 금지되엇소.', open: [2, 2, 0], ban: 1 }
+      { img: 'bb_night_house.jpg', alt: '눈 덮인 밤 골목의 한 집', k: '이월 십륙일 밤 · 왕십리', h: '불이 아즉 켜져 잇섯소', b: '왕십리의 한 집에, 불이 아즉 켜져 잇섯소.', dir: 1 },
+      { img: 'bb_door2.jpg', alt: '창호 앞에서 마주 선 두 그림자', k: '밤 · 만남', h: '따지러 온 사내', b: '유곤용의 조부와 부친은 재산을 모다 바첫고, 누이동생은 교주에게 바쳐졋소. 뒤늦게 이를 안 그는 삼만 원을 바치겟다 하고 인삼과 록용을 보내어 — 이 밤, 하왕십리 부친의 집에서 교주를 맛낫소.', dir: -1 },
+      { img: 'bb_door.jpg', alt: '창호에 비친 손 그림자', k: '그 순간', h: '틈', b: '그는 틈을 엿보앗소.', dir: 0, slit: 1 },
+      { img: 'bb_door3.jpg', alt: '창호 너머로 엉킨 그림자들', k: '그 순간', h: '막힌 복수', b: '복수하려 하엿소. 그러나 수행원들에게 막혓고 — 교주는 그 길로 달아낫소.', dir: 1, hit: 1 },
+      { img: 'bb_flee.jpg', alt: '어두운 골목으로 멀어지는 흰 옷의 뒷모습', k: '그 길로', h: '사라진 교주', b: '그날 밤, 교주는 사라졋소. 경찰이 그를 쫏앗소.', dir: -1 },
+      { img: 'bb_raid.jpg', alt: '등불 아래 문 앞에 선 경찰들', k: '새벽 · 인현동', h: '인현동', b: '경찰이 인현동의 집을 덥쳣소. 이경득과 이순분이 붓잡혓소. 장부 속의 일이, 그제야 열리기 시작하엿소.', dir: 1 },
+      { img: 'bb_ban.jpg', alt: '등불 아래 펼쳐진 신문 원고', k: '사흘 뒤 · 이월 십구일', h: '보도 금지', b: '이 일을 신문에 싯는 것이 금지되엇소.', dir: -1, ban: 1 }
     ];
-    var N = SC.length;
-    root.style.height = (N * 150 + 60) + 'svh';
-    root.innerHTML = '<div class="dr-st" id="drSt">' +
-      SC.map(function (x, i) { return '<figure class="dr-sc" data-i="' + i + '"><img src="./img/mj/' + x.img + '" alt="' + x.alt + ' (재현 그림)" loading="lazy"></figure>'; }).join('') +
-      '<div class="dr-door l"><i></i></div><div class="dr-door r"><i></i></div>' +
-      '<b class="dr-ban" id="drBan">報道禁止</b>' +
-      '<i class="dr-bar t"></i><i class="dr-bar b"></i>' +
-      '<div class="dr-hd"><span>第四章 · 그 밤</span><span id="drNo">一 / 七</span></div><span class="dr-rt">그림 · 재현</span>' +
-      '<div class="dr-sub" id="drSub"><p class="k" id="drK"></p><h3 id="drH"></h3><p class="b" id="drB"></p></div>' +
-      '<p class="dr-hint" id="drHint">천천히 내리시압 — 문이 열리오</p>' +
+    var N = SC.length, KJ = ['一', '二', '三', '四', '五', '六', '七'];
+    root.style.height = (N * 130 + 40) + 'svh';
+    root.innerHTML = '<div class="cm-st" id="cmSt">' +
+      SC.map(function (x, i) { return '<div class="cm-sc" data-i="' + i + '"><img src="./img/mj/' + x.img + '" alt="' + x.alt + ' (재현 그림)"></div>'; }).join('') +
+      '<i class="cm-grain" aria-hidden="true"></i><i class="cm-vig" aria-hidden="true"></i><i class="cm-black" id="cmBlack"></i>' +
+      '<b class="cm-ban" id="cmBan">報道禁止</b>' +
+      '<i class="cm-bar t"></i><i class="cm-bar b"></i>' +
+      '<div class="cm-hd"><span>第四章 · 그 밤</span><span><b id="cmNo">一</b> / 七</span></div><span class="cm-rt">그림 · 재현</span>' +
+      SC.map(function (x, i) { return '<div class="cm-sub" data-i="' + i + '"><p class="k">' + x.k + '</p><h3>' + x.h + '</h3><p class="b">' + x.b + '</p></div>'; }).join('') +
+      '<p class="cm-hint" id="cmHint">천천히 내리시압</p>' +
     '</div>';
-    var st = $('#drSt'), scs = $$('.dr-sc', st), L = $('.dr-door.l', st), R = $('.dr-door.r', st), cur = -1, inside = false, lastOpen = 0, slammed = false;
-    var KJ = ['一', '二', '三', '四', '五', '六', '七'];
-    function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
-    /* 문 소리 — 미닫이 (거친 바람 소리) · 쾅 */
-    function slide(hard) {
-      var c = W.mb.ctx; if (!c || (W.mb.muted && W.mb.muted())) return;
-      try {
-        var len = hard ? .25 : .7, buf = c.createBuffer(1, c.sampleRate * len, c.sampleRate), d = buf.getChannelData(0);
-        for (var i = 0; i < d.length; i++) { var t = i / d.length; d[i] = (Math.random() * 2 - 1) * (hard ? Math.pow(1 - t, 6) : Math.sin(Math.PI * t) * .5); }
-        var s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
-        f.type = hard ? 'lowpass' : 'bandpass'; f.frequency.value = hard ? 180 : 700; f.Q.value = hard ? .7 : 1.4; g.gain.value = hard ? 1.6 : .35;
-        s.buffer = buf; s.connect(f); f.connect(g); g.connect(c.destination); s.start();
-      } catch (e) {}
-    }
-    function frame() {
-      if (!inside) return;
-      var r = root.getBoundingClientRect(), h = W.innerHeight, span = r.height - h;
-      var p = Math.max(0, Math.min(.9999, -r.top / Math.max(1, span))), f = p * N, i = Math.floor(f), t = f - i, x = SC[i];
-      var a = x.open[0], b = x.open[1], mx = x.open[2], o;
-      if (t < a) o = 0; else if (t < b) o = ease(Math.min(1, (t - a) / (x.fast ? .08 : .22))); else o = 1 - ease(Math.min(1, (t - b) / (x.slam ? .03 : .12)));
-      if (x.slam && t >= b) o = t < b + .03 ? 1 - (t - b) / .03 : 0;
-      o = Math.max(0, Math.min(1, o)) * mx;
-      var w = 50 * o;
-      L.style.transform = 'translateX(' + (-w * 2) + '%)'; R.style.transform = 'translateX(' + (w * 2) + '%)';
-      st.style.setProperty('--o', o.toFixed(3));
+    var st = $('#cmSt'), scs = $$('.cm-sc', st), subs = $$('.cm-sub', st), imgs = scs.map(function (s) { return $('img', s); }), blk = $('#cmBlack'), ban = $('#cmBan');
+    var tp = 0, p = 0, inside = false, raf = 0, cur = -1, hitDone = -1;
+    function sm(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+    function measure() { imgs.forEach(function (im) { var r = st.getBoundingClientRect(); im.dataset.w = (im.naturalWidth && im.naturalHeight) ? r.height * im.naturalWidth / im.naturalHeight : r.height * 1.78; }); }
+    imgs.forEach(function (im) { im.addEventListener('load', measure); });
+    function target() { var r = root.getBoundingClientRect(), span = r.height - W.innerHeight; tp = Math.max(0, Math.min(.9999, -r.top / Math.max(1, span))); }
+    function draw() {
+      if (!inside) { raf = 0; return; }
+      p += (tp - p) * .085;
+      var f = p * N, i = Math.min(N - 1, Math.floor(f)), t = f - i, x = SC[i], vw = st.clientWidth;
       if (i !== cur) {
-        cur = i; scs.forEach(function (s, k) { s.classList.toggle('on', k === i); });
-        $('#drNo').textContent = KJ[i] + ' / 七'; $('#drK').textContent = x.k; $('#drH').textContent = x.h; $('#drB').textContent = x.b;
-        var sub = $('#drSub'); sub.classList.remove('in'); void sub.offsetWidth; sub.classList.add('in');
-        A().heart(x.fx === 'heart'); slammed = false;
-        st.classList.toggle('ban', !!x.ban);
-        if (x.ban) setTimeout(function () { if (cur === N - 1) { st.classList.add('stamped'); tone('stamp'); } }, 500); else st.classList.remove('stamped');
-        $('#drHint').classList.toggle('gone', i > 0);
+        cur = i; $('#cmNo').textContent = KJ[i]; $('#cmHint').style.opacity = i ? 0 : 1;
+        A().heart(!!x.slit);
+        if (!x.ban) st.classList.remove('stamped', 'paper');
       }
-      var sc = scs[i]; sc.style.transform = 'scale(' + (1.12 - t * .1).toFixed(3) + ')' + (x.pan ? ' translateX(' + (-t * 6).toFixed(2) + '%)' : '');
-      if (o > .05 && lastOpen <= .05) slide(false);
-      if (x.slam && t >= b && !slammed) { slammed = true; slide(true); tone('gavel'); st.classList.add('shake'); setTimeout(function () { st.classList.remove('shake'); }, 450); }
-      lastOpen = o;
+      scs.forEach(function (s, k) { s.style.opacity = k === i ? 1 : 0; });
+      /* 카메라 — 넓은 그림을 옆으로 흘러감 */
+      var im = imgs[i], w = +im.dataset.w || vw * 2, over = Math.max(0, w - vw), e = sm(0, 1, t);
+      var tx = x.dir === 0 ? -over / 2 : x.dir > 0 ? -over * e : -over * (1 - e);
+      var sc = 1.06 - t * .05;
+      if (x.hit && t > .55) { var q = sm(.55, .62, t); sc += q * .14; tx += Math.sin(t * 90) * (1 - sm(.62, .75, t)) * 6; }
+      im.style.width = w + 'px'; im.style.transform = 'translateX(' + tx.toFixed(1) + 'px) scale(' + sc.toFixed(3) + ')';
+      /* 틈 — 문틈만큼만 */
+      scs[i].style.clipPath = x.slit ? 'inset(0 ' + (44 - sm(.2, .7, t) * 6).toFixed(1) + '% 0 ' + (44 - sm(.2, .7, t) * 6).toFixed(1) + '%)' : '';
+      /* 컷 — 장면 끝과 처음은 검게 */
+      var b = Math.max(1 - sm(0, .1, t), sm(.9, 1, t)); if (i === 0) b = Math.max(0, sm(.9, 1, t)); if (i === N - 1) b = 1 - sm(0, .1, t);
+      blk.style.opacity = b.toFixed(3);
+      subs.forEach(function (s, k) { var o = k === i ? sm(.1, .22, t) * (1 - sm(.82, .9, t)) : 0; if (i === N - 1 && k === i) o = sm(.1, .22, t); s.style.opacity = o.toFixed(3); s.style.transform = 'translateY(' + ((1 - o) * 10).toFixed(1) + 'px)'; });
+      if (x.hit && t > .56 && hitDone !== i) { hitDone = i; tone('gavel'); }
+      if (x.hit && t < .5) hitDone = -1;
+      if (x.ban) { st.classList.toggle('paper', t > .45); if (t > .62 && !st.classList.contains('stamped')) { st.classList.add('stamped'); tone('stamp'); } if (t < .55) st.classList.remove('stamped'); }
+      raf = requestAnimationFrame(draw);
     }
-    onScroll(frame);
-    watch(root, function () { inside = true; A().drone(true); frame(); }, function () { inside = false; A().drone(false); A().heart(false); });
+    onScroll(target);
+    W.addEventListener('resize', measure);
+    watch(root, function () { inside = true; measure(); target(); p = tp; A().drone(true); if (!raf) raf = requestAnimationFrame(draw); }, function () { inside = false; A().drone(false); A().heart(false); });
   })();
 
   /* ════ 第五章 · 쉰세 날 — 하로씩 검게 칠해짐 ════ */
@@ -423,54 +385,60 @@
     });
   })();
 
-  /* ════ 第九章 · 병 — 표본 꼬리표에 칠십사 년이 적혀 감 ════ */
+  /* ════ 第九章 · 병 — 칠십사 년이 한 번에 흐름 ════
+     내리는 만큼 해가 흐르고(끈김 업이), 창빛이 병 우를 지나가고, 먼지가 내려안즘 · 끗에 병이 비고 재가 떠오름 */
   (function () {
     var root = $('#jarStage'); if (!root) return;
     var E = [
-      { y: 1937, tag: '1937 · 소화 십이 년', b: '일본 경찰은 그의 머리를 잘라 포르말린 병에 너헛소.', dust: 0 },
-      { y: 1945, tag: '1945 · 해방', b: '나라가 바뀌엇소. 병은 그대로 남앗소.', dust: .25 },
-      { y: 1950, tag: '1950 · 전쟁', b: '전쟁이 지나갓소. 병은 그대로 남앗소.', dust: .45 },
-      { y: 0, tag: '그 뒤 · 국과수', b: '병은 국립과학수사연구원의 선반 우에 노혀 잇섯소.', dust: .7 },
-      { y: 0, tag: '훗날 · 진정', b: '「사람의 몸을 표본으로 두는 것은 비인도적」이라는 진정을 행정안전부가 바다들엿소.', dust: .85 },
-      { y: 2011, tag: '2011 · 시월 이십오일', b: '불교단체가 병을 넘겨바다, 서울시립승화원에서 화장하엿소. 이틀 뒤 남양주 봉선사에서 위령제가 열렷소.', dust: 1, end: 1 }
+      { at: .06, y: 1937, k: '1937 · 소화 십이 년', b: '일본 경찰은 그의 머리를 잘라 포르말린 병에 너헛소.' },
+      { at: .24, y: 1945, k: '1945 · 해방', b: '나라가 바뀌엇소. 병은 그대로 남앗소.' },
+      { at: .38, y: 1950, k: '1950 · 전쟁', b: '전쟁이 지나갓소. 병은 그대로 남앗소.' },
+      { at: .53, k: '그 뒤 · 국과수', b: '병은 국립과학수사연구원의 선반 우에 노혀 잇섯소.' },
+      { at: .68, k: '훗날 · 진정', b: '「사람의 몸을 표본으로 두는 것은 비인도적」이라는 진정을 행정안전부가 바다들엿소.' },
+      { at: .88, y: 2011, k: '2011 · 시월 이십오일', b: '불교단체가 병을 넘겨바다, 서울시립승화원에서 화장하엿소. 이틀 뒤 남양주 봉선사에서 위령제가 열렷소.' }
     ];
-    root.style.height = (E.length * 110 + 80) + 'svh';
-    root.innerHTML = '<div class="j2-st" id="j2St">' +
-      '<div class="j2-pic"><img class="a" src="./img/mj/bb_jar3.jpg" alt="선반 위의 병 (재현 그림 — 속은 알아볼 수 없게 그림)"><img class="e" src="./img/mj/bb_jar.jpg" alt="비워진 병 (재현 그림)"><i class="j2-dust"></i><canvas class="j2-ash" id="j2Ash"></canvas><span class="rt">그림 · 재현</span></div>' +
-      '<div class="j2-tag"><i class="hole"></i><p class="t"><span>標本</span><b>第　號</b></p><p class="y"><b id="j2Y">1937</b><small id="j2A">0 년째</small></p><ol id="j2L">' + E.map(function (x, i) { return '<li data-i="' + i + '">' + x.tag + '</li>'; }).join('') + '</ol><b class="j2-fire">火葬</b></div>' +
-      '<p class="j2-b" id="j2B"></p>' +
+    root.style.height = '760svh';
+    root.innerHTML = '<div class="jm-st" id="jmSt">' +
+      '<div class="jm-pic"><img class="a" src="./img/mj/bb_jar3.jpg" alt="선반 위의 병 (재현 그림 — 속은 알아볼 수 없게 그림)"><img class="e" src="./img/mj/bb_jar.jpg" alt="비워진 병 (재현 그림)"><i class="jm-sun"></i><i class="jm-dust"></i><canvas class="jm-cv" id="jmCv"></canvas></div>' +
+      '<i class="jm-vig"></i><span class="jm-rt">그림 · 재현</span>' +
+      '<div class="jm-year"><b id="jmY">1937</b><small id="jmA">병 속에서 — 0 년</small></div>' +
+      E.map(function (x, i) { return '<div class="jm-cap" data-i="' + i + '"><p class="k">' + x.k + '</p><p class="b">' + x.b + '</p></div>'; }).join('') +
+      '<div class="jm-rule"><i id="jmBar"></i>' + E.map(function (x) { return '<span style="left:' + (x.at * 100) + '%"></span>'; }).join('') + '</div>' +
     '</div>';
-    var st = $('#j2St'), lis = $$('#j2L li', st), yEl = $('#j2Y'), aEl = $('#j2A'), bEl = $('#j2B'), cur = -1, shown = 1937, anim = 0, inside = false;
-    function show(i) {
-      var x = E[i]; cur = i;
-      lis.forEach(function (l, k) { l.classList.toggle('on', k <= i); l.classList.toggle('now', k === i); });
-      bEl.classList.remove('in'); void bEl.offsetWidth; bEl.textContent = x.b; bEl.classList.add('in');
-      st.style.setProperty('--dust', x.dust); st.classList.toggle('end', !!x.end);
-      if (x.end) { tone('stamp'); ash(true); } else ash(false);
-      cancelAnimationFrame(anim);
-      if (!x.y) { yEl.textContent = '· · ·'; aEl.textContent = '해가 가도, 병은 그대로'; return; }
-      var from = shown, to = x.y, t0 = performance.now(), T = calm ? 1 : Math.min(2400, 300 + Math.abs(to - from) * 40);
-      (function f(t) { var k = Math.min(1, (t - t0) / T), v = Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))); yEl.textContent = v; aEl.textContent = (v - 1937) + ' 년째' + (x.end ? ' — 병이 비워짐' : ', 병 속에'); shown = v; if (k < 1) anim = requestAnimationFrame(f); })(t0);
+    var st = $('#jmSt'), caps = $$('.jm-cap', st), a = $('.jm-pic .a', st), e = $('.jm-pic .e', st), sun = $('.jm-sun', st), dust = $('.jm-dust', st), yEl = $('#jmY'), aEl = $('#jmA'), bar = $('#jmBar');
+    var tp = 0, p = 0, inside = false, raf = 0;
+    var K = [[0, 1937], [E[0].at, 1937], [E[1].at, 1945], [E[2].at, 1950], [E[5].at, 2011], [1, 2011]];
+    function yearAt(q) { for (var i = 1; i < K.length; i++) if (q <= K[i][0]) { var t = (q - K[i - 1][0]) / Math.max(1e-6, K[i][0] - K[i - 1][0]); return K[i - 1][1] + (K[i][1] - K[i - 1][1]) * t; } return 2011; }
+    function sm(a0, b0, x) { var t = Math.max(0, Math.min(1, (x - a0) / (b0 - a0))); return t * t * (3 - 2 * t); }
+    /* 병 속 — 떠도는 알갱이 → 끗에는 재가 되어 떠오름 */
+    var cv = $('#jmCv'), cx = cv.getContext('2d'), P = [];
+    for (var i = 0; i < 70; i++) P.push({ x: .3 + Math.random() * .4, y: .25 + Math.random() * .55, r: .5 + Math.random() * 1.5, ph: Math.random() * 6, v: .2 + Math.random() * .6 });
+    function target() { var r = root.getBoundingClientRect(), span = r.height - W.innerHeight; tp = Math.max(0, Math.min(1, -r.top / Math.max(1, span))); }
+    function draw(ts) {
+      if (!inside) { raf = 0; return; }
+      p += (tp - p) * .07;
+      var y = yearAt(p), end = sm(.84, .95, p);
+      var roll = p > E[2].at + .045 && p < E[5].at - .05; yEl.classList.toggle('roll', roll);
+      yEl.textContent = Math.round(y); aEl.textContent = end > .5 ? '칠십사 년 — 병이 비워짐' : roll ? '해가 가도 — 병은 그대로' : '병 속에서 — ' + Math.round(y - 1937) + ' 년';
+      st.style.setProperty('--p', p.toFixed(4));
+      a.style.opacity = (1 - end).toFixed(3); e.style.opacity = end.toFixed(3);
+      a.style.transform = e.style.transform = 'scale(' + (1.02 + p * .16).toFixed(4) + ')';
+      sun.style.transform = 'translateX(' + (Math.sin(p * Math.PI * 9) * 60).toFixed(1) + '%)'; sun.style.opacity = (.35 + Math.sin(p * Math.PI * 9 + 1.5) * .25 * (1 - end)).toFixed(3);
+      dust.style.opacity = (Math.min(1, p * 1.25) * .6 * (1 - end)).toFixed(3);
+      bar.style.width = (p * 100) + '%';
+      caps.forEach(function (c, k) { var d = Math.abs(p - E[k].at), o = 1 - sm(.03, .062, d); if (k === E.length - 1) o = sm(E[k].at - .1, E[k].at - .05, p); c.style.opacity = o.toFixed(3); c.style.transform = 'translateY(' + ((p - E[k].at) * -120).toFixed(1) + 'px)'; });
+      var w = cv.width = cv.clientWidth, h = cv.height = cv.clientHeight; cx.clearRect(0, 0, w, h);
+      P.forEach(function (q) {
+        q.ph += .006 + end * .01;
+        if (end > .02) { q.y -= q.v * .0016 * end; if (q.y < -.05) { q.y = .8; q.x = .35 + Math.random() * .3; } }
+        var px = (q.x + Math.sin(q.ph) * .01) * w, py = (q.y + Math.cos(q.ph * .7) * .008) * h;
+        cx.fillStyle = end > .02 ? 'rgba(232,232,228,' + (.75 * end) + ')' : 'rgba(210,210,200,' + (.25 + .2 * Math.sin(q.ph * 2)) * (1 - p * .6) + ')';
+        cx.beginPath(); cx.arc(px, py, q.r * (1 + end * .6), 0, 6.3); cx.fill();
+      });
+      raf = requestAnimationFrame(draw);
     }
-    /* 재 — 천천히 우로 떠오름 */
-    var cv = $('#j2Ash'), cx = cv.getContext('2d'), P = [], on = false, run = false;
-    function ash(v) { on = v; if (v && !run) { run = true; cv.width = cv.offsetWidth; cv.height = cv.offsetHeight; draw(); } }
-    function draw() {
-      if (!inside) { run = false; return; }
-      var w = cv.width, h = cv.height; cx.clearRect(0, 0, w, h);
-      if (on && P.length < 90) P.push({ x: w * (.35 + Math.random() * .3), y: h * (.55 + Math.random() * .3), r: .6 + Math.random() * 1.6, v: .15 + Math.random() * .4, a: .7 });
-      P.forEach(function (q) { q.y -= q.v; q.x += Math.sin(q.y * .03) * .3; q.a -= .0025; cx.fillStyle = 'rgba(230,230,226,' + Math.max(0, q.a) + ')'; cx.beginPath(); cx.arc(q.x, q.y, q.r, 0, 6.3); cx.fill(); });
-      P = P.filter(function (q) { return q.a > 0 && q.y > -5; });
-      if (on || P.length) requestAnimationFrame(draw); else run = false;
-    }
-    function frame() {
-      if (!inside) return;
-      var r = root.getBoundingClientRect(), h = W.innerHeight, span = r.height - h;
-      var p = Math.max(0, Math.min(.9999, -r.top / Math.max(1, span))), i = Math.floor(p * E.length);
-      if (i !== cur) show(i);
-    }
-    onScroll(frame);
-    watch(root, function () { inside = true; A().drone(true); frame(); if (on) { run = false; ash(true); } }, function () { inside = false; A().drone(false); });
+    onScroll(target);
+    watch(root, function () { inside = true; target(); p = tp; A().drone(true); if (!raf) raf = requestAnimationFrame(draw); }, function () { inside = false; A().drone(false); });
   })();
 
   /* ════ 끗 · 눈 — 천천히 내림, 마지막은 하얗게 ════ */
