@@ -23,7 +23,7 @@
      사진: assets/expo/ (1929 실물 자료) — 기존 파일은 손대지 않음
      ========================================================================= -->
 <meta charset="UTF-8">
-<script>/* 폰판으로 넘김 (컴퓨터판 보기: ?pc=1) */(function(){try{var q=location.search,ss=window.sessionStorage;if(/[?&]pc=1/.test(q)){ss.setItem('mb-pc','1');return}if(ss.getItem('mb-pc')==='1')return;var m=(window.matchMedia&&matchMedia('(max-width:600px)').matches)||(screen&&Math.min(screen.width,screen.height)<=600&&/Mobi|Android|iPhone/i.test(navigator.userAgent));if(m)location.replace('m-fair.html'+q)}catch(e){}})();</script>
+<script>/* 폰판으로 넘김 (컴퓨터판 보기: ?pc=1) */(function(){try{var q=location.search,ss=window.sessionStorage;if(/[?&]pc=1/.test(q))return;try{ss.removeItem('mb-pc')}catch(e){}var m=(window.matchMedia&&matchMedia('(max-width:600px)').matches)||(screen&&Math.min(screen.width,screen.height)<=600&&/Mobi|Android|iPhone/i.test(navigator.userAgent));if(m)location.replace('m-fair.html'+q)}catch(e){}})();</script>
 <script src="yk-zoom.js?v=32" data-yk-fit-h="900"></script><script src="yk-noir.js?v=17"></script><!-- 화면 배율 120% -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="only light">

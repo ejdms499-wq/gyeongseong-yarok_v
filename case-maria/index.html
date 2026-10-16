@@ -6,7 +6,7 @@
      마리아 사건만의 장치(괴투서 감정실 · 유성긔 음반장 · 판결)를 maria.css / maria.js 에 따로 둠.
      더블클릭(file://)으로도 열리도록 보통 스크립트만 씀. 그림·소리는 ../case/ 폴더 것을 씀. -->
 <meta charset="UTF-8">
-<script>/* 폰판으로 넘김 (컴퓨터판 보기: ?pc=1) */(function(){try{var q=location.search,ss=window.sessionStorage;if(/[?&]pc=1/.test(q)){ss.setItem('mb-pc','1');return}if(ss.getItem('mb-pc')==='1')return;var m=(window.matchMedia&&matchMedia('(max-width:600px)').matches)||(screen&&Math.min(screen.width,screen.height)<=600&&/Mobi|Android|iPhone/i.test(navigator.userAgent));if(m)location.replace('m.html'+q)}catch(e){}})();</script>
+<script>/* 폰판으로 넘김 (컴퓨터판 보기: ?pc=1) */(function(){try{var q=location.search,ss=window.sessionStorage;if(/[?&]pc=1/.test(q))return;try{ss.removeItem('mb-pc')}catch(e){}var m=(window.matchMedia&&matchMedia('(max-width:600px)').matches)||(screen&&Math.min(screen.width,screen.height)<=600&&/Mobi|Android|iPhone/i.test(navigator.userAgent));if(m)location.replace('m.html'+q)}catch(e){}})();</script>
 <script src="../yk-zoom.js?v=32"></script><script src="../yk-noir.js?v=17"></script><!-- 화면 배율 120% -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="only light">
