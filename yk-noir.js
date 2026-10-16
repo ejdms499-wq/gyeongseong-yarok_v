@@ -153,7 +153,6 @@
       /* 바래 가는 구간: 흰 바탕 · 사진과 글이 장마다 조금씩 더 옅어짐 (붉은색은 그대로) */
       'html.yn-bb:not(#yn) body .bb-dusk{background:#fbfbf9!important}',
       'html.yn-bb:not(#yn) body [data-ynw] img{filter:grayscale(1) brightness(calc(1 + var(--w) * .9)) contrast(calc(1 - var(--w) * .55))!important}',
-      'html.yn-bb:not(#yn) body [data-ynw] p,html.yn-bb:not(#yn) body [data-ynw] li,html.yn-bb:not(#yn) body [data-ynw] dd,html.yn-bb:not(#yn) body [data-ynw] dt,html.yn-bb:not(#yn) body [data-ynw] h3,html.yn-bb:not(#yn) body [data-ynw] h2{opacity:calc(1 - var(--w) * .45)}',
       /* 반전 띠: 금지가 풀린 날 */
       'html.yn-bb:not(#yn) body .yn-flip{position:relative;background:#080808;color:#efece6;padding:70px 22px 54px;overflow:hidden}',
       'html.yn-bb:not(#yn) body .yn-flip:before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:#fff}',
@@ -192,9 +191,11 @@
     'html.yk-noir .yn-stack>*+*{margin-top:16px!important}',
     'html.yk-noir .yn-wrap{max-width:100%!important;width:auto!important;white-space:normal!important;overflow-wrap:anywhere;word-break:keep-all}',
     'html.yk-noir .yn-hd{letter-spacing:.04em!important}',
+    'html.yk-noir:not(#yn) body .mt-names{display:flex!important;flex-wrap:wrap!important;gap:6px!important;height:auto!important}',
+    'html.yk-noir:not(#yn) body .mt-names>*{flex:0 0 auto!important;height:auto!important;min-height:0!important}',
     'html.yk-noir .yn-vert{writing-mode:horizontal-tb!important;text-orientation:mixed!important;height:auto!important}'
   ]);
-  var SKIPLIN = '.jn-desk,.m-hd,.m-dock,.m-deck>.m-pg,.notebook,.ykg-book,.ykp-veil,.yke .yg-press,.ykr,.report-timeline,.m-in>.m-mh,nav,button,.cb-steps,.yn-flip,.ck-face-wrap,.ykq-tray,[class*="track"],[class*="slider"],[class*="tabs"],[class*="chips"],[class*="dots"],[class*="strip"]';
+  var SKIPLIN = '.ch-card,.mk-row,.finale,.prologue,.jn-desk,.hs6,.h6-strips,[class*="strips"],.pl-tabs,.cb-steps,.ck-face-wrap,.yke,.mt-names,[class*="names"],[class*="chips"],.h6-strip,[class*="row6"],.ob-line,.m-hd,.m-dock,.m-deck>.m-pg,.notebook,.ykg-book,.ykp-veil,.yke .yg-press,.ykr,.report-timeline,.m-in>.m-mh,nav,button,.cb-steps,.yn-flip,.ck-face-wrap,.ykq-tray,[class*="track"],[class*="slider"],[class*="tabs"],[class*="chips"],[class*="dots"],[class*="strip"]';
   function textLen(e) { return (e.textContent || '').replace(/\s+/g, '').length; }
   function linearize() {
     var vw = innerWidth;
@@ -202,13 +203,15 @@
     for (var i = 0; i < all.length; i++) {
       var e = all[i]; if (e.__ynlin) continue;
       if (e.closest(SKIPLIN)) { e.__ynlin = 1; continue; }
+      if (e.tagName === 'SECTION') continue;
       var cs = getComputedStyle(e), d = cs.display;
       /* 1) 나란히 놓인 칸: 글이 든 칸이 컨테이너 절반보다 좁으면 위아래로 */
       if ((d === 'grid' || (d === 'flex' && cs.flexDirection.indexOf('row') === 0) || (cs.columnCount && cs.columnCount !== 'auto')) && e.children.length >= 2) {
         var r = e.getBoundingClientRect(); if (r.width < 200) continue;
         var kids = [].filter.call(e.children, function (k) { var kc = getComputedStyle(k); return kc.display !== 'none' && kc.position !== 'absolute' && kc.position !== 'fixed'; });
-        var narrow = kids.filter(function (k) { var kr = k.getBoundingClientRect(); return kr.width > 0 && kr.width < r.width * .58 && kr.width < 230 && textLen(k) > 30; });
-        if (narrow.length) { e.classList.add('yn-stack'); e.__ynlin = 1; continue; }
+        if (kids.length && kids.filter(function (k) { return k.tagName === 'BUTTON' || k.tagName === 'IMG' || k.tagName === 'FIGURE' || getComputedStyle(k).aspectRatio !== 'auto'; }).length >= kids.length * .6) { e.__ynlin = 1; continue; }   /* 그림 조각 · 단추 줄은 나란히 그대로 */
+        var narrow = kids.filter(function (k) { var kr = k.getBoundingClientRect(); return kr.width > 0 && ((kr.width < r.width * .58 && kr.width < 230 && textLen(k) > 30) || (kr.right > r.right + 4 && textLen(k) > 10) || (kr.left >= r.right - 2 && textLen(k) > 10)); });
+        if (narrow.length || (e.scrollWidth > e.clientWidth + 6 && textLen(e) > 30)) { e.classList.add('yn-stack'); e.__ynlin = 1; continue; }
       }
       /* 2) 세로쓰기 긴 글 → 가로 */
       if (cs.writingMode.indexOf('vertical') === 0 && textLen(e) > 14) { e.classList.add('yn-vert'); }
@@ -255,7 +258,20 @@
      · 설명 · 출처 같은 작은 글 최소 12.5px
      · 바탕과 글자색 대비가 4.5:1 보다 낮으면 (검은 바탕에 어두운 회색 등) 글자색을 밝게 / 어둡게 */
   function L(c) { var o = parse(c); if (!o) return null; var f = function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return { l: .2126 * f(o.r) + .7152 * f(o.g) + .0722 * f(o.b), a: o.a }; }
-  function bgL(e) { for (var a = e; a; a = a.parentElement) { if (a === D.documentElement) break; var x = L(getComputedStyle(a).backgroundColor); if (x && x.a > .6) return x.l; } return L(getComputedStyle(D.body).backgroundColor).l; }
+  function bgL(e) {
+    for (var a = e; a; a = a.parentElement) {
+      if (a === D.documentElement) break;
+      var cs = getComputedStyle(a), x = L(cs.backgroundColor);
+      if (x && x.a > .6) return x.l;
+      if (cs.backgroundImage && cs.backgroundImage !== 'none' && a.getBoundingClientRect().height > 120) {
+        var g = cs.backgroundImage.match(/rgba?\([^)]+\)/g);
+        if (g && !/url\(/.test(cs.backgroundImage)) { var sum = 0, n = 0; g.forEach(function (c) { var y = L(c); if (y && y.a > .3) { sum += y.l; n++; } }); if (n) return sum / n; }
+        var tc = L(cs.color); if (tc) return tc.l > .35 ? .02 : .85;   /* 사진 바탕: 그 칸의 글자색이 밝으면 어두운 바탕 */
+      }
+      if (/(^|\s)(bb-dark|bb-night|bb-mute|bb-mount|sk-night|sk-blank|jk-story|extra|finale|ch-card|prologue)(\s|$)/.test(a.className || '')) return .02;
+    }
+    return L(getComputedStyle(D.body).backgroundColor).l;
+  }
   function ratio(a, b) { return (Math.max(a, b) + .05) / (Math.min(a, b) + .05); }
   function readable(near) {
     var w = D.createTreeWalker(D.body, NodeFilter.SHOW_TEXT), n, done = new Set();
