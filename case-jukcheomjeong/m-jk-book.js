@@ -102,63 +102,10 @@
   function esc(s) { return String(s); }
   var IMG = './image/Jukcheomjeong/';
 
-  /* ── 모은 말 ── */
-  var got = {};
-  function paintN() {
-    var n = Object.keys(got).length;
-    $$('.jkWordN').forEach(function (el) { el.textContent = n; });
-    var d = $('#ppDots'); if (d) d.innerHTML = WORDS.map(function (w, i) { return '<i class="' + (got[i] ? 'on' : '') + '"></i>'; }).join('');
-  }
-
-  /* ════ 第二章 · 일곱 날의 지면 ════ */
-  var ppI = 0, ppMode = 'scan';
-  function ppTabs() {
-    $('#ppTabs').innerHTML = ARTS.map(function (a, i) {
-      return '<button type="button" data-i="' + i + '" class="' + (i === ppI ? 'on ' : '') + (a.sealed ? 'seal' : '') + '">' + a.d[0] + '<small>' + (a.mark ? '● ' : '') + a.tag[0] + '</small></button>';
-    }).join('');
-  }
-  function ppRender() {
-    var a = ARTS[ppI], h = '';
-    if (a.sealed) {
-      h = '<div class="pp-seal"><span class="sl">封<br>緘</span><b>유월 팔일자 지면은,<br>호외에서 뜨드시압.</b><p>이 날의 말은 모아 둔 말들과 함께 第五章 號外에서 드러나오.</p>' +
-        '<button class="mb-btn red" data-goto="ch5" data-open-extra>第五章 號外로 →</button></div>';
-    } else {
-      var md = a.date.slice(5);
-      h = '<div class="pp-hd"><small>사회면 | ' + a.d[0] + ' | ' + a.day[0] + '</small>' + (a.mark ? '<i class="stamp">' + a.mark + '</i>' : '') + '</div>' +
-        '<div class="mb-seg pp-seg"><button data-m="scan" class="' + (ppMode === 'scan' ? 'on' : '') + '">원문 지면</button><button data-m="now" class="' + (ppMode === 'now' ? 'on' : '') + '">오늘 말로 읽기</button></div>';
-      if (ppMode === 'scan') {
-        h += '<button class="pp-scan" type="button" data-zoom="' + IMG + 'articles-toned/' + a.img + '" data-cap="동아일보 ' + a.date + ' 원문 지면"><img src="' + IMG + 'articles-toned/' + a.img + '" alt="동아일보 ' + a.date + ' 원문 지면"><span>눌러 크게 보기</span></button>' +
-          '<p class="pp-cap">원 긔사 · 동아일보 · 소화 팔 년 ' + a.d[0] + ' — 테두리 친 곳이 그날 실린 긔사이오.</p>';
-      } else {
-        h += '<article class="pp-art"><p class="pp-sec">경성야록뉴스 · 사회 › 사건·사고 › 아카이브</p><h3>' + a.title + '</h3>' +
-          '<p class="pp-by">경성야록 아카이브팀 기자 · 입력 2026.' + md + ' 06:00 · 원 보도 동아일보 ' + a.date + '</p>' +
-          '<p class="pp-lead">' + a.lead + '</p>' + a.body.map(function (p) { return '<p>' + p + '</p>'; }).join('') +
-          '<p class="pp-tags">' + a.keys.map(function (k) { return '#' + k; }).join(' ') + '</p>' +
-          '<h4>간추려 읽기</h4><ul class="pp-sum">' + a.sum.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
-          '<p class="pp-warn">※ 1933년 동아일보 원문을 바탕으로, 오늘의 기사 형식으로 다시 쓴 것입니다. 실제 2026년 보도가 아닙니다.</p></article>';
-      }
-      h += '<div class="pp-words"><h4>이날 지면에 오른 말</h4>';
-      if (a.w.length) h += '<div class="pp-chips">' + a.w.map(function (k) { return '<span class="chip' + (got[k] ? ' had' : '') + '" data-k="' + k + '">' + WORDS[k].w[0] + '</span>'; }).join('') + '</div><p class="pp-cap">모아 두엇소. 호외에서 다시 맛나리다.</p>';
-      else h += '<p class="pp-none">' + (a.none ? a.none[0] : '') + '</p>';
-      h += '</div>';
-      var nx = ARTS[ppI + 1];
-      if (nx) h += '<button class="mb-btn pp-next" data-next>' + nx.d[0] + ' 지면 →</button>';
-    }
-    var bd = $('#ppBody'); bd.innerHTML = h; bd.scrollTop = 0;
-    if (!a.sealed) {
-      a.w.forEach(function (k) { got[k] = 1; });
-      setTimeout(function () { $$('.pp-chips .chip', bd).forEach(function (c, i) { setTimeout(function () { c.classList.add('got'); }, i * 260); }); }, 250);
-      paintN();
-    }
-    ppTabs();
-    var on = $('#ppTabs .on'); if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest' });
-  }
-  D.addEventListener('click', function (e) {
-    var t = e.target.closest('#ppTabs button'); if (t) { ppI = +t.dataset.i; ppRender(); return; }
-    var m = e.target.closest('.pp-seg button'); if (m) { ppMode = m.dataset.m; ppRender(); return; }
-    if (e.target.closest('[data-next]')) { ppI = Math.min(ARTS.length - 1, ppI + 1); ppRender(); return; }
-    if (e.target.closest('[data-open-extra]')) setTimeout(openExtra, 700);
-  });
+  /* 第二章 · 일곱 날의 지면 (공통 장치) */
+  W.mb.paper({ arts: ARTS, words: WORDS, imgBase: IMG + 'articles-toned/', era: '소화 팔 년', goto: 'ch5',
+    sealHead: '유월 팔일자 지면은,<br>호외에서 뜨드시압.', sealText: '이 날의 말은 모아 둔 말들과 함께 第五章 號外에서 드러나오.', sealBtn: '第五章 號外로 →' });
+  D.addEventListener('click', function (e) { if (e.target.closest('[data-open-extra]')) setTimeout(openExtra, 700); });
 
   /* ════ 第四章 · 스물세 날 ════ */
   var DATES = ['5.16','5.17','5.18','5.19','5.20','5.21','5.22','5.23','5.24','5.25','5.26','5.27','5.28','5.29','5.30','5.31','6.1','6.2','6.3','6.4','6.5','6.6','6.7','6.8'];
@@ -236,39 +183,8 @@
     }, { passive: true });
   })();
 
-  /* ════ 第七章 · 라듸오 ════ */
-  var rdI = -1, au = null, stc = null, tm = null;
-  function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + s % 60).slice(-2); }
-  function rdScale() {
-    var nums = ['550', '700', '900', '1100', '1300', '1500'];
-    $('#rdScale').innerHTML = '<div class="rd-nums">' + nums.map(function (n) { return '<span>' + n + '</span>'; }).join('') + '</div><div class="rd-ticks"></div><i class="rd-needle" id="rdNeedle"></i>' +
-      '<div class="rd-st">' + ST.map(function (s, i) { return '<button data-r="' + i + '" class="' + (i === rdI ? 'on' : '') + '">' + s.y + '</button>'; }).join('') + '</div>';
-    var nd = $('#rdNeedle'); if (nd) nd.style.left = (rdI < 0 ? 4 : (10 + rdI * 20)) + '%';
-  }
-  function stopAu() { if (au) { au.pause(); } if (stc) { stc.pause(); } clearInterval(tm); var p = $('#rdPlay'); if (p) p.textContent = '▶ 듯기'; }
-  function tune(i) {
-    stopAu(); rdI = i; var s = ST[i]; rdScale();
-    $('#rdNo').textContent = s.no + ' · ' + s.y; $('#rdWhen').textContent = s.when;
-    var m = $('#rdMeter'); m.style.width = '0%'; setTimeout(function () { m.style.width = (s.moon || 60) + '%'; }, 60);
-    try { if (!stc) { stc = new Audio('./audio/radio-static.mp3'); stc.volume = .35; } stc.currentTime = 0; stc.play().catch(function () {}); setTimeout(function () { if (stc) stc.pause(); }, 700); } catch (e) {}
-    var p = $('#rdPlay'); p.disabled = !s.au; p.textContent = s.au ? '▶ 듯기' : '녹음 업슴';
-    $('#rdTime').textContent = s.au ? '00:00 / --:--' : '이 칸은 녹음이 업소';
-    au = s.au ? new Audio('./audio/' + s.au) : null;
-    if (au) au.addEventListener('loadedmetadata', function () { $('#rdTime').textContent = '00:00 / ' + fmt(au.duration); });
-    if (au) au.addEventListener('ended', function () { stopAu(); });
-    $('#rdCard').innerHTML = '<p class="rd-k">' + s.no + ' · ' + s.when + '</p><h3>' + s.t[0] + '</h3><ul>' + s.b.map(function (x) { return '<li>' + x[0] + '</li>'; }).join('') + '</ul>' +
-      '<p class="rd-d">' + s.d[0] + '</p><p class="mb-q" style="font-size:16.5px">' + s.link[0] + '</p>' +
-      (ST[i + 1] ? '<button class="mb-btn ghost" data-r="' + (i + 1) + '">다음 주파수 · ' + ST[i + 1].y + ' →</button>' : '<p class="mb-p" style="margin-top:18px;color:#d9d8d3">여전히, 그 말은 우리 겨테서 소근거리고 잇소.</p>');
-    $('#rdCard').classList.add('on');
-  }
-  D.addEventListener('click', function (e) {
-    var r = e.target.closest('[data-r]'); if (r) { tune(+r.dataset.r); var bd = $('#rdBody'); if (r.closest('#rdCard')) bd.scrollTop = 0; return; }
-    if (e.target.closest('#rdPlay')) {
-      if (!au) return;
-      if (au.paused) { au.play().catch(function () {}); $('#rdPlay').textContent = '❚❚ 멈춤'; clearInterval(tm); tm = setInterval(function () { $('#rdTime').textContent = '방송 중이오 · ' + fmt(au.currentTime) + ' / ' + fmt(au.duration); }, 500); }
-      else stopAu();
-    }
-  });
+  /* 第七章 · 라듸오 (공통 장치) */
+  W.mb.radio({ st: ST, audioBase: './audio/', staticSrc: './audio/radio-static.mp3', endLine: '여전히, 그 말은 우리 겨테서 소근거리고 잇소.' });
 
   /* ════ 第五章 · 號外 ════ */
   var exDone = false;
@@ -302,11 +218,5 @@
     $$('.mis-pane').forEach(function (p) { p.hidden = p.dataset.k !== b.dataset.k; });
   });
 
-  W.addEventListener('mb:open', function (e) {
-    if (e.detail === 'shPaper') ppRender();
-    if (e.detail === 'shDays') dyRender();
-    if (e.detail === 'shRadio') { rdScale(); if (rdI < 0) $('#rdCard').innerHTML = '<p class="rd-hint">우 다섯 해 가운데 하나를 누르면 그 해의 주파수가 잡히오.<br>1933 → 1930s → 1953 → 1970s → 2011</p>'; }
-  });
-  W.addEventListener('mb:close', function (e) { if (e.detail === 'shRadio') stopAu(); });
-  paintN();
+  W.addEventListener('mb:open', function (e) { if (e.detail === 'shDays') dyRender(); });
 })(window, document);
