@@ -37,7 +37,8 @@
         ? '<b>식자실 문이 열렷소</b><span>드러가기 →</span>'
         : '<span class="egg-th">' + bag.map(function (id) { return '<img src="assets/egg/relic-' + id + '.webp" alt="">'; }).join('') + '</span><b>식자공의 소지품 ' + bag.length + ' / ' + NEED + '</b>';
       tray.classList.toggle('open', bag.length >= NEED);
-      if (flash) { tray.classList.remove('pop'); void tray.offsetWidth; tray.classList.add('pop'); }
+      /* 쪽지는 주운 순간에만 잠깐 — 넷이 차기 전엔 늘 숨어 잇음 */
+      if (flash || bag.length >= NEED) { tray.classList.add('show'); clearTimeout(tray._t); if (bag.length < NEED) tray._t = setTimeout(function () { tray.classList.remove('show'); }, 3200); }
       var c = $('#eggRoomN'); if (c) c.textContent = Math.min(bag.length, NEED) + ' / ' + NEED;
     }
     tray.addEventListener('click', function () { if (bag.length >= NEED) gate(); else say('이 물건들은 어대서 흘러나왓을고. 넷이 모이면 무슨 일이 생기오.'); });

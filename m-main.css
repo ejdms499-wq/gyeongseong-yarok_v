@@ -475,3 +475,5 @@ html,body.mm{background:var(--paper)}
 .egg-relic.peek::after{opacity:1}
 .mm-logo,.mm-today,.mm-tag,.mm-plans,.mm-ft-b{position:relative}
 .mm-ft-b{display:inline-block}
+.egg-tray{opacity:0;transform:translateY(140%);pointer-events:none;transition:opacity .4s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.egg-tray.show{opacity:1;transform:none;pointer-events:auto}
