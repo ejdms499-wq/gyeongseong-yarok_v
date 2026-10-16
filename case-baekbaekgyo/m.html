@@ -12,7 +12,7 @@
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="stylesheet" href="../case-jukcheomjeong/fonts/fonts.css">
 <link rel="stylesheet" href="../yk-mbook.css?v=10">
-<link rel="stylesheet" href="./m-bb-book.css?v=1">
+<link rel="stylesheet" href="./m-bb-book.css?v=3">
 </head>
 <body class="bb-m" data-bgm="../case/audio/baekbaekgyo/baekbaekgyo-bg.mp3" data-bell="../case-jukcheomjeong/audio/bell.mp3" data-whoosh="../case-jukcheomjeong/audio/whoosh.mp3">
 
@@ -43,7 +43,6 @@
       <p class="sealed">지면 끗에서 드러나오.<button type="button" id="briefOpen">눌러 먼저 뜻기</button></p>
       <p class="opened" hidden>스무 곳 남짓한 땅, 셀 때마다 달라지는 수, 그리고 — 병 하나.</p></div></li>
   </ol>
-  <p class="bb-warn">이 지면은 — 읽어 내려갈수록 글이 하얗게 바래오.<br>흰 것이 무엇을 덥헛는지는, 검게 뒤집히는 장에서 보이오.</p>
   <p class="mb-note">출처 · 조선일보 1937년 4월 13일 호외 · 동아일보 1937년 6월 3일(속간) · 6월 9일 · 9월 23일 · 10월 17일 · 11월 17일 · 12월 11일자 · 한국민족문화대백과사전</p>
 </section>
 
@@ -59,10 +58,12 @@
   <figure class="mb-fig mb-rv bb-wfig"><div class="im"><img src="./img/mj/bb_hero2.jpg" alt="안개 속 흰 옷 입은 사람들의 행렬 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>흰 옷의 행렬 · 재현 그림</figcaption></figure>
   <p class="mb-p bl">교주는 말하엿소. 곳 물과 불로 심판하는 날이 온다. 살 곳은 전국 쉰세 곳의 피난처뿐이다.</p>
   <p class="mb-p bl">그 피난처로 가려면 — <em>가진 것을 바쳐야 하엿소.</em></p>
-  <div class="bb-chant" id="bbChant">
-    <small>신도들이 외든 주문 · 눌러 외어 보시압</small>
-    <p><span>백백백</span><span>의의의</span><span>적적적</span><span>감응감감응</span><span>하시옵숭성</span></p>
-    <button type="button" class="mb-btn" id="chantBtn">외기</button>
+  <div class="ch-m" id="bbChant">
+    <small class="ch-k">신도들이 외든 주문</small>
+    <p class="ch-t"><span>백백백</span> <span>의의의</span> <span>적적적</span> <span>감응감감응</span> <span>하시옵숭성</span></p>
+    <div class="ch-echo" id="chEcho" aria-hidden="true"></div>
+    <button type="button" class="ch-play" id="chantBtn"><i aria-hidden="true"></i><b>주문 듯기</b><small>소리가 나오오 · 이어폰을 권하오</small></button>
+    <p class="ch-cap">음성 · 재현 — 실제 신도의 목소리가 아니오.</p>
   </div>
   <p class="mb-note">근거 · 한국민족문화대백과사전 「백백교」 · 흰 옷의 그림은 재현</p>
   <p class="mb-q">그 말을 내건 사람을,<br>신도들은 「대원님」이라 불럿소.</p>
@@ -141,24 +142,20 @@
 <section class="mb-sec bb-pale" id="c2" data-ch="장부 · 바칠수록 놉흔 벼슬" data-no="02" data-kj="第二章" data-sub="헌납 장부">
   <h2 class="mb-h"><small>장부 · 獻納</small>바칠수록 놉흔 벼슬</h2>
   <p class="mb-p">바친 만큼, 「독립이 되는 날」의 벼슬을 약속하엿소. <em>바칠 것을 하나씩 내 보시압.</em></p>
-  <div class="lg-m" id="lgLadder">
-    <div class="lg-hd"><span>바친 것</span><span>약속된 벼슬</span></div>
-    <div class="lg-last" id="lgLast"><b class="g"></b><i></i><span class="p"></span></div>
-    <ol class="lg-rungs">
-      <li data-k="4"><b class="g"></b><i></i><span class="p">대신</span></li>
-      <li data-k="3"><b class="g"></b><i></i><span class="p">참의</span></li>
-      <li data-k="2"><b class="g"></b><i></i><span class="p">도지사</span></li>
-      <li data-k="1"><b class="g"></b><i></i><span class="p">군수</span></li>
-      <li data-k="0"><b class="g"></b><i></i><span class="p">경찰서장</span></li>
-    </ol>
-    <div class="lg-slip" id="lgSlip">
-      <p class="sl-h">임 명 장</p><p class="sl-to">아무개 귀하</p>
-      <p class="sl-b">바칠 것을 내면,<br>여긔에 벼슬이 적히오.</p>
-      <p class="sl-f"><span>대원</span><i>大元之印</i></p>
-      <b class="sl-void">무 효</b>
+  <div class="lg2" id="lgBook">
+    <div class="lg2-stage">
+      <div class="lg2-stack" id="lgStack">
+        <article class="lg2-card base"><p class="h">任 命 狀</p><p class="to">아무개 귀하</p><p class="rank">· · ·</p><p class="b">바칠 것을 내면,<br>여긔에 벼슬이 적히오.</p><p class="f"><span>大元</span><i>大元<br>之印</i></p></article>
+      </div>
+      <b class="lg2-void" id="lgVoid">無效</b>
+      <p class="lg2-n"><span>임명장</span><b id="lgN">0</b><span>장</span></p>
     </div>
-    <button type="button" class="lg-give" id="lgGive">논밭을 바치시압</button>
-    <p class="lg-say" id="lgSay">다섯을 다 바치면 — 맨 우에 한 줄이 더 적히오.</p>
+    <p class="lg2-say" id="lgSay">아래에서 하나씩 바치시압. 바친 만큼 — 벼슬이 올라가오.</p>
+    <div class="lg2-give" id="lgGive">
+      <button type="button" data-g="논밭">논밭</button><button type="button" data-g="집">집</button><button type="button" data-g="모은 돈">모은 돈</button><button type="button" data-g="패물">패물</button><button type="button" data-g="가진 것 전부">가진 것 전부</button>
+    </div>
+    <ol class="lg2-led" id="lgLed"><li class="hd"><span>헌납 장부</span><span>바친 것</span><span>약속된 벼슬</span></li></ol>
+    <button type="button" class="mb-btn ghost" id="lgReset" hidden>처음부터</button>
   </div>
   <p class="mb-q">임명장은, 한 장도 지켜지지 아넛소.<br>그리고 — 신도들은 딸까지 바쳣소.</p>
   <p class="mb-note">근거 · 한국민족문화대백과사전 · 벼슬의 높낮이와 바친 것의 짝, 장부와 임명장의 모양은 재구성</p>
@@ -169,45 +166,29 @@
   <p class="mb-q bl" style="margin-top:0">바친 것이 다하면 — 다음은 식구엿소.</p>
   <h2 class="mb-h"><small>第三章 · 한 집</small>흐터진 한 집</h2>
   <p class="mb-p">한 집 식구를 여러 곳에 나누어 살게 하엿소. 하나가 떠나면 — 남은 식구가 볼모가 되엇소. <em>직접 해 보시압.</em></p>
-  <div class="hs-m" id="hsFam" data-step="0">
-    <div class="hs-strips">
-      <button type="button" class="hs-s" data-i="0" disabled><i class="v"></i><span class="who">아버지</span><span class="at">가 지부</span><b class="st"></b></button>
-      <button type="button" class="hs-s" data-i="1" disabled><i class="v"></i><span class="who">어머니</span><span class="at">나 지부</span><b class="st"></b></button>
-      <button type="button" class="hs-s" data-i="2" disabled><i class="v"></i><span class="who">맛아들</span><span class="at">다 지부</span><b class="st"></b></button>
-      <button type="button" class="hs-s far" data-i="3" disabled><i class="v"></i><span class="who">딸</span><span class="at">대원님 곁</span><b class="st"></b></button>
+  <div class="hs2" id="hsFam" data-step="0">
+    <div class="hs2-box" id="hsBox">
+      <button type="button" class="hs2-c" data-i="0" disabled><i class="v"></i><span class="pl">가 지부</span><b class="who">아버지</b><em class="st"></em></button>
+      <button type="button" class="hs2-c" data-i="1" disabled><i class="v"></i><span class="pl">나 지부</span><b class="who">어머니</b><em class="st"></em></button>
+      <button type="button" class="hs2-c" data-i="2" disabled><i class="v"></i><span class="pl">다 지부</span><b class="who">맛아들</b><em class="st"></em></button>
+      <button type="button" class="hs2-c far" data-i="3" disabled><i class="v"></i><span class="pl">대원님 곁</span><b class="who">딸</b><em class="st"></em></button>
+      <span class="rt">한 집 · 재현 그림</span>
     </div>
-    <span class="rt">한 집 · 재현 그림</span>
-    <p class="hs-say" id="hsSay">방석 네 장 — 한 집 식구요.</p>
-    <div class="hs-ctl"><button type="button" class="mb-btn" id="hsGo">지부로 나누시오</button><button type="button" class="mb-btn ghost" id="hsReset" hidden>처음부터</button></div>
+    <p class="hs2-say" id="hsSay">방석 네 장 — 한 집 식구요.</p>
+    <div class="hs2-ctl"><button type="button" class="mb-btn" id="hsGo">지부로 나누시오</button><button type="button" class="mb-btn ghost" id="hsReset" hidden>처음부터</button></div>
   </div>
   <dl class="mb-facts">
     <div><dt>벽력사</dt><dd>말을 듯지 안는 이, 떠나려는 이, 비밀을 아는 이 — 그들을 맡은 무리가 따로 잇섯소.</dd></div>
     <div><dt>볼모</dt><dd>식구가 흐터져 잇스니, 누구도 혼자서는 떠날 수 업섯소.</dd></div>
   </dl>
   <p class="mb-note">근거 · 한국민족문화대백과사전 · 식구와 지부의 짝은 재구성</p>
-  <p class="bb-turn" id="turnLine">소화 십이 년 이월 십륙일 밤.<br>왕십리의 한 집에, 불이 아즉 켜져 잇섯소.</p>
+  <p class="mb-q bl">소화 십이 년 이월 십륙일 밤.<br>왕십리의 한 집에, 불이 아즉 켜져 잇섯소.</p>
 </section>
 
 <!-- 第四章 · 그 밤 — 여기서부터 검게 뒤집힘 -->
-<section class="mb-sec dark bb-night" id="c4" data-ch="그 밤 · 왕십리" data-no="04" data-kj="第四章" data-sub="이월 십륙일 밤 · 왕십리">
-  <div class="ng-rail" id="ngRail"><div class="ng-n"><small>場面</small><b id="ngNo">1</b><small>/ 7</small></div><div class="ng-mid"><div class="ng-ticks" id="ngTicks"></div><p class="ng-date" id="ngDate">이월 십륙일 밤 · 왕십리</p></div></div>
-  <ol class="ng-list" id="ngList">
-    <li class="ng-sc" data-k="이월 십륙일 밤 · 왕십리"><div class="ng-fig"><img src="./img/mj/bb_night_house.jpg" alt="눈 덮인 밤 골목의 한 집 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div>
-      <div class="ng-tx"><p class="k"><b>一</b>이월 십륙일 밤 · 왕십리</p><h3>불이 아즉<br>켜져 잇섯소</h3><p>왕십리의 한 집에, 불이 아즉 켜져 잇섯소.</p></div></li>
-    <li class="ng-sc" data-k="밤 · 따지러 온 사내"><div class="ng-fig"><img src="./img/mj/bb_door2.jpg" alt="창호 앞에서 마주 선 두 그림자 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div>
-      <div class="ng-tx"><p class="k"><b>二</b>밤 · 만남</p><h3>따지러 온 사내</h3><p>유곤용의 조부와 부친은 재산을 모다 바첫고, 누이동생은 교주에게 바쳐졋소. 뒤늦게 이를 안 그는 삼만 원을 바치겟다 하고 인삼과 록용을 보내어 — 이 밤, 하왕십리 부친의 집에서 교주를 맛낫소.</p></div></li>
-    <li class="ng-sc" data-k="그 순간 · 틈" data-fx="heart"><div class="ng-fig"><img src="./img/mj/bb_door.jpg" alt="창호에 비친 손 그림자 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div>
-      <div class="ng-tx"><p class="k"><b>三</b>그 순간</p><h3>틈</h3><p>그는 틈을 엿보앗소.</p></div></li>
-    <li class="ng-sc" data-k="그 순간 · 막힌 복수"><div class="ng-fig"><img src="./img/mj/bb_door3.jpg" alt="창호 너머로 엉킨 그림자들 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div>
-      <div class="ng-tx"><p class="k"><b>四</b>그 순간</p><h3>막힌 복수</h3><p>복수하려 하엿소. 그러나 수행원들에게 막혓고 — 교주는 그 길로 달아낫소.</p></div></li>
-    <li class="ng-sc" data-k="그 길로 · 사라진 교주"><div class="ng-fig"><img src="./img/mj/bb_flee.jpg" alt="어두운 골목으로 멀어지는 흰 옷의 뒷모습 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div>
-      <div class="ng-tx"><p class="k"><b>五</b>그 길로</p><h3>사라진 교주</h3><p>그날 밤, 교주는 사라졋소. 경찰이 그를 쫏앗소.</p></div></li>
-    <li class="ng-sc" data-k="새벽 · 인현동"><div class="ng-fig"><img src="./img/mj/bb_raid.jpg" alt="등불 아래 문 앞에 선 경찰들 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div>
-      <div class="ng-tx"><p class="k"><b>六</b>새벽</p><h3>인현동</h3><p>경찰이 인현동의 집을 덥쳣소. 이경득과 이순분이 붓잡혓소. 장부 속의 일이, 그제야 열리기 시작하엿소.</p></div></li>
-    <li class="ng-sc" data-k="사흘 뒤 · 이월 십구일" data-fx="stamp"><div class="ng-fig"><img src="./img/mj/bb_ban.jpg" alt="등불 아래 펼쳐진 신문 원고 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span><b class="ng-ban">報道禁止</b></div>
-      <div class="ng-tx"><p class="k"><b>七</b>사흘 뒤 · 이월 십구일</p><h3>보도 금지</h3><p>이 일을 신문에 싯는 것이 금지되엇소.</p></div></li>
-  </ol>
-  <p class="mb-note">왕십리의 방 · 재현 그림 · 장면의 순서와 연출은 재구성 · 근거 · 후대 회고 기사 (3만 원 헌금 약속 · 인삼과 녹용 · 하왕십리)</p>
+<section class="bb-night2" id="c4" data-ch="그 밤 · 왕십리" data-no="04" data-kj="第四章" data-sub="이월 십륙일 밤 · 왕십리">
+  <div class="dr" id="ngDoor"></div>
+  <p class="mb-note dr-note">왕십리의 방 · 재현 그림 · 장면의 순서와 연출은 재구성 · 근거 · 후대 회고 기사 (3만 원 헌금 약속 · 인삼과 녹용 · 하왕십리)</p>
 </section>
 
 <!-- 第五章 · 쉰세 날 -->
@@ -359,20 +340,7 @@
 <section class="mb-sec dark bb-jar" id="c11" data-ch="병 · 칠십사 년" data-no="09" data-kj="第九章" data-sub="선반 우의 병">
   <h2 class="mb-h"><small>第九章 · 標本</small>선반 우의 병</h2>
   <p class="mb-p">그는 땅에 묻히지 아넛소. <em>칠십사 년 동안 — 병 속에 잇섯소.</em></p>
-  <div class="jr-wrap">
-    <div class="jr-stage" id="jrStage">
-      <div class="jr-pic"><img class="j1" src="./img/mj/bb_jar3.jpg" alt="선반 위의 병 (재현 그림 — 속은 알아볼 수 없게 그림)"><img class="j2" src="./img/mj/bb_jar.jpg" alt="비워진 병 (재현 그림)"><span class="rt">그림 · 재현</span></div>
-      <p class="jr-y"><b id="jrYear">1937</b><span><i id="jrAgo">0</i> 년째, 병 속에</span></p>
-    </div>
-    <ol class="jr-tl" id="jrTl">
-      <li data-yr="1937"><b>1937 · 소화 십이 년</b><p>일본 경찰은 그의 머리를 잘라 포르말린 병에 너헛소.</p></li>
-      <li data-yr="1945"><b>1945 · 해방</b><p>나라가 바뀌엇소. 병은 그대로 남앗소.</p></li>
-      <li data-yr="1950"><b>1950 · 전쟁</b><p>전쟁이 지나갓소. 병은 그대로 남앗소.</p></li>
-      <li data-yr=""><b>그 뒤 · 국과수</b><p>병은 국립과학수사연구원의 선반 우에 노혀 잇섯소.</p></li>
-      <li data-yr=""><b>훗날 · 진정</b><p>「사람의 몸을 표본으로 두는 것은 비인도적」이라는 진정을 행정안전부가 바다들엿소.</p></li>
-      <li data-yr="2011" class="last"><b>2011 · 시월 이십오일</b><p>불교단체가 병을 넘겨바다, 서울시립승화원에서 화장하엿소. 이틀 뒤 남양주 봉선사에서 위령제가 열렷소.</p></li>
-    </ol>
-  </div>
+  <div class="jr2" id="jarStage"></div>
   <p class="mb-q">병이 비워지고 —<br>그는 재가 되엇소.</p>
   <p class="mb-note">선반 우의 병 · 재현 그림 — 속은 알아볼 수 업게 그렷소 · 근거 · 한국민족문화대백과사전 「백백교」 · 2011년 화장 · 위령제 보도</p>
 </section>
@@ -387,8 +355,8 @@
   <p class="mb-rv sm">이십여 곳의 산이 잇섯소.</p>
   <p class="mb-rv big">가장 흰 것이,<br>가장 만히 덥고 잇섯소.</p>
   <p class="mb-rv red">덥힌 것을 다 세지 못한 채로 — 지금도.</p>
-  <p class="mb-rv end">경성의 밤은 아즉 길소.</p>
 </section>
+<section class="bb-wout" id="wout"><p>경성의 밤은 아즉 길소.</p></section>
 
 <!-- 덧붙임 · 라듸오 -->
 <section class="mb-sec dark" id="c12" data-ch="덧붙임 · 닫힌 무리의 주파수" data-no="附" data-kj="덧붙임" data-sub="흰 옷은 벗엇어도">
@@ -523,7 +491,7 @@
 <script src="./m-bb-ko.js?v=1"></script>
 <script src="../yk-news26.js?v=2"></script>
 <script src="../yk-mbook.js?v=11"></script>
-<script src="./m-bb-book.js?v=1"></script>
+<script src="./m-bb-book.js?v=2"></script>
 
 <script src="../yk-reward.js?v=9"></script>
 </body>
