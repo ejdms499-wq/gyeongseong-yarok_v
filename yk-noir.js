@@ -130,6 +130,48 @@
   function onReady(f) { if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', f); else f(); setTimeout(f, 1500); setTimeout(f, 4000); }
   function lum(el) { for (var e = el; e && e !== D.documentElement; e = e.parentElement) { var o = parse(getComputedStyle(e).backgroundColor); if (o && o.a > .5) return .299 * o.r + .587 * o.g + .114 * o.b; } return 255; }
 
+
+  /* ── 폰 최적화 (1016d): 컴퓨터에서 「양옆으로 나란히」 보던 칸이 폰에서 좁은 기둥으로 찌그러지면 → 위아래 한 줄로 ── */
+  addCss('yk-noir-lin', [
+    'html.yk-noir .yn-stack{display:block!important;grid-template-columns:none!important;columns:auto!important;column-count:auto!important}',
+    'html.yk-noir .yn-stack>*{width:auto!important;max-width:100%!important;min-width:0!important;margin-left:0!important;margin-right:0!important;float:none!important;flex:none!important}',
+    'html.yk-noir .yn-stack>*+*{margin-top:16px!important}',
+    'html.yk-noir .yn-wrap{max-width:100%!important;width:auto!important;white-space:normal!important;overflow-wrap:anywhere;word-break:keep-all}',
+    'html.yk-noir .yn-hd{letter-spacing:.04em!important}',
+    'html.yk-noir .yn-vert{writing-mode:horizontal-tb!important;text-orientation:mixed!important;height:auto!important}'
+  ]);
+  var SKIPLIN = '.m-hd,.m-dock,.m-deck>.m-pg,.notebook,.ykg-book,.ykp-veil,.yke .yg-press,.ykr,.report-timeline,.m-in>.m-mh,nav,button,.cb-steps,.yn-flip,.ck-face-wrap,.ykq-tray,[class*="track"],[class*="slider"],[class*="tabs"],[class*="chips"],[class*="dots"],[class*="strip"]';
+  function textLen(e) { return (e.textContent || '').replace(/\s+/g, '').length; }
+  function linearize() {
+    var vw = innerWidth;
+    var all = (D.querySelector('main, .detail-content, .m-deck') || D.body).querySelectorAll('*');
+    for (var i = 0; i < all.length; i++) {
+      var e = all[i]; if (e.__ynlin) continue;
+      if (e.closest(SKIPLIN)) { e.__ynlin = 1; continue; }
+      var cs = getComputedStyle(e), d = cs.display;
+      /* 1) 나란히 놓인 칸: 글이 든 칸이 컨테이너 절반보다 좁으면 위아래로 */
+      if ((d === 'grid' || (d === 'flex' && cs.flexDirection.indexOf('row') === 0) || (cs.columnCount && cs.columnCount !== 'auto')) && e.children.length >= 2) {
+        var r = e.getBoundingClientRect(); if (r.width < 200) continue;
+        var kids = [].filter.call(e.children, function (k) { var kc = getComputedStyle(k); return kc.display !== 'none' && kc.position !== 'absolute' && kc.position !== 'fixed'; });
+        var narrow = kids.filter(function (k) { var kr = k.getBoundingClientRect(); return kr.width > 0 && kr.width < r.width * .58 && kr.width < 230 && textLen(k) > 30; });
+        if (narrow.length) { e.classList.add('yn-stack'); e.__ynlin = 1; continue; }
+      }
+      /* 2) 세로쓰기 긴 글 → 가로 */
+      if (cs.writingMode.indexOf('vertical') === 0 && textLen(e) > 14) { e.classList.add('yn-vert'); }
+      /* 3) 화면 밖으로 삐져나간 글 */
+      var b = e.getBoundingClientRect();
+      if (b.width > 0 && b.right > vw + 2 && textLen(e) > 10 && e.children.length < 6) {
+        var scroller = false; for (var a = e.parentElement; a && a !== D.body; a = a.parentElement) { var ac = getComputedStyle(a); if (/auto|scroll/.test(ac.overflowX)) { scroller = true; break; } }
+        if (!scroller) e.classList.add('yn-wrap');
+      }
+      /* 4) 자간이 너무 벌어진 긴 제목 · 글 */
+      var fs = parseFloat(cs.fontSize) || 16, ls = parseFloat(cs.letterSpacing) || 0;
+      if (ls > fs * .16 && textLen(e) > 8 && e.children.length < 4) e.classList.add('yn-hd');
+    }
+  }
+  onReady(linearize);
+  var lq = null; addEventListener('scroll', function () { clearTimeout(lq); lq = setTimeout(linearize, 350); }, { passive: true });
+
   /* 마리아 · 한 방에 불 하나 — 어두운 장의 그림은 등불 하나만큼만 보이고, 손가락을 따라 불빛이 움직임 */
   if (path.indexOf('/case-maria/') > -1) {
     H.classList.add('yn-mr');
