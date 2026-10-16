@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <script>/* 1013 · 이 창(탭)에서 처음 본지를 열면 오프닝 「자정까지」부터 (한 번 보면 새로고침 · 다른 면에서 돌아올 때는 바로 본지) · index.html?op=0 이면 건너뜀 */
-(function(){try{var s=sessionStorage;if(!location.hash&&!/[?&]op=0\b/.test(location.search)&&!s.getItem('ykop-seen')){s.setItem('ykop-seen','1');location.replace('opening.html');document.write('<style>html{background:#ece5d6}body{display:none}</style>');return;}s.setItem('ykop-seen','1');}catch(e){}})();</script>
+(function(){try{var s=sessionStorage;if(!/Mobi|Android|iPhone|iPod/i.test(navigator.userAgent)&&!location.hash&&!/[?&]op=0\b/.test(location.search)&&!s.getItem('ykop-seen')){s.setItem('ykop-seen','1');location.replace('opening.html');document.write('<style>html{background:#ece5d6}body{display:none}</style>');return;}s.setItem('ykop-seen','1');}catch(e){}})();</script>
 <script>/* 오프닝(자정의 호외)에서 넘어온 경우: 첫 화면을 오프닝의 마지막 장면과 똑같이 맞춘다 */
 if(location.hash.indexOf('#yarok=')===0)document.documentElement.classList.add('yarok-in');</script>
 <style>html.yarok-in,html.yarok-in body{background:#000}html.yarok-in body{visibility:hidden}
