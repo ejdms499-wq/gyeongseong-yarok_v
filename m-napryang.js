@@ -53,6 +53,7 @@
       cancelAnimationFrame(raf); b.classList.remove('hold'); b.classList.add('done'); b.disabled = true;
       out[n] = 1; ORDER.push(n); paintBar(); ep.classList.add('out'); sfx('whoosh'); buzz(30);
       var a = $('#cbRow a[data-n="' + n + '"]'); if (a) { a.classList.add('puff'); setTimeout(function () { a.classList.remove('puff'); }, 1600); }
+      if (!ep.classList.contains('quiet') && Object.keys(out).length < 6) { scare(Object.keys(out).length, after); return; }
       if (ep.classList.contains('quiet')) { var m = $('#mute'); m.classList.add('on'); A().drone(false); setTimeout(function () { m.classList.remove('on'); if (D.body.classList.contains('lit')) A().drone(true); after(); }, calm ? 800 : 5200); }
       else after();
       function after() {
@@ -76,11 +77,15 @@
     b.onclick = function () {
       var s = SRC[b.dataset.src];
       $('#srcHd').textContent = '봉투 제' + HAN[b.dataset.src] + '호 · ' + s.date;
-      $('#srcBd').innerHTML = '<div class="rec"><p class="rl"><b>현대어 풀이</b><span>제목' + (s.os ? ' · 부제' : '') + '만 옮김</span></p><p class="mt">' + esc(s.mt) + (s.ms ? '<small>' + esc(s.ms) + '</small>' : '') + '</p>' +
-        '<p class="rl"><b>원문 기록</b><span>' + esc(s.vs || ('제목 · ' + (s.os ? '부제 · ' : '') + '날짜 · 지면 확인')) + '</span></p><p class="ot">' + esc(s.ot) + '</p>' + (s.os ? '<p class="os">' + esc(s.os) + '</p>' : '') +
-        (s.pg ? '<button type="button" class="pg" data-zoom="' + s.pg.src + '" data-cap="' + esc(s.date) + ' 지면 전체"><img src="' + s.pg.src + '" alt="' + esc(s.date) + ' 지면 전체"><i style="' + s.pg.box + '"></i></button><p class="pgc">붉은 테두리 — 이 긔사 자리' + (s.pgc ? ' · ' + esc(s.pgc) : '') + ' · 누르면 크게</p>' : '') +
-        (s.url ? '<a class="lk" href="' + s.url + '" target="_blank" rel="noopener">한국사데이터베이스에서 원문 보기 ↗</a>' : '') +
-        '<p class="rl"><b>편집국 재구성</b><span>원문 아님</span></p><p class="re">' + esc(s.re) + '</p></div>';
+      var CR = { 1: ['assets/n1-spirit.png', '그날 오면에 실린 사진 — 실물'], 2: ['assets/np/c1932.jpg', '그날 칠면에서 오려 낸 긔사 — 실물'], 4: ['assets/np/c1924.jpg', '그날 이면에서 오려 낸 긔사 — 실물'] }[b.dataset.src];
+      $('#srcBd').innerHTML = '<div class="rec">' +
+        (CR ? '<button type="button" class="clip" data-zoom="' + CR[0] + '" data-cap="' + esc(s.date) + ' · ' + CR[1] + '"><img src="' + CR[0] + '" alt="' + esc(s.date) + ' ' + CR[1] + '"><span>' + CR[1] + ' · 누르면 크게</span></button>' : '') +
+        '<div class="hl"><p class="hl-k">원문 제목 · 그날 활자 그대로</p><p class="ot">' + esc(s.ot) + '</p>' + (s.os ? '<p class="os">' + esc(s.os) + '</p>' : '') + '<p class="hl-d">' + esc(s.date) + '</p></div>' +
+        '<p class="rl"><b>오늘 말로</b><span>제목' + (s.os ? ' · 부제' : '') + '를 옮김</span></p><p class="mt">' + esc(s.mt) + (s.ms ? '<small>' + esc(s.ms) + '</small>' : '') + '</p>' +
+        (s.pg ? '<p class="rl"><b>그날 지면 한 장</b><span>붉은 테두리가 이 긔사</span></p><button type="button" class="pg" data-zoom="' + s.pg.src + '" data-cap="' + esc(s.date) + ' 지면 전체"><img src="' + s.pg.src + '" alt="' + esc(s.date) + ' 지면 전체"><i style="' + s.pg.box + '"></i></button><p class="pgc">' + (s.pgc ? esc(s.pgc) + ' · ' : '') + '누르면 크게</p>' : '') +
+        (!CR && !s.pg ? '<p class="none">이 날 지면 사진은 아즉 구하지 못햇소. 제목' + (s.os ? '과 부제' : '') + '만 원문 그대로 옮겻소.</p>' : '') +
+        '<p class="rl"><b>편집국 재구성</b><span>원문 아님</span></p><p class="re">' + esc(s.re) + '</p>' +
+        '<p class="from">긔사 긔록 · 국사편찬위원회 한국사데이터베이스 (동아일보)' + (s.vs ? ' · ' + esc(s.vs) : '') + '</p></div>';
       W.mb.open('shSrc');
     };
   });
@@ -229,6 +234,36 @@
     $('#iqF').addEventListener('submit', function (e) { e.preventDefault(); var i = $('#iqQ'); ask(i.value); i.value = ''; i.blur(); });
   })();
 
+  /* ── 초를 끌 때마다 — 어둠이 한 겹씩, 그리고 세는 목소리 ── */
+  var SAY = ['', '하나.', '둘. — 방금, 숨소리가 하나 더 들렷소.', '셋. …세는 목소리가 당신 것이 아니오.', '넷. 뒤를 도라보지 마시오.', '다섯. 저것도 — 초를 세고 잇소.'];
+  function dim() { var k = Object.keys(out).length; D.documentElement.style.setProperty('--np-dim', (k * .075).toFixed(3)); }
+  function scare(k, after) {
+    var o = $('#snf'), t = $('#snfT'); dim();
+    if (calm) { after(); return; }
+    t.textContent = ''; o.hidden = false; requestAnimationFrame(function () { o.classList.add('on'); });
+    A().drone(false); A().heart(true); buzz([40, 180, 40, 700, 40, 180, 40]);
+    setTimeout(function () { t.textContent = SAY[k] || ''; t.classList.add('in'); tone('tick'); }, 700);
+    setTimeout(function () { o.classList.remove('on'); t.classList.remove('in'); A().heart(false); if (D.body.classList.contains('lit')) A().drone(true);
+      setTimeout(function () { o.hidden = true; if (k === 3) relight(); after(); }, 900); }, 2900);
+  }
+  function relight() {   /* 꺼진 초 하나가 저 혼자 켜졋다 꺼짐 */
+    var a = $$('#cbRow a.out')[0]; if (!a) return;
+    a.classList.add('relit'); buzz([15, 60, 15]);
+    var n = $('#cbNote'); n.textContent = '꺼진 초가 — 저 혼자 켜졋다 꺼졋소.'; n.classList.add('on');
+    setTimeout(function () { a.classList.remove('relit'); }, 2600); setTimeout(function () { n.classList.remove('on'); }, 3600);
+  }
+  /* ── 일곱째 초 앞 — 검은 화면은 거울이오 ── */
+  function mirror(done) {
+    var o = $('#mir'); if (calm) { done(); return; }
+    o.hidden = false; requestAnimationFrame(function () { o.classList.add('on'); }); A().drone(false); A().heart(false);
+    var L = $$('p', o); L.forEach(function (p) { p.classList.remove('in'); });
+    setTimeout(function () { L[0].classList.add('in'); }, 1600);
+    setTimeout(function () { L[0].classList.remove('in'); }, 5200);
+    setTimeout(function () { L[1].classList.add('in'); buzz([30, 400, 30]); }, 6400);
+    setTimeout(function () { L[2].classList.add('in'); A().heart(true); }, 9000);
+    setTimeout(function () { o.classList.remove('on'); A().heart(false); setTimeout(function () { o.hidden = true; done(); }, 1400); }, 11600);
+  }
+
   /* ── 뒤로 가려 하면 — 문턱의 신 두 켤레 ── */
   var trapArmed = false, trapUp = false, leaving = false;
   function armTrap() { if (trapArmed) return; trapArmed = true; try { history.pushState({ npTrap: 1 }, ''); } catch (e) {} }
@@ -266,9 +301,12 @@
   /* ── 끗 · 일곱째 초 ── */
   var STORY = '', finaled = false;
   function showEnd() {
-    var end = $('#end'); end.hidden = false; A().drone(false); trapArmed = false;
-    setTimeout(function () { end.classList.add('on'); W.scrollTo({ top: end.getBoundingClientRect().top + W.scrollY - 92, behavior: 'smooth' }); }, 60);
-    setTimeout(function () { $('#cbRow a.seven').classList.add('on'); sfx('bell'); buzz(60); end.classList.add('seven'); }, calm ? 0 : 4200);
+    var end = $('#end'); trapArmed = false; dim();
+    mirror(function () {
+      end.hidden = false; A().drone(false);
+      setTimeout(function () { end.classList.add('on'); W.scrollTo({ top: end.getBoundingClientRect().top + W.scrollY - 92, behavior: 'auto' }); }, 60);
+      setTimeout(function () { $('#cbRow a.seven').classList.add('on'); sfx('bell'); buzz(60); end.classList.add('seven'); }, calm ? 0 : 4200);
+    });
   }
   $('#wgT').addEventListener('input', function () { $('#wgN').textContent = this.value.length; });
   $('#wgB').onclick = function () { STORY = $('#wgT').value.trim().slice(0, 40); if (!STORY) { $('#wgT').focus(); return; } finale(); };

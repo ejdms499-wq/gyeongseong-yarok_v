@@ -199,7 +199,7 @@
     ];
     var N = SC.length;
     root.removeAttribute('style'); root.className = 'jx'; root.style.height = (N * 110 + 60) + 'svh';
-    root.innerHTML = '<div class="jx-st">' + SC.map(function (x, i) { return '<div class="jx-l" style="--fx:' + (x.fx * 100) + '%"><img src="' + G + x.img + '.jpg" alt="' + x.alt + ' (재현 그림)" decoding="async"></div>'; }).join('') +
+    root.innerHTML = '<div class="jx-st">' + SC.map(function (x, i) { return '<div class="jx-l" style="--fx:' + (x.fx * 100) + '%"><img src="' + G + 'jx_' + x.img + '.jpg" alt="' + x.alt + ' (재현 그림)" decoding="async"></div>'; }).join('') +
       '<i class="jx-vig" aria-hidden="true"></i>' +
       '<div class="jx-yr"><b id="jxY">1937</b><small id="jxA">병 속에서 — 0 년</small></div>' +
       SC.map(function (x, i) { return '<div class="jx-cap"><p class="k">' + x.k + '</p><p class="b">' + x.b + '</p></div>'; }).join('') +
@@ -210,13 +210,15 @@
     function target() { var r = root.getBoundingClientRect(), span = r.height - W.innerHeight; tp = Math.max(0, Math.min(1, -r.top / Math.max(1, span))); if (!raf && on) raf = requestAnimationFrame(draw); }
     var YK = [1937, 1945, 1950, 0, 0, 2011];
     function draw() {
-      raf = 0; p += (tp - p) * .085; if (Math.abs(tp - p) < .0004) p = tp;
+      raf = 0; p += (tp - p) * .12; if (Math.abs(tp - p) < .0004) p = tp;
       var f = p * (N - 1);
-      ls.forEach(function (l, k) {
-        var o = k === 0 ? 1 : sm(f - k + 1);
-        l.style.opacity = o.toFixed(3);
-        var t = Math.max(0, Math.min(1, (f - k + 1) / 2)), x = SC[k];
-        im[k].style.transform = 'scale(' + (x.s0 + (x.s1 - x.s0) * t).toFixed(4) + ')';
+      ls.forEach(function (l, k) {   /* 보이는 두 장만 그림 — 나머지는 쉬게 함 (끈김 업게) */
+        var o = k === 0 ? 1 : sm(f - k + 1), live = k >= Math.floor(f) - 1 && k <= Math.floor(f) + 1, os = o.toFixed(2);
+        if (l._v !== live) { l._v = live; l.style.visibility = live ? 'visible' : 'hidden'; }
+        if (!live) return;
+        if (l._o !== os) { l._o = os; l.style.opacity = os; }
+        var t = Math.max(0, Math.min(1, (f - k + 1) / 2)), x = SC[k], sc = (x.s0 + (x.s1 - x.s0) * t).toFixed(3);
+        if (im[k]._s !== sc) { im[k]._s = sc; im[k].style.transform = 'translate3d(0,0,0) scale(' + sc + ')'; }
       });
       caps.forEach(function (c, k) { var d = Math.abs(f - k), o = 1 - sm((d - .18) / .3); c.style.opacity = o.toFixed(3); c.style.transform = 'translateY(' + ((f - k) * -26).toFixed(1) + 'px)'; });
       var i0 = Math.floor(f), t0 = f - i0, y;
@@ -354,34 +356,36 @@
     once(wp, function () { ring.classList.add('go'); }, .5);
   })();
 
-  /* ════════ 끗 · 흰 것 — 보이면 스스로 흐름 (시간으로 · 끈김 업슴) ════════ */
+  /* ════════ 끗 · 흰 것 — 내리는 만큼, 흰 천이 우에서부터 모든 것을 덥허 내려옴 (시간 아닌 손가락으로 · 끈김 업게) ════════ */
   (function () {
     var root = $('#fnRoot'); if (!root) return;
-    root.removeAttribute('style'); root.className = 'fz';
-    root.innerHTML = '<i class="fz-bg" aria-hidden="true"></i><canvas class="fz-snow" aria-hidden="true" hidden></canvas><i class="fz-white" aria-hidden="true"></i>' +
-      '<div class="fz-g a"><p class="fz-k">소화 십이 년 · 왕십리에서 용문산까지</p><p class="fz-l" style="--d:1.4s">그들은 흰 것을 미덧소.</p><p class="fz-l" style="--d:3.6s">한 사람의 흰 것으로,<br>천하를 희게 하자 하엿소.</p><p class="fz-l" style="--d:6.2s">흰 옷 아래에는 장부가 잇섯고,<br>임명장이 잇섯고 —</p><p class="fz-l" style="--d:8.8s">이십여 곳의 산이 잇섯소.</p></div>' +
-      '<div class="fz-g b"><p class="fz-big">가장 흰 것이,<br>가장 만히 덥고 잇섯소.</p><p class="fz-red">덥힌 것을 다 세지 못한 채로 — 지금도.</p></div>' +
-      '<div class="fz-g c"><p class="fz-end">경성의 밤은 아즉 길소.</p><button type="button" class="fz-re">한 번 더</button></div><span class="fz-rt">그림 · 재현</span>';
-    var cv = $('.fz-snow', root), cx = cv.getContext('2d'), F = [], vis = false, t0 = 0, raf = 0, WHITE = 17000;
-    for (var i = 0; i < 0; i++) F.push({ x: Math.random(), y: Math.random(), r: .5 + Math.random() * 2, s: .25 + Math.random() * .6, ph: Math.random() * 6 });
-    function draw(ts) {
-      raf = 0; if (!vis) return;
-      var w = cv.clientWidth, h = cv.clientHeight, d = Math.min(2, W.devicePixelRatio || 1);
-      if (cv.width !== Math.round(w * d)) { cv.width = Math.round(w * d); cv.height = Math.round(h * d); }
-      cx.setTransform(d, 0, 0, d, 0, 0); cx.clearRect(0, 0, w, h);
-      var el = t0 ? ts - t0 : 0, fade = 1 - Math.max(0, Math.min(1, (el - WHITE + 1500) / 2500));
-      if (fade > 0) {
-        cx.fillStyle = 'rgba(255,255,255,' + (.8 * fade).toFixed(3) + ')';
-        F.forEach(function (f) { f.y += f.s * .0012 * (1 + Math.min(1, el / 12000)); f.ph += .01; if (f.y > 1.02) { f.y = -.02; f.x = Math.random(); } cx.beginPath(); cx.arc((f.x + Math.sin(f.ph) * .012) * w, f.y * h, f.r, 0, 6.3); cx.fill(); });
-      }
-      raf = requestAnimationFrame(draw);
+    root.removeAttribute('style'); root.className = 'fw';
+    var L = ['그들은 흰 것을 미덧소.', '한 사람의 흰 것으로,<br>천하를 희게 하자 하엿소.', '흰 옷 아래에는 장부가 잇섯고,<br>임명장이 잇섯고 —', '이십여 곳의 산이 잇섯소.'];
+    root.innerHTML = '<div class="fw-st"><img class="fw-bg" src="' + G + 'fz_snow.jpg" alt="눈 덮인 산자락 (재현 그림)" decoding="async"><span class="fw-rt">그림 · 재현</span>' +
+      '<div class="fw-tx"><p class="fw-k">소화 십이 년 · 왕십리에서 용문산까지</p>' + L.map(function (t) { return '<p class="fw-l">' + t + '</p>'; }).join('') + '</div>' +
+      '<div class="fw-sheet" aria-hidden="true"><i></i></div>' +
+      '<div class="fw-out"><p class="fw-big">가장 흰 것이,<br>가장 만히 덥고 잇섯소.</p><p class="fw-red">덥힌 것을 다 세지 못한 채로 — 지금도.</p><p class="fw-end">경성의 밤은 아즉 길소.</p></div>' +
+      '<p class="fw-hint">천천히 내리시압</p></div>';
+    var st = $('.fw-st', root), bg = $('.fw-bg', root), k = $('.fw-k', root), ls = $$('.fw-l', root), sh = $('.fw-sheet', root), big = $('.fw-big', root), red = $('.fw-red', root), end = $('.fw-end', root), hint = $('.fw-hint', root);
+    var tp = 0, p = 0, raf = 0, on = false, cache = {};
+    function sm(t) { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); }
+    function set(el, key, prop, v) { var id = key + prop; if (cache[id] === v) return; cache[id] = v; el.style[prop] = v; }
+    function target() { var r = root.getBoundingClientRect(), span = r.height - W.innerHeight; tp = Math.max(0, Math.min(1, -r.top / Math.max(1, span))); if (!raf && on) raf = requestAnimationFrame(draw); }
+    function draw() {
+      raf = 0; p += (tp - p) * .12; if (Math.abs(tp - p) < .0005) p = tp;
+      set(bg, 'bg', 'transform', 'translate3d(0,0,0) scale(' + (1.12 - p * .12).toFixed(3) + ')');
+      set(k, 'k', 'opacity', sm(p / .05).toFixed(2));
+      ls.forEach(function (l, i) { var a = .04 + i * .085; set(l, 'l' + i, 'opacity', sm((p - a) / .06).toFixed(2)); set(l, 'lt' + i, 'transform', 'translate3d(0,' + ((1 - sm((p - a) / .06)) * 14).toFixed(1) + 'px,0)'); });
+      var c = sm((p - .44) / .36);   /* 흰 천이 내려옴 */
+      set(sh, 's', 'transform', 'translate3d(0,' + (-100 + c * 100).toFixed(2) + '%,0)');
+      set(big, 'b', 'opacity', sm((p - .8) / .06).toFixed(2));
+      set(red, 'r', 'opacity', sm((p - .87) / .05).toFixed(2));
+      set(end, 'e', 'opacity', sm((p - .94) / .05).toFixed(2));
+      set(hint, 'h', 'opacity', p < .02 ? '1' : '0');
+      if (on && p !== tp) raf = requestAnimationFrame(draw);
     }
-    function play() { root.classList.remove('play'); void root.offsetWidth; root.classList.add('play'); t0 = performance.now(); }
-    $('.fz-re', root).onclick = play;
-    if ('IntersectionObserver' in W) new IntersectionObserver(function (es) { es.forEach(function (e) {
-      vis = e.isIntersecting; if (vis && !raf) raf = requestAnimationFrame(draw);
-      if (vis && e.intersectionRatio > .6 && !root.classList.contains('play')) play();
-    }); }, { threshold: [0, .6] }).observe(root);
-    else play();
+    W.addEventListener('scroll', target, { passive: true }); W.addEventListener('resize', target);
+    if ('IntersectionObserver' in W) new IntersectionObserver(function (es) { es.forEach(function (e) { on = e.isIntersecting; if (on) target(); }); }).observe(root);
+    target(); p = tp; draw();
   })();
 })(window, document);

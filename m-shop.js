@@ -70,7 +70,9 @@
   }
 
   /* 가위로 오리기 — 점선을 따라 가위가 돌고, 엽서 한 장이 만들어짐 */
+  var CUR = null;
   function cutOut(v) {
+    CUR = v; $('#cutKept').textContent = ''; $('#cutShare').classList.remove('on');
     var box = $('#cut'), cv = $('#cutCv'), cx = cv.getContext('2d'), im = new Image(), save = $('#cutSave');
     box.hidden = false; requestAnimationFrame(function () { box.classList.add('on'); }); save.classList.remove('on'); $('#cutSay').textContent = '가위가 지나가오…';
     im.onload = function () {
@@ -97,11 +99,48 @@
         cx.font = '46px sans-serif'; cx.fillStyle = '#0e0e0e'; cx.fillText('✂', last[0] - 22, last[1] + 16);
         if (Math.floor(p * 20) !== Math.floor(((ts - 16 - t0) / dur) * 20)) tone('type');
         if (p < 1) requestAnimationFrame(f);
-        else { paper(); try { save.href = cv.toDataURL('image/png'); save.classList.add('on'); } catch (e) {} $('#cutSay').textContent = '오렷소 — 엽서로 저장하시압.'; buzz([10, 30, 10]); }
+        else { paper(); try { save.href = cv.toDataURL('image/png'); save.classList.add('on'); } catch (e) {} $('#cutSay').textContent = '오렷소.'; $('#cutShare').classList.add('on'); keep(v); buzz([10, 30, 10]); }
       })(t0);
     };
     im.src = v.src;
   }
+  /* ── 오려 둔 엽서 보관함 (이 폰에만 남음) ── */
+  var SKEY = 'yk-shop-scraps';
+  function scraps() { try { return JSON.parse(localStorage.getItem(SKEY) || '[]'); } catch (e) { return []; } }
+  function keep(v) {
+    var L = scraps().filter(function (x) { return x.src !== v.src; });
+    L.unshift({ id: v.id || '', src: v.src, t: v.t, d: v.d, p: v.p || '', at: Date.now() });
+    try { localStorage.setItem(SKEY, JSON.stringify(L.slice(0, 60))); $('#cutKept').textContent = '보관함에 너엇소 — 「오려 둔 엽서」에서 다시 볼 수 잇소.'; } catch (e) {}
+    paintScraps();
+  }
+  function paintScraps() {
+    var L = scraps(), box = $('#sb'); if (!box) return; $('#sbN').textContent = L.length;
+    box.innerHTML = L.length ? L.map(function (x, i) { return '<div class="sb-c" data-i="' + i + '"><button type="button" class="sb-o" data-i="' + i + '"><img src="' + x.src + '" alt="' + esc(x.t) + ' 엽서" loading="lazy"><b>' + esc(x.t) + '</b><em>' + esc(x.d) + '</em></button><button type="button" class="sb-x" data-x="' + i + '" aria-label="버리기">×</button></div>'; }).join('')
+      : '<p class="sb-0">아즉 오린 엽서가 업소. 우 진렬장에서 「✂ 오려 엽서로」를 누르시압.</p>';
+  }
+  $('#sb').addEventListener('click', function (e) {
+    var x = e.target.closest('[data-x]'); if (x) { var L = scraps(); L.splice(+x.dataset.x, 1); try { localStorage.setItem(SKEY, JSON.stringify(L)); } catch (er) {} paintScraps(); tone('tick'); return; }
+    var o = e.target.closest('.sb-o'); if (o) { var v = scraps()[+o.dataset.i]; if (v) cutOut(v); }
+  });
+  paintScraps();
+  /* ── 카톡 · SNS 로 보내기 — 폰의 공유 창을 띄움 (카카오톡 · 인스타그램 · 문자 등) ── */
+  function toast(t) { var n = $('#cutKept'); n.textContent = t; }
+  $('#cutShare').onclick = function () {
+    var v = CUR; if (!v) return; var url = location.origin + location.pathname.replace(/[^\/]*$/, '') + 'm-shop.html' + (v.id ? '#v-' + v.id : '#vitrine');
+    if (/^file:/.test(url)) url = 'https://ejdms499-wq.github.io/gyeongseong-yarok_v/m-shop.html' + (v.id ? '#v-' + v.id : '');
+    var text = '경성야록 상뎜에서 오린 엽서 — ' + v.t + ' (동아일보 ' + v.d + ')';
+    var cv = $('#cutCv');
+    function plain() { if (navigator.share) navigator.share({ title: '경성야록 엽서', text: text, url: url }).catch(function () {}); else copy(); }
+    function copy() { try { navigator.clipboard.writeText(text + ' ' + url).then(function () { toast('주소를 복사햇소 — 카톡 대화창에 붓처 너흐시압.'); }, function () { toast(url); }); } catch (e) { toast(url); } }
+    if (navigator.share && cv.toBlob) {
+      cv.toBlob(function (b) {
+        try { var f = new File([b], '경성야록-엽서.png', { type: 'image/png' });
+          if (navigator.canShare && navigator.canShare({ files: [f] })) { navigator.share({ files: [f], title: '경성야록 엽서', text: text + ' ' + url }).catch(function () {}); return; } } catch (e) {}
+        plain();
+      }, 'image/png');
+    } else plain();
+    buzz(10);
+  };
   $('#cutX').onclick = function () { var b = $('#cut'); b.classList.remove('on'); setTimeout(function () { b.hidden = true; }, 400); };
 
   /* ═══ 二 다섯 서랍 ═══ */
@@ -139,7 +178,7 @@
       var L = S.YR[tr];
       track.innerHTML = L.map(function (it, k) {
         return '<figure class="yr-c' + (it.src ? '' : ' void') + '" data-k="' + k + '">' +
-          (it.src ? '<button type="button" class="yr-pic" data-zoom="' + it.src + '" data-cap="' + esc(it.t + ' · ' + it.d) + '"><img src="' + it.src + '" alt="동아일보 ' + esc(it.d) + ' 광고" loading="lazy"></button>' : '<div class="yr-pic"><p>이 날부터 —<br>실릴 지면이 업소.</p></div>') +
+          (it.src ? '<button type="button" class="yr-pic" data-zoom="' + it.src + '" data-cap="' + esc(it.t + ' · ' + it.d) + '"><img src="' + it.src + '" alt="동아일보 ' + esc(it.d) + ' 광고" loading="lazy"><i class="yr-big">' + esc(it.d.slice(0, 4)) + '</i><i class="yr-nx">' + (k + 1) + ' / ' + L.length + ' · 옆으로 →</i></button>' : '<div class="yr-pic"><p>이 날부터 —<br>실릴 지면이 업소.</p></div>') +
           '<figcaption><em>' + esc(it.d) + (it.p ? ' · ' + esc(it.p) : '') + '</em><b>' + esc(it.t) + '</b><p>' + esc(it.o) + '</p></figcaption></figure>';
       }).join('');
       line.innerHTML = L.map(function (it, k) { var p = it.d.split('.'); return '<li' + (it.src ? '' : ' class="end"') + '><button type="button" data-k="' + k + '"><i></i><span>' + p[0] + (p[1] ? '.' + (+p[1]) : '') + '</span></button></li>'; }).join('');
