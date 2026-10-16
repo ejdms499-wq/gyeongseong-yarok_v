@@ -11,7 +11,7 @@
 <link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
 <link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
 <link rel="stylesheet" href="yk-mbook.css?v=12">
-<link rel="stylesheet" href="m-shop.css?v=4">
+<link rel="stylesheet" href="m-shop.css?v=6">
 </head>
 <body class="ms">
 
@@ -139,7 +139,14 @@
   <div class="mb-sh-bd" id="frBd"></div>
 </div>
 <!-- 오린 엽서 -->
-<div class="cut" id="cut" hidden><div class="cut-in"><canvas id="cutCv"></canvas><p class="cut-say" id="cutSay">가위가 지나가오…</p><div class="cut-btns"><button type="button" class="cut-share" id="cutShare">카톡 · SNS로 보내기</button><a class="cut-save" id="cutSave" download="경성야록-엽서.png">사진첩에 저장</a></div><p class="cut-kept" id="cutKept"></p><button type="button" class="cut-x" id="cutX">닫기</button></div></div>
+<div class="cut" id="cut" hidden><div class="cut-in"><div class="cut-card" id="cutCard"><div class="cut-flip"><canvas id="cutCv"></canvas><canvas id="cutBk" aria-label="엽서 뒷면"></canvas></div></div><p class="cut-say" id="cutSay">가위가 지나가오…</p><div class="cut-btns"><button type="button" class="cut-share" id="cutShare">카톡 · SNS로 보내기</button><a class="cut-save" id="cutSave" download="경성야록-엽서.png">사진첩에 저장</a></div><button type="button" class="cut-write" id="cutWrite">✎ 뒷면에 편지 쓰기</button>
+<div class="cut-form" id="cutForm" hidden>
+<label><span>받는 이</span><input id="lwTo" maxlength="16" placeholder="예) 죽첨정 김 아무개 님"></label>
+<label><span>편지 <small id="lwN">0 / 160</small></span><textarea id="lwMsg" maxlength="160" rows="5" placeholder="이 광고를 보니 그대 생각이 나서 오려 보내오…"></textarea></label>
+<label><span>보내는 이</span><input id="lwFrom" maxlength="12" placeholder="예) 김소이"></label>
+<div class="cut-fb"><button type="button" id="lwFlip">앞면 보기</button><button type="button" id="lwDone">다 썻소 · 봉투에 너키</button></div>
+</div>
+<p class="cut-kept" id="cutKept"></p><button type="button" class="cut-x" id="cutX">닫기</button></div></div>
 <div class="mb-sheet" id="mbToc" role="dialog" aria-label="차례">
   <div class="mb-sh-hd"><b><small>차례</small>경성야록 상뎜</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
   <div class="mb-sh-bd"><nav class="mb-toc"></nav></div>
@@ -148,6 +155,6 @@
 <script src="m-shop-data.js?v=1"></script>
 <script src="case-sonkijeong/m-sk-ko.js"></script>
 <script src="yk-mbook.js?v=14"></script>
-<script src="m-shop.js?v=5"></script>
+<script src="m-shop.js?v=6"></script>
 </body>
 </html>

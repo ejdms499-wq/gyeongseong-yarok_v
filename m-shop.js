@@ -69,10 +69,67 @@
     W.mb.open('shAd');
   }
 
+  /* ── 엽서 뒷면 — 편지 쓰기 (받는 이 · 편지 · 보내는 이) ── */
+  var LW = (function () {
+    var bk = $('#cutBk'), bx = bk.getContext('2d'), fm = $('#cutForm'), card = $('#cutCard'), to = $('#lwTo'), msg = $('#lwMsg'), fr = $('#lwFrom'), cv = $('#cutCv'), raf = 0;
+    var MON = ['정월', '이월', '삼월', '사월', '오월', '륙월', '칠월', '팔월', '구월', '시월', '십일월', '십이월'];
+    function wrap(txt, maxW) { var out = []; String(txt).split('\n').forEach(function (para) { var line = ''; for (var i = 0; i < para.length; i++) { var c = para[i]; if (bx.measureText(line + c).width > maxW && line) { out.push(line); line = c === ' ' ? '' : c; } else line += c; } out.push(line); }); return out; }
+    function draw() {
+      raf = 0; var W0 = cv.width || 900, H0 = cv.height || 1200; bk.width = W0; bk.height = H0; var pad = 60;
+      bx.fillStyle = '#f4f3f0'; bx.fillRect(0, 0, W0, H0);
+      bx.strokeStyle = '#0e0e0e'; bx.lineWidth = 2; bx.strokeRect(pad - 20, pad - 20, W0 - (pad - 20) * 2, H0 - (pad - 20) * 2);
+      bx.fillStyle = '#0e0e0e'; bx.font = '900 40px "Noto Serif KR", serif'; bx.textAlign = 'left'; bx.fillText('우 편 엽 서', pad, pad + 40);
+      bx.fillStyle = '#6b6b68'; bx.font = '400 18px "Noto Sans KR", sans-serif'; bx.fillText('경성야록 상뎜 · 오려 낸 광고 엽서', pad, pad + 74);
+      /* 우표 · 소인 */
+      var sw = 120, sh = 148, sx = W0 - pad - sw, sy = pad - 6;
+      bx.setLineDash([6, 5]); bx.strokeStyle = '#b3261e'; bx.lineWidth = 2; bx.strokeRect(sx, sy, sw, sh); bx.setLineDash([]);
+      bx.fillStyle = '#b3261e'; bx.fillRect(sx + 12, sy + 12, sw - 24, sh - 24); bx.fillStyle = '#f4f3f0'; bx.font = '900 54px "Noto Serif KR", serif'; bx.textAlign = 'center'; bx.fillText('야', sx + sw / 2, sy + sh / 2 + 10); bx.font = '500 14px "Noto Sans KR", sans-serif'; bx.fillText('삼 전', sx + sw / 2, sy + sh - 24);
+      var d = new Date(), px = sx - 30, py = sy + sh - 10; bx.strokeStyle = 'rgba(14,14,14,.55)'; bx.lineWidth = 3; bx.beginPath(); bx.arc(px, py, 62, 0, Math.PI * 2); bx.stroke(); bx.beginPath(); bx.moveTo(px - 62, py); bx.lineTo(px + 62, py); bx.stroke();
+      bx.fillStyle = 'rgba(14,14,14,.6)'; bx.font = '700 18px "Noto Serif KR", serif'; bx.fillText('경성', px, py - 18); bx.font = '600 16px "Noto Sans KR", sans-serif'; bx.fillText(MON[d.getMonth()] + ' ' + d.getDate() + '일', px, py + 30);
+      bx.textAlign = 'left';
+      /* 칸 나누기 — 왼편 편지 · 오른편 받는 이 */
+      var top = pad + 190, bot = H0 - pad - 30, mid = Math.round(W0 * .56);
+      bx.strokeStyle = '#0e0e0e'; bx.lineWidth = 1.5; bx.beginPath(); bx.moveTo(mid, top); bx.lineTo(mid, bot); bx.stroke();
+      var lh = 52; bx.strokeStyle = '#d6d5d0'; bx.lineWidth = 1;
+      for (var y = top + lh; y <= bot; y += lh) { bx.beginPath(); bx.moveTo(pad, y); bx.lineTo(mid - 30, y); bx.stroke(); }
+      bx.fillStyle = '#0e0e0e'; bx.font = '400 30px "Noto Serif KR", serif';
+      var L = wrap(msg.value || '', mid - 30 - pad - 6), maxL = Math.floor((bot - top) / lh);
+      if (!msg.value) { bx.fillStyle = '#b9b8b3'; L = ['(여긔에 편지가 적히오)']; }
+      L.slice(0, maxL).forEach(function (s, i) { bx.fillText(s, pad + 4, top + lh * (i + 1) - 12); });
+      /* 받는 이 · 보내는 이 */
+      var ax = mid + 34, aw = W0 - pad - ax;
+      bx.fillStyle = '#6b6b68'; bx.font = '500 18px "Noto Sans KR", sans-serif'; bx.fillText('받는 이', ax, top + 30);
+      bx.strokeStyle = '#0e0e0e'; bx.lineWidth = 1.2; [top + 110, top + 180].forEach(function (y) { bx.beginPath(); bx.moveTo(ax, y); bx.lineTo(ax + aw, y); bx.stroke(); });
+      bx.fillStyle = '#0e0e0e'; bx.font = '700 34px "Noto Serif KR", serif'; wrap(to.value || '', aw).slice(0, 2).forEach(function (s, i) { bx.fillText(s, ax, top + 100 + i * 70); });
+      bx.fillStyle = '#6b6b68'; bx.font = '500 18px "Noto Sans KR", sans-serif'; bx.fillText('보내는 이', ax, bot - 80);
+      bx.beginPath(); bx.moveTo(ax, bot - 10); bx.lineTo(ax + aw, bot - 10); bx.stroke();
+      bx.fillStyle = '#0e0e0e'; bx.font = '700 30px "Noto Serif KR", serif'; bx.fillText(fr.value || '', ax, bot - 22);
+      $('#lwN').textContent = (msg.value || '').length + ' / 160';
+    }
+    function later() { if (!raf) raf = requestAnimationFrame(draw); }
+    [to, msg, fr].forEach(function (i) { i.addEventListener('input', later); });
+    function flip(b) { card.classList.toggle('back', b); $('#lwFlip').textContent = b ? '앞면 보기' : '뒷면 보기'; tone('tick'); }
+    $('#cutWrite').onclick = function () { fm.hidden = false; this.hidden = true; draw(); flip(true); setTimeout(function () { msg.focus(); }, 450); buzz(8); };
+    $('#lwFlip').onclick = function () { flip(!card.classList.contains('back')); };
+    $('#lwDone').onclick = function () {
+      draw(); if (CUR) { CUR.to = to.value.trim(); CUR.msg = msg.value.trim(); CUR.from = fr.value.trim(); keep(CUR); }
+      try { $('#cutSave').href = both().toDataURL('image/png'); } catch (e) {}
+      fm.hidden = true; $('#cutWrite').hidden = false; $('#cutWrite').textContent = '✎ 편지 고쳐 쓰기';
+      $('#cutKept').textContent = '편지를 봉햇소 — 「보내기」를 누르면 앞 · 뒷면이 함께 가오.'; tone('stamp'); buzz([20, 60, 20]);
+    };
+    card.addEventListener('click', function () { if (fm.hidden && !has()) return; flip(!card.classList.contains('back')); });
+    function has() { return !!(msg.value.trim() || to.value.trim()); }
+    function both() { var o = D.createElement('canvas'), g = 30; o.width = cv.width; o.height = cv.height * 2 + g; var c = o.getContext('2d'); c.fillStyle = '#0b0b0b'; c.fillRect(0, 0, o.width, o.height); c.drawImage(cv, 0, 0); c.drawImage(bk, 0, cv.height + g); return o; }
+    return {
+      reset: function (v) { to.value = v.to || ''; msg.value = v.msg || ''; fr.value = v.from || ''; fm.hidden = true; card.classList.remove('back'); var w = $('#cutWrite'); w.hidden = false; w.classList.remove('on'); w.textContent = v.msg ? '✎ 편지 고쳐 쓰기' : '✎ 뒷면에 편지 쓰기'; },
+      ready: function () { draw(); if (has()) { try { $('#cutSave').href = both().toDataURL('image/png'); } catch (e) {} } },
+      has: has, both: both
+    };
+  })();
   /* 가위로 오리기 — 점선을 따라 가위가 돌고, 엽서 한 장이 만들어짐 */
   var CUR = null;
   function cutOut(v) {
-    CUR = v; $('#cutKept').textContent = ''; $('#cutShare').classList.remove('on');
+    CUR = v; $('#cutKept').textContent = ''; $('#cutShare').classList.remove('on'); LW.reset(v);
     var box = $('#cut'), cv = $('#cutCv'), cx = cv.getContext('2d'), im = new Image(), save = $('#cutSave');
     box.hidden = false; requestAnimationFrame(function () { box.classList.add('on'); }); save.classList.remove('on'); $('#cutSay').textContent = '가위가 지나가오…';
     im.onload = function () {
@@ -99,7 +156,7 @@
         cx.font = '46px sans-serif'; cx.fillStyle = '#0e0e0e'; cx.fillText('✂', last[0] - 22, last[1] + 16);
         if (Math.floor(p * 20) !== Math.floor(((ts - 16 - t0) / dur) * 20)) tone('type');
         if (p < 1) requestAnimationFrame(f);
-        else { paper(); try { save.href = cv.toDataURL('image/png'); save.classList.add('on'); } catch (e) {} $('#cutSay').textContent = '오렷소.'; $('#cutShare').classList.add('on'); keep(v); buzz([10, 30, 10]); }
+        else { paper(); try { save.href = cv.toDataURL('image/png'); save.classList.add('on'); } catch (e) {} $('#cutSay').textContent = '오렷소. 뒷면에 몃 자 적어 보내도 되오.'; $('#cutShare').classList.add('on'); $('#cutWrite').classList.add('on'); keep(v); LW.ready(); buzz([10, 30, 10]); }
       })(t0);
     };
     im.src = v.src;
@@ -109,7 +166,7 @@
   function scraps() { try { return JSON.parse(localStorage.getItem(SKEY) || '[]'); } catch (e) { return []; } }
   function keep(v) {
     var L = scraps().filter(function (x) { return x.src !== v.src; });
-    L.unshift({ id: v.id || '', src: v.src, t: v.t, d: v.d, p: v.p || '', at: Date.now() });
+    L.unshift({ id: v.id || '', src: v.src, t: v.t, d: v.d, p: v.p || '', at: Date.now(), to: v.to || '', msg: v.msg || '', from: v.from || '' });
     try { localStorage.setItem(SKEY, JSON.stringify(L.slice(0, 60))); $('#cutKept').textContent = '보관함에 너엇소 — 「오려 둔 엽서」에서 다시 볼 수 잇소.'; } catch (e) {}
     paintScraps();
   }
@@ -129,7 +186,7 @@
     var v = CUR; if (!v) return; var url = location.origin + location.pathname.replace(/[^\/]*$/, '') + 'm-shop.html' + (v.id ? '#v-' + v.id : '#vitrine');
     if (/^file:/.test(url)) url = 'https://ejdms499-wq.github.io/gyeongseong-yarok_v/m-shop.html' + (v.id ? '#v-' + v.id : '');
     var text = '경성야록 상뎜에서 오린 엽서 — ' + v.t + ' (동아일보 ' + v.d + ')';
-    var cv = $('#cutCv');
+    var cv = LW.has() ? LW.both() : $('#cutCv'); if (LW.has()) text = (v.from ? v.from + ' 님이 ' : '') + '경성야록 엽서 뒷면에 편지를 적어 보냇소 — ' + v.t;
     function plain() { if (navigator.share) navigator.share({ title: '경성야록 엽서', text: text, url: url }).catch(function () {}); else copy(); }
     function copy() { try { navigator.clipboard.writeText(text + ' ' + url).then(function () { toast('주소를 복사햇소 — 카톡 대화창에 붓처 너흐시압.'); }, function () { toast(url); }); } catch (e) { toast(url); } }
     if (navigator.share && cv.toBlob) {

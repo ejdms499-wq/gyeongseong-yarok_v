@@ -236,7 +236,9 @@ html,body.mm{background:var(--paper)}
 /* ═══ 1017 일면 — 움직이는 사진 (그 시절 신문 속 사진이 저 혼자 움직이오) ═══
    화면에 들어오면 돌고(.on), 나가면 멈춤. 번쩍임 업슴. 누르면 한 번 더 */
 .mv{position:relative;display:block;overflow:hidden;-webkit-tap-highlight-color:transparent;cursor:pointer;user-select:none;-webkit-user-select:none}
-.mv:not(.on) *,.mv:not(.on)::before,.mv:not(.on)::after{animation-play-state:paused!important}
+.mv:not(.tap) *,.mv:not(.tap)::before,.mv:not(.tap)::after{animation-play-state:paused!important}
+.mv.tap *,.mv.tap::before,.mv.tap::after{animation-iteration-count:1!important;animation-fill-mode:both!important}
+.mv.mv-rs *,.mv.mv-rs::before,.mv.mv-rs::after{animation:none!important}
 .mv img{-webkit-user-drag:none}
 .mm-case>.mv{aspect-ratio:4/5;background:#0b0b0b;color:#fff;isolation:isolate}
 .mm-case>.mv::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;box-shadow:inset 0 0 80px 10px rgba(0,0,0,.75);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");mix-blend-mode:overlay;opacity:.7}
@@ -377,3 +379,44 @@ html,body.mm{background:var(--paper)}
 .mv-loupe .mv-bg{inset:auto;left:0;right:0;top:24%;aspect-ratio:418/305;background-size:100% 100%;animation:none;filter:grayscale(1) contrast(1.08) brightness(.95);box-shadow:0 0 0 1px #2a2a2a}
 .mv-loupe .mv-ask{left:86px;right:14px;top:20px;font-size:18px;line-height:1.45}
 .mv-loupe .mv-cap{z-index:5}
+
+/* ── v8 움직이는 사진은 누를 때만 · 손긔정은 지워진 채로 멈춤 ── */
+.mv-sohn.tap .mv-pic .p{animation-name:mvPrint1}
+@keyframes mvPrint1{0%,46%{opacity:0}60%,100%{opacity:1}}
+.mv-hint{position:absolute;right:12px;bottom:34px;z-index:7;padding:6px 10px;border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.55);font:500 11px/1 var(--sans);letter-spacing:.08em;color:#fff;pointer-events:none;transition:opacity .3s}
+.mv.tap .mv-hint{opacity:0}
+/* 다른 긔사 작은 사진 — 크기 · 틀 통일 */
+.mm-alt{grid-template-columns:88px 1fr!important;align-items:start}
+.mm-alt .mm-ob.mv{width:88px;height:112px;overflow:hidden}
+.mm-alt .mv-kim,.mm-alt .mv-hyun,.mm-alt .mv-jang{background:#0b0b0b}
+.mv-kim>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%;transform:scale(1.42);transform-origin:50% 40%}
+.mv-hyun>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.mv-jang>img{object-position:12% 50%}
+.mv-kim .band{top:auto;bottom:10%;height:20px;left:-6%;right:-6%}
+@keyframes mvBand{0%,38%{transform:rotate(-4deg)}55%,100%{transform:translateY(-260%) rotate(-4deg)}}
+.mm-alt>div>i{display:inline-block;margin-top:8px;padding:4px 8px;border:1px solid var(--red);color:var(--red);font:600 10.5px/1 var(--sans);letter-spacing:.06em;font-style:normal}
+.mm-alt{cursor:pointer}
+/* 봉한 긔사 — 정긔 독자 전용 */
+#mmLock .mb-sh-bd{text-align:center;padding-bottom:calc(30px + env(safe-area-inset-bottom))}
+.lk-seal{display:grid;place-items:center;width:84px;height:84px;margin:10px auto 18px;border-radius:50%;background:var(--red);color:#fff;font:900 22px/1 var(--serif);letter-spacing:.06em;box-shadow:0 0 0 4px rgba(179,38,30,.25),inset 0 0 0 3px rgba(0,0,0,.18);transform:rotate(-8deg)}
+.lk-t{font:900 22px/1.4 var(--serif);color:#fff}
+.lk-k{margin-top:6px;font:500 11px/1.5 var(--sans);letter-spacing:.14em;color:#e07a72}
+.lk-d{margin:16px auto 22px;max-width:20em;font:400 14.5px/1.85 var(--serif);color:#cfcfca}
+.lk-go{display:block;width:100%;height:54px;border:0;background:#fff;color:#0b0b0b;font:800 15px/54px var(--serif);letter-spacing:.12em}
+.lk-x{display:block;width:100%;margin-top:10px;height:46px;border:1px solid #444;background:none;color:#9a9994;font:500 13px/44px var(--sans)}
+/* 제호 — 줄을 덜고 서늘하게 */
+.mm-mast{background:#0b0b0b;color:#ecebe7;padding-bottom:26px}
+.mm-ml{border:0;padding-bottom:0;color:#6f6e6a}
+.mm-logo{padding:30px 0 22px}
+.mm-logo .mm-mark{color:#ecebe7}
+.mm-logo h1{color:#fff}
+.mm-info{border:0;border-top:1px solid #2c2c2b;padding:14px 0 0;color:#bdbcb7}
+.mm-info .r{color:#6f6e6a}
+.mm-today{border:0;padding:16px 0 0}
+.mm-date{color:#ecebe7}
+.mm-now{color:#e0574d}
+.mm-ago{color:#6f6e6a}
+.mm-stop{color:#bdbcb7}
+.mm-tag{margin:36px 0 0;color:#8f8e89}
+.mm-tag b{color:#fff}
+.mm-mast .hj.gloss,.mm-mast .hj{border-bottom-color:transparent!important;text-decoration:none!important}

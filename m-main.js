@@ -95,18 +95,18 @@
 
   /* ══ 일면 — 움직이는 사진 ══ */
   (function () {
-    var io = 'IntersectionObserver' in W ? new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('on', e.isIntersecting); if (e.isIntersecting) first(e.target); }); }, { threshold: .25 }) : null;
+    var io = 'IntersectionObserver' in W ? new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('on', e.isIntersecting); }); }, { threshold: .25 }) : null;
     function first(el) {
       if (el.dataset.seen) return; el.dataset.seen = 1;
       var b = $('.mv-count b', el); if (b) { var to = +b.dataset.to, t0 = performance.now(); (function f(t) { var p = Math.min(1, (t - t0) / 2400); b.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(f); })(t0); }
     }
     function tap(el) {
-      el.classList.remove('tap'); void el.offsetWidth; el.classList.add('tap'); clearTimeout(el._t); el._t = setTimeout(function () { el.classList.remove('tap'); }, 1600);
+      el.classList.remove('tap'); el.classList.add('mv-rs'); void el.offsetWidth; el.classList.remove('mv-rs'); void el.offsetWidth; el.classList.add('tap'); first(el);
       var k = el.dataset.mv; buzz(k === 'door' ? [25, 90, 25, 90, 25] : k === 'letter' || k === 'sohn' ? [10, 40, 30] : 12); tone(k === 'letter' ? 'stamp' : 'tick');
     }
     function scan(root) {
       $$('.mv', root || D).forEach(function (el) {
-        if (el._mv) return; el._mv = 1; if (io) io.observe(el); else el.classList.add('on');
+        if (el._mv) return; el._mv = 1; if (el.parentNode.classList.contains('mm-case') && !el.querySelector('.mv-hint')) el.insertAdjacentHTML('beforeend', '<span class="mv-hint">' + (el.dataset.mv === 'loupe' ? '눌러서 확대경을 깨우시오' : '눌러 보시오') + '</span>'); if (io) io.observe(el); else el.classList.add('on');
         if (el.dataset.mv !== 'loupe') el.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); tap(el); });
         if (el.dataset.mv === 'loupe') loupe(el);
       });
@@ -121,15 +121,26 @@
       var bg = $('.mv-bg', el);
       function place(px, py) { var bx = bg.offsetLeft, by = bg.offsetTop, w = bg.offsetWidth, h = bg.offsetHeight; x = Math.max(bx + R, Math.min(bx + w - R, px)); y = Math.max(by + R * .6, Math.min(by + h - R * .6, py));
         lp.style.transform = 'translate(' + x + 'px,' + y + 'px)'; inn.style.backgroundSize = (w * Z) + 'px ' + (h * Z) + 'px'; inn.style.backgroundPosition = (-((x - bx) * Z - R)) + 'px ' + (-((y - by) * Z - R)) + 'px'; }
-      (function f(t) { if (el.isConnected) requestAnimationFrame(f); if (!el.classList.contains('on') || man) return;
+      var once = 0; (function f(t) { if (el.isConnected) requestAnimationFrame(f); if (!once && bg.offsetWidth) { once = 1; place(bg.offsetLeft + bg.offsetWidth * .5, bg.offsetTop + bg.offsetHeight * .5); } if (!el.classList.contains('tap') || man) return;
         var k = (t - t0) / 1000, w = bg.offsetWidth, h = bg.offsetHeight; place(bg.offsetLeft + w * (.5 + .36 * Math.sin(k * .37)), bg.offsetTop + h * (.55 + .25 * Math.sin(k * .53 + 1.3))); })(t0);
       function pos(e) { var r = el.getBoundingClientRect(); place(e.clientX - r.left, e.clientY - r.top); }
       lp.addEventListener('pointerdown', function (e) { man = 1; lp.setPointerCapture && lp.setPointerCapture(e.pointerId); pos(e); buzz(8); e.preventDefault(); });
       lp.addEventListener('pointermove', function (e) { if (man) { pos(e); e.preventDefault(); } });
       function up() { if (!man) return; man = null; t0 = performance.now() - 1000 * Math.asin(Math.max(-1, Math.min(1, ((x - bg.offsetLeft) / bg.offsetWidth - .5) / .36))) / .37; }
       lp.addEventListener('pointerup', up); lp.addEventListener('pointercancel', up);
-      el.addEventListener('click', function (e) { if (e.target.closest('.mv-lp')) return; man = 1; var r = el.getBoundingClientRect(); place(e.clientX - r.left, e.clientY - r.top); buzz(8); setTimeout(function () { man = null; }, 2500); });
+      el.addEventListener('click', function (e) { if (!el.classList.contains('tap')) { el.classList.add('tap'); t0 = performance.now(); clearTimeout(el._w); el._w = setTimeout(function () { el.classList.remove('tap'); }, 12000); buzz(8); return; } if (e.target.closest('.mv-lp')) return; man = 1; var r = el.getBoundingClientRect(); place(e.clientX - r.left, e.clientY - r.top); buzz(8); setTimeout(function () { man = null; }, 2500); });
     }
     W.mmMv = scan; scan();
+    /* 다른 긔사 — 봉해 둔 긔사 · 정긔 독자 전용 */
+    D.addEventListener('click', function (e) {
+      var a = e.target.closest('.mm-alt'); if (!a || e.target.closest('.mv')) return;
+      var h = $('b', a); $('#lkHead').textContent = h ? h.textContent : '';
+      buzz([10, 50, 20]); tone('stamp'); if (W.mb && W.mb.open) W.mb.open('mmLock');
+    });
+    $('#lkGo').addEventListener('click', function () {
+      if (W.mb) W.mb.close('mmLock');
+      var all = $('#mmSecs button[data-f="all"]'); if (all && !all.classList.contains('on')) all.click();
+      setTimeout(function () { var s = $('#sub'); if (s) W.scrollTo({ top: s.getBoundingClientRect().top + W.scrollY - 90, behavior: 'smooth' }); }, 350);
+    });
   })();
 })(window, document);
