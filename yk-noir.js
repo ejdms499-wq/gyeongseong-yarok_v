@@ -46,6 +46,8 @@
     /* 사건 표지 — 음화 */
     'html.yk-noir .yn-cov{background:#0b0b0b!important}',
     'html.yk-noir .yn-cov img.hero-slide{object-fit:cover!important}',
+    'html.yk-noir .yn-cov img.hero-slide:not(.yn-first){display:none!important}',
+    'html.yk-noir .yn-cov img.hero-slide.yn-first{opacity:1!important;visibility:visible!important;transform:none!important}',
     'html.yk-noir .yn-tag{position:absolute;right:12px;bottom:10px;z-index:5;font:500 9.5px/1 "Noto Sans KR",sans-serif;letter-spacing:.2em;color:rgba(239,236,230,.6);pointer-events:none}'
   ].join('\n');
   (D.head || H).appendChild(css);
@@ -172,6 +174,29 @@
   }
   onReady(linearize);
   var lq = null; addEventListener('scroll', function () { clearTimeout(lq); lq = setTimeout(linearize, 350); }, { passive: true });
+
+
+  /* ── 폰: 내려가며 나타나는 글이 끝내 안 나타나 빈 검은 화면이 되던 것 → 화면에 들어오고 잠시 뒤에도 투명하면 천천히 드러냄 ── */
+  (function () {
+    if (!('IntersectionObserver' in W)) return;
+    var REV = 'p,h1,h2,h3,h4,li,ol,ul,dl,figure,blockquote,.ex-echo,[class*="-time"],[class*="-tag"],[class*="-s"]';
+    var seen = new WeakSet(), io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; var el = e.target; io.unobserve(el);
+        setTimeout(function () {
+          var cs = getComputedStyle(el);
+          if (parseFloat(cs.opacity) < .05 && !el.closest('[hidden],.sealed,.cb-seal,.ykp-veil,.m-hd,.yn-erase')) {
+            el.style.transition = 'opacity .9s ease, transform .9s ease'; el.style.opacity = '1'; el.style.transform = 'none'; el.style.filter = 'none';
+          }
+        }, 1400);
+      });
+    }, { rootMargin: '-20% 0px -20% 0px' });
+    function scan() {
+      var root = D.querySelector('.detail-content, main') || D.body;
+      [].forEach.call(root.querySelectorAll(REV), function (el) { if (seen.has(el)) return; seen.add(el); if (parseFloat(getComputedStyle(el).opacity) < .05 && (el.textContent || '').trim().length > 1) io.observe(el); });
+    }
+    onReady(scan);
+  })();
 
   /* 마리아 · 한 방에 불 하나 — 어두운 장의 그림은 등불 하나만큼만 보이고, 손가락을 따라 불빛이 움직임 */
   if (path.indexOf('/case-maria/') > -1) {
@@ -314,7 +339,7 @@
       var slides = D.querySelectorAll('img.hero-slide');
       if (slides.length) {
         var host = slides[0].parentElement; host.classList.add('yn-cov');
-        [].forEach.call(slides, function (im, i) { if (i === 0) { im.src = BASE + 'assets/noir/' + COV[k] + '.jpg'; im.removeAttribute('srcset'); } });
+        [].forEach.call(slides, function (im, i) { if (i === 0) { im.src = BASE + 'assets/noir/' + COV[k] + '.jpg'; im.removeAttribute('srcset'); im.classList.add('yn-first'); } });
         if (!host.querySelector('.yn-tag')) { var t = D.createElement('span'); t.className = 'yn-tag'; t.textContent = '그림 · 재현'; host.appendChild(t); }
       }
     }
