@@ -7,7 +7,11 @@
 (function () {
   'use strict';
   var W = window, D = document;
-  if (!(W.matchMedia && matchMedia('(max-width:600px)').matches)) return;
+  if (W.__ykNoir) return; W.__ykNoir = true;
+  /* 폰 판정: 머리(head)에서 불릴 때는 안드로이드 크롬이 아직 화면 폭을 모를 수 있어 — 화면 크기 · 기기로도 판정 */
+  var phone = (W.matchMedia && matchMedia('(max-width:600px)').matches) ||
+    (W.screen && Math.min(screen.width, screen.height) <= 600 && /Mobi|Android|iPhone|iPod/i.test(navigator.userAgent || ''));
+  if (!phone) return;
   var me = D.currentScript || [].slice.call(D.scripts).filter(function (s) { return /yk-noir\.js/.test(s.src); })[0];
   var BASE = me ? me.src.replace(/yk-noir\.js.*$/, '') : '';
   var H = D.documentElement; H.classList.add('yk-noir');
@@ -34,18 +38,53 @@
     'html.yk-noir ::selection{background:#0e0e0e;color:#f3f2ef}',
     'html.yk-noir .ykg-toast{display:none!important}',
     /* 본지(메인) 첫 면 머리 — 검은 음화 */
-    'html.yk-noir .m-pg1 .yn-neg{position:relative;margin:-14px -16px 14px;padding:18px 18px 22px;background:#0b0b0b url(' + BASE + 'assets/noir/street.jpg) center 30%/cover;color:#efece6!important;overflow:hidden}',
-    'html.yk-noir .m-pg1 .yn-neg:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(11,11,11,.35),rgba(11,11,11,.82) 70%,#0b0b0b);filter:none}',
-    'html.yk-noir .m-pg1 .yn-neg>*{position:relative}',
-    'html.yk-noir .m-pg1 .yn-neg *{color:#efece6!important;border-color:rgba(239,236,230,.35)!important;background-color:transparent!important}',
-    'html.yk-noir .m-pg1 .yn-neg .topbar{border-bottom-color:rgba(239,236,230,.35)!important}',
-    'html.yk-noir .m-pg1 .yn-neg header.masthead{border-bottom:0!important;padding:46px 0 10px!important}',
-    'html.yk-noir .m-pg1 .yn-neg .title h1{font-size:64px!important;font-weight:900!important;letter-spacing:-.05em!important;line-height:.95!important}',
-    'html.yk-noir .m-pg1 .yn-neg .title .mark{color:#efece6!important}',
-    'html.yk-noir .m-pg1 .yn-neg .title .hanja{letter-spacing:.9em!important;opacity:.7}',
-    'html.yk-noir .m-pg1 .yn-neg .tagline{border-bottom:0!important;padding-top:24px!important}',
-    'html.yk-noir .m-pg1 .yn-neg .tagline>span{opacity:.6}',
-    'html.yk-noir .m-pg1 .yn-neg .yn-cap{display:block;margin-top:14px;text-align:right;font:500 9.5px/1 "Noto Sans KR",sans-serif;letter-spacing:.2em;opacity:.55}',
+    /* 본지 첫 면 — 시안 1안 「흑백 활판」 */
+    'html.yk-noir:not(#yn) body .m-pg1 .yf-hide,html.yk-noir:not(#yn) body .m-pg1 header.masthead.yf-hide{display:none!important}',
+    'html.yk-noir .yn-front{margin:-14px -16px 18px;padding:16px 20px 18px;background:#f3f2ef;color:#0e0e0e}',
+    'html.yk-noir .yf-bar{display:flex;justify-content:space-between;font:500 10px/1 "Noto Sans KR",sans-serif;letter-spacing:.22em;color:#0e0e0e}',
+    'html.yk-noir .yf-mast{margin-top:22px}',
+    'html.yk-noir .yf-mast b{display:block;font:900 clamp(60px,19vw,78px)/.92 "Noto Serif KR",serif;letter-spacing:-.05em;color:#0e0e0e}',
+    'html.yk-noir .yf-mast i{display:inline-grid;place-items:center;width:30px;height:30px;margin-left:8px;vertical-align:middle;background:#b3261e;color:#f3f2ef;font:900 13px/1 "Noto Serif KR",serif;font-style:normal;letter-spacing:0}',
+    'html.yk-noir .yf-sub{display:flex;justify-content:space-between;margin-top:14px;padding-top:9px;border-top:1px solid #0e0e0e;font:500 10.5px/1.6 "Noto Sans KR",sans-serif;letter-spacing:.12em;color:#0e0e0e}',
+    'html.yk-noir .yf-sub span:last-child{text-align:right}',
+    'html.yk-noir .yf-tl .tagline{border:0!important;padding:26px 0 0!important;margin:0!important;text-align:left!important}',
+    'html.yk-noir .yf-tl .tagline p{white-space:normal!important;font:300 24px/1.45 "Noto Serif KR",serif!important;letter-spacing:-.02em!important;color:#0e0e0e!important;text-align:left!important}',
+    'html.yk-noir .yf-tl .tagline>span{display:block;margin-top:8px!important;font:500 10.5px/1.6 "Noto Sans KR",sans-serif!important;letter-spacing:.14em!important;color:#666!important;text-align:left!important}',
+    'html.yk-noir .yf-idx{list-style:none;margin:26px 0 0;padding:0}',
+    'html.yk-noir .yf-idx li{border-top:1px solid #0e0e0e}',
+    'html.yk-noir .yf-idx li:last-child{border-bottom:1px solid #0e0e0e}',
+    'html.yk-noir .yf-idx a{display:grid;grid-template-columns:30px minmax(0,1fr) 72px;gap:12px;align-items:center;padding:13px 0;color:#0e0e0e;text-decoration:none}',
+    'html.yk-noir .yf-idx em{font:400 11px/1 "Noto Sans KR",sans-serif;font-style:normal;letter-spacing:.1em}',
+    'html.yk-noir .yf-idx b{display:block;font:700 16.5px/1.35 "Noto Serif KR",serif;letter-spacing:-.02em}',
+    'html.yk-noir .yf-idx small{display:block;margin-top:4px;font:400 11px/1.4 "Noto Sans KR",sans-serif;letter-spacing:.06em;color:#666}',
+    'html.yk-noir .yf-idx img{width:72px;height:50px;object-fit:cover}',
+    'html.yk-noir .yf-cap{margin:10px 0 0;font:400 10.5px/1.5 "Noto Sans KR",sans-serif;letter-spacing:.08em;color:#777;text-align:right}',
+    /* 사건 표지 — 시안: 위 사진이 아래로 바래며 종이로 · 큰 제목 */
+    'html.yk-noir:not(#yn) body .hero-slider{height:auto!important;min-height:0!important;background:#f3f2ef!important;overflow:hidden}',
+    'html.yk-noir:not(#yn) body .hero-slider .hero-images{position:relative!important;height:58svh!important;min-height:340px}',
+    'html.yk-noir:not(#yn) body .hero-slider img.hero-slide.yn-first{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important}',
+    'html.yk-noir:not(#yn) body .hero-slider .hero-overlay,html.yk-noir:not(#yn) body .hero-slider .hero-dark{position:absolute!important;left:0;right:0;top:0;height:58svh!important;min-height:340px;background:linear-gradient(rgba(243,242,239,0) 45%,rgba(243,242,239,.85) 85%,#f3f2ef)!important;opacity:1!important}',
+    'html.yk-noir:not(#yn) body .hero-slider .hero-content{position:relative!important;inset:auto!important;transform:none!important;margin:-70px 0 0!important;padding:0 22px 30px!important;max-width:none!important;text-align:left!important;color:#0e0e0e!important}',
+    'html.yk-noir:not(#yn) body .hero-slider .hero-content *{color:#0e0e0e!important;text-shadow:none!important;text-align:left!important}',
+    'html.yk-noir:not(#yn) body .hero-slider .hero-meta{display:flex!important;flex-wrap:wrap;gap:4px 8px;font:500 10.5px/1.5 "Noto Sans KR",sans-serif!important;letter-spacing:.2em!important;color:#555!important}',
+    'html.yk-noir:not(#yn) body .hero-slider .hero-meta *{color:#555!important}',
+    'html.yk-noir:not(#yn) body .hero-slider h1{margin:14px 0 16px!important;font:900 44px/1.06 "Noto Serif KR",serif!important;letter-spacing:-.05em!important}',
+    'html.yk-noir:not(#yn) body .hero-slider .hero-content p{font:400 15px/1.8 "Noto Serif KR",serif!important;letter-spacing:0!important;color:#333!important;max-width:320px}',
+    'html.yk-noir:not(#yn) body .hero-slider .yk-credit,html.yk-noir:not(#yn) body .hero-slider .yn-tag{color:#f3f2ef!important;top:12px!important;bottom:auto!important;right:12px!important}',
+    'html.yk-noir:not(#yn) body .hero-slider .scroll-cue,html.yk-noir:not(#yn) body .hero-slider [class*="dots"],html.yk-noir:not(#yn) body .hero-slider [class*="arrow"]{display:none!important}',
+    /* 마리아(어둠) · 죽첨정(안개) 표지는 색만 바꿈 */
+    'html.yn-mr:not(#yn) body .hero-slider{background:#050505!important}',
+    'html.yn-mr:not(#yn) body .hero-slider .hero-overlay,html.yn-mr:not(#yn) body .hero-slider .hero-dark{background:linear-gradient(rgba(5,5,5,0) 40%,rgba(5,5,5,.85) 82%,#050505)!important}',
+    'html.yn-mr:not(#yn) body .hero-slider .hero-content *{color:#efece6!important}',
+    'html.yn-mr:not(#yn) body .hero-slider .hero-meta,html.yn-mr:not(#yn) body .hero-slider .hero-meta *{color:#8d8a84!important}',
+    'html.yn-mr:not(#yn) body .hero-slider .hero-content p{color:#c9c5bc!important}',
+    'html.yn-jk:not(#yn) body .hero-slider{background:#d9d9d6!important}',
+    'html.yn-jk:not(#yn) body .hero-slider .hero-overlay,html.yn-jk:not(#yn) body .hero-slider .hero-dark{background:linear-gradient(rgba(217,217,214,.1) 30%,rgba(217,217,214,.85) 78%,#d9d9d6)!important}',
+    /* 장 머리 — 시안: 큰 번호 */
+    'html.yk-noir .yn-chap{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:8px 0 14px;padding-bottom:10px;border-bottom:1px solid currentColor}',
+    'html.yk-noir .yn-chap b{font:900 92px/.8 "Noto Serif KR",serif;letter-spacing:-.06em}',
+    'html.yk-noir .yn-chap span{font:500 11px/1.6 "Noto Sans KR",sans-serif;letter-spacing:.16em;text-align:right;max-width:55%}',
+    'html.yk-noir .label.yn-has-chap>b,html.yk-noir .label.yn-has-chap>em{display:none!important}',
     /* 아래 면 고르개 · 사건 머리 띠 — 먹색 */
     'html.yk-noir .m-dock{background:#0b0b0b!important}',
     'html.yk-noir .m-dock button{border-color:#333!important;color:#bdb9b0!important}',
@@ -69,8 +108,9 @@
     var oc = D.createElement('style'); oc.id = 'yk-noir-op';
     oc.textContent = [
       'html.yk-noir{--cream:#f3f2ef;--ink:#0e0e0e;--red:#b3261e}',
-      'html.yk-noir #gate{background:#0b0b0b!important;align-items:flex-end!important;justify-content:flex-end!important;text-align:right!important;padding:0 26px 120px!important;overflow:hidden}',
-      'html.yk-noir #gate .yn-gt{position:absolute;left:-6px;top:54px;writing-mode:vertical-rl;font:900 150px/.86 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:-.06em;color:#efece6;pointer-events:none}',
+      'html.yk-noir #gate{--gf:min(132px,calc((100svh - 150px) / 4.3),34vw);background:#0b0b0b!important;align-items:flex-end!important;justify-content:flex-end!important;text-align:right!important;padding:0 22px 110px calc(var(--gf) + 34px)!important;overflow:hidden}',
+      'html.yk-noir #gate .yn-gt{position:absolute;left:14px;top:56px;bottom:auto;width:var(--gf);writing-mode:vertical-rl;text-orientation:upright;white-space:nowrap;font:900 var(--gf)/1 "Noto Serif KR","Nanum Myeongjo",serif;letter-spacing:-.04em;color:#efece6;pointer-events:none}',
+      'html.yk-noir #gate .t{font-size:15px!important;line-height:1.6!important;word-break:keep-all}',
       'html.yk-noir #gate .yn-gt b{color:#b3261e;font-weight:900}',
       'html.yk-noir #gate .yn-gk{position:absolute;right:24px;top:26px;font:500 10px/1 "Noto Sans KR",sans-serif;letter-spacing:.3em;color:#77736c}',
       'html.yk-noir #gate>*:not(.yn-gt):not(.yn-gk){position:relative;z-index:2}',
@@ -396,14 +436,37 @@
         if (!host.querySelector('.yn-tag')) { var t = D.createElement('span'); t.className = 'yn-tag'; t.textContent = '그림 · 재현'; host.appendChild(t); }
       }
     }
+
+    var NUM = { '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9, '十': 10 };
+    function hn(t) { if (t === '十') return 10; if (t.length === 2 && t[0] === '十') return 10 + NUM[t[1]]; if (t.length === 2 && t[1] === '十') return NUM[t[0]] * 10; if (t.length === 3) return NUM[t[0]] * 10 + NUM[t[2]]; return NUM[t] || 0; }
+    [].forEach.call(D.querySelectorAll('.detail-content .label'), function (lb) {
+      if (lb.classList.contains('yn-has-chap')) return;
+      var b = lb.querySelector(':scope > b'), em = lb.querySelector(':scope > em'); if (!b) return;
+      var m = /第\s*([一二三四五六七八九十]+)\s*[章話]/.exec(b.textContent) || /제\s*([일이삼사오륙육칠팔구십]+)\s*[장화]/.exec(b.textContent);
+      if (!m) return;
+      var n = hn(m[1]) || ({ '일': 1, '이': 2, '삼': 3, '사': 4, '오': 5, '륙': 6, '육': 6, '칠': 7, '팔': 8, '구': 9, '십': 10 })[m[1]] || 0; if (!n) return;
+      var c = D.createElement('div'); c.className = 'yn-chap'; c.innerHTML = '<b>' + (n < 10 ? '0' : '') + n + '</b><span>' + b.textContent.trim() + (em ? '<br>' + em.textContent.trim() : '') + '</span>';
+      lb.parentNode.insertBefore(c, lb); lb.classList.add('yn-has-chap');
+    });
     var p1 = D.querySelector('.m-pg1 .m-in');
-    if (p1 && !p1.querySelector('.yn-neg')) {
+    if (p1 && !p1.querySelector('.yn-front')) {
       var tb = p1.querySelector('.topbar'), ms = p1.querySelector('header.masthead'), tg = p1.querySelector('.tagline');
       if (ms) {
-        var neg = D.createElement('div'); neg.className = 'yn-neg';
-        p1.insertBefore(neg, tb || ms);
-        [tb, ms, tg].forEach(function (x) { if (x) neg.appendChild(x); });
-        var cap = D.createElement('span'); cap.className = 'yn-cap'; cap.textContent = '밤의 경성 · 그림 · 재현'; neg.appendChild(cap);
+        var dt = ms.querySelector('.today p, .today') ; var dtx = dt ? (dt.textContent || '').replace(/\s+/g, ' ').trim().split(/(?<=일)\s/)[0] : '';
+        var fr = D.createElement('div'); fr.className = 'yn-front';
+        var CS = [['01', '죽첨정 골목의 어린 주검', '사회 · 1933 · 경성', 'case-jukcheomjeong/index.html', 'jk_cover'],
+                  ['02', '부산 마리아 참살사건', '사회 · 1931 · 부산', 'case-maria/index.html', 'mr_cover'],
+                  ['03', '손기정 군과 지워진 표지', '문화예술 · 1936 · 경성', 'case-sonkijeong/index.html', 'sk_cover'],
+                  ['04', '백백교 사건', '경제 · 1937 · 경성', 'case-baekbaekgyo/index.html', 'bb_cover']];
+        fr.innerHTML = '<div class="yf-bar"><span>京城野錄</span><span>' + (dtx || '1920 — 1940') + '</span></div>' +
+          '<div class="yf-mast"><b>경성<br>야록<i>夜</i></b></div>' +
+          '<div class="yf-sub"><span>신문 아래 칸에서<br>깨어난 경성의 사건</span><span>四 事件<br>一九二〇 — 一九四〇</span></div>' +
+          '<div class="yf-tl"></div>' +
+          '<ol class="yf-idx">' + CS.map(function (c) { return '<li><a href="' + c[3] + '"><em>' + c[0] + '</em><span><b>' + c[1] + '</b><small>' + c[2] + '</small></span><img src="' + BASE + 'assets/noir/' + c[4] + '.jpg" alt=""></a></li>'; }).join('') + '</ol>' +
+          '<p class="yf-cap">표지 그림은 모두 재현 · 원문은 각 면에</p>';
+        p1.insertBefore(fr, p1.firstChild);
+        if (tg) fr.querySelector('.yf-tl').appendChild(tg);
+        if (tb) tb.classList.add('yf-hide'); ms.classList.add('yf-hide');
       }
     }
   }
