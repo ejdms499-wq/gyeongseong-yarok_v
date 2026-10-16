@@ -67,3 +67,40 @@
 .mce-share button:first-child{border-color:#ecebe7}
 .mce-say{margin-top:10px;font:500 12px/1.5 var(--sans);color:#e07a72}
 @media (prefers-reduced-motion:reduce){.mce *{animation:none!important}}
+
+/* ── v2 아래 고정 두 단추: 왼편 기자수첩 · 오른편 호외 ── */
+.mce-tab{left:auto;right:12px}
+.mce-nb{position:fixed;left:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:80;display:flex;align-items:center;gap:8px;height:50px;padding:0 14px 0 10px;border:0;background:#0b0b0b;color:#fff;box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.mce-nb-i{width:22px;height:28px;background:#f4f3f0;border-left:4px solid var(--red,#b3261e);box-shadow:inset 0 -5px 0 -3px #999,inset 0 -11px 0 -9px #999,inset 0 -17px 0 -15px #999}
+.mce-nb b{font:800 13px/1 var(--serif);letter-spacing:.06em}
+.mce-nb em{font:600 12px/1 var(--sans);font-style:normal;color:#e07a72}
+.mce-nb.done{background:var(--red,#b3261e)}.mce-nb.done em{color:#fff}
+.mce-nb.pop{animation:mceNbPop .6s ease}
+@keyframes mceNbPop{30%{transform:scale(1.12)}60%{transform:scale(.97)}}
+.mce-tab{height:50px}
+/* 도장 쾅 */
+.mce-stp{position:fixed;left:24px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:81;pointer-events:none}
+.mce-stp i{display:grid;place-items:center;width:74px;height:74px;border-radius:50%;border:3px solid var(--red,#b3261e);color:var(--red,#b3261e);background:rgba(244,243,240,.94);font:900 17px/1 var(--serif);font-style:normal;opacity:0;transform:rotate(-12deg) scale(2.2)}
+.mce-stp.on i{animation:mceStp 1.9s cubic-bezier(.5,0,.6,1.4) both}
+@keyframes mceStp{0%{opacity:0;transform:rotate(-12deg) scale(2.2)}18%{opacity:1;transform:rotate(-12deg) scale(.94)}26%,72%{opacity:1;transform:rotate(-12deg) scale(1)}100%{opacity:0;transform:rotate(-12deg) scale(.6) translate(-20px,60px)}}
+/* 수첩 펼침 */
+.mce-bk-bd{padding:18px 22px 0}
+.mce-bk{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;list-style:none;margin:0;padding:0}
+.mce-bk button{display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;border:0;background:none;color:#6f6e6a}
+.mce-bk i{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;border:1.5px dashed #444;font:700 14px/1 var(--serif);font-style:normal;color:#555}
+.mce-bk small{font:600 11.5px/1 var(--sans)}
+.mce-bk .on{color:#ecebe7}
+.mce-bk .on i{border:3px solid var(--red,#b3261e);color:var(--red,#b3261e);font:900 14px/1 var(--serif);transform:rotate(-10deg);background:rgba(179,38,30,.06)}
+.mce-bk-s{margin-top:16px;text-align:center;font:400 13px/1.6 var(--serif);color:#9a9994}
+.mce-bk-4{margin-top:20px;padding:14px;border:1px solid #2c2c2b}
+.mce-bk-4>p:first-child{display:flex;justify-content:space-between;font:700 12px/1 var(--sans);letter-spacing:.12em;color:#9a9994}
+.mce-bk-4>p:first-child span{color:#fff}
+.mce-bk-4>div{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:12px}
+.mce-bk-4>div>*{display:flex;flex-direction:column;align-items:center;gap:6px;font:600 11.5px/1 var(--sans);color:#6f6e6a;text-decoration:none}
+.mce-bk-4>div i{width:14px;height:14px;border-radius:50%;border:1.5px solid #555}
+.mce-bk-4>div .on{color:#ecebe7}.mce-bk-4>div .on i{background:var(--red,#b3261e);border-color:var(--red,#b3261e)}
+.mce-bk-4>div .me{color:#fff}
+.mce-bk-t{margin-top:12px;font:400 13px/1.7 var(--serif);color:#bdbcb7;text-align:center}
+.mce-bk-t strong{color:#fff;font-weight:900;letter-spacing:.2em}
+.mce-bk-t a{color:#e07a72}
+.mce-book .mce-share{margin:16px 22px 0}

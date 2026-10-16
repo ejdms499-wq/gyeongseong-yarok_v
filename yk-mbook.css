@@ -476,3 +476,5 @@ details.pp-ad[open]{padding-bottom:18px}
 .pp-seg button{border:1px solid var(--ink)!important}
 .pp-seg button+button{margin-left:-1px}
 .news26 .n26-gnb{position:static!important}
+.mb-snd.ask{animation:mbAsk 1.6s ease-in-out 3}
+@keyframes mbAsk{50%{color:var(--red);transform:scale(1.25)}}

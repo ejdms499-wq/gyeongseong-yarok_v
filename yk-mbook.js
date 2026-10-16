@@ -375,8 +375,13 @@
     function sync() { b.classList.toggle('on', !bgm.paused); }
     bgm.addEventListener('play', sync); bgm.addEventListener('pause', sync);
     b.addEventListener('click', function (e) { e.stopPropagation(); if (bgm.paused) { off = false; W.__mbOff = false; bgm.play().catch(function () {}); } else { off = true; W.__mbOff = true; bgm.pause(); } });
-    function first(e) { if (e.target.closest && e.target.closest('.mb-snd')) return; ['pointerdown', 'touchstart', 'keydown'].forEach(function (t) { D.removeEventListener(t, first, true); }); if (!off) bgm.play().catch(function () {}); }
-    ['pointerdown', 'touchstart', 'keydown'].forEach(function (t) { D.addEventListener(t, first, true); });
+    /* 들어오자마자 곡조 — 폰이 막으면, 처음 「누르는」 순간 (밀어 내리기만으로는 폰이 소리를 허락하지 안음 · 될 때까지 다시 해 봄) */
+    var EV = ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown'];
+    function stopTry() { EV.forEach(function (t) { D.removeEventListener(t, first, true); }); }
+    function first(e) { if (e && e.target && e.target.closest && e.target.closest('.mb-snd')) return; if (off) { stopTry(); return; } if (!bgm.paused) { stopTry(); return; } var p = bgm.play(); if (p && p.then) p.then(stopTry, function () {}); }
+    EV.forEach(function (t) { D.addEventListener(t, first, true); });
+    bgm.addEventListener('playing', stopTry);
+    setTimeout(function () { if (!off && bgm.paused) { var p = bgm.play(); if (p && p.catch) p.catch(function () { b.classList.add('ask'); }); } }, 300);
     W.addEventListener('mb:audio', function () { if (!bgm.paused) { bgm.pause(); W.__mbResume = !off; } });
     W.addEventListener('mb:close', function (e) { if (e.detail === 'shRadio' && W.__mbResume && !off) { W.__mbResume = false; bgm.play().catch(function () {}); } });
     W.mb.bgm = bgm;
