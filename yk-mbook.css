@@ -389,3 +389,31 @@ html.mb-lock,html.mb-lock body{overflow:hidden}
 .pp-ad-cap{margin-top:12px;font:400 14px/1.8 var(--serif);color:#222}
 .pp-ad-say{margin-top:10px;padding-left:12px;border-left:3px solid var(--red);font:700 15px/1.7 var(--serif)}
 .pp-ad-go{display:inline-block;margin-top:14px;font:500 12.5px/1 var(--sans);color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:3px;text-decoration:none}
+
+/* ── 비 ── */
+.mb-rain{position:fixed;inset:0;z-index:40;pointer-events:none;width:100vw;height:100vh}
+
+/* ── 라듸오 (다이얼 돌리기) ── */
+#shRadio{background:#050505}
+.rx2{padding:14px var(--g) 36px}
+.rx2-scr{position:relative;height:150px;background:radial-gradient(ellipse at 50% 40%,#151515,#050505 75%);border:1px solid #2a2a2a;box-shadow:inset 0 0 40px #000;overflow:hidden}
+.rx2-scr canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.8}
+.rx2-ghost{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font:900 64px/1 var(--serif);letter-spacing:.06em;color:#e9e8e3;opacity:0;transition:opacity .4s,filter .4s;mix-blend-mode:screen;pointer-events:none}
+.rx2.lock .rx2-ghost{color:#ff8a80}
+.rx2-top{position:absolute;left:10px;right:10px;top:8px;display:flex;justify-content:space-between;font:500 11px/1 var(--sans);letter-spacing:.14em;color:#8a8984}
+.rx2.lock .rx2-top #rxState{color:#ff6b61}
+.rx2-kc b{font:900 20px/1 var(--serif);color:#efeeea;letter-spacing:.02em}
+.rx2-scale{position:relative;height:58px;margin:14px 0 0;border:1px solid #2a2a2a;background:#0a0a0a}
+.rx2-st{position:absolute;bottom:6px;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#4a1714}
+.rx2-scale .rd-needle{transition:none}
+.rx2-knobwrap{display:flex;flex-direction:column;align-items:center;margin:22px 0 10px}
+.rx2-hint{font:400 12.5px/1.6 var(--sans);color:#8a8984;margin-bottom:14px}
+.rx2-knob{position:relative;width:62vw;max-width:250px;aspect-ratio:1;border-radius:50%;touch-action:none;cursor:grab;filter:drop-shadow(0 20px 30px #000)}
+.rx2-knob img{width:100%;height:100%;border-radius:50%;filter:grayscale(1) contrast(1.15) brightness(.85);user-select:none;-webkit-user-drag:none;pointer-events:none}
+.rx2-knob i{position:absolute;left:50%;top:-10px;width:2px;height:22px;margin-left:-1px;background:var(--red)}
+.rx2-knob.grab{cursor:grabbing}
+.rx2-jump{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:10px 0 0}
+.rx2-jump button{padding:7px 10px;border:1px solid #333;color:#8a8984;font:500 11.5px/1 var(--sans)}
+.rx2 .rd-card{padding:22px 0 0;opacity:.0;transform:translateY(8px);transition:opacity .8s,transform .8s}
+.rx2 .rd-card.in,.rx2 .rd-card:has(.rd-hint){opacity:1;transform:none}
+.rd-next{margin-top:14px;font:400 12.5px/1.6 var(--sans);color:#8a8984}

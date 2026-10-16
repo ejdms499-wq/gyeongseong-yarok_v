@@ -248,30 +248,58 @@
   var t0 = function (x) { return x == null ? '' : (Array.isArray(x) ? x[0] : x); };
   var NUMS = ['一', '二', '三', '四', '五', '六', '七'];
 
-  /* ════ 第二話 · 관사 평면도 ════ */
+  /* ════ 第二話 · 관사 평면도 — 불 꺼진 집을 손전등으로 더듬음 ════ */
   (function () {
-    var TG = { '기록': 'rec', '후대': 'later', '소문': 'rumor' };
-    var svg = '<svg viewBox="0 0 1000 560" aria-label="관사 15호 평면도 (재현)">' +
-      ROOMS.map(function (r) {
-        return '<g class="hs-room' + (r.hot ? ' hot' : '') + '" data-id="' + r.id + '"><rect x="' + r.x + '" y="' + r.y + '" width="' + r.w + '" height="' + r.h + '"/>' +
-          '<text class="t" x="' + (r.x + r.w / 2) + '" y="' + (r.y + r.h / 2 + 4) + '">' + r.t + '</text>' + (r.h > 100 ? '<text class="h" x="' + (r.x + r.w / 2) + '" y="' + (r.y + r.h / 2 + 40) + '">' + r.hj + '</text>' : '') + '</g>';
-      }).join('') +
-      '<path class="ink" d="M280 60 h90"/><path class="ink" d="M840 430 h56 m-14 -10 l14 10 l-14 10"/>' +
-      EXTRA.map(function (e) { var cy = e.id === 'window' ? 34 : 430, cx = e.id === 'window' ? 325 : 945; return '<g class="hs-ex" data-id="' + e.id + '"><circle cx="' + cx + '" cy="' + cy + '" r="26"/><text x="' + cx + '" y="' + (cy + 9) + '">' + (e.id === 'window' ? '窓' : '園') + '</text></g>'; }).join('') +
-      '<text class="cap" x="40" y="548">鐵道官舍 第十五號 · 平面圖 (재현 — 실제 구조는 전하지 않음)</text></svg>';
-    var chips = ROOMS.concat(EXTRA).map(function (r) { return '<button data-id="' + r.id + '">' + r.t + '</button>'; }).join('');
-    $('#hsPlan').innerHTML = '<div class="hs-svg">' + svg + '</div><div class="hs-chips">' + chips + '</div>';
-    function show(id) {
-      var r = ROOMS.concat(EXTRA).filter(function (x) { return x.id === id; })[0]; if (!r) return;
-      $$('#hsPlan [data-id]').forEach(function (g) { g.classList.toggle('on', g.dataset.id === id); });
-      var h = '<figure class="hs-ph"><img alt="' + r.t + ' (재현 그림)" src="./img/room_' + r.id + '.jpg"><span class="rt">그림 · 재현</span></figure><div class="hs-tx"><small>이 방에 남은 이야기</small><h3>' + r.t + (r.hj ? ' <em>' + r.hj + '</em>' : '') + '</h3>' +
-        (t0(r.note) ? '<p class="lead">' + t0(r.note) + '</p>' : '') +
-        r.y_.map(function (k) { var y = YASA[k]; return '<div class="hs-y"><i class="' + TG[y.s] + '">' + (y.s === '후대' ? '후대 정리' : y.s) + '</i><b>' + y.q + '</b><p>' + y.a + '</p></div>'; }).join('') + '</div>';
-      var n = $('#hsNote'); n.innerHTML = h; n.scrollTop = 0;
-      var c = $('#hsPlan .hs-chips .on'); if (c && c.scrollIntoView) c.scrollIntoView({ inline: 'center', block: 'nearest' });
+    var TG = { '기록': 'rec', '후대': 'later', '소문': 'rumor' }, ALL = ROOMS.concat(EXTRA), seen = {}, built = false, dwell = null, dwId = '';
+    var EX = { window: { cx: 34, cy: 325 }, park: { cx: 430, cy: 945 } };
+    function plan(lit) {
+      return '<svg viewBox="0 0 560 1010" class="hs2-svg' + (lit ? ' lit' : '') + '">' +
+        ROOMS.map(function (r) { return '<g class="hr' + (r.hot ? ' hot' : '') + '" data-id="' + r.id + '"><rect x="' + r.y + '" y="' + r.x + '" width="' + r.h + '" height="' + r.w + '"/>' + (lit ? '<text x="' + (r.y + r.h / 2) + '" y="' + (r.x + r.w / 2 + 12) + '">' + r.t + '</text>' : '') + '</g>'; }).join('') +
+        '<path class="ink" d="M60 280 v90"/>' +
+        EXTRA.map(function (e) { var p = EX[e.id]; return '<g class="hx" data-id="' + e.id + '"><circle cx="' + p.cx + '" cy="' + p.cy + '" r="26"/>' + (lit ? '<text x="' + p.cx + '" y="' + (p.cy + 9) + '">' + (e.id === 'window' ? '窓' : '園') + '</text>' : '') + '</g>'; }).join('') + '</svg>';
     }
-    D.addEventListener('click', function (e) { var g = e.target.closest('#hsPlan [data-id]'); if (g) show(g.dataset.id); });
-    W.addEventListener('mb:open', function (e) { if (e.detail === 'shHouse' && !$('#hsNote').innerHTML) show('maid'); });
+    function build() {
+      built = true;
+      $('#hs2').innerHTML = '<div class="hs2-stage" id="hsStage"><div class="hs2-dark">' + plan(false) + '</div><div class="hs2-light" id="hsLight">' + plan(true) + '</div>' +
+        '<p class="hs2-hint" id="hsHint">불 꺼진 관사오. 손가락으로 어둠을 더듬으시압 — 방 우에서 잠시 멈추면, 그 방에 드러가오.</p><p class="hs2-cnt"><span id="hsCnt">0</span> / ' + ALL.length + ' 곳</p></div>' +
+        '<div class="hs2-list">' + ALL.map(function (r) { return '<button data-id="' + r.id + '"' + (r.hot ? ' class="hot"' : '') + '>' + r.t + '</button>'; }).join('') + '</div>' +
+        '<div class="hs2-room" id="hsRoom" hidden></div>';
+      var st = $('#hsStage'), li = $('#hsLight');
+      function at(e) {
+        var r = li.getBoundingClientRect(), t = e.touches ? e.touches[0] : e, x = t.clientX - r.left, y = t.clientY - r.top;
+        li.style.setProperty('--x', x + 'px'); li.style.setProperty('--y', y + 'px'); st.classList.add('torch');
+        var el = D.elementFromPoint(t.clientX, t.clientY), g = el && el.closest && el.closest('#hsLight [data-id]'), id = g ? g.getAttribute('data-id') : '';
+        $$('#hsLight [data-id]').forEach(function (n) { n.classList.toggle('on', n.getAttribute('data-id') === id); });
+        if (id !== dwId) { dwId = id; clearTimeout(dwell); if (id) dwell = setTimeout(function () { enter(id); }, 900); }
+      }
+      st.addEventListener('touchstart', at, { passive: true });
+      st.addEventListener('touchmove', function (e) { at(e); e.preventDefault(); }, { passive: false });
+      st.addEventListener('touchend', function () { clearTimeout(dwell); dwId = ''; });
+      st.addEventListener('mousemove', at); st.addEventListener('mouseleave', function () { clearTimeout(dwell); dwId = ''; st.classList.remove('torch'); });
+      st.addEventListener('click', function (e) { var g = e.target.closest('[data-id]'); if (g) enter(g.getAttribute('data-id')); });
+    }
+    function enter(id) {
+      clearTimeout(dwell); dwId = '';
+      var r = ALL.filter(function (x) { return x.id === id; })[0]; if (!r) return;
+      seen[id] = 1; $('#hsCnt').textContent = Object.keys(seen).length;
+      $$('#hs2 .hs2-list [data-id]').forEach(function (b) { if (seen[b.getAttribute('data-id')]) b.classList.add('seen'); });
+      var box = $('#hsRoom');
+      box.innerHTML = '<figure class="hs2-ph' + (r.hot || id === 'maid' ? ' red' : '') + '"><img src="./img/room_' + r.id + '.jpg" alt="' + r.t + ' (재현 그림)"><span class="rt">그림 · 재현</span></figure>' +
+        '<div class="hs2-tx"><small>이 방에 남은 이야기</small><h3>' + r.t + (r.hj ? ' <em>' + r.hj + '</em>' : '') + '</h3><p class="lead" id="hsLead"></p>' +
+        r.y_.map(function (k, j) { var y = YASA[k]; return '<div class="hs-y" style="transition-delay:' + (1.2 + j * .8) + 's"><i class="' + TG[y.s] + '">' + (y.s === '후대' ? '후대 정리' : y.s) + '</i><b>' + y.q + '</b><p>' + y.a + '</p></div>'; }).join('') +
+        '<button class="mb-btn ghost hs2-back">‹ 어둠 속 평면도로</button></div>';
+      box.hidden = false; box.scrollTop = 0; requestAnimationFrame(function () { box.classList.add('in'); });
+      tone('stamp'); setTimeout(function () { tone('stamp'); }, 420);
+      if (W.mb.audio) W.mb.audio.heart(!!(r.hot || id === 'maid'));
+      var lead = t0(r.note); if (lead) setTimeout(function () { typeIn($('#hsLead'), lead, 45); }, 700);
+    }
+    function back() { var box = $('#hsRoom'); box.classList.remove('in'); setTimeout(function () { box.hidden = true; }, 500); if (W.mb.audio) W.mb.audio.heart(false); }
+    D.addEventListener('click', function (e) {
+      var b = e.target.closest('#hs2 .hs2-list [data-id]'); if (b) { enter(b.getAttribute('data-id')); return; }
+      if (e.target.closest('.hs2-back')) back();
+    });
+    W.addEventListener('mb:open', function (e) { if (e.detail !== 'shHouse') return; if (!built) build(); if (W.mb.audio) W.mb.audio.drone(true); });
+    W.addEventListener('mb:close', function (e) { if (e.detail !== 'shHouse') return; if (W.mb.audio) { W.mb.audio.drone(false); W.mb.audio.heart(false); } var box = $('#hsRoom'); if (box) { box.hidden = true; box.classList.remove('in'); } });
   })();
 
   /* ════ 第四話 · 여섯 날의 지면 (공통 장치) ════ */
@@ -311,36 +339,38 @@
     paint();
   })();
 
-  /* ════ 第三話 · 시계 — 내려갈수록 바늘이 돌고, 밤이 깁허짐 ════ */
+  /* ════ 第三話 · 시계 — 화면 가득 괘종시계, 똑딱 소리 · 비명 시각엔 시계가 멎고 심장 소리 ════ */
   (function () {
-    var rail = $('#ckRail'), items = $$('#c3 .mr-tl > li'); if (!rail || !items.length) return;
+    var stage = $('#ckStage'), items = $$('#c3 .mr-tl > li'); if (!stage || !items.length) return;
     var H = [12, 18, 21, 21, 22, 23, 23.5, 24, 25, 25.5, 27, 30, 34];
     var LBL = ['낫', '저녁 여섯 시', '밤 아홉 시', '밤 아홉 시', '밤 열 시', '밤 열한 시', '열한 시 ~ 열두 시', '열두 시', '새벽 한 시', '새벽 한 시 반', '새벽 세 시', '아츰 여섯 시', '아츰 열 시'];
-    var ticks = ''; for (var k = 0; k < 60; k++) { var a = k * 6 * Math.PI / 180, r1 = k % 5 ? 43 : 39; ticks += '<line x1="' + (50 + Math.sin(a) * r1).toFixed(1) + '" y1="' + (50 - Math.cos(a) * r1).toFixed(1) + '" x2="' + (50 + Math.sin(a) * 46).toFixed(1) + '" y2="' + (50 - Math.cos(a) * 46).toFixed(1) + '"' + (k % 5 ? '' : ' class="h"') + '/>'; }
-    var nums = ['XII', 'I', 'II', 'III', 'IIII', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'].map(function (n, i) { var a = i * 30 * Math.PI / 180; return '<text x="' + (50 + Math.sin(a) * 31).toFixed(1) + '" y="' + (53 - Math.cos(a) * 31).toFixed(1) + '">' + n + '</text>'; }).join('');
-    rail.innerHTML = '<svg class="ck-face" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48"/>' + ticks + nums + '<line class="hh" x1="50" y1="50" x2="50" y2="27"/><line class="mm" x1="50" y1="50" x2="50" y2="14"/><circle class="pin" cx="50" cy="50" r="2.4"/></svg>' +
-      '<div class="ck-read"><small>소화 륙 년 칠월 삼십일일 ~</small><b id="ckT">낫</b><span id="ckW"></span></div>';
-    var cur = -1, hourAngle = 0, minAngle = 0;
+    var ticks = ''; for (var k = 0; k < 60; k++) { var a = k * 6 * Math.PI / 180, r1 = k % 5 ? 43 : 38.5; ticks += '<line x1="' + (50 + Math.sin(a) * r1).toFixed(1) + '" y1="' + (50 - Math.cos(a) * r1).toFixed(1) + '" x2="' + (50 + Math.sin(a) * 46).toFixed(1) + '" y2="' + (50 - Math.cos(a) * 46).toFixed(1) + '"' + (k % 5 ? '' : ' class="h"') + '/>'; }
+    var nums = ['XII', 'I', 'II', 'III', 'IIII', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'].map(function (n, i) { var a = i * 30 * Math.PI / 180; return '<text x="' + (50 + Math.sin(a) * 31).toFixed(1) + '" y="' + (52.5 - Math.cos(a) * 31).toFixed(1) + '">' + n + '</text>'; }).join('');
+    stage.innerHTML = '<div class="ck-in"><svg class="ck-big" viewBox="0 0 100 100"><circle class="rim" cx="50" cy="50" r="48"/>' + ticks + nums + '<line class="hh" x1="50" y1="50" x2="50" y2="26"/><line class="mm" x1="50" y1="50" x2="50" y2="12"/><line class="ss" x1="50" y1="56" x2="50" y2="10"/><circle class="pin" cx="50" cy="50" r="2"/></svg>' +
+      '<p class="ck-t" id="ckT">낫</p><p class="ck-w" id="ckW"></p></div>';
+    var cur = -1, sec = 0, secT = 0, inView = false;
+    function sweep() { clearInterval(secT); secT = setInterval(function () { if (!stage.classList.contains('stop')) { sec = (sec + 6) % 360; $('.ss', stage).style.transform = 'rotate(' + sec + 'deg)'; } }, 1000); }
     function set(i) {
-      if (i === cur) return; var prev = cur; cur = i;
-      var h = H[i], ha = h * 30, ma = (h % 1) * 360 + Math.floor(h) * 360; /* 분침은 시간만큼 돌아감 */
-      $('.hh', rail).style.transform = 'rotate(' + ha + 'deg)'; $('.mm', rail).style.transform = 'rotate(' + ma + 'deg)';
-      $('#ckT').textContent = LBL[i];
-      var tag = $('i', items[i]); $('#ckW').innerHTML = tag ? tag.outerHTML : '';
+      if (i === cur) return; cur = i;
+      var h = H[i]; $('.hh', stage).style.transform = 'rotate(' + h * 30 + 'deg)'; $('.mm', stage).style.transform = 'rotate(' + h * 360 + 'deg)';
+      $('#ckT').textContent = LBL[i]; var tag = $('i', items[i]); $('#ckW').innerHTML = tag ? tag.outerHTML : '';
       items.forEach(function (li, k) { li.classList.toggle('now', k === i); if (k <= i) li.classList.add('seen'); });
       var night = Math.min(1, Math.max(0, (h - 17) / 8)) - Math.max(0, (h - 29) / 6);
       $('#c3').style.setProperty('--nt', night.toFixed(2));
-      rail.classList.toggle('key', items[i].classList.contains('key'));
-      if (prev >= 0) tone('tick');
+      var key = items[i].classList.contains('key'); stage.classList.toggle('stop', key); $('#c3').classList.toggle('scream', key);
+      sound();
     }
+    function sound() { var A = W.mb.audio; if (!A) return; var key = cur >= 0 && items[cur].classList.contains('key'); A.tick(inView && !key, 1000); A.heart(inView && key); }
     var tick = false;
     function onScroll() {
-      tick = false; var mid = W.innerHeight * .5, best = -1, bd = 1e9;
-      items.forEach(function (li, k) { var r = li.getBoundingClientRect(), d = Math.abs(r.top + Math.min(r.height, 200) / 2 - mid); if (r.bottom > 80 && r.top < W.innerHeight && d < bd) { bd = d; best = k; } });
+      tick = false; var sr = $('#c3').getBoundingClientRect(), v = sr.top < W.innerHeight * .4 && sr.bottom > W.innerHeight * .6;
+      if (v !== inView) { inView = v; sound(); }
+      var mid = W.innerHeight * .55, best = -1, bd = 1e9;
+      items.forEach(function (li, k) { var r = li.getBoundingClientRect(), d = Math.abs(r.top + Math.min(r.height, 220) / 2 - mid); if (r.bottom > 80 && r.top < W.innerHeight && d < bd) { bd = d; best = k; } });
       if (best >= 0) set(best);
     }
     W.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
-    onScroll();
+    sweep(); onScroll();
   })();
 
   /* ════ 第五話 · 취재 수첩 — 표지를 열고, 한 장씩 넘김 ════ */
@@ -351,11 +381,12 @@
     }).join('');
     function tabs() { $('#bkTabs').innerHTML = PEOPLE.map(function (p, i) { return '<button data-p="' + i + '" class="' + (i === I ? 'on' : '') + '">' + p.tab + '</button>'; }).join(''); }
     function page(p) {
-      var h = '<article class="bk-pg' + (p.last ? ' last' : '') + '"><div class="bk-top"><figure class="bk-ph"><i class="clip"></i><img src="' + p.mj + '" alt="' + (p.name || '범인') + ' (재현 사진)"><figcaption>사진은 재현 — 얼골은 남기지 아니함</figcaption></figure>' +
+      var h = '<article class="bk-pg' + (p.last ? ' last' : '') + '"><div class="bk-top"><figure class="bk-ph"><i class="tape a"></i><i class="tape b"></i><img src="' + p.mj + '" alt="' + (p.name || '범인') + ' (재현 사진)"><figcaption>사진은 재현 — 얼골은 남기지 아니함</figcaption></figure>' +
         '<div class="bk-id"><small>인물 조사 · 뎨 ' + (I + 1) + ' 호</small><b>' + (p.name || '') + '</b>' + (p.hj ? '<span>' + p.hj + '</span>' : '') + '</div>' + (p.stamp ? '<i class="bk-st">' + p.stamp + '</i>' : '') + '</div>';
       h += '<dl class="bk-f">' + p.f.map(function (f) { return '<div><dt>' + t0(f[0]) + '</dt><dd>' + (t0(f[1]) || '<span class="blank"></span>') + '</dd></div>'; }).join('') + '</dl>';
       h += '<h4>취재 일지</h4><ol class="bk-j">' + p.j.map(function (j) { return '<li><b>' + t0(j[0]) + '</b><p>' + t0(j[1]) + '</p></li>'; }).join('') + '</ol>';
-      if (p.q) h += '<div class="bk-q"><small>의문</small>' + t0(p.q) + '</div>';
+      if (p.q) h += '<div class="bk-q"><small>의문</small><span class="bk-qt">' + t0(p.q) + '</span><svg class="bk-circ" viewBox="0 0 300 100" preserveAspectRatio="none"><path d="M20 52 C 20 10, 280 6, 288 46 C 296 90, 40 98, 14 60 C 4 44, 40 22, 80 16"/></svg></div>';
+
       h += '<button class="bk-clip" type="button" data-zoom="' + p.clip[0] + '" data-cap="' + p.clip[1] + '"><img src="' + p.clip[0] + '" alt="' + p.clip[1] + '" loading="lazy"><span><b>原文 오려 붓친 것</b>' + p.clip[1] + '</span></button>';
       h += '<div class="bk-go"><small>이어진 사람</small>' + p.go.map(function (id) { var k = 0; PEOPLE.forEach(function (x, i) { if (x.id === id) k = i; }); return '<button data-p="' + k + '">' + PEOPLE[k].tab + ' →</button>'; }).join('') + '</div>';
       h += '<p class="bk-foot">동아일보 사회부 · 부산 출장 취재 수첩 · ' + (I + 1) + ' / ' + PEOPLE.length + '</p></article>';
@@ -366,6 +397,10 @@
       bd.innerHTML = '<div class="bk-leaf ' + (dir > 0 ? 'in-r' : dir < 0 ? 'in-l' : '') + '">' + page(PEOPLE[I]) + '</div>'; bd.scrollTop = 0; tabs();
       var on = $('#bkTabs .on'); if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest' });
       var st = $('.bk-st', bd); if (st) setTimeout(function () { st.classList.add('down'); tone('stamp'); }, 650);
+      $$('.bk-j li', bd).forEach(function (li, k) { li.style.transitionDelay = (0.5 + k * 0.55) + 's'; });
+      requestAnimationFrame(function () { var lf = $('.bk-leaf', bd); if (lf) lf.classList.add('shown'); });
+      var q = $('.bk-q', bd); if (q) setTimeout(function () { q.classList.add('drawn'); }, 900 + $$('.bk-j li', bd).length * 550);
+
     }
     function go(k) { if (k < 0 || k >= PEOPLE.length || k === I) return; var d = k > I ? 1 : -1; I = k; render(d); W.mb.sfx('whoosh', .25); }
     function open() { opened = true; $('#bkCover').classList.add('gone'); render(0); }
@@ -430,8 +465,19 @@
       /* 첫째 편지 — 한 줄씩 */
       var t1 = $('#ltT1'), L1 = LETTERS[0].lines;
       var io = new IntersectionObserver(function (es) { if (!es[0].isIntersecting) return; io.disconnect();
-        var k = 0; (function nx() { if (k >= L1.length) return; var p = D.createElement('p'); if (k === L1.length - 1) p.className = 'r'; t1.appendChild(p); typeIn(p, t0(L1[k++]), 38, function () { setTimeout(nx, 260); }); })();
+        var k = 0; (function nx() {
+          if (k >= L1.length) return; var last = k === L1.length - 1, p = D.createElement('p'); if (last) p.className = 'r'; t1.appendChild(p);
+          if (last) { var line = t0(L1[k++]); takeover(line, function () { p.textContent = line; }); return; }
+          typeIn(p, t0(L1[k++]), 38, function () { setTimeout(nx, 260); });
+        })();
       }, { root: $('#ltBody'), threshold: .4 }); io.observe(t1);
+    }
+    function takeover(line, done) {
+      var o = D.createElement('div'); o.className = 'lt-take'; o.innerHTML = '<p class="k">— 첫째 편지의 맨 끗 줄</p><p class="l"></p><p class="tap">눌러서 도라가기</p>';
+      $('#shLetter').appendChild(o); requestAnimationFrame(function () { o.classList.add('on'); });
+      if (W.mb.audio) W.mb.audio.heart(true);
+      setTimeout(function () { typeIn($('.l', o), line, 120, function () { tone('stamp'); o.classList.add('stamped'); if (W.mb.audio) W.mb.audio.heart(false); }); }, 1200);
+      o.addEventListener('click', function () { if (!o.classList.contains('stamped')) return; o.classList.remove('on'); setTimeout(function () { o.remove(); }, 700); done(); });
     }
     D.addEventListener('click', function (e) {
       if (e.target.closest('#ltEnv')) {
@@ -464,27 +510,25 @@
   /* ════ 第八話 · 봉한 쪽지 ════ */
   $$('#c8 .sl').forEach(function (b) { b.addEventListener('click', function () { if (!b.classList.contains('open')) { b.classList.add('open'); W.mb.sfx('whoosh', .3); } }); });
 
-  /* ════ 第十話 · 방청석 — 말이 한 자씩 ════ */
+  /* ════ 第十話 · 방청석 — 온 화면 법뎡. 누를 때마다 말이 한 자씩 ════ */
   (function () {
-    var qs = $$('#mrCourt .qa'), n = 0, btn = $('#ctNext'), busy = false;
-    var texts = qs.map(function (q) { return $$('p', q).map(function (p) { var b = $('b', p), t = p.textContent.replace(b.textContent, ''); return [b.outerHTML, t]; }); });
-    qs.forEach(function (q) { q.hidden = true; });
-    function say(p, pair, done) { p.innerHTML = pair[0] + '<span class="tx"></span>'; var dots = D.createElement('span'); dots.className = 'dots'; dots.textContent = '…'; p.appendChild(dots);
-      setTimeout(function () { dots.remove(); typeIn($('.tx', p), pair[1], 42, done); }, 700); }
-    function next() {
-      if (busy) return;
-      if (n >= qs.length) { var t = $('#c11'); W.scrollTo({ top: t.getBoundingClientRect().top + W.scrollY - 48, behavior: 'smooth' }); return; }
-      busy = true; var q = qs[n], ps = $$('p', q), tx = texts[n]; q.hidden = false; q.classList.add('in'); n++;
-      if (n === 1) tone('gavel');
-      ps[1].style.visibility = 'hidden';
-      say(ps[0], tx[0], function () { setTimeout(function () { ps[1].style.visibility = ''; say(ps[1], tx[1], function () {
-        busy = false; btn.innerHTML = '다음 문답 ▸ <span id="ctN">' + n + ' / ' + qs.length + '</span>';
-        if (n >= qs.length) { btn.innerHTML = '공판 끗 — 第十一話 판결로 ↓'; $('#c10').classList.add('end'); }
-      }); }, 500); });
-      setTimeout(function () { var r = q.getBoundingClientRect(); if (r.bottom > W.innerHeight - 120) W.scrollBy({ top: r.bottom - W.innerHeight + 200, behavior: 'smooth' }); }, 300);
+    var QA = $$('#mrCourt .qa').map(function (q) { return $$('p', q).map(function (p) { var b = $('b', p); return { who: b.textContent, t: p.textContent.replace(b.textContent, '').trim(), w: p.classList.contains('w') }; }); });
+    var step = 0, busy = false, inn = $('#ct2In');
+    var SEQ = [{ open: 1 }]; QA.forEach(function (pair, i) { SEQ.push({ q: i, k: 0 }); SEQ.push({ q: i, k: 1 }); }); SEQ.push({ end: 1 });
+    function show() {
+      var s = SEQ[step]; busy = true; $('#ct2Tap').style.opacity = 0;
+      var fin = function () { busy = false; $('#ct2Tap').style.opacity = 1; };
+      if (s.open) { inn.innerHTML = '<p class="ct2-k">소화 팔 년 십이월 십사일 오전 열 시</p><p class="ct2-line" id="ct2L"></p>'; tone('gavel'); setTimeout(function () { tone('gavel'); }, 380); typeIn($('#ct2L'), '마리아가 죽은 지 이 년 다섯 달. 그 밤의 일을 아는 두 사람이 — 처음으로, 한 방에 섯소.', 48, fin); $('#ct2N').textContent = ''; return; }
+      if (s.end) { $('#ct2').classList.add('end'); inn.innerHTML = '<p class="ct2-line end" id="ct2L"></p>'; typeIn($('#ct2L'), '나는 맨 뒤 줄에 안저, 그 말을 바다 적엇소.', 60, function () { busy = false; inn.insertAdjacentHTML('beforeend', '<button class="mb-btn ghost ct2-out" data-close>법뎡을 나가기</button>'); $('#mrCourt').open = true; }); $('#ct2N').textContent = '공판 끗'; return; }
+      var u = QA[s.q][s.k], judge = s.k === 0;
+      $('#ct2').classList.toggle('witness', !!u.w); $('#ct2').classList.toggle('judge', judge);
+      inn.innerHTML = '<p class="ct2-who">' + u.who + '</p><p class="ct2-line' + (u.w ? ' w' : '') + '" id="ct2L"><span class="dots">…</span></p>';
+      $('#ct2N').textContent = '문답 ' + (s.q + 1) + ' / ' + QA.length;
+      setTimeout(function () { typeIn($('#ct2L'), u.t, judge ? 40 : 62, fin); }, judge ? 500 : 1100);
     }
-    btn.innerHTML = '공판을 시작하오 ▸ <span id="ctN">0 / 7</span>';
-    btn.addEventListener('click', next);
+    $('#ct2').addEventListener('click', function (e) { if (e.target.closest('[data-close]')) return; if (busy || step >= SEQ.length - 1) return; step++; show(); });
+    W.addEventListener('mb:open', function (e) { if (e.detail !== 'shCourt') return; step = 0; $('#ct2').className = 'ct2'; show(); if (W.mb.audio) { W.mb.audio.drone(true); W.mb.audio.heart(true); } });
+    W.addEventListener('mb:close', function (e) { if (e.detail !== 'shCourt') return; if (W.mb.audio) { W.mb.audio.drone(false); W.mb.audio.heart(false); } });
   })();
 
   /* ════ 終章 · 그때와 이제 ════ */
@@ -502,5 +546,5 @@
   })();
 
   /* ════ 第十二話 · 라듸오 (공통 장치) ════ */
-  W.mb.radio({ st: ST, audioBase: '../case/audio/maria/', staticSrc: '../case-jukcheomjeong/audio/radio-static.mp3', endLine: '여전히, 긔록은 우리 겨테서 소근거리고 잇소.' });
+  W.mb.radio({ dial: '../case-jukcheomjeong/image/Jukcheomjeong/case/dial.png', st: ST, audioBase: '../case/audio/maria/', staticSrc: '../case-jukcheomjeong/audio/radio-static.mp3', endLine: '여전히, 긔록은 우리 겨테서 소근거리고 잇소.' });
 })(window, document);

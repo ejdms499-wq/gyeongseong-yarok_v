@@ -176,13 +176,15 @@
       var r0 = list.getBoundingClientRect(); rail.classList.toggle('on', r0.top < W.innerHeight * .6 && r0.bottom > 120);
       sc.forEach(function (el, k) { var r = el.getBoundingClientRect(), c = r.top + Math.min(r.height, W.innerHeight) / 2, d = Math.abs(c - mid); if (r.bottom > 0 && r.top < W.innerHeight && d < bd) { bd = d; best = k; } });
       if (best >= 0) set(best);
+      var b = BEATS[cur], wet = !!b && (b.t === '비 오는 개천' || b.t === '비 오는 새벽'), vis = r0.top < W.innerHeight * .5 && r0.bottom > W.innerHeight * .4;
+      if (W.mb.rain) W.mb.rain(wet && vis); list.classList.toggle('wet', wet && vis);
     }
     W.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(onScroll); } }, { passive: true });
     onScroll();
   })();
 
   /* 第七章 · 라듸오 (공통 장치) */
-  W.mb.radio({ st: ST, audioBase: './audio/', staticSrc: './audio/radio-static.mp3', endLine: '여전히, 그 말은 우리 겨테서 소근거리고 잇소.' });
+  W.mb.radio({ dial: './image/Jukcheomjeong/case/dial.png', st: ST, audioBase: './audio/', staticSrc: './audio/radio-static.mp3', endLine: '여전히, 그 말은 우리 겨테서 소근거리고 잇소.' });
 
   /* ════ 第五章 · 號外 — 봉을 뜨드면: 제목 한 줄씩 → 지면 → 종소리와 함께 「살인은 — 업섯소.」 → 진상 ════ */
   var exDone = false;
