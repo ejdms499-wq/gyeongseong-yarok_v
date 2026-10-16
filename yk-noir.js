@@ -1,0 +1,125 @@
+/* 경성야록 · 폰 전용 「흑백 활판 + 음화」 톤 (1016)
+   폰(600px 이하)에서만. 컴퓨터 화면은 그대로.
+   - 누런 종이색 · 갈색 글씨 · 갈색 줄을 같은 밝기의 흰 종이 · 먹색으로 바꿈 (붉은 인주색은 그대로)
+   - 사진 · 그림은 모두 흑백
+   - 사건 표지 · 본지 머리는 검은 음화(새 미드저니 그림 · 그림은 재현)
+   내용 · 장치 · 순서는 하나도 바꾸지 않음 — 색과 표지 그림만 */
+(function () {
+  'use strict';
+  var W = window, D = document;
+  if (!(W.matchMedia && matchMedia('(max-width:600px)').matches)) return;
+  var me = D.currentScript || [].slice.call(D.scripts).filter(function (s) { return /yk-noir\.js/.test(s.src); })[0];
+  var BASE = me ? me.src.replace(/yk-noir\.js.*$/, '') : '';
+  var H = D.documentElement; H.classList.add('yk-noir');
+  var path = location.pathname;
+
+  /* ── 모양 ── */
+  var css = D.createElement('style'); css.id = 'yk-noir-css';
+  css.textContent = [
+    'html.yk-noir{--yn-paper:#f3f2ef;--yn-ink:#0e0e0e;--yn-red:#b3261e;background:#f3f2ef}',
+    'html.yk-noir body{background-color:#f3f2ef}',
+    'html.yk-noir img:not(.yn-keep),html.yk-noir video,html.yk-noir picture{filter:grayscale(1) contrast(1.08)!important}',
+    'html.yk-noir *::before,html.yk-noir *::after{filter:grayscale(1)}',
+    'html.yk-noir ::selection{background:#0e0e0e;color:#f3f2ef}',
+    /* 본지(메인) 첫 면 머리 — 검은 음화 */
+    'html.yk-noir .m-pg1 .yn-neg{position:relative;margin:-14px -16px 14px;padding:18px 18px 22px;background:#0b0b0b url(' + BASE + 'assets/noir/street.jpg) center 30%/cover;color:#efece6!important;overflow:hidden}',
+    'html.yk-noir .m-pg1 .yn-neg:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(11,11,11,.35),rgba(11,11,11,.82) 70%,#0b0b0b);filter:none}',
+    'html.yk-noir .m-pg1 .yn-neg>*{position:relative}',
+    'html.yk-noir .m-pg1 .yn-neg *{color:#efece6!important;border-color:rgba(239,236,230,.35)!important;background-color:transparent!important}',
+    'html.yk-noir .m-pg1 .yn-neg .topbar{border-bottom-color:rgba(239,236,230,.35)!important}',
+    'html.yk-noir .m-pg1 .yn-neg header.masthead{border-bottom:0!important;padding:46px 0 10px!important}',
+    'html.yk-noir .m-pg1 .yn-neg .title h1{font-size:64px!important;font-weight:900!important;letter-spacing:-.05em!important;line-height:.95!important}',
+    'html.yk-noir .m-pg1 .yn-neg .title .mark{color:#efece6!important}',
+    'html.yk-noir .m-pg1 .yn-neg .title .hanja{letter-spacing:.9em!important;opacity:.7}',
+    'html.yk-noir .m-pg1 .yn-neg .tagline{border-bottom:0!important;padding-top:24px!important}',
+    'html.yk-noir .m-pg1 .yn-neg .tagline>span{opacity:.6}',
+    'html.yk-noir .m-pg1 .yn-neg .yn-cap{display:block;margin-top:14px;text-align:right;font:500 9.5px/1 "Noto Sans KR",sans-serif;letter-spacing:.2em;opacity:.55}',
+    /* 아래 면 고르개 · 사건 머리 띠 — 먹색 */
+    'html.yk-noir .m-dock{background:#0b0b0b!important}',
+    'html.yk-noir .m-dock button{border-color:#333!important;color:#bdb9b0!important}',
+    'html.yk-noir .m-dock button.on{background:#efece6!important;color:#0b0b0b!important;border-color:#efece6!important}',
+    'html.yk-noir .m-deck{background:#0b0b0b!important}',
+    'html.yk-noir .m-in{background-color:#f3f2ef!important}',
+    'html.yk-noir .m-hd{background:#f3f2ef!important}',
+    'html.yk-noir .m-hd .m-prog{background:#b3261e!important}',
+    /* 사건 표지 — 음화 */
+    'html.yk-noir .yn-cov{background:#0b0b0b!important}',
+    'html.yk-noir .yn-cov img.hero-slide{object-fit:cover!important}',
+    'html.yk-noir .yn-tag{position:absolute;right:12px;bottom:10px;z-index:5;font:500 9.5px/1 "Noto Sans KR",sans-serif;letter-spacing:.2em;color:rgba(239,236,230,.6);pointer-events:none}'
+  ].join('\n');
+  (D.head || H).appendChild(css);
+
+  /* ── 색 바꾸기: 누런색 · 갈색 → 같은 밝기의 무채색 ── */
+  function parse(c) { var m = /rgba?\(([^)]+)\)/.exec(c); if (!m) return null; var p = m[1].split(/[ ,\/]+/).filter(Boolean).map(parseFloat); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; }
+  function warm(o) {
+    var r = o.r / 255, g = o.g / 255, b = o.b / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, d = mx - mn;
+    if (d < .025) return false;
+    var s = d / (1 - Math.abs(2 * l - 1) || 1), h;
+    if (mx === r) h = 60 * (((g - b) / d) % 6); else if (mx === g) h = 60 * ((b - r) / d + 2); else h = 60 * ((r - g) / d + 4);
+    if (h < 0) h += 360;
+    if (h >= 18 && h <= 70) return true;          /* 누런 · 갈색 · 황토 */
+    if ((h < 18 || h > 340) && s < .35) return true; /* 바랜 적갈색(종이 얼룩) */
+    return false;                                   /* 진한 붉은 인주색 · 그 밖 색은 그대로 */
+  }
+  function gray(o) {
+    var v = .299 * o.r + .587 * o.g + .114 * o.b;
+    if (v > 175) v = Math.min(244, 175 + (v - 175) * 1.6);   /* 누런 종이 → 맑은 흰 종이 */
+    else if (v < 60) v = v * .8;                              /* 어두운 갈색 → 먹 */
+    v = Math.round(v);
+    return 'rgba(' + v + ',' + v + ',' + Math.max(0, v - 3) + ',' + o.a + ')';
+  }
+  function fix(c) { var o = parse(c); return o && o.a > 0 && warm(o) ? gray(o) : null; }
+  function fixStr(s) { return s.replace(/rgba?\([^)]+\)/g, function (m) { return fix(m) || m; }); }
+  var PROPS = [['color', 'color'], ['backgroundColor', 'background-color'], ['borderTopColor', 'border-top-color'], ['borderRightColor', 'border-right-color'], ['borderBottomColor', 'border-bottom-color'], ['borderLeftColor', 'border-left-color'], ['outlineColor', 'outline-color'], ['fill', 'fill'], ['stroke', 'stroke']];
+  function one(e) {
+    if (e.__yn || e.nodeType !== 1) return; e.__yn = 1;
+    if (/^(IMG|VIDEO|CANVAS|SCRIPT|STYLE|IFRAME|SOURCE|PICTURE)$/.test(e.tagName)) return;
+    if (e.closest && e.closest('.yn-neg,#ykn,.ykp-veil,.m-dock')) return;
+    var cs = getComputedStyle(e);
+    for (var i = 0; i < PROPS.length; i++) { var v = cs[PROPS[i][0]]; if (v && v.indexOf('rgb') === 0) { var f = fix(v); if (f) e.style.setProperty(PROPS[i][1], f, 'important'); } }
+    var bi = cs.backgroundImage;
+    if (bi && bi !== 'none') {
+      if (/gradient/.test(bi)) { var nb = fixStr(bi); if (nb !== bi) e.style.setProperty('background-image', nb, 'important'); }
+      if (/url\(/.test(bi)) { e.style.setProperty('background-blend-mode', 'luminosity', 'important'); var bc = parse(cs.backgroundColor); if (!bc || bc.a === 0) e.style.setProperty('background-color', 'rgb(128,128,128)', 'important'); }
+    }
+    var sh = cs.textShadow; if (sh && sh !== 'none' && /rgb/.test(sh)) { var ns = fixStr(sh); if (ns !== sh) e.style.setProperty('text-shadow', ns, 'important'); }
+    var bs = cs.boxShadow; if (bs && bs !== 'none' && /rgb/.test(bs)) { var nbs = fixStr(bs); if (nbs !== bs) e.style.setProperty('box-shadow', nbs, 'important'); }
+  }
+  function sweep(root) { root = root || D.body; if (!root) return; one(root); var all = root.getElementsByTagName('*'); for (var i = 0; i < all.length; i++) one(all[i]); }
+
+  /* ── 표지 그림: 사건 네 개 · 본지 ── */
+  var COV = { 'case-maria': 'mr_cover', 'case-jukcheomjeong': 'jk_cover', 'case-sonkijeong': 'sk_cover', 'case-baekbaekgyo': 'bb_cover' };
+  function covers() {
+    var k = null; for (var c in COV) if (path.indexOf('/' + c + '/') > -1) k = c;
+    if (k) {
+      var slides = D.querySelectorAll('img.hero-slide');
+      if (slides.length) {
+        var host = slides[0].parentElement; host.classList.add('yn-cov');
+        [].forEach.call(slides, function (im, i) { if (i === 0) { im.src = BASE + 'assets/noir/' + COV[k] + '.jpg'; im.removeAttribute('srcset'); } });
+        if (!host.querySelector('.yn-tag')) { var t = D.createElement('span'); t.className = 'yn-tag'; t.textContent = '그림 · 재현'; host.appendChild(t); }
+      }
+    }
+    var p1 = D.querySelector('.m-pg1 .m-in');
+    if (p1 && !p1.querySelector('.yn-neg')) {
+      var tb = p1.querySelector('.topbar'), ms = p1.querySelector('header.masthead'), tg = p1.querySelector('.tagline');
+      if (ms) {
+        var neg = D.createElement('div'); neg.className = 'yn-neg';
+        p1.insertBefore(neg, tb || ms);
+        [tb, ms, tg].forEach(function (x) { if (x) neg.appendChild(x); });
+        var cap = D.createElement('span'); cap.className = 'yn-cap'; cap.textContent = '밤의 경성 · 그림 · 재현'; neg.appendChild(cap);
+      }
+    }
+  }
+
+  function start() {
+    covers(); sweep();
+    var q = [], tm = null;
+    if ('MutationObserver' in W) new MutationObserver(function (ms) {
+      ms.forEach(function (m) { [].forEach.call(m.addedNodes, function (n) { if (n.nodeType === 1) q.push(n); }); });
+      if (!tm) tm = setTimeout(function () { tm = null; var l = q.splice(0); l.forEach(function (n) { if (n.isConnected) sweep(n); }); }, 120);
+    }).observe(D.body, { childList: true, subtree: true });
+    setTimeout(function () { covers(); sweep(); }, 1500);
+    setTimeout(function () { sweep(); }, 4000);
+  }
+  if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', start); else start();
+})();

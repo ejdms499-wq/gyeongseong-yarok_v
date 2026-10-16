@@ -254,3 +254,13 @@
   }
   watchResize();
 })();
+/* 1016 · 폰에서만 「흑백 활판 + 음화」 톤 (yk-noir.js) */
+(function () {
+  try {
+    if (window.screen && Math.min(screen.width, screen.height) > 820) return;   /* 큰 화면은 불러오지도 않음 · 폰 판정은 yk-noir.js 안에서 */
+    var me = document.currentScript || [].slice.call(document.scripts).filter(function (s) { return /yk-zoom\.js/.test(s.src); })[0];
+    var base = me ? me.src.replace(/yk-zoom\.js.*$/, '') : '';
+    var s = document.createElement('script'); s.src = base + 'yk-noir.js?v=1';
+    (document.head || document.documentElement).appendChild(s);
+  } catch (e) {}
+})();
