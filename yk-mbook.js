@@ -305,7 +305,7 @@
   }
   function flip(sp, on) { sp.classList.toggle('ko', on); sp.textContent = on ? sp.getAttribute('data-ko') : sp.getAttribute('data-old'); }
   D.addEventListener('click', function (e) {
-    var sp = e.target.closest('.hj[data-ko]'); if (!sp || e.target.closest('button, a')) return;
+    var sp = e.target.closest('.hj[data-ko]'); if (!sp || e.target.closest('button, a, [role="button"]')) return;
     flip(sp, !sp.classList.contains('ko'));
   });
   function init() {
