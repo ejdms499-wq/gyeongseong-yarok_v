@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
 <!-- 경성야록 심인 광고면 — 폰판 (폰에서 seek.html 이 이 쪽으로 넘김 · 컴퓨터판은 seek.html?pc=1)
-     글과 장치(seek.js)는 컴퓨터판 그대로 쓰고, 폰에 맞는 모양과 덧장치(m-seek.js)만 새로 붙임. 이 면의 광고는 모두 지어낸 것(재현). -->
+     글과 장치(seek.js)는 컴퓨터판 그대로 쓰고, 폰에 맞는 모양과 덧장치(m-seek.js)만 새로 붙임. 이 면의 광고는 모두 지어낸 것(재현).
+     이 파일은 seek.html 에서 뽑아 만듦 — 컴퓨터판을 고치면 다시 뽑을 것. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -11,15 +12,15 @@
 <link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
 <link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
 <link rel="stylesheet" href="yk-mbook.css?v=11">
-<link rel="stylesheet" href="seek.css?v=20">
-<link rel="stylesheet" href="m-seek.css?v=1">
+<link rel="stylesheet" href="seek.css?v=21">
+<link rel="stylesheet" href="m-seek.css?v=2">
 </head>
 <body class="msk">
 <div class="mb-bar"><a href="index.html">‹ 본지</a><span class="mb-now" data-def="심인 광고 · 사람을 차즘"></span><a href="seek.html?pc=1" class="msk-pc">컴퓨터판</a><i class="mb-prog"></i></div>
 <div class="msk-search" aria-hidden="true"><span>수색률</span><i><b id="mskPct"></b></i><em id="mskPctN">0%</em></div>
 <header class="sp-head sk-head">
-<button aria-label="유성기 켜고 끄기 — 심인계 행진곡" aria-pressed="false" class="sk-snd" id="skSnd" type="button"><img alt="" src="assets/np/v2_gramo.jpg"/><span><span class="hj" data-ko="배경 음악" data-old="유성기" tabindex="0">유성기</span></span><small><span class="hj" data-ko="심인계 행진곡" data-old="심인계 행진곡" tabindex="0">심인계 행진곡</span></small><i></i></button>
-<audio id="skBgm" loop="" preload="auto" src="assets/v3/seek_bgm.mp3"></audio>
+<button aria-label="유성기 켜고 끄기 — 심인계 행진곡" aria-pressed="false" class="sk-snd" id="skSnd" type="button"><img alt="" src="assets/np/v2_gramo.jpg"/><span><span class="hj" data-ko="배경 음악" data-old="유성기" tabindex="0">유성기</span></span><small><span class="hj" data-ko="한여름밤 심인계" data-old="한여름밤 심인계" tabindex="0">한여름밤 심인계</span></small><i></i></button>
+<audio id="skBgm" loop="" preload="auto" src="assets/v3/seek_bgm2.mp3"></audio>
 <p class="sp-k"><span class="hj" data-ko="사람 찾는 광고 · 광고면 셋째 단" data-old="심인 광고 · 광고면 제삼 단" tabindex="0">심인 광고 · 광고면 제삼 단</span></p>
 <h1><span class="hj" data-ko="사람을 찾습니다" data-old="사람을 차즘" tabindex="0">사람을 차즘</span></h1><figure class="sk-mug" id="skMug"><img alt="수배 사진 — 268번을 든 먹색 고양이" src="assets/seek/cat_wanted.jpg"/><figcaption><b>현상 수배 · 제 268 호</b><span>죄목 — 활자 「ㄱ」 절도 · 편집장 의자 점거 · 원고 우 낮잠</span><em>사례 — 멸치 한 줌</em></figcaption><i aria-hidden="true" class="sk-paw"></i></figure>
 <p class="sp-s"><span class="hj" data-ko="옛 신문 광고란에는 집 나간 사람을 찾는 '심인' 광고가 실렸습니다. 경성야록도 사람을 찾습니다. 이번에는 우리 쪽에서." data-old="녯 신문 광고란에는 집 나간 이를 찻는 「심인」 광고가 실렷소. 경성야록도 사람을 찻소. 이번엔 우리 쪽에서." tabindex="0">녯 신문 광고란에는 집 나간 이를 찻는 「심인」 광고가 실렷소. 경성야록도 사람을 찻소. 이번엔 우리 쪽에서.</span></p>
@@ -37,7 +38,7 @@
 <article class="sk-ad big" data-k="crew" id="adCrew">
 <p class="sk-kind"><b><span class="hj" data-ko="사람 찾음" data-old="심인" tabindex="0">심인</span></b><span>일</span></p>
 <h2><span class="hj" data-ko="동료를 찾음" data-old="동료를 차즘" tabindex="0">동료를 차즘</span></h2>
-<figure class="sk-photo sk-ix" id="crewPh"><img alt="" onerror="this.remove()" src="assets/v3/seek_crew.jpg"/><img alt="" aria-hidden="true" class="ix-b" src="assets/v3/seek_crew2.jpg"/><button aria-label="이불을 흔들어 보기" class="ix-hot" id="crewHot" style="left:2%;top:8%;width:62%;height:62%" type="button"></button><p aria-live="polite" class="ix-say" id="crewSay"></p><figcaption><span class="hj" data-ko="그 사람의 자리 · 이불이 수상함 (재현)" data-old="당자의 자리 · 이불이 수상함 (재현)" tabindex="0">당자의 자리 · 이불이 수상함 (재현)</span></figcaption><span class="sk-nophoto">사진<br/>차즘 중</span></figure>
+<figure class="sk-photo sk-ix" id="crewPh"><img alt="" onerror="this.remove()" src="assets/seek2/crew.jpg"/><img alt="" aria-hidden="true" class="ix-b" src="assets/seek2/crew2.jpg"/><button aria-label="이불을 흔들어 보기" class="ix-hot" id="crewHot" style="left:4%;top:34%;width:80%;height:40%" type="button"></button><p aria-live="polite" class="ix-say" id="crewSay"></p><figcaption><span class="hj" data-ko="그 사람의 자리 · 이불이 수상함 (재현)" data-old="당자의 자리 · 이불이 수상함 (재현)" tabindex="0">당자의 자리 · 이불이 수상함 (재현)</span></figcaption><span class="sk-nophoto">사진<br/>차즘 중</span></figure>
 <p class="ix-tip" id="crewTip"><span class="hj" data-ko="☞ 사진 속 이불을 눌러 보세요" data-old="☞ 사진 속 이불을 눌러 보시오" tabindex="0">☞ 사진 속 이불을 눌러 보시오</span></p>
 <dl class="sk-spec">
 <div><dt>나이</dt><dd><span class="hj" data-ko="상관없음. 단, 자정 넘어 눈이 반짝이는 사람" data-old="불문. 단, 자정 넘어 눈이 반짝이는 자" tabindex="0">불문. 단, 자정 넘어 눈이 반짝이는 자</span></dd></div>
@@ -53,6 +54,7 @@
 <article class="sk-ad">
 <p class="sk-kind"><b><span class="hj" data-ko="물건 찾음" data-old="심물" tabindex="0">심물</span></b></p>
 <h3><span class="hj" data-ko="원고 한 장 찾음" data-old="원고 한 장 차즘" tabindex="0">원고 한 장 차즘</span></h3>
+<figure class="sk-mini"><img alt="새가 물고 날아가는 원고와 놀란 편집장 (재현 그림)" loading="lazy" src="assets/seek2/page.jpg"/><figcaption>그림 · 재현</figcaption></figure>
 <p><span class="hj" data-ko="어젯밤 자정, 편집국 창밖으로 날아갔습니다. 주운 분은 읽지 말고 돌려주세요. 읽었다면 감상도 함께. 오타는 못 본 척해 주세요." data-old="어젯밤 자정, 편집국 창으로 날아감. 줍는 이는 읽지 말고 돌려주시오. 읽엇거든 감상도 함께. 오자는 못 본 체하시오." tabindex="0">어젯밤 자정, 편집국 창으로 날아감. 줍는 이는 읽지 말고 돌려주시오. 읽엇거든 감상도 함께. 오자는 못 본 체하시오.</span></p>
 <p class="sk-up"><span class="hj" data-ko="추가 소식 — 찾았습니다. 고양이가 깔고 앉아 있었습니다. 오타 세 개는 고양이가 냈다고 합니다." data-old="추보 — 차잣소. 고양이가 깔고 안저 잇섯소. 오자 세 개는 고양이가 냇다 함." tabindex="0">추보 — 차잣소. 고양이가 깔고 안저 잇섯소. 오자 세 개는 고양이가 냇다 함.</span></p><button class="sk-upb" type="button"><span class="hj" data-ko="추가 소식 보기" data-old="추보 보기" tabindex="0">추보 보기</span></button>
 </article>
@@ -60,6 +62,7 @@
 <article class="sk-ad">
 <p class="sk-kind"><b><span class="hj" data-ko="사람 찾음" data-old="심인" tabindex="0">심인</span></b></p>
 <h3><span class="hj" data-ko="어제의 나를 찾음" data-old="어제의 나를 차즘" tabindex="0">어제의 나를 차즘</span></h3>
+<figure class="sk-mini"><img alt="등불을 들고 자기를 찾는 사내와 그 뒤에서 자는 또 하나의 그 (재현 그림)" loading="lazy" src="assets/seek2/me.jpg"/><figcaption>그림 · 재현</figcaption></figure>
 <p><span class="hj" data-ko="마감 전까지는 분명 있었습니다. 인상은 부지런함. “5분만”이라고 말한 뒤로 세 시간째 소식 없음." data-old="마감 전까지는 분명 잇섯슴. 인상은 부지런함. 「오 분만」이라 말한 뒤로 세 시간째 소식 업슴." tabindex="0">마감 전까지는 분명 잇섯슴. 인상은 부지런함. 「오 분만」이라 말한 뒤로 세 시간째 소식 업슴.</span></p>
 <p class="sk-up"><span class="hj" data-ko="추가 소식 — 이불 속에서 발견. 아직 자는 중이라 깨우지 않기로 했습니다." data-old="추보 — 이불 속에서 발견. 아즉 자는 중이라 깨우지 안키로 함." tabindex="0">추보 — 이불 속에서 발견. 아즉 자는 중이라 깨우지 안키로 함.</span></p><button class="sk-upb" type="button"><span class="hj" data-ko="추가 소식 보기" data-old="추보 보기" tabindex="0">추보 보기</span></button>
 </article>
@@ -67,7 +70,7 @@
 <article class="sk-ad big" data-k="reader" id="adReader">
 <p class="sk-kind"><b><span class="hj" data-ko="사람 찾음" data-old="심인" tabindex="0">심인</span></b><span>이</span></p>
 <h2><span class="hj" data-ko="독자를 찾음" data-old="독자를 차즘" tabindex="0">독자를 차즘</span></h2>
-<figure class="sk-photo sk-ix" id="readPh"><img alt="" onerror="this.remove()" src="assets/v3/seek_reader.jpg"/><img alt="" aria-hidden="true" class="ix-b" src="assets/v3/seek_reader2.jpg"/><button aria-label="신문" class="ix-hot" data-c="news" data-p2="left:21%;top:59%;width:47%;height:38%" style="left:9%;top:56%;width:33%;height:33%" type="button"></button><button aria-label="떡" class="ix-hot" data-c="tteok" data-p2="left:64%;top:71%;width:20%;height:14%" style="left:44%;top:66%;width:19%;height:18%" type="button"></button><button aria-label="찻잔" class="ix-hot" data-c="cup" data-p2="left:72%;top:2%;width:13%;height:16%" style="left:80%;top:20%;width:15%;height:22%" type="button"></button><button aria-label="창문" class="ix-hot" data-c="win" data-p2="left:58%;top:0;width:12%;height:22%" style="left:62%;top:0;width:17%;height:30%" type="button"></button><span aria-hidden="true" class="ix-crumb"></span><p aria-live="polite" class="ix-say" id="readSay"></p><figcaption><span class="hj" data-ko="그 사람이 두고 간 신문과 떡 (재현)" data-old="당자가 두고 간 신문과 떡 (재현)" tabindex="0">당자가 두고 간 신문과 떡 (재현)</span></figcaption><span class="sk-nophoto">사진<br/>차즘 중</span></figure>
+<figure class="sk-photo sk-ix" id="readPh"><img alt="" onerror="this.remove()" src="assets/seek2/reader.jpg"/><img alt="" aria-hidden="true" class="ix-b" src="assets/seek2/reader2.jpg"/><button aria-label="신문" class="ix-hot" data-c="news" data-p2="left:18%;top:58%;width:42%;height:18%" style="left:18%;top:49%;width:20%;height:15%" type="button"></button><button aria-label="떡" class="ix-hot" data-c="tteok" data-p2="left:44%;top:68%;width:12%;height:9%" style="left:36%;top:61%;width:12%;height:10%" type="button"></button><button aria-label="찻잔" class="ix-hot" data-c="cup" data-p2="left:62%;top:66%;width:20%;height:13%" style="left:62%;top:53%;width:26%;height:16%" type="button"></button><button aria-label="창문" class="ix-hot" data-c="win" data-p2="left:58%;top:0;width:40%;height:40%" style="left:42%;top:2%;width:50%;height:32%" type="button"></button><span aria-hidden="true" class="ix-crumb"></span><p aria-live="polite" class="ix-say" id="readSay"></p><figcaption><span class="hj" data-ko="그 사람이 두고 간 신문과 떡 (재현)" data-old="당자가 두고 간 신문과 떡 (재현)" tabindex="0">당자가 두고 간 신문과 떡 (재현)</span></figcaption><span class="sk-nophoto">사진<br/>차즘 중</span></figure>
 <p class="ix-tip" id="readTip"><span class="hj" data-ko="☞ 사진 속 물건을 눌러 단서를 모으세요" data-old="☞ 사진 속 물건을 눌러 단서를 모으시오" tabindex="0">☞ 사진 속 물건을 눌러 단서를 모으시오</span> · 단서 <b id="clueN">0</b>/4</p>
 <dl class="sk-spec">
 <div><dt>나이</dt><dd><span class="hj" data-ko="상관없음. 손가락 하나로 화면을 내릴 줄 아는 사람" data-old="불문. 손가락 하나로 화면을 내릴 줄 아는 자" tabindex="0">불문. 손가락 하나로 화면을 내릴 줄 아는 자</span></dd></div>
@@ -84,20 +87,37 @@
 <!-- 먹색 고양이: 손을 대면 귀만 빼꼼, 누르면 「ㄱ」 활자를 물고 튀어나와 냐옹 (소리는 브라우저에서 만듦) -->
 <p class="sk-kind"><span aria-hidden="true" class="cat-box"><svg class="cat" viewbox="0 0 120 92"><image class="c-img" height="69" href="assets/seek/cat_peek.png" width="120" x="0" y="23"/><g class="c-type"><rect height="18" rx="1.5" width="20" x="50" y="73"></rect><text text-anchor="middle" x="60" y="87">ㄱ</text></g></svg><span class="cat-say">냐옹</span></span><b><span class="hj" data-ko="고양이 찾음" data-old="심묘" tabindex="0">심묘</span></b></p>
 <h3><span class="hj" data-ko="활자 상자 위의 고양이 찾음" data-old="활자 상자 우의 고양이 차즘" tabindex="0">활자 상자 우의 고양이 차즘</span></h3>
+<figure class="sk-mini"><img alt="활자를 물고 달아나는 먹색 고양이와 쫓는 식자공들 (재현 그림)" loading="lazy" src="assets/seek2/cattype.jpg"/><figcaption>그림 · 재현</figcaption></figure>
 <p><span class="hj" data-ko="털은 먹색. “ㄱ” 활자를 물고 나갔습니다. 고양이도 고양이지만, 솔직히 ㄱ이 더 급합니다." data-old="털빛은 먹색. 「ㄱ」 자 활자를 물고 나감. 고양이도 고양이지만, 솔직히 ㄱ이 더 급함." tabindex="0">털빛은 먹색. 「ㄱ」 자 활자를 물고 나감. 고양이도 고양이지만, 솔직히 ㄱ이 더 급함.</span></p>
 </article>
 <!-- 작은 광고 4 -->
 <article class="sk-ad">
 <p class="sk-kind"><b><span class="hj" data-ko="물건 찾음" data-old="심물" tabindex="0">심물</span></b></p>
 <h3><span class="hj" data-ko="우산 찾음 · 세 번째" data-old="우산 차즘 · 셋째 번" tabindex="0">우산 차즘 · 셋째 번</span></h3>
+<figure class="sk-mini"><img alt="책상 밑의 우산 셋과 시치미 떼는 편집장 (재현 그림)" loading="lazy" src="assets/seek2/umbrella.jpg"/><figcaption>그림 · 재현</figcaption></figure>
 <p><span class="hj" data-ko="첫 번째와 두 번째도 아직 못 찾았습니다. 네 번째는 안 사기로 했습니다. 비 오는 날 문 앞에 갖다 두세요." data-old="첫째와 둘째도 아즉 못 차잣슴. 넷째는 사지 안키로 함. 비 오는 날 문 압헤 갓다 두시오." tabindex="0">첫째와 둘째도 아즉 못 차잣슴. 넷째는 사지 안키로 함. 비 오는 날 문 압헤 갓다 두시오.</span></p>
 <p class="sk-up"><span class="hj" data-ko="추가 소식 — 셋 다 편집장 책상 밑에 있었습니다. 편집장은 " data-old="추보 — 셋 다 편집장 책상 밋헤 잇섯소. 편집장은 「처음 본다」 함." tabindex="0" 본다"고="" 처음="" 합니다."="">추보 — 셋 다 편집장 책상 밋헤 잇섯소. 편집장은 「처음 본다」 함.</span></p><button class="sk-upb" type="button"><span class="hj" data-ko="추가 소식 보기" data-old="추보 보기" tabindex="0">추보 보기</span></button>
+</article>
+<!-- 작은 광고 5 · 6 (1016) -->
+<article class="sk-ad">
+<p class="sk-kind"><b><span class="hj" data-ko="사람 찾음" data-old="심인" tabindex="0">심인</span></b></p>
+<h3><span class="hj" data-ko="편집장을 찾음" data-old="편집장을 차즘" tabindex="0">편집장을 차즘</span></h3>
+<figure class="sk-mini"><img alt="편집장 의자에 앉은 먹색 고양이와 옆에 어정쩡하게 선 편집장 (재현 그림)" loading="lazy" src="assets/seek2/chair.jpg"/><figcaption>그림 · 재현</figcaption></figure>
+<p><span class="hj" data-ko="의자에서 찾았습니다. 의자 옆에 서 있었습니다. 의자는 고양이가 쓰고 있습니다. 사흘째입니다." data-old="의자에서 차잣소. 의자 엽헤 서 잇섯소. 의자는 고양이가 쓰는 중이오. 사흘째요." tabindex="0">의자에서 차잣소. 의자 엽헤 서 잇섯소. 의자는 고양이가 쓰는 중이오. 사흘째요.</span></p>
+<p class="sk-up"><span class="hj" data-ko="추가 소식 — 협상 결렬. 고양이는 멸치 두 줌을 요구했습니다." data-old="추보 — 협상 결렬. 고양이는 멸치 두 줌을 요구하엿소." tabindex="0">추보 — 협상 결렬. 고양이는 멸치 두 줌을 요구하엿소.</span></p>
+<button class="sk-upb" type="button"><span class="hj" data-ko="추가 소식 보기" data-old="추보 보기" tabindex="0">추보 보기</span></button>
+</article>
+<article class="sk-ad">
+<p class="sk-kind"><b><span class="hj" data-ko="주의" data-old="주의" tabindex="0">주의</span></b></p>
+<h3><span class="hj" data-ko="고양이 떼 출몰 주의" data-old="고양이 떼 출몰 주의" tabindex="0">고양이 떼 출몰 주의</span></h3>
+<figure class="sk-mini"><img alt="신문 칸 사이로 쏟아져 나오는 고양이 떼와 달아나는 기자들 (재현 그림)" loading="lazy" src="assets/seek2/herd.jpg"/><figcaption>그림 · 재현</figcaption></figure>
+<p><span class="hj" data-ko="이 광고면 가장자리에서 고양이가 나타나면 눌러 주세요. 다섯 마리를 넘기면 책임지지 않습니다." data-old="이 광고면 가장자리에 고양이가 나오거든 누르시오. 다섯 마리를 넘기면 책임지지 아니하오." tabindex="0">이 광고면 가장자리에 고양이가 나오거든 누르시오. 다섯 마리를 넘기면 책임지지 아니하오.</span></p>
 </article>
 </section>
 <!-- ═══ 광고면 아래칸 — 블랙 코미디 네 칸 ═══ -->
 <section aria-label="광고면 아래칸" class="sk-low">
 <article class="sk-l sk-obit" id="adObit">
-<figure class="sk-l-img"><img alt="" loading="lazy" src="assets/v3/obit.jpg"/></figure>
+<figure class="sk-l-img"><img alt="" loading="lazy" src="assets/seek2/obit.jpg"/></figure>
 <p class="sk-l-k"><span class="hj" data-ko="부고" data-old="부　고" tabindex="0">부　고</span></p>
 <h3><span class="hj" data-ko="본사 차 끓이는 기계 별세" data-old="본사 차 끓이는 기계 영면" tabindex="0">본사 차 끓이는 기계 영면</span></h3>
 <p><span class="hj" data-ko="향년 7세. 생전에 하루 400잔을 내렸고, 단 한 번도 마감을 탓하지 않았습니다." data-old="향년 칠 세. 생전에 하로 사백 잔을 내렷고, 단 한 번도 마감을 탓하지 안앗소." tabindex="0">향년 칠 세. 생전에 하로 사백 잔을 내렷고, 단 한 번도 마감을 탓하지 안앗소.</span></p>
@@ -105,7 +125,7 @@
 <button class="sk-l-b" id="obitB" type="button"><span class="hj" data-ko="분향하기" data-old="분향하기" tabindex="0">분향하기</span> <i id="obitN"></i></button>
 </article>
 <article class="sk-l sk-wanted" id="adWanted">
-<figure class="sk-l-img"><img alt="" loading="lazy" src="assets/v3/wanted_card.jpg"/></figure>
+<figure class="sk-l-img"><img alt="" loading="lazy" src="assets/seek2/wanted.jpg"/></figure>
 <p class="sk-l-k"><span class="hj" data-ko="현상 수배" data-old="현상 수배" tabindex="0">현상 수배</span></p>
 <h3><span class="hj" data-ko="마감" data-old="마　감" tabindex="0">마　감</span></h3>
 <p><span class="hj" data-ko="인상 — 매일 밤 온다. 늦은 적이 한 번도 없다. 문을 잠가도 온다." data-old="인상 — 매일 밤 온다. 늦은 적이 한 번도 업다. 문을 잠가도 온다." tabindex="0">인상 — 매일 밤 온다. 늦은 적이 한 번도 업다. 문을 잠가도 온다.</span></p>
@@ -115,7 +135,7 @@
 <p aria-live="polite" class="sk-run" id="runN"></p>
 </article>
 <article class="sk-l sk-sorry" id="adSorry" tabindex="0">
-<figure class="sk-l-img"><img alt="흐린 흰 그림자가 찍힌 편집국 사진 (재현)" loading="lazy" src="assets/v3/ghost_thumb.jpg"/><figcaption><span class="hj" data-ko="문제의 사진 (재현)" data-old="문제의 사진 (재현)" tabindex="0">문제의 사진 (재현)</span></figcaption></figure>
+<figure class="sk-l-img"><img alt="흐린 흰 그림자가 찍힌 편집국 사진 (재현)" loading="lazy" src="assets/seek2/ghost.jpg"/><figcaption><span class="hj" data-ko="문제의 사진 (재현)" data-old="문제의 사진 (재현)" tabindex="0">문제의 사진 (재현)</span></figcaption></figure>
 <p class="sk-l-k"><span class="hj" data-ko="사과" data-old="사　과" tabindex="0">사　과</span></p>
 <h3><span class="hj" data-ko="어제 3면 귀신 사진에 대하여" data-old="어제 삼 면의 귀신 사진에 대하야" tabindex="0">어제 삼 면의 귀신 사진에 대하야</span></h3>
 <p class="sk-l-a"><span class="hj" data-ko="본보가 귀신이라 보도한 흰 그림자는 편집장의 엄지손가락이었습니다. 귀신께 깊이 사과드립니다." data-old="본보가 귀신이라 보도한 흰 그림자는 편집장의 엄지손가락이엇소. 귀신께 깁히 사과드리오." tabindex="0">본보가 귀신이라 보도한 흰 그림자는 편집장의 엄지손가락이엇소. 귀신께 깁히 사과드리오.</span></p>
@@ -123,7 +143,7 @@
 <p class="sk-l-s" id="sorryN"><span class="hj" data-ko="이 칸을 누르면 정정이 나옵니다." data-old="이 칸을 누르면 정정이 나오." tabindex="0">이 칸을 누르면 정정이 나오.</span></p>
 </article>
 <article class="sk-l sk-knock" id="adKnock" tabindex="0">
-<figure class="sk-l-img"><img alt="" loading="lazy" src="assets/v3/knock.jpg"/></figure>
+<figure class="sk-l-img"><img alt="" loading="lazy" src="assets/seek2/knock.jpg"/></figure>
 <p class="sk-l-k"><span class="hj" data-ko="심인" data-old="심　인" tabindex="0">심　인</span></p>
 <h3><span class="hj" data-ko="자정에 문 두드린 사람을 찾음" data-old="자정에 문 두드린 이를 차즘" tabindex="0">자정에 문 두드린 이를 차즘</span></h3>
 <p><span class="hj" data-ko="똑, 똑, 똑. 열어 보니 없었습니다. 둘째 밤에도 없었습니다. 셋째 밤엔 열지 않았습니다." data-old="똑, 똑, 똑. 열어 보니 업섯소. 둘째 밤에도 업섯소. 셋째 밤엔 열지 안앗소." tabindex="0">똑, 똑, 똑. 열어 보니 업섯소. 둘째 밤에도 업섯소. 셋째 밤엔 열지 안앗소.</span></p>
@@ -172,8 +192,7 @@
 
 
 <footer class="msk-foot"><p>경성야록 편집국 심인계 · 차즈면 광고는 내리오</p><a href="index.html">본지로 도라가시압</a></footer>
-<button type="button" class="msk-cat" id="mskCat" aria-label="수배 고양이"><img src="assets/seek/cat_wanted.jpg" alt=""><span class="msk-bub" id="mskBub"></span></button>
-<script src="seek.js?v=12"></script>
-<script src="m-seek.js?v=1"></script>
+<script src="seek.js?v=13"></script>
+<script src="m-seek.js?v=2"></script>
 </body>
 </html>

@@ -116,3 +116,5 @@ html,body.msk{background:var(--paper)!important;color:var(--ink)}
 .msk .sk-foot{display:none!important}
 .sk-mug{margin-top:26px}
 .msk .mb-bar .msk-pc{flex:none;white-space:nowrap}
+.msk .sk-l-img img,.msk .sk-sorry .sk-l-img img,.msk .sk-knock .sk-l-img img,.msk .sk-ix .ix-b,.msk .sk-ix.dim img{filter:grayscale(1) contrast(1.06)!important;mix-blend-mode:normal!important}
+.msk .sk-mini figcaption{background:rgba(14,14,14,.75);color:#ddd}
