@@ -11,30 +11,27 @@
 <link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
 <link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
 <link rel="stylesheet" href="yk-mbook.css?v=11">
-<link rel="stylesheet" href="m-main.css?v=1">
+<link rel="stylesheet" href="m-main.css?v=2">
 </head>
 <body class="mm" data-whoosh="case-jukcheomjeong/audio/whoosh.mp3">
 
-<div class="mb-bar"><a href="index.html?pc=1" class="mm-pc">컴퓨터판</a><span class="mb-now" data-def="경성야록 · 오늘 밤의 지면"></span><button data-open="mbToc">차례</button><i class="mb-prog"></i></div>
+<div class="mb-bar mm-bar"><a href="#top" class="mm-brand" aria-label="경성야록 — 맨 우로"><svg class="mm-mark sm" viewBox="0 0 100 100" aria-hidden="true"><use href="#mmLogo"/></svg><b>경성야록</b></a><span class="mb-now" data-def=""></span><button data-open="mbToc" aria-label="차례">차례</button><i class="mb-prog"></i></div>
 
-<!-- 제호 -->
-<header class="mb-cover mm-cover" id="top">
-  <div class="mm-cv-bg" aria-hidden="true"></div><i class="mm-cv-rain" aria-hidden="true"></i>
-  <div class="mm-cv-top"><span>괴사 문고 · 납량 특집</span><span class="mm-cv-rt">그림 · 재현</span></div>
-  <div class="mm-cv-in">
-    <h1 class="mm-title" aria-label="경성야록"><span>경</span><span>성</span><span class="r">야</span><span>록</span></h1>
-    <div class="mm-cv-side">
-      <p class="mm-date" id="mmDate">소화 십일 년</p>
-      <p class="mm-now" id="mmNow">지금은 —</p>
-      <p class="mm-ago" id="mmAgo">90년 전 오늘날</p>
-      <p class="mm-stop">이날 본보는 발행되지 못하엿다 — 정간 중</p>
-    </div>
-  </div>
-  <div class="mm-cv-foot">
-    <p class="mm-tag">밤이 깁허지면 니저진 사건이<br>깨여나나니라</p>
-    <p class="mm-sub2">신문 한 줄로부터 비롯하는 경성의 괴사</p>
-    <span class="mm-down">오늘 밤의 지면</span>
-  </div>
+<!-- 제호 — 달 모양 로고는 컴퓨터판과 똑같이 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="mmLogo" viewBox="0 0 100 100"><defs><clipPath id="mmC"><circle cx="50" cy="50" r="49"/></clipPath><mask id="mmRing"><rect width="100" height="100" fill="#000"/><circle cx="50" cy="50" r="49" fill="#fff"/><circle cx="32.4" cy="50" r="52.6" fill="#000"/></mask></defs><g clip-path="url(#mmC)" fill="currentColor"><rect x="4.0" y="0" width="2.7" height="100"/><rect x="8.6" y="0" width="2.7" height="100"/><rect x="13.2" y="0" width="2.7" height="100"/><rect x="17.8" y="0" width="2.7" height="100"/><rect x="22.4" y="0" width="2.7" height="100"/><rect x="27.0" y="0" width="2.7" height="100"/><rect x="31.6" y="0" width="2.7" height="100"/><rect x="36.2" y="0" width="2.7" height="100"/><rect x="40.8" y="0" width="2.7" height="100"/><rect x="45.4" y="0" width="2.7" height="100"/></g><rect x="47.6" y="0.6" width="3.4" height="98.8" fill="#b3261e"/><g mask="url(#mmRing)" fill="currentColor"><rect x="54" y="1.5" width="46" height="2.5"/><rect x="54" y="6.0" width="46" height="2.5"/><rect x="54" y="10.5" width="46" height="2.5"/><rect x="54" y="15.0" width="46" height="2.5"/><rect x="54" y="19.5" width="46" height="2.5"/><rect x="54" y="24.0" width="46" height="2.5"/><rect x="54" y="28.5" width="46" height="2.5"/><rect x="54" y="33.0" width="46" height="2.5"/><rect x="54" y="37.5" width="46" height="2.5"/><rect x="54" y="42.0" width="46" height="2.5"/><rect x="54" y="46.5" width="46" height="2.5"/><rect x="54" y="51.0" width="46" height="2.5"/><rect x="54" y="55.5" width="46" height="2.5"/><rect x="54" y="60.0" width="46" height="2.5"/><rect x="54" y="64.5" width="46" height="2.5"/><rect x="54" y="69.0" width="46" height="2.5"/><rect x="54" y="73.5" width="46" height="2.5"/><rect x="54" y="78.0" width="46" height="2.5"/><rect x="54" y="82.5" width="46" height="2.5"/><rect x="54" y="87.0" width="46" height="2.5"/><rect x="54" y="91.5" width="46" height="2.5"/><rect x="54" y="96.0" width="46" height="2.5"/></g></symbol></svg>
+<header class="mm-mast" id="top">
+  <div class="mm-ml"><span>괴사 문고 · 납량 특집</span><span id="mmNo">제일호</span></div>
+  <div class="mm-logo"><svg class="mm-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#mmLogo"/></svg><h1>경성야록</h1></div>
+  <div class="mm-info"><p>신문 아래 칸에서<br>깨여난 경성의 사건</p><p class="r">네 사건<br>1920 — 1940</p></div>
+  <div class="mm-today"><p class="mm-date" id="mmDate">소화 십일 년</p><p class="mm-now" id="mmNow">지금은 —</p><p class="mm-ago" id="mmAgo">구십 년 전 오늘날</p><p class="mm-stop">이날 본보는 발행되지 못하엿다 — 정간 중</p></div>
+  <p class="mm-tag">밤이 <b>깁허지면</b><br>니저진 사건이<br><b>깨여나나니라.</b></p>
+  <p class="mm-sub2">신문 한 줄로부터 비롯하는 경성의 괴사</p>
+  <ol class="mm-list">
+    <li><a href="case-jukcheomjeong/m.html"><s>01</s><span><b>죽첨정 사건</b><small>사회 · 1933 · 경성</small></span><img src="assets/noir/jk_cover.jpg" alt=""></a></li>
+    <li><a href="case-maria/m.html"><s>02</s><span><b>부산 마리아 참살사건</b><small>사회 · 1931 · 부산</small></span><img src="assets/noir/mr_cover.jpg" alt=""></a></li>
+    <li><a href="case-sonkijeong/m.html"><s>03</s><span><b>손기정 군과 지워진 표지</b><small>문화예술 · 1936 · 경성</small></span><img src="assets/noir/sk_cover.jpg" alt=""></a></li>
+    <li><a href="case-baekbaekgyo/m.html"><s>04</s><span><b>백백교 사건</b><small>경제 · 1937 · 경성</small></span><img src="assets/noir/bb_cover.jpg" alt=""></a></li>
+  </ol>
 </header>
 
 <!-- 면 고르기 -->
@@ -243,6 +240,6 @@
 
 <script src="case-sonkijeong/m-sk-ko.js"></script>
 <script src="yk-mbook.js?v=13"></script>
-<script src="m-main.js?v=1"></script>
+<script src="m-main.js?v=2"></script>
 </body>
 </html>

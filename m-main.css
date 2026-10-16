@@ -1,89 +1,90 @@
-/* 경성야록 본지 — 폰판 · 흑백 느와르 · 붉은빛은 #b3261e 하나 */
-html,body.mm{background:var(--night)}
-.mm{color:var(--nink)}
+/* 경성야록 본지 — 폰판 2판 · 흰 「흑백 활판」 · 붉은빛은 #b3261e 하나 · 달 모양 로고 고정 */
+html,body.mm{background:var(--paper)}
+.mm{color:var(--ink)}
 .mm img{filter:grayscale(1)}
-.mm .mb-bar{color:var(--ink)}
-.mm-pc{color:var(--mute)}
-
-/* ── 제호 ── */
-.mm-cover{justify-content:space-between;background:#050505}
-.mm-cv-bg{position:absolute;inset:-4%;background:url(assets/noir/street.jpg) center 40%/cover no-repeat;filter:brightness(.5) contrast(1.15);animation:mmKb 26s cubic-bezier(.3,0,.3,1) infinite alternate}
-@keyframes mmKb{from{transform:scale(1.02)}to{transform:scale(1.14) translateY(-2%)}}
-.mm-cover::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -260px 160px -80px #050505,inset 0 120px 100px -60px rgba(5,5,5,.8);pointer-events:none}
-.mm-cv-rain{position:absolute;inset:0;z-index:1;opacity:.18;background-image:repeating-linear-gradient(104deg,transparent 0 22px,rgba(255,255,255,.5) 22px 23px,transparent 23px 61px);background-size:200px 300px;animation:mmRain .9s linear infinite;pointer-events:none}
-@keyframes mmRain{to{background-position:-40px 300px}}
-.mm-cv-top{position:relative;z-index:2;display:flex;justify-content:space-between;padding:calc(16px + env(safe-area-inset-top)) var(--g) 0;font:500 10.5px/1 var(--sans);letter-spacing:.24em;color:var(--nmute)}
-.mm-cv-rt{font-size:9px;letter-spacing:.18em;padding:4px 5px;background:rgba(0,0,0,.5);color:#bbb}
-.mm-cv-in{position:relative;z-index:2;flex:1;display:flex;align-items:center;gap:14px;padding:10px var(--g) 0}
-.mm-cover .mm-title{display:flex;flex-direction:column;margin:0;font:900 clamp(78px,25vw,112px)/.98 var(--sans);letter-spacing:-.04em;color:#f2f1ed}
-.mm-title span{display:block;opacity:0;transform:translateY(18px);animation:mmUp 1s cubic-bezier(.2,.7,.2,1) forwards}
-.mm-title span:nth-child(2){animation-delay:.12s}.mm-title span:nth-child(3){animation-delay:.24s}.mm-title span:nth-child(4){animation-delay:.36s}
-.mm-title .r{color:var(--red)}
-@keyframes mmUp{to{opacity:1;transform:none}}
-.mm-cv-side{flex:1;align-self:flex-end;padding-bottom:6%;text-align:right;opacity:0;animation:mmUp 1.2s ease .7s forwards}
-.mm-date{font:700 14px/1.5 var(--serif);color:#f2f1ed}
-.mm-now{margin-top:6px;font:500 12px/1.4 var(--sans);color:#e07a72}
+/* 위 띠 — 늘 붙어 잇음 · 왼쪽에 달 로고 */
+.mm-bar{transform:none!important;background:rgba(244,243,240,.96)}
+.mm-brand{gap:8px;padding:0 10px!important;letter-spacing:0!important}
+.mm-brand b{font:900 16px/1 var(--serif);letter-spacing:-.01em}
+.mm-mark{display:block;width:44px;height:44px;flex:none;color:var(--ink)}
+.mm-mark.sm{width:24px;height:24px}
+.mm-bar .mb-now{font-size:12px}
+/* 제호 */
+.mm-mast{padding:calc(64px + env(safe-area-inset-top)) var(--g) 8px;background:var(--paper)}
+.mm-ml{display:flex;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--ink);font:500 10px/1 var(--sans);letter-spacing:.2em;color:var(--mute)}
+.mm-logo{display:flex;align-items:center;gap:14px;padding:26px 0 18px}
+.mm-logo .mm-mark{width:64px;height:64px}
+.mm-logo h1{margin:0;font:900 clamp(52px,16vw,68px)/1 var(--serif);letter-spacing:-.02em}
+.mm-info{display:flex;justify-content:space-between;align-items:flex-end;padding:10px 0;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);font:500 11px/1.5 var(--sans);color:var(--ink)}
+.mm-info .r{text-align:right;color:var(--mute)}
+.mm-today{padding:12px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:baseline}
+.mm-date{font:700 14px/1.5 var(--serif)}
+.mm-now{font:500 12px/1.4 var(--sans);color:var(--red);text-align:right}
 .mm-now::before{content:"● ";font-size:8px;vertical-align:2px}
-.mm-ago{margin-top:4px;font:400 11px/1.4 var(--sans);letter-spacing:.08em;color:var(--nmute)}
-.mm-stop{display:inline-block;margin-top:12px;padding:6px 8px;border:1px solid #444;font:400 11px/1.5 var(--serif);color:#cfcfca}
+.mm-ago{grid-column:1/3;font:400 11px/1.4 var(--sans);color:var(--mute)}
+.mm-stop{grid-column:1/3;margin-top:6px;font:400 12px/1.5 var(--serif);color:var(--ink)}
+.mm-stop::before{content:"";display:inline-block;width:8px;height:8px;margin-right:6px;background:var(--red)}
 .mm-stop[hidden]{display:none}
-.mm-cv-foot{position:relative;z-index:2;padding:0 var(--g) calc(26px + env(safe-area-inset-bottom));border-top:0}
-.mm-tag{padding-top:16px;border-top:1px solid #444;font:700 21px/1.5 var(--serif);color:#f2f1ed}
-.mm-sub2{margin-top:6px;font:400 12px/1.5 var(--sans);letter-spacing:.14em;color:var(--nmute)}
-.mm-down{display:block;margin-top:22px;text-align:center;font:500 10px/1 var(--sans);letter-spacing:.34em;color:var(--nmute)}
-.mm-down::after{content:"";display:block;width:1px;height:26px;margin:10px auto 0;background:var(--nmute);animation:mmDn 2s ease-in-out infinite}
-@keyframes mmDn{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.mm-tag{margin:30px 0 10px;font:400 30px/1.42 var(--serif);letter-spacing:-.02em}
+.mm-tag b{font-weight:900}
+.mm-sub2{font:400 11.5px/1.5 var(--sans);letter-spacing:.14em;color:var(--mute)}
+.mm-list{list-style:none;margin:30px 0 10px;padding:0;border-top:2px solid var(--ink)}
+.mm-list li{border-bottom:1px solid var(--ink)}
+.mm-list a{display:grid;grid-template-columns:34px 1fr 64px;gap:12px;align-items:center;padding:12px 0;color:inherit;text-decoration:none}
+.mm-list s{text-decoration:none;font:400 12px/1 var(--sans);color:var(--mute)}
+.mm-list b{display:block;font:700 16px/1.35 var(--serif)}
+.mm-list small{display:block;margin-top:4px;font:400 11px/1 var(--sans);color:var(--mute)}
+.mm-list img{width:64px;height:46px;object-fit:cover;filter:grayscale(1) contrast(1.1)}
+.mm-list a:active{background:var(--paper2)}
 
-/* ── 면 고르기 ── */
-.mm-secs{position:sticky;top:48px;z-index:20;display:flex;align-items:center;gap:6px;padding:10px var(--g);background:rgba(11,11,11,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid #222;overflow-x:auto;scrollbar-width:none}
+/* 면 고르기 */
+.mm-secs{position:sticky;top:48px;z-index:20;display:flex;align-items:center;gap:0;padding:0 var(--g);background:rgba(244,243,240,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid var(--ink);overflow-x:auto;scrollbar-width:none}
 .mm-secs::-webkit-scrollbar{display:none}
-.mm-secs button,.mm-secs a{flex:none;height:34px;padding:0 14px;border:1px solid #3a3a3a;background:none;color:#cfcfca;font:500 12.5px/32px var(--sans);text-decoration:none;white-space:nowrap}
-.mm-secs button.on{background:#ecebe7;border-color:#ecebe7;color:#0b0b0b;font-weight:700}
-.mm-secs .mm-map{margin-left:auto;border-color:transparent;color:var(--nmute)}
+.mm-secs button,.mm-secs a{flex:none;height:42px;padding:0 12px;border:0;background:none;color:var(--mute);font:500 13px/42px var(--sans);text-decoration:none;white-space:nowrap;position:relative}
+.mm-secs button.on{color:var(--ink);font-weight:700}
+.mm-secs button.on::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:3px;background:var(--red)}
+.mm-secs .mm-map{margin-left:auto}
 
-/* ── 공통 칸 ── */
-.mm-sec{padding:44px var(--g) 52px}
-.mm-hd{margin-bottom:26px}
-.mm-hd small{display:block;font:500 10.5px/1.5 var(--sans);letter-spacing:.24em;color:#e07a72}
-.mm-hd h2{margin:12px 0 10px;font:900 clamp(28px,8.6vw,36px)/1.3 var(--serif);letter-spacing:-.02em}
-.mm-hd p{font:400 14px/1.75 var(--serif);color:var(--nmute)}
-.mm-hd.dk small{color:var(--red)}
-.mm-hd.dk p{color:var(--mute)}
-.mm-rt{position:absolute;right:10px;top:10px;z-index:3;font:500 9px/1 var(--sans);letter-spacing:.18em;padding:4px 5px;background:rgba(0,0,0,.55);color:#bbb}
+/* 공통 칸 */
+.mm-sec{padding:40px var(--g) 48px}
+.mm-hd{margin-bottom:24px;padding-top:12px;border-top:3px solid var(--ink)}
+.mm-hd small{display:block;font:500 10.5px/1.5 var(--sans);letter-spacing:.22em;color:var(--red)}
+.mm-hd h2{margin:12px 0 10px;font:900 clamp(26px,8vw,34px)/1.3 var(--serif);letter-spacing:-.02em}
+.mm-hd p{font:400 14px/1.75 var(--serif);color:var(--mute)}
+.mm-rt{position:absolute;right:8px;top:8px;z-index:3;font:500 9px/1 var(--sans);letter-spacing:.18em;padding:4px 5px;background:rgba(0,0,0,.55);color:#ddd}
 
-/* ── 일면 · 큰 사건 ── */
-.mm-case{margin-bottom:40px}
-.mm-lead{position:relative;display:block;aspect-ratio:4/5;max-height:82svh;width:100%;overflow:hidden;background:#000;color:#fff;text-decoration:none;isolation:isolate}
-.mm-lead .mm-ph{position:absolute;inset:0}
-.mm-lead .mm-ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(.62) contrast(1.12);transform:scale(1.06);transition:transform 7s cubic-bezier(.3,0,.3,1)}
+/* 일면 — 사건 기사 (사진 우 · 글 아래) */
+.mm-case{margin-bottom:46px}
+.mm-lead{position:relative;display:block;color:inherit;text-decoration:none}
+.mm-lead .mm-ph{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#000}
+.mm-lead .mm-ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.85);transform:scale(1.06);transition:transform 7s cubic-bezier(.3,0,.3,1)}
 .mm-lead.in .mm-ph img{transform:scale(1)}
-.mm-lead::after{content:"";position:absolute;inset:0;z-index:1;box-shadow:inset 0 -300px 180px -90px rgba(0,0,0,.95);pointer-events:none}
-.mm-no{position:absolute;left:var(--g);top:14px;z-index:3;font:300 54px/1 var(--serif);color:rgba(255,255,255,.88)}
-.mm-lt{position:absolute;left:0;right:0;bottom:0;z-index:2;display:block;padding:0 var(--g) 22px}
-.mm-lab{display:block;font:500 10.5px/1.5 var(--sans);letter-spacing:.2em;color:#e07a72}
-.mm-h{display:block;margin:8px 0 10px;font:900 clamp(30px,9.5vw,40px)/1.18 var(--serif);letter-spacing:-.02em}
-.mm-big{display:inline-block;margin-bottom:10px;padding:5px 8px;border:2px solid var(--red);font:900 15px/1 var(--serif);color:#fff;letter-spacing:.06em}
-.mm-d{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font:400 14px/1.75 var(--serif);color:#dcdbd6}
-.mm-go{display:inline-flex;margin-top:14px;padding:11px 14px;background:#ecebe7;color:#0b0b0b;font:700 13px/1 var(--sans);letter-spacing:.06em}
-.mm-lead:active .mm-go{background:var(--red);color:#fff}
-.mm-alts{display:flex;gap:10px;margin-top:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:2px}
-.mm-alts::-webkit-scrollbar{display:none}
-.mm-alt{flex:none;width:82%;scroll-snap-align:start;display:grid;grid-template-columns:86px 1fr;gap:12px;padding:12px;border:1px solid #262626;background:#111}
-.mm-alt .mm-ob{display:grid;place-items:center;height:108px;background:radial-gradient(circle at 50% 40%,#2a2a2a,#0d0d0d 70%);overflow:hidden}
-.mm-alt .mm-ob img{max-width:92%;max-height:92%;object-fit:contain;filter:grayscale(1) contrast(1.1) drop-shadow(0 6px 10px rgba(0,0,0,.7))}
+.mm-lead .mm-rt{top:8px}
+.mm-no{position:absolute;left:12px;top:6px;z-index:3;font:900 50px/1 var(--serif);color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.mm-lt{display:block;padding-top:14px}
+.mm-lab{display:block;font:500 10.5px/1.5 var(--sans);letter-spacing:.2em;color:var(--red)}
+.mm-h{display:block;margin:8px 0 10px;font:900 clamp(28px,8.6vw,36px)/1.22 var(--serif);letter-spacing:-.02em}
+.mm-big{display:inline-block;margin-bottom:10px;padding:5px 8px;border:2px solid var(--red);font:900 14px/1 var(--serif);color:var(--red);letter-spacing:.06em}
+.mm-d{display:block;font:400 15px/1.85 var(--serif);color:#2b2b2a}
+.mm-go{display:block;position:relative;margin-top:14px;padding:13px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);font:700 13px/1 var(--sans);letter-spacing:.04em}
+.mm-go::after{content:"";position:absolute;right:0;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;background:var(--red)}
+.mm-lead:active .mm-go{background:var(--paper2)}
+.mm-alts{margin-top:4px}
+.mm-alt{display:grid;grid-template-columns:72px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.mm-alt .mm-ob{display:grid;place-items:center;height:84px;background:#e3e2de;overflow:hidden}
+.mm-alt .mm-ob img{max-width:90%;max-height:90%;object-fit:contain;filter:grayscale(1) contrast(1.1)}
 .mm-alt .mm-ob.ph img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover}
-.mm-alt small{display:block;font:500 9.5px/1.4 var(--sans);letter-spacing:.12em;color:var(--nmute)}
-.mm-alt b{display:block;margin:6px 0 6px;font:700 15.5px/1.35 var(--serif);color:#f2f1ed}
-.mm-alt p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font:400 12.5px/1.6 var(--serif);color:#a9a8a3}
-.mm-alt i{display:inline-block;margin-top:8px;font:500 10px/1 var(--sans);font-style:normal;letter-spacing:.1em;color:#6b6b68;border:1px solid #333;padding:4px 6px}
-.mm-alts.solo{flex-direction:column;overflow:visible}
+.mm-alt small{display:block;font:500 9.5px/1.4 var(--sans);letter-spacing:.1em;color:var(--mute)}
+.mm-alt b{display:block;margin:5px 0;font:700 15px/1.35 var(--serif)}
+.mm-alt p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font:400 12.5px/1.6 var(--serif);color:#4a4a48}
+.mm-alt i{display:inline-block;margin-top:6px;font:500 9.5px/1 var(--sans);font-style:normal;letter-spacing:.1em;color:var(--mute)}
 .mm-alts.solo .mm-alt{width:auto}
-.mm-filtered{padding:34px var(--g) 50px}
-.mm-filtered .mm-lead{margin-bottom:12px}
-.mm-back{display:block;width:100%;margin-top:22px;min-height:48px;border:1px solid #444;background:none;color:#ddd;font:600 13px/1 var(--sans)}
-
+.mm-filtered{padding:30px var(--g) 50px}
+.mm-filtered .mm-lead{margin-bottom:26px}
+.mm-back{display:block;width:100%;margin-top:22px;min-height:48px;border:1px solid var(--ink);background:none;color:var(--ink);font:600 13px/1 var(--sans)}
+.mm-paper{background:var(--paper2)}
 /* ── 색인 (흰 종이) ── */
-.mm-paper{background:var(--paper);color:var(--ink)}
+.mm-paper{color:var(--ink)}
 .mm-ixtabs{display:flex;border-bottom:2px solid var(--ink);margin-bottom:6px}
 .mm-ixtabs button{flex:1;height:44px;border:0;background:none;font:700 14px/1 var(--serif);color:var(--mute)}
 .mm-ixtabs button sup{font:500 9px/1 var(--sans);margin-left:3px;color:var(--mute)}
