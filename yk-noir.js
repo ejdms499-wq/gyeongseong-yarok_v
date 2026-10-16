@@ -85,6 +85,31 @@
     'html.yk-noir .yn-chap b{font:900 92px/.8 "Noto Serif KR",serif;letter-spacing:-.06em}',
     'html.yk-noir .yn-chap span{font:500 11px/1.6 "Noto Sans KR",sans-serif;letter-spacing:.16em;text-align:right;max-width:55%}',
     'html.yk-noir .label.yn-has-chap>b,html.yk-noir .label.yn-has-chap>em{display:none!important}',
+    /* 본지 二~六면 — 첫 면과 같은 흑백 활판 머리 · 종이 그늘 없앰 */
+    'html.yk-noir:not(#yn) body .m-in{box-shadow:none!important;background-image:none!important}',
+    'html.yk-noir:not(#yn) body .m-in:before{display:none!important}',
+    'html.yk-noir.yk-noir::after{display:none!important}',
+    'html.yk-noir:not(#yn) body .m-shade,html.yk-noir:not(#yn) body .m-corner{display:none!important}',
+    'html.yk-noir:not(#yn) body .m-pg{padding:0!important}',
+    'html.yk-noir:not(#yn) body .m-in{padding:16px 20px 28px!important}',
+    'html.yk-noir:not(#yn) body .m-mh.yn-mh{display:block!important;border:0!important;margin:0 0 18px!important;padding:0!important}',
+    'html.yk-noir .yn-mh .yh-bar{display:flex;justify-content:space-between;font:500 10px/1 "Noto Sans KR",sans-serif;letter-spacing:.22em;color:#0e0e0e}',
+    'html.yk-noir .yn-mh .yh-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:16px;padding-bottom:10px;border-bottom:1px solid #0e0e0e}',
+    'html.yk-noir .yn-mh .yh-no{font:900 64px/.82 "Noto Serif KR",serif;letter-spacing:-.04em;color:#0e0e0e}',
+    'html.yk-noir .yn-mh .yh-t{text-align:right}',
+    'html.yk-noir .yn-mh .yh-t b{display:block;font:900 22px/1.2 "Noto Serif KR",serif;letter-spacing:-.02em;color:#0e0e0e}',
+    'html.yk-noir .yn-mh .yh-t small{display:block;margin-top:5px;font:500 10.5px/1.4 "Noto Sans KR",sans-serif;letter-spacing:.14em;color:#666}',
+    'html.yk-noir:not(#yn) body .m-pgno{font:500 10px/1 "Noto Sans KR",sans-serif!important;letter-spacing:.3em!important;color:#999!important}',
+    /* 부록 목차 (五 · 六면 맨 위) */
+    'html.yk-noir .yn-apx{list-style:none;margin:0 0 26px;padding:0}',
+    'html.yk-noir .yn-apx li{border-top:1px solid #0e0e0e}',
+    'html.yk-noir .yn-apx li:last-child{border-bottom:1px solid #0e0e0e}',
+    'html.yk-noir .yn-apx a{display:grid;grid-template-columns:30px minmax(0,1fr) 72px;gap:12px;align-items:center;padding:12px 0;color:#0e0e0e;text-decoration:none}',
+    'html.yk-noir .yn-apx em{font:400 11px/1 "Noto Sans KR",sans-serif;font-style:normal;letter-spacing:.1em}',
+    'html.yk-noir .yn-apx b{display:block;font:700 16.5px/1.35 "Noto Serif KR",serif;letter-spacing:-.02em}',
+    'html.yk-noir .yn-apx small{display:block;margin-top:4px;font:400 12px/1.45 "Noto Sans KR",sans-serif;color:#666}',
+    'html.yk-noir .yn-apx img{width:72px;height:50px;object-fit:cover}',
+    'html.yk-noir .yn-apx-h{margin:0 0 8px;font:500 10.5px/1.5 "Noto Sans KR",sans-serif;letter-spacing:.2em;color:#b3261e}',
     /* 아래 면 고르개 · 사건 머리 띠 — 먹색 */
     'html.yk-noir .m-dock{background:#0b0b0b!important}',
     'html.yk-noir .m-dock button{border-color:#333!important;color:#bdb9b0!important}',
@@ -468,6 +493,26 @@
       var n = hn(m[1]) || ({ '일': 1, '이': 2, '삼': 3, '사': 4, '오': 5, '륙': 6, '육': 6, '칠': 7, '팔': 8, '구': 9, '십': 10 })[m[1]] || 0; if (!n) return;
       var c = D.createElement('div'); c.className = 'yn-chap'; c.innerHTML = '<b>' + (n < 10 ? '0' : '') + n + '</b><span>' + b.textContent.trim() + (em ? '<br>' + em.textContent.trim() : '') + '</span>';
       lb.parentNode.insertBefore(c, lb); lb.classList.add('yn-has-chap');
+    });
+
+    /* 본지 二~六면 머리 · 부록 목차 */
+    var FACE = [null, ['02', '사회', '社會 · 第二面'], ['03', '문화예술', '文化藝術 · 第三面'], ['04', '경제', '經濟 · 第四面'], ['05', '부록 · 편집국', '附錄 · 第五面'], ['06', '호외 · 광고', '號外 · 廣告 · 第六面']];
+    var APX = {
+      4: [['expo.html', '경성사건박람회', '자정에 열리는 회장 · 여섯 관', 'expo_gate'], ['appendix.html', '부록 자료실', '사건 뒤의 지면 · 연표', 'papers'], ['newsroom.html', '편집국', '기자증이 있어야 들어가오', 'desk'], ['about.html', '야록 소개', '이 신문은 어떻게 만들었나', 'type']],
+      5: [['hogoe.html', '독자 호외', '내 손으로 찍는 괴담 호외', 'press'], ['shop.html', '광고 상뎜', '그 시절 신문 아래 칸의 광고', 'shop'], ['seek.html', '심인 광고', '사람을 차즘', 'street'], ['napryang.html', '납량란', '자정의 백물어', 'clock']]
+    };
+    [].forEach.call(D.querySelectorAll('.m-deck .m-pg'), function (pg, i) {
+      if (!i) return;
+      var inn = pg.querySelector('.m-in'), mh = inn && inn.querySelector('.m-mh'); if (!mh || mh.classList.contains('yn-mh')) return;
+      var f = FACE[i] || ['0' + (i + 1), '', ''];
+      mh.classList.add('yn-mh');
+      mh.innerHTML = '<div class="yh-bar"><span>京城野錄</span><span>경성야록</span></div><div class="yh-row"><span class="yh-no">' + f[0] + '</span><span class="yh-t"><b>' + f[1] + '</b><small>' + f[2] + '</small></span></div>';
+      if (APX[i] && !inn.querySelector('.yn-apx')) {
+        var h = D.createElement('p'); h.className = 'yn-apx-h'; h.textContent = '이 면의 부록 — 눌러서 드러가시압';
+        var ol = D.createElement('ol'); ol.className = 'yn-apx';
+        ol.innerHTML = APX[i].map(function (a, k) { return '<li><a href="' + a[0] + '"><em>' + (k < 9 ? '0' : '') + (k + 1) + '</em><span><b>' + a[1] + '</b><small>' + a[2] + '</small></span><img src="' + BASE + 'assets/noir/' + a[3] + '.jpg" alt=""></a></li>'; }).join('');
+        mh.insertAdjacentElement('afterend', ol); mh.insertAdjacentElement('afterend', h);
+      }
     });
     var p1 = D.querySelector('.m-pg1 .m-in');
     if (p1 && !p1.querySelector('.yn-front')) {
