@@ -144,3 +144,12 @@
     });
   })();
 })(window, document);
+/* 편집국 칸 — 사건 도장 몃 개 */
+(function (D) {
+  var d = D.getElementById('mmDesk'); if (!d) return;
+  var o = {}; try { o = JSON.parse(localStorage.getItem('yk-read') || '{}') || {}; } catch (e) {}
+  var k = ['jk', 'maria', 'sk', 'bb'].filter(function (x) { return o[x]; }).length;
+  var s = D.createElement('span'); s.className = 'mm-stamps';
+  s.innerHTML = ['jk', 'maria', 'sk', 'bb'].map(function (x) { return '<i class="' + (o[x] ? 'on' : '') + '"></i>'; }).join('') + '<em>' + (k >= 4 ? '사건 도장 넷 · 출입증 발급됨' : '사건 도장 ' + k + ' / 4 · 넷이면 기자 출입증') + '</em>';
+  var a = d.querySelector('.mm-act'); d.insertBefore(s, a);
+})(document);

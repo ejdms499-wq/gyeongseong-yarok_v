@@ -363,3 +363,9 @@ html,body.ms{background:var(--paper)}
 .cut-fb button{min-height:48px;border:1.5px solid #0e0e0e;background:#fff;color:#0e0e0e;font:700 13px/1 var(--sans)}
 .cut-fb #lwDone{background:#b3261e;border-color:#b3261e;color:#fff}
 .cut{background:#0b0b0b}
+/* 진렬장 — 오리기 · 편지 단추 둘 */
+.vw-act{grid-template-columns:1fr 1fr}
+.vw-act #vwLetter{background:var(--red);border-color:var(--red)}
+.ad-cuts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+.ad-cuts .ad-cut{margin:0}
+.ad-cut.lt{border:0;background:var(--red);color:#fff}

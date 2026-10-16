@@ -420,3 +420,7 @@ html,body.mm{background:var(--paper)}
 .mm-tag{margin:36px 0 0;color:#8f8e89}
 .mm-tag b{color:#fff}
 .mm-mast .hj.gloss,.mm-mast .hj{border-bottom-color:transparent!important;text-decoration:none!important}
+.mm-stamps{display:flex;align-items:center;gap:5px;margin-top:12px}
+.mm-stamps i{width:12px;height:12px;border-radius:50%;border:1.5px solid #ecebe7;opacity:.7}
+.mm-stamps i.on{background:var(--red);border-color:var(--red);opacity:1}
+.mm-stamps em{margin-left:6px;font:500 11px/1 var(--sans);font-style:normal;color:#cfcfca}

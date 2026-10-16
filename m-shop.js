@@ -51,6 +51,7 @@
   $('#vwZoom').onclick = zoom;
   $('#vwKo').onclick = function () { ko = !ko; paintO(); tone('tick'); };
   $('#vwCut').onclick = function () { var v = L[cur]; if (v) cutOut(v); };
+  $('#vwLetter').onclick = function () { var v = L[cur]; if (v) cutOut(v, true); };
   $('#msCats').addEventListener('click', function (e) { var b = e.target.closest('button[data-c]'); if (!b) return; cat = b.dataset.c; $$('#msCats button').forEach(function (x) { x.classList.toggle('on', x === b); }); build(); tone('tick'); });
   build();
   W.ykShowAd = function (id) {   /* 다른 쪽에서 광고 하나를 바로 펼칠 때 */
@@ -64,8 +65,8 @@
     $('#adT').textContent = v.t;
     $('#adBd').innerHTML = '<button type="button" class="ad-big" data-zoom="' + v.src + '" data-cap="' + esc(v.t + ' · ' + v.d) + '"><img src="' + v.src + '" alt="' + esc(v.t) + ' 광고"><span>누르면 크게</span></button>' +
       '<p class="ad-k">오늘 말로</p><p class="ad-o">' + nl(v.o) + '</p>' + (v.k && v.k !== v.o ? '<p class="ad-ko">' + nl(v.k) + '</p>' : '') +
-      '<button type="button" class="ad-cut" id="adCut">✂ 가위로 오려 엽서로</button><p class="ad-src">동아일보 ' + esc(v.d) + (v.p ? ' · ' + esc(v.p) : '') + ' · 실제 광고</p>';
-    $('#adCut').onclick = function () { cutOut(v); };
+      '<div class="ad-cuts"><button type="button" class="ad-cut" id="adCut">✂ 오려 엽서로</button><button type="button" class="ad-cut lt" id="adLetter">✎ 편지 써 보내기</button></div><p class="ad-src">동아일보 ' + esc(v.d) + (v.p ? ' · ' + esc(v.p) : '') + ' · 실제 광고</p>';
+    $('#adCut').onclick = function () { cutOut(v); }; $('#adLetter').onclick = function () { cutOut(v, true); };
     W.mb.open('shAd');
   }
 
@@ -128,7 +129,7 @@
   })();
   /* 가위로 오리기 — 점선을 따라 가위가 돌고, 엽서 한 장이 만들어짐 */
   var CUR = null;
-  function cutOut(v) {
+  function cutOut(v, auto) {
     CUR = v; $('#cutKept').textContent = ''; $('#cutShare').classList.remove('on'); LW.reset(v);
     var box = $('#cut'), cv = $('#cutCv'), cx = cv.getContext('2d'), im = new Image(), save = $('#cutSave');
     box.hidden = false; requestAnimationFrame(function () { box.classList.add('on'); }); save.classList.remove('on'); $('#cutSay').textContent = '가위가 지나가오…';
@@ -156,7 +157,7 @@
         cx.font = '46px sans-serif'; cx.fillStyle = '#0e0e0e'; cx.fillText('✂', last[0] - 22, last[1] + 16);
         if (Math.floor(p * 20) !== Math.floor(((ts - 16 - t0) / dur) * 20)) tone('type');
         if (p < 1) requestAnimationFrame(f);
-        else { paper(); try { save.href = cv.toDataURL('image/png'); save.classList.add('on'); } catch (e) {} $('#cutSay').textContent = '오렷소. 뒷면에 몃 자 적어 보내도 되오.'; $('#cutShare').classList.add('on'); $('#cutWrite').classList.add('on'); keep(v); LW.ready(); buzz([10, 30, 10]); }
+        else { paper(); try { save.href = cv.toDataURL('image/png'); save.classList.add('on'); } catch (e) {} $('#cutSay').textContent = '오렷소. 뒷면에 몃 자 적어 보내도 되오.'; $('#cutShare').classList.add('on'); $('#cutWrite').classList.add('on'); keep(v); LW.ready(); buzz([10, 30, 10]); if (auto) setTimeout(function () { $('#cutWrite').click(); }, 350); }
       })(t0);
     };
     im.src = v.src;
