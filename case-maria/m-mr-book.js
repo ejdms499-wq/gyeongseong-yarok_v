@@ -276,7 +276,11 @@
 
   /* ════ 第四話 · 여섯 날의 지면 (공통 장치) ════ */
   ARTS.forEach(function (a, i) { a.hook = HOOK[i]; });
-  W.mb.paper({ arts: ARTS, imgBase: './img/scan/', era: '소화 륙 년' });
+  var ADB = '../assets/ads/day/mr_';
+  W.mb.paper({ arts: ARTS, imgBase: './img/scan/', era: '소화 륙 년', shop: '../shop.html#underside',
+    ads: { '19310813': { top: .79, h: .19, img: ADB + '19310813_band.jpg' },
+      '19310902': { top: .795, h: .16, img: ADB + '19310902_band.jpg', cap: '일홈 업는 투서가 수사를 다시 움직엿다는 구월 이일 지면, 그 맨 아래칸이오. 「박사의 약」 · 「후미나인」 같은 약 광고가 줄지어 잇소.', say: '가튼 장 우에선 범인을 다시 쫏고, 아래칸은 약을 팔앗소.' },
+      '19310916': { top: .81, h: .17, img: ADB + '19310916_band.jpg' } } });
 
   var tone = function (k) { if (W.mb.tone) W.mb.tone(k); };
   /* 글자를 한 자씩 (깜빡임 업시) */

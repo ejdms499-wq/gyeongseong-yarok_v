@@ -103,7 +103,12 @@
   var IMG = './image/Jukcheomjeong/';
 
   /* 第二章 · 일곱 날의 지면 (공통 장치) */
-  W.mb.paper({ arts: ARTS, words: WORDS, imgBase: IMG + 'articles-toned/', era: '소화 팔 년', goto: 'ch5',
+  var ADB = '../assets/ads/day/jk_';
+  W.mb.paper({ arts: ARTS, words: WORDS, imgBase: IMG + 'articles-toned/', era: '소화 팔 년', goto: 'ch5', shop: '../shop.html#underside',
+    ads: { '19330517': { top: .665, h: .325, img: ADB + '19330517_band.jpg', cap: '죽첨정 사건이 처음 실린 오월 십칠일 지면, 그 맨 아래칸이오. 카메라 · 필름 광고와 「당선 사례」 광고가 열 칸 넘게 줄지어 잇소.', say: '가튼 장 우에선 범인을 쫓고, 아래에선 당선을 감사햇소.' },
+      '19330518': { top: .74, h: .24, img: ADB + '19330518_band.jpg' }, '19330519': { top: .82, h: .16, img: ADB + '19330519_band.jpg' },
+      '19330525': { top: .76, h: .22, img: ADB + '19330525_band.jpg' }, '19330602': { top: .78, h: .20, img: ADB + '19330602_band.jpg' },
+      '19330603': { top: .78, h: .19, img: ADB + '19330603_band.jpg' } },
     sealHead: '유월 팔일자 지면은,<br>호외에서 뜨드시압.', sealText: '이 날의 말은 모아 둔 말들과 함께 第五章 號外에서 드러나오.', sealBtn: '第五章 號外로 →' });
   /* ════ 第四章 · 스물세 날 ════ */
   var DATES = ['5.16','5.17','5.18','5.19','5.20','5.21','5.22','5.23','5.24','5.25','5.26','5.27','5.28','5.29','5.30','5.31','6.1','6.2','6.3','6.4','6.5','6.6','6.7','6.8'];

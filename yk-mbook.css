@@ -373,3 +373,19 @@ html.mb-lock,html.mb-lock body{overflow:hidden}
 .pp-qa b{display:inline-grid;place-items:center;width:22px;height:22px;margin-right:8px;background:var(--ink);color:#fff;font:700 11px/1 var(--sans)}
 .pp-qa p b{background:var(--red)}
 .pp-qa p{padding:0 0 14px;font:400 15px/1.8 var(--sans)!important}
+/* 아래칸 · 그날의 광고 */
+.pp-scanbox{position:relative}
+.pp-cut{position:absolute;left:1.5%;width:97%;border:2px dashed var(--red);background:rgba(179,38,30,.07);display:flex;align-items:flex-start;justify-content:flex-end;padding:0;z-index:2}
+.pp-cut::after{content:"";}
+.pp-cut{font:700 11px/1 var(--sans);color:#fff;letter-spacing:.06em}
+.pp-cut{color:transparent}
+.pp-cut::before{content:"✂ 아래칸 · 그날의 광고 ▾";position:absolute;right:-2px;top:-24px;padding:6px 8px;background:var(--red);color:#fff;font:700 11px/1 var(--sans);letter-spacing:.06em;white-space:nowrap}
+.pp-ad{margin-top:22px;padding:16px 14px 18px;border:2px dashed var(--red);background:#fff}
+.pp-ad h4{margin:0 0 4px!important;color:var(--red)}
+.pp-ad-k{font:500 11px/1.5 var(--sans);color:var(--mute);margin-bottom:10px}
+.pp-adimg{position:relative;display:block;width:100%}
+.pp-adimg img{width:100%;filter:grayscale(1) contrast(1.12)}
+.pp-adimg span{position:absolute;right:6px;bottom:6px;padding:5px 7px;background:rgba(14,14,14,.85);color:#fff;font:500 10.5px/1 var(--sans)}
+.pp-ad-cap{margin-top:12px;font:400 14px/1.8 var(--serif);color:#222}
+.pp-ad-say{margin-top:10px;padding-left:12px;border-left:3px solid var(--red);font:700 15px/1.7 var(--serif)}
+.pp-ad-go{display:inline-block;margin-top:14px;font:500 12.5px/1 var(--sans);color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:3px;text-decoration:none}

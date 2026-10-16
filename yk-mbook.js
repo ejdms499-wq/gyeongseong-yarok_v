@@ -130,8 +130,18 @@
         h = '<div class="pp-hd"><small>' + (cfg.sec || '사회면') + ' | ' + t0(a.d) + ' | ' + t0(a.day) + '</small>' + (a.mark ? '<i class="stamp">' + a.mark + '</i>' : '') + '</div>' +
           '<div class="mb-seg pp-seg three"><button data-m="scan" class="' + (mode === 'scan' ? 'on' : '') + '">원문 지면</button><button data-m="now" class="' + (mode === 'now' ? 'on' : '') + '">오늘 말로 읽기</button><button data-m="sum" class="' + (mode === 'sum' ? 'on' : '') + '">간추려 읽기</button></div>';
         if (mode === 'scan') {
-          h += '<button class="pp-scan" type="button" data-zoom="' + src + '" data-cap="동아일보 ' + a.date + ' 원문 지면"><img src="' + src + '" alt="동아일보 ' + a.date + ' 원문 지면"><span>눌러 크게 보기</span></button>' +
-            '<p class="pp-cap">원 긔사 · 동아일보 · ' + cfg.era + ' ' + t0(a.d) + ' — 테두리 친 곳이 그날 실린 긔사이오.</p>';
+          var key = String(a.img).replace(/\.[a-z]+$/, '').replace(/_0\d$/, ''), AD = cfg.ads && cfg.ads[String(a.img).replace(/\.[a-z]+$/, '')];
+          h += '<div class="pp-scanbox"><button class="pp-scan" type="button" data-zoom="' + src + '" data-cap="동아일보 ' + a.date + ' 원문 지면"><img src="' + src + '" alt="동아일보 ' + a.date + ' 원문 지면"><span>눌러 크게 보기</span></button>' +
+            (AD ? '<button type="button" class="pp-cut" style="top:' + (AD.top * 100) + '%;height:' + (AD.h * 100) + '%" data-goad>아래칸 · 그날의 광고 ▾</button>' : '') + '</div>' +
+            '<p class="pp-cap">원 긔사 · 동아일보 · ' + cfg.era + ' ' + t0(a.d) + ' — 테두리 친 곳이 그날 실린 긔사이오.' + (AD ? ' 붉은 절취선 안은 가튼 장 맨 아래칸의 광고요.' : '') + '</p>';
+          if (AD) {
+            var y = a.date.slice(0, 4), m = +a.date.slice(5, 7), dd = +a.date.slice(8, 10);
+            h += '<section class="pp-ad" id="ppAd"><h4>아래칸 · 그날의 광고</h4><p class="pp-ad-k">그날, 가튼 장 아래칸 · ' + y + '년 ' + m + '월 ' + dd + '일 · 동아일보</p>' +
+              '<button type="button" class="pp-adimg" data-zoom="' + AD.img + '" data-cap="' + y + '년 ' + m + '월 ' + dd + '일 지면 맨 아래칸 광고"><img src="' + AD.img + '" alt="' + y + '년 ' + m + '월 ' + dd + '일 지면 아래칸 광고" loading="lazy"><span>눌러 크게 보기</span></button>' +
+              '<p class="pp-ad-cap">' + (AD.cap || (y + '년 ' + m + '월 ' + dd + '일 지면, 그 맨 아래칸이오. 가튼 날 가튼 장에 실린 진짜 광고들이오.')) + '</p>' +
+              '<p class="pp-ad-say">' + (AD.say || '가튼 장 우에선 사건을 쫏고, 아래칸에선 물건을 팔앗소.') + '</p>' +
+              (cfg.shop ? '<a class="pp-ad-go" href="' + cfg.shop + '">그 시절 광고 상뎜으로 →</a>' : '') + '</section>';
+          }
         } else if (mode === 'sum') {
           var Q = ['이 보도의 요뎜은 무엇이오?', '그때 형편은 엇더하엿소?', '긔록에서 눈여겨볼 대목은 어대요?'];
           h += '<article class="pp-art pp-short"><p class="pp-sec">간추려 읽기 · ' + t0(a.d) + '</p><h3>' + a.title + '</h3><ol class="pp-sum big">' + a.sum.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol>' +
@@ -169,7 +179,8 @@
     D.addEventListener('click', function (e) {
       var t = e.target.closest('#ppTabs button'); if (t) { I = +t.dataset.i; render(); return; }
       var m = e.target.closest('.pp-seg button'); if (m) { mode = m.dataset.m; render(); return; }
-      if (e.target.closest('#ppBody [data-next]')) { I = Math.min(A.length - 1, I + 1); render(); }
+      if (e.target.closest('#ppBody [data-next]')) { I = Math.min(A.length - 1, I + 1); render(); return; }
+      if (e.target.closest('#ppBody [data-goad]')) { e.preventDefault(); e.stopPropagation(); var ad = $('#ppAd'), bd = $('#ppBody'); if (ad) bd.scrollTo({ top: ad.offsetTop - 10, behavior: 'smooth' }); }
     });
     W.addEventListener('mb:open', function (e) { if (e.detail === 'shPaper') render(); });
     paintN();
