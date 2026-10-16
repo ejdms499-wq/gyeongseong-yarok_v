@@ -193,6 +193,7 @@
     'html.yk-noir .yn-hd{letter-spacing:.04em!important}',
     'html.yk-noir:not(#yn) body .mt-names{display:flex!important;flex-wrap:wrap!important;gap:6px!important;height:auto!important}',
     'html.yk-noir:not(#yn) body .mt-names>*{flex:0 0 auto!important;height:auto!important;min-height:0!important}',
+    'html.yk-noir:not(#yn) body .page-title .wm,html.yk-noir:not(#yn) body .sec-head .wm{display:none!important}',
     'html.yk-noir .yn-vert{writing-mode:horizontal-tb!important;text-orientation:mixed!important;height:auto!important}'
   ]);
   var SKIPLIN = '.ch-card,.mk-row,.finale,.prologue,.jn-desk,.hs6,.h6-strips,[class*="strips"],.pl-tabs,.cb-steps,.ck-face-wrap,.yke,.mt-names,[class*="names"],[class*="chips"],.h6-strip,[class*="row6"],.ob-line,.m-hd,.m-dock,.m-deck>.m-pg,.notebook,.ykg-book,.ykp-veil,.yke .yg-press,.ykr,.report-timeline,.m-in>.m-mh,nav,button,.cb-steps,.yn-flip,.ck-face-wrap,.ykq-tray,[class*="track"],[class*="slider"],[class*="tabs"],[class*="chips"],[class*="dots"],[class*="strip"]';
@@ -292,6 +293,10 @@
         var lh = parseFloat(cs.lineHeight); if (!lh || lh / fs < 1.7) e.style.setProperty('line-height', '1.8', 'important');
         if ((parseFloat(cs.letterSpacing) || 0) > fs * .04) e.style.setProperty('letter-spacing', '.01em', 'important');
       }
+      /* 흐리게 남겨 둔 긴 글(스크롤로 차례로 밝아지는 목록 등) — 폰에서는 읽히게 */
+      var op0 = parseFloat(cs.opacity);
+      if (op0 >= .05 && op0 < .6 && len > 10 && !e.closest('.cb-seal,.sealed,[class*="blur"],.yn-erase,.wm,[aria-hidden="true"]')) e.style.setProperty('opacity', '1', 'important');
+      for (var up = e.parentElement, hop = 0; up && hop < 3; up = up.parentElement, hop++) { var uo = parseFloat(getComputedStyle(up).opacity); if (uo >= .05 && uo < .6 && (up.textContent || '').length < 600 && !up.closest('.cb-seal,.sealed,.wm,[aria-hidden="true"]')) up.style.setProperty('opacity', '1', 'important'); }
       /* 대비 */
       var fg = L(cs.color); if (!fg) continue;
       var bl = bgL(e), op = parseFloat(cs.opacity) || 1;

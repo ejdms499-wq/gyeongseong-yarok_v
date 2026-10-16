@@ -54,3 +54,7 @@
   html body #board .nb-clip img{width:100%!important;height:auto!important}
   html body #board .nb-stamp{position:static!important;transform:rotate(-6deg)!important}
 }
+@media (max-width:600px){
+  /* 수첩을 펼치기 전에는 속지 자리를 비워 두지 않음 (검은 빈 화면 없애기) */
+  html body #board:not(.jn-open) .jn-book{display:none!important}
+}
