@@ -7,7 +7,7 @@
 <title>경성야록 · 사건 지도</title>
 <meta name="theme-color" content="#0b0b0b">
 <link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts.css">
-<link rel="stylesheet" href="yk-mbook.css?v=12">
+<link rel="stylesheet" href="yk-mbook.css?v=13">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@400;600;900&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
@@ -150,6 +150,7 @@ button{font:inherit;color:inherit}
   <header class="mcm-hd"><small>사건 긔록 · 경성부관내도 1927</small><h1>사건 지도</h1></header>
   <p class="intro">점을 누르면 그때의 자리와 <b>지금의 자리</b>가 나오오. 두 손가락으로 크게 보시압.</p>
 
+  <div class="mcm-chips" id="mcmChips"></div>
   <div class="wrap">
     <div>
       <div class="vp" id="vp" aria-label="1927년 경성부관내도 (끌어서 옮기고, 휠이나 두 손가락으로 크게 볼 수 있음)">
@@ -308,7 +309,7 @@ button{font:inherit;color:inherit}
     if(p.nomap)return;
     var b=document.createElement('button');
     b.className='pin'+(p.kind==='dan'?' dan':'')+(p.far?' far':'')+(p.left?' l':'');
-    b.style.left=p.x+'px'; b.style.top=p.y+'px';
+    b.style.left=p.x+'px'; b.style.top=p.y+'px'; b.dataset.id=p.id;
     b.setAttribute('aria-label',p.title+' · '+p.name);
     b.innerHTML='<i>'+esc(p.n)+'</i><em>'+esc(p.name)+'</em>';
     b.addEventListener('click',function(e){e.stopPropagation(); pick(p.id,true);});
@@ -408,6 +409,24 @@ button{font:inherit;color:inherit}
   if(document.readyState==='complete') start(); else addEventListener('load',start);
 })();
 </script>
-<script src="yk-mbook.js?v=14"></script>
+<script src="yk-mbook.js?v=15"></script>
+<script>
+/* 폰 — 우에 사건 고르는 줄 · 출처는 맨 아래로 · 고르면 지도와 긔록이 한 화면에 */
+(function(D){
+  var chips=D.getElementById('mcmChips'), list=D.getElementById('list');
+  function build(){
+    var bs=[].slice.call(list.querySelectorAll('button[data-id]'));
+    chips.innerHTML=bs.map(function(b){var n=b.querySelector('.n'),id=b.dataset.id,pin=null;[].forEach.call(D.querySelectorAll('.pin'),function(x){ if(x.dataset.id===id) pin=x; });var nm=pin?pin.querySelector('em').textContent:(b.querySelector('.t')||{}).firstChild.nodeValue;return '<button type="button" data-id="'+id+'" class="'+(n&&n.classList.contains('d')?'d':'')+'"><i>'+(n?n.textContent:'')+'</i>'+nm+'</button>';}).join('');
+    sync();
+  }
+  function sync(){ var on=list.querySelector('button.on'); [].forEach.call(chips.children,function(c){c.classList.toggle('on',!!on&&c.dataset.id===on.dataset.id);}); var c=chips.querySelector('.on'); if(c) chips.scrollTo({left:c.offsetLeft-chips.clientWidth/2+c.offsetWidth/2,behavior:'smooth'}); }
+  chips.addEventListener('click',function(e){var b=e.target.closest('button[data-id]');if(!b)return;var t=list.querySelector('button[data-id="'+b.dataset.id+'"]');if(t)t.click();setTimeout(function(){var vp=D.getElementById('vp');window.scrollTo({top:vp.getBoundingClientRect().top+scrollY-104,behavior:'smooth'});},20);});
+  new MutationObserver(build).observe(list,{childList:true});
+  new MutationObserver(sync).observe(list,{subtree:true,attributes:true,attributeFilter:['class']});
+  D.getElementById('vp').addEventListener('click',function(e){ if(!e.target.closest('.pin'))return; setTimeout(function(){var c=D.getElementById('card');var r=c.getBoundingClientRect(); if(r.top>innerHeight-120) window.scrollBy({top:Math.min(r.top-innerHeight*.45, 260),behavior:'smooth'});},350); });
+  var cr=D.querySelector('.credit'), side=D.querySelector('.side'); if(cr&&side) side.appendChild(cr);
+  if(list.children.length) build();
+})(document);
+</script>
 </body>
 </html>

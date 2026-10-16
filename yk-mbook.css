@@ -471,3 +471,8 @@ details.pp-ad[open]{padding-bottom:18px}
 .mb-seg.four{grid-template-columns:repeat(4,1fr)}
 .mb-seg.four button{font-size:11.5px;letter-spacing:0;padding:11px 2px}
 .mb-seg.four button[data-m="n26"]:not(.on){color:var(--red);font-weight:700}
+/* 지면 시트 — 원문 · 2026 · 오늘 말 · 간추림 고르는 줄은 우에 고정, 2026 뉴스 안의 메뉴줄은 따라 내려오지 안케 */
+.pp-seg{position:sticky;top:-18px;z-index:6;margin:-18px calc(var(--g) * -1) 16px!important;padding:10px var(--g);background:var(--paper);border:0!important;border-bottom:1px solid var(--line)!important;box-shadow:0 6px 10px -8px rgba(0,0,0,.25)}
+.pp-seg button{border:1px solid var(--ink)!important}
+.pp-seg button+button{margin-left:-1px}
+.news26 .n26-gnb{position:static!important}

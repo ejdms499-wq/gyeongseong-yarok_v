@@ -87,3 +87,18 @@ html,body.mcm{background:#0b0b0b}
 .lk-x{display:block;width:100%;margin-top:10px;height:46px;border:1px solid #444;background:none;color:#9a9994;font:500 13px/44px var(--sans)}
 .mcm .mb-bar,.mcm .mb-bar a{color:#0e0e0e}
 .mcm .vp{height:52svh}
+/* v2 — 보기 편하게: 사건 고르는 줄 · 이름표는 고른 점만 · 범례는 지도 밧그로 */
+.mcm-chips{position:sticky;top:48px;z-index:30;display:flex;gap:6px;padding:10px var(--g);overflow-x:auto;background:#0b0b0b;border-bottom:1px solid #222;scrollbar-width:none}
+.mcm-chips::-webkit-scrollbar{display:none}
+.mcm-chips button{flex:none;display:flex;align-items:center;gap:7px;height:38px;padding:0 12px 0 5px;border:1px solid #3a3a3a;border-radius:19px;background:#151515;color:#ecebe7;font:600 13px/1 var(--sans);white-space:nowrap}
+.mcm-chips button i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--seal);color:#fff;font:800 12px/1 var(--serif);font-style:normal}
+.mcm-chips button.d i{background:none;color:#e07a72;box-shadow:inset 0 0 0 1.5px #e07a72}
+.mcm-chips button.on{background:#fff;color:#0e0e0e;border-color:#fff}
+.mcm .vp{height:56svh}
+.mcm .pin i{width:28px;height:28px;font-size:13px}
+.mcm .pin em{display:none!important}
+.mcm .pin.on em{display:block!important}
+.mcm .legend{display:none}
+.mcm .intro{margin-bottom:12px}
+.mcm .credit{margin-top:26px;padding:14px 0 0;border-top:1px solid #222}
+.mcm .inset span{font-size:11px;padding:5px 8px}
