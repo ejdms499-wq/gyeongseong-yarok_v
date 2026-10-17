@@ -15,15 +15,15 @@
   var R = [
     { id: 'watch', host: '#front .mm-case:nth-of-type(1) > .mv', ko: '이름표 달린 회중시계', pos: 'left:10px;bottom:38px;width:54px;transform:rotate(-8deg)' },
     { id: 'scissors', host: '#front .mm-case:nth-of-type(2) > .mv', ko: '녹슨 가위', pos: 'left:10px;bottom:40px;width:60px;transform:rotate(18deg)' },
-    { id: 'pen', host: '#front .mm-case:nth-of-type(3) > .mv', ko: '펜촉 부러진 만년필', pos: 'left:6px;bottom:38px;width:66px;transform:rotate(-12deg)' },
+    { id: 'pen', host: '#front .mm-case:nth-of-type(3) > .mv', ko: '펜촉 부러진 만년필', pos: 'left:8px;top:27%;width:66px;transform:rotate(-12deg)' },
     { id: 'door', host: '#front .mm-case:nth-of-type(4) > .mv', ko: '긁힌 문 사진', pos: 'left:12px;bottom:40px;width:50px;transform:rotate(-5deg)' },
     { id: 'key', host: '.mm-logo', ko: '붉은 실 감긴 열쇠', pos: 'right:0;top:4px;width:46px;transform:rotate(-14deg)' },
     { id: 'mirror', host: '.mm-today', ko: '깨진 손거울', pos: 'right:0;bottom:-8px;width:40px;transform:rotate(8deg)' },
     { id: 'flesh', host: '.mm-tag', ko: '살덩이 같은 덩어리', pos: 'right:4px;bottom:0;width:38px;transform:rotate(6deg)' },
-    { id: 'doll', host: '#front > .mm-hd', ko: '인형 머리', pos: 'right:0;top:6px;width:40px;transform:rotate(-6deg)' },
+    { id: 'doll', host: '#front > .mm-hd', ko: '인형 머리', pos: 'right:8px;top:10px;width:40px;transform:rotate(-6deg)' },
     { id: 'match', host: '#mmLock .mb-sh-bd', ko: '타 버린 성냥갑', pos: 'right:18px;top:18px;width:46px;transform:rotate(-10deg)', on: 'mmLock' },
     { id: 'bottle', host: '.mm-plans', ko: '검붉은 약병', pos: 'right:6px;top:-30px;width:22px;transform:rotate(-4deg)' },
-    { id: 'cube', host: '.mm-ft-b', ko: '긁힌 활자 덩어리', pos: 'right:-34px;top:0;width:34px;transform:rotate(4deg)' }
+    { id: 'cube', host: '.mm-ft-b', ko: '긁힌 활자 덩어리', pos: 'right:0;top:-30px;width:34px;transform:rotate(4deg)' }
   ];
   var bag = [];
 

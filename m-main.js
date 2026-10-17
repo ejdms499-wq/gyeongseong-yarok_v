@@ -9,6 +9,7 @@
 
   /* ── 제호의 날 — 구십 년 전 오늘 ── */
   var NUM = ['', '일', '이', '삼', '사', '오', '륙', '칠', '팔', '구'];
+  function knat(n) { var K = ['', '한', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉', '열', '열한', '열두']; return K[n] || kn(n); }
   function kn(n) { if (n === 0) return '영'; var s = ''; if (n >= 10) { var t = Math.floor(n / 10); s += (t > 1 ? NUM[t] : '') + '십'; n %= 10; } return s + (n ? NUM[n] : ''); }
   var MON = ['정월', '이월', '삼월', '사월', '오월', '륙월', '칠월', '팔월', '구월', '시월', '십일월', '십이월'];
   var DAY = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
@@ -37,7 +38,7 @@
       else {
         var leads = $$('.mm-case', front).filter(function (c) { return c.dataset.tag === f; }).map(function (c) { var k = c.cloneNode(true), al = $('.mm-alts', k); if (al) al.remove(); return k.outerHTML; });
         var alts = $$('.mm-alt', front).filter(function (a) { return a.dataset.tag === f; }).map(function (a) { return a.outerHTML; });
-        out.innerHTML = '<div class="mm-hd"><small>' + f + '면</small><h2>' + f + '면의 긔사 ' + kn(leads.length + alts.length) + ' 건</h2></div>' +
+        out.innerHTML = '<div class="mm-hd"><small>' + f + '면</small><h2>' + f + '면의 긔사 ' + knat(leads.length + alts.length) + ' 건</h2></div>' +
           leads.join('') + '<div class="mm-alts solo">' + alts.join('') + '</div>' + ixOf(f) +
           '<button type="button" class="mm-back">온 지면으로 도라가기</button>';
         $$('.mb-rv', out).forEach(function (el) { el.classList.add('in'); });

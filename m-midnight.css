@@ -1,0 +1,200 @@
+/* 경성야록 폰 본지 — MIDNIGHT EDITION (1017)
+   흰 종이와 검은 잉크만으로. 붉은빛은 셋뿐: 로고의 선 · 위 띠의 진행줄 · 고른 면의 밑줄.
+   장치(움직이는 사진 · 봉투 · 붓 · 확대경 · 숨은 물건)는 m-main.css 그대로, 여긔선 판만 다시 짬 */
+:root{--mmBar:calc(56px + env(safe-area-inset-top))}
+.mm-x{--mmTop:var(--mmBar);--ink:#0e0e0e;--paper:#fff;--mute:#6b6b68;--line:#dcdbd7}
+html,body.mm-x{background:#fff}
+body.mm-x{overflow-x:hidden;color:var(--ink)}
+.mm-x *{box-sizing:border-box}
+
+/* ── 위 띠 — 얇고 희게. 내려 닑을 땐 숨고, 올리면 돌아옴 ── */
+.mm-x .mb-bar{height:var(--mmBar);padding:env(safe-area-inset-top) 4px 0 6px;background:#fff;border-bottom:1px solid var(--ink);-webkit-backdrop-filter:none;backdrop-filter:none;transition:transform .34s cubic-bezier(.2,.8,.2,1)}
+.mm-x.mm-hidebar .mb-bar.on{transform:translateY(-100%)!important}
+.mm-x.mm-hidebar{--mmTop:0px}
+.mm-x .mb-bar a,.mm-x .mb-bar button{height:56px}
+.mm-x .mm-brand{gap:9px;padding:0 10px!important}
+.mm-x .mm-brand .mm-mark.sm{width:22px;height:22px}
+.mm-x .mm-brand b{font:900 15px/1 var(--serif);letter-spacing:-.01em;color:var(--ink)}
+.mm-x .mb-bar .mb-now{display:none}
+.mm-x .mb-bar .mb-ko{padding:0 8px}
+.mm-x .mb-bar .mb-ko b{width:24px;height:24px;border:1px solid var(--ink);font:700 12px/1 var(--serif)}
+.mm-x .mb-bar button[data-open="mbToc"]{padding:0 14px 0 10px}
+.mm-x .mb-burger{width:20px;height:13px;border-width:1.5px}
+.mm-x .mb-burger i{height:1.5px;top:4px}
+.mm-x .mb-prog{height:2px;bottom:-1px}
+
+/* ── 면 고르기 — 위 띠 아래 붙어 따라옴 ── */
+.mm-x .mm-secs{top:var(--mmTop);transition:top .34s cubic-bezier(.2,.8,.2,1);background:#fff;border-bottom:1px solid var(--ink);padding:0 calc(var(--g) - 12px)}
+.mm-x .mm-secs button,.mm-x .mm-secs a{height:44px;font:500 13.5px/44px var(--sans);letter-spacing:.02em;color:var(--mute)}
+.mm-x .mm-secs button.on{color:var(--ink);font-weight:700}
+.mm-x .mm-secs button.on::after{height:2px;background:var(--red)}
+.mm-x .mm-secs .mm-map{color:var(--ink)}
+
+/* ── 첫 화면 — THE PAPER AWAKENS · 검은 지면, 여백이 주인공 ── */
+.mm-x .mm-mast{position:relative;display:flex;flex-direction:column;min-height:100svh;padding:calc(var(--mmBar) + 22px) var(--g) calc(26px + env(safe-area-inset-bottom))!important;background:#000!important;color:#fff;overflow:hidden}
+.mm-x .mm-ml{display:flex;justify-content:space-between;padding:0;border:0!important;font:500 10px/1 var(--sans);letter-spacing:.3em;color:#8a8a86}
+.mm-x .mm-today{display:flex!important;flex-wrap:wrap;gap:4px 14px;align-items:baseline;padding:12px 0 0!important;border:0!important}
+.mm-x .mm-date,.mm-x .mm-now{font:400 11px/1.6 var(--sans);letter-spacing:.06em;color:#8a8a86}
+.mm-x .mm-now::before{content:none}
+.mm-x .mm-stop{flex-basis:100%;margin:0!important;font:400 11px/1.6 var(--sans)!important;color:#5f5f5c!important}
+.mm-x .mm-stop::before{display:none}
+.mm-x .mm-logo{display:flex;flex-direction:column;align-items:center;gap:28px;margin-top:auto;padding:34px 0 26px!important;text-align:center}
+.mm-x .mm-logo .mm-mark{width:40px;height:40px;color:#fff;opacity:0;animation:mmSeal 1.2s ease 1.1s forwards}
+.mm-x .mm-logo h1{margin:0;font:900 clamp(60px,18vw,84px)/1 var(--serif);letter-spacing:-.04em;color:#fff;opacity:0;filter:blur(8px);animation:mmInk 2s cubic-bezier(.2,.7,.2,1) .2s forwards}
+@keyframes mmInk{0%{opacity:0;filter:blur(8px);letter-spacing:.05em}50%{opacity:1}100%{opacity:1;filter:blur(0);letter-spacing:-.04em}}
+@keyframes mmSeal{to{opacity:1}}
+.mm-x .mm-tag{margin:0 0 auto!important;text-align:center;font:400 16px/1.85 var(--serif)!important;letter-spacing:0;color:#9a9994!important;opacity:0;animation:mmSeal 1.4s ease 1.7s forwards}
+.mm-x .mm-tag b{font-weight:400;color:#fff}
+.mm-open{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:34px;color:#8a8a86;text-decoration:none;font:500 10.5px/1 var(--sans);letter-spacing:.3em;text-indent:.3em}
+.mm-open i{display:block;width:1px;height:40px;background:linear-gradient(#fff,rgba(255,255,255,0));animation:mmDown 2.8s ease-in-out infinite}
+@keyframes mmDown{0%{transform:translateY(-8px);opacity:0}30%{opacity:1}100%{transform:translateY(12px);opacity:0}}
+.mm-x .mm-mast .hj{border:0!important;text-decoration:none!important}
+
+/* ── 면 머리 ── */
+.mm-x .mm-sec{padding:0}
+.mm-x #front,.mm-x #mmFiltered{padding:0;background:#fff}
+.mm-x #front>.mm-hd,.mm-x #mmFiltered>.mm-hd{margin:0;padding:24px var(--g) 18px;border-top:0;border-bottom:1px solid var(--ink)}
+.mm-x .mm-hd small{font:500 10px/1.5 var(--sans);letter-spacing:.28em;color:var(--mute)}
+.mm-x .mm-hd h2{margin:10px 0 8px;font:700 clamp(22px,6.4vw,28px)/1.35 var(--serif);letter-spacing:-.02em;color:var(--ink)}
+.mm-x .mm-hd p{font:400 12.5px/1.7 var(--sans);color:var(--mute)}
+
+/* ── 사건 한 장 = 지면 한 면 ── */
+.mm-x .mm-case{position:relative;margin:0;background:#fff;border-bottom:1px solid var(--ink)}
+.mm-x .mm-case>.mv{aspect-ratio:4/5;isolation:isolate}
+.mm-x .mm-case>.mv::after{box-shadow:inset 0 0 70px 0 rgba(0,0,0,.55);opacity:.7}
+.mm-x .mv-no{left:14px;top:12px;font:400 clamp(72px,22vw,92px)/.9 var(--serif);letter-spacing:-.05em;color:#fff;text-shadow:none;font-variant-numeric:lining-nums}
+.mm-x .mv-cap{padding:14px 14px 11px;font:400 9.5px/1.4 var(--sans);letter-spacing:.14em;color:#9a9994;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+.mm-x .mv-hint{right:14px;bottom:42px;padding:8px 11px;border:1px solid rgba(255,255,255,.75);background:rgba(0,0,0,.4);font:500 10.5px/1 var(--sans);letter-spacing:.1em;color:#fff}
+.mm-x .mm-lead{display:block;color:inherit}
+.mm-x .mm-case .mm-lt{display:block;padding:22px var(--g) 28px!important}
+.mm-x .mm-lab{font:500 10.5px/1.5 var(--sans);letter-spacing:.2em;color:var(--mute)}
+.mm-x .mm-h{margin:8px 0 12px;font:900 clamp(28px,8.4vw,40px)/1.2 var(--serif);letter-spacing:-.03em;color:var(--ink);word-break:keep-all}
+.mm-x .mm-d{font:400 15px/1.8 var(--serif);color:#2b2b2a;word-break:keep-all}
+.mm-x .mm-big{margin:0 0 12px;padding:5px 8px;border:1px solid var(--ink);font:500 11px/1 var(--sans);letter-spacing:.14em;color:var(--ink);background:none}
+.mm-x .mm-go{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding:14px 0 0;border-top:1px solid var(--ink);border-bottom:0;font:700 13px/1 var(--sans);letter-spacing:.04em;color:var(--ink);background:none!important}
+.mm-x .mm-go::after{display:none}
+.mm-x .mm-th{display:block;padding:26px var(--g) 4px;color:inherit;text-decoration:none}
+.mm-x .mm-th .mm-h{margin-bottom:0}
+.mm-leaving .mv *{animation-play-state:paused!important}
+.mm-leaving .mv-hint{opacity:0}
+
+/* 01 죽첨정 — 어둠 속 약병이 한가운대, 제목은 그 아래 흰 지면으로 */
+.mm-x .mm-c1>.mv{background:#000!important}
+.mm-x .mm-c1 .mv-bottle{background:radial-gradient(ellipse at 55% 42%,#1d1d1c,#000 70%)!important}
+
+/* 02 마리아 — 흰 종이 우에 봉투 한 장을 물건처럼 ・ 제목이 먼저 */
+.mm-x .mm-c2>.mv{background:#fff!important;color:var(--ink)}
+.mm-x .mm-c2>.mv::after{display:none}
+.mm-x .mm-c2 .mv-no{left:auto;right:14px;top:4px;color:var(--ink)}
+.mm-x .mm-c2>.mv::before{content:"";position:absolute;left:0;right:0;bottom:0;height:24%;z-index:1;background:#fff;pointer-events:none}
+.mm-x .mm-c2 .mv-env{bottom:15%}
+.mm-x .mm-c2 .mv-lt{z-index:0;left:16%;bottom:23%}
+.mm-x .mm-c2 .mv-env img{filter:grayscale(1) contrast(1.06) brightness(.97)}
+.mm-x .mm-c2 .mv-lt img{filter:grayscale(1) contrast(1.08) brightness(.98)}
+.mm-x .mm-c2 .mv-stamp{border-color:var(--ink);color:var(--ink);background:rgba(255,255,255,.55)}
+.mm-x .mm-c2 .mv-cap{color:var(--mute);background:none}
+.mm-x .mm-c2 .mv-hint{border-color:var(--ink);background:#fff;color:var(--ink);bottom:auto;top:50%;right:auto;left:14px;transform:translateY(-50%)}
+.mm-x .mm-c2 .mm-lt{padding-top:12px!important}
+
+/* 03 손긔정 — 긔록 사진을 가는 틀에 끼워 지면 복판에 · 우엔 출처, 아래엔 날자 */
+.mm-x .mm-c3>.mv{background:#f1f0ec!important;color:var(--ink)}
+.mm-x .mm-c3>.mv::after{display:none}
+.mm-x .mm-c3 .mv-no{color:var(--ink);left:14px;top:10px}
+.mm-x .mm-c3 .mv-pic{left:58%;top:22%;height:60%;box-shadow:none;outline:1px solid var(--ink);outline-offset:7px;background:#fff}
+.mm-x .mm-c3 .mv-pc{top:auto;bottom:5%;left:14px;right:auto;max-width:58%;text-align:left;font:500 10px/1.5 var(--sans);letter-spacing:.08em;color:var(--ink)}
+.mm-x .mm-c3 .mv-cap{top:16px;bottom:auto;right:14px;left:auto;max-width:46%;padding:0;text-align:right;background:none;color:var(--mute)}
+.mm-x .mm-c3 .mv-count{top:auto;bottom:5%;right:14px;padding:7px 9px;border:1px solid var(--ink);background:#fff;color:var(--ink);font:500 10.5px/1 var(--sans);letter-spacing:.1em}
+.mm-x .mm-c3 .mv-count b{font:700 14px/1 var(--serif);color:var(--ink)}
+.mm-x .mm-c3 .mv:not(.tap) .mv-count{opacity:0}
+.mm-x .mm-c3 .mv-count{transition:opacity .6s}
+.mm-x .mm-c3 .mv-hint{border-color:var(--ink);background:#fff;color:var(--ink);right:auto;left:14px;bottom:auto;top:50%;transform:translateY(-50%)}
+
+/* 04 백백교 — 가장 어둡고 고요한 면. 사진과 확대경, 그리고 어둠 */
+.mm-x .mm-c4{background:#050505;color:#ecebe7;border-bottom:0}
+.mm-x .mm-c4>.mv{background:#050505!important}
+.mm-x .mm-c4 .mv-no{left:auto;right:14px;top:10px}
+.mm-x .mm-c4 .mv-ask{left:14px;right:120px;top:22px;font:400 17px/1.55 var(--serif)!important;color:#cfcfca;text-shadow:none}
+.mm-x .mm-c4 .mv-bg{filter:grayscale(1) contrast(1.06) brightness(.82)}
+.mm-x .mm-c4 .mv-cap{color:#8a8a86}
+.mm-x .mm-c4 .mm-lab{color:#8a8a86}
+.mm-x .mm-c4 .mm-h{color:#fff}
+.mm-x .mm-c4 .mm-d{color:#bdbcb7}
+.mm-x .mm-c4 .mm-go{color:#fff;border-color:#3a3a3a}
+
+/* 고른 면 (사회 · 경제 · 문화예술) */
+.mm-x .mm-alt>div>i{border-color:var(--ink);color:var(--ink)}
+.mm-x .mm-alt .mm-ob{background:#f1f0ec}
+.mm-x #mmFiltered .mm-alts.solo,.mm-x #mmFiltered .mm-fix{margin:0 var(--g)}
+.mm-x #mmFiltered .mm-alts.solo{padding:6px 0 10px}
+.mm-x #mmFiltered .mm-back{display:block;width:calc(100% - var(--g) * 2);margin:10px var(--g) 36px;height:50px;border:1px solid var(--ink);background:none;color:var(--ink);font:700 13px/1 var(--sans)}
+
+/* ── 부록 — 심야 편집국의 여섯 서랍 ── */
+.mm-x .mm-annex{padding:34px var(--g) 40px;background:#000;color:#fff;border-top:1px solid #2a2a2a}
+.mm-x .mm-annex .mm-hd{margin:0 0 4px;padding:0;border:0}
+.mm-x .mm-annex .mm-hd small{color:#8a8a86}
+.mm-x .mm-annex .mm-hd h2{margin:10px 0 0;color:#fff}
+.dw{list-style:none;margin:18px 0 0;padding:0;border-top:1px solid #fff}
+.dw-i{border-bottom:1px solid #2e2e2e}
+.dw-t{display:grid;grid-template-columns:36px 1fr 28px;align-items:center;gap:10px;width:100%;min-height:66px;padding:14px 0;border:0;background:none;color:#fff;text-align:left;-webkit-tap-highlight-color:transparent}
+.dw-n{font:400 15px/1 var(--serif);letter-spacing:.04em;color:#8a8a86;font-variant-numeric:tabular-nums}
+.dw-tt b{display:block;font:700 18px/1.3 var(--serif);letter-spacing:-.02em}
+.dw-tt small{display:block;margin-top:4px;font:400 11.5px/1.4 var(--sans);color:#8a8a86}
+.dw-p{position:relative;width:28px;height:28px;justify-self:end}
+.dw-p::before,.dw-p::after{content:"";position:absolute;left:50%;top:50%;background:#fff;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.dw-p::before{width:14px;height:1px;margin-left:-7px}
+.dw-p::after{width:1px;height:14px;margin-top:-7px}
+.dw-i.open .dw-p::after{transform:rotate(90deg)}
+.dw-i.open .dw-p::before{transform:rotate(180deg)}
+.dw-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)}
+.dw-i.open .dw-b{grid-template-rows:1fr}
+.dw-in{overflow:hidden;min-height:0}
+.dw-in figure{position:relative;margin:2px 0 0 46px;aspect-ratio:16/9;overflow:hidden;border:1px solid #2e2e2e;background:#111}
+.dw-in img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.08) brightness(.85)}
+.dw-in figcaption{position:absolute;right:8px;bottom:6px;font:400 9px/1 var(--sans);letter-spacing:.1em;color:rgba(255,255,255,.7)}
+.dw-in p{margin:14px 0 0 46px;font:400 14px/1.75 var(--serif);color:#cfcfca;word-break:keep-all}
+.dw-in p small{display:block;margin-top:6px;font:400 11px/1.5 var(--sans);color:#8a8a86}
+.dw-go{display:flex;justify-content:space-between;align-items:center;width:calc(100% - 46px);margin:16px 0 20px 46px;height:50px;padding:0 14px;border:1px solid #fff;background:none;color:#fff;font:700 13px/1 var(--sans);letter-spacing:.04em}
+.dw-go:active{background:#fff;color:#000}
+.mm-x .mm-annex .mm-adnote{margin-top:16px;font:400 10.5px/1.7 var(--sans);color:#5f5f5c}
+
+/* ── 구독 ── */
+.mm-x .mm-subs{padding:34px var(--g) 36px;background:#fff;border-top:0}
+.mm-x .mm-subs .mm-hd{margin:0 0 18px;padding:0;border:0}
+.mm-x .mm-subs .mm-hd h2{font-size:clamp(22px,6.4vw,28px)}
+.mm-x .mm-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.mm-x .mm-plan{display:block;padding:16px 8px;text-align:center;border:0;border-left:1px solid var(--line);background:none}
+.mm-x .mm-plan:first-child{border-left:0}
+.mm-x .mm-plan small{display:block;font:500 10px/1.4 var(--sans);letter-spacing:.14em;color:var(--mute)}
+.mm-x .mm-plan b{display:block;margin:8px 0 4px;font:900 24px/1.1 var(--serif);color:var(--ink)}
+.mm-x .mm-plan span{display:block;font:400 11px/1.5 var(--sans);color:var(--mute)}
+.mm-x .mm-plan.best{background:#f1f0ec}
+.mm-x .mm-plan.best small{color:var(--ink);font-weight:700}
+.mm-x .mm-subn{margin-top:12px;font:400 10.5px/1.7 var(--sans);color:var(--mute)}
+
+/* ── 꼬리 ── */
+.mm-x .mm-foot{padding:40px var(--g) calc(36px + env(safe-area-inset-bottom));background:#000;color:#8a8a86;text-align:left}
+.mm-ft-q{padding-bottom:24px;border-bottom:1px solid #2e2e2e;font:400 15px/1.8 var(--serif);color:#cfcfca;word-break:keep-all}
+.mm-x .mm-ft-h{margin-top:24px;font:500 10px/1 var(--sans);letter-spacing:.28em;color:#8a8a86}
+.mm-x .mm-foot nav{justify-content:flex-start;gap:4px 18px;margin:12px 0 18px;font:500 13px/2 var(--sans)}
+.mm-x .mm-foot nav a{color:#ecebe7}
+.mm-x .mm-ft-n{font:400 11px/1.7 var(--sans);color:#6f6e6a}
+.mm-x .mm-ft-b{display:block;margin-top:28px;font:900 clamp(56px,17vw,80px)/1 var(--serif);letter-spacing:-.05em;color:#161616}
+
+/* ── 지면 넘김 — 얇은 검은 줄이 번져 화면을 덮고, 그 사건의 면이 열림 ── */
+.mm-wipe{position:fixed;left:0;right:0;top:0;height:100vh;height:100svh;z-index:9999;background:#000;transform:scaleY(.003);transform-origin:50% var(--y,50%);pointer-events:none}
+.mm-wipe.on{transition:transform .46s cubic-bezier(.6,0,.2,1);transform:scaleY(1);pointer-events:auto}
+
+@media (prefers-reduced-motion:reduce){
+  .mm-x .mm-logo h1,.mm-x .mm-logo .mm-mark,.mm-x .mm-tag{animation:none;opacity:1;filter:none}
+  .mm-open i{animation:none}
+  .mm-wipe.on{transition:none}
+  .dw-b{transition:none}
+}
+
+/* ── 처음 오신 이에게 — 흰 종이 쪽지로 ── */
+.mm-x .mb-tip{left:0;right:0;bottom:0;padding:18px var(--g) calc(14px + env(safe-area-inset-bottom));background:#fff;color:var(--ink);border:0;border-top:1px solid var(--ink);box-shadow:none}
+.mm-x .mb-tip .k{color:var(--mute)}
+.mm-x .mb-tip li{color:#3a3a38}
+.mm-x .mb-tip li i{border-color:var(--ink);color:var(--ink)}
+.mm-x .mb-tip li b{color:var(--ink)}
+.mm-x .mb-tip button{background:var(--ink);color:#fff}
