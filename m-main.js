@@ -153,3 +153,31 @@
   s.innerHTML = ['jk', 'maria', 'sk', 'bb'].map(function (x) { return '<i class="' + (o[x] ? 'on' : '') + '"></i>'; }).join('') + '<em>' + (k >= 4 ? '사건 도장 넷 · 출입증 발급됨' : '사건 도장 ' + k + ' / 4 · 넷이면 기자 출입증') + '</em>';
   var a = d.querySelector('.mm-act'); d.insertBefore(s, a);
 })(document);
+/* 부록 꾸러미 — 본지 사이에 끼운 여섯 장. 한 장씩 뽑아 펼침 */
+(function (W, D) {
+  var g = D.querySelector('.mm-annex-g'); if (!g) return;
+  var esc = function (t) { return String(t || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var buzz = function (p) { if (navigator.vibrate) try { navigator.vibrate(p); } catch (e) {} };
+  var tone = function (k) { if (W.mb && W.mb.tone) try { W.mb.tone(k); } catch (e) {} };
+  var items = [].slice.call(g.children).filter(function (x) { return x.querySelector('.ax-t'); });
+  var PAGE = ['네 면', '두 면', '한 장', '여섯 면', '한 단', '두 면'];
+  var html = '<div class="bdl"><div class="bdl-hd"><span>본지 부록 · 여섯 장 끼움</span><span>한 장씩 뽑아 보시압</span></div><div class="bdl-st"><i class="bdl-tw" aria-hidden="true"></i>' +
+    items.map(function (el, i) {
+      var t = el.querySelector('.ax-t').textContent, s = el.querySelector('.ax-s').textContent;
+      var im = el.querySelector('.mm-ph img, .mm-ad-ph img'), src = im ? im.getAttribute('src') : 'assets/noir/street.jpg';
+      var d = el.querySelector('.mm-rd, .mm-ad-d'); d = d ? d.textContent.replace(/\s+/g, ' ').trim() : s;
+      return '<article class="bdl-s" style="--i:' + i + ';--r:' + (i % 2 ? .5 : -.6) * (1 + i % 3 * .3) + 'deg;--w:' + [100, 97, 99, 95, 98, 96][i] + '%">' +
+        '<button type="button" class="bdl-tab" aria-expanded="false"><span class="no">부록 ' + (i + 1) + ' · ' + PAGE[i] + '</span><b>' + esc(t) + '</b><em>' + esc(s) + '</em><i aria-hidden="true">＋</i></button>' +
+        '<div class="bdl-body"><figure><img src="' + esc(src) + '" alt="" loading="lazy"><figcaption>그림 · 재현</figcaption></figure><p>' + esc(d) + '</p><button type="button" class="bdl-go" data-i="' + i + '">펼쳐 드러가기 →</button></div></article>';
+    }).join('') + '</div></div>';
+  g.insertAdjacentHTML('beforebegin', html); g.hidden = true;
+  var st = D.querySelector('.bdl-st');
+  st.addEventListener('click', function (e) {
+    var go = e.target.closest('.bdl-go'); if (go) { buzz(15); items[+go.dataset.i].click(); return; }
+    var tab = e.target.closest('.bdl-tab'); if (!tab) return;
+    var s = tab.parentNode, open = !s.classList.contains('open');
+    [].forEach.call(st.querySelectorAll('.bdl-s.open'), function (x) { x.classList.remove('open'); x.querySelector('.bdl-tab').setAttribute('aria-expanded', 'false'); });
+    st.classList.toggle('has-open', open);
+    if (open) { s.classList.add('open'); tab.setAttribute('aria-expanded', 'true'); buzz([8, 30, 8]); tone('tick'); setTimeout(function () { var r = s.getBoundingClientRect(); if (r.top < 100 || r.bottom > innerHeight) W.scrollTo({ top: r.top + W.scrollY - 110, behavior: 'smooth' }); }, 380); }
+  });
+})(window, document);
