@@ -181,3 +181,9 @@
     if (open) { s.classList.add('open'); tab.setAttribute('aria-expanded', 'true'); buzz([8, 30, 8]); tone('tick'); setTimeout(function () { var r = s.getBoundingClientRect(); if (r.top < 100 || r.bottom > innerHeight) W.scrollTo({ top: r.top + W.scrollY - 110, behavior: 'smooth' }); }, 380); }
   });
 })(window, document);
+/* 위 띠의 작은 제호는 큰 제호가 화면 밧그로 나간 뒤에만 */
+(function (W, D) {
+  var m = D.getElementById('top'); if (!m) return;
+  function f() { D.body.classList.toggle('mm-attop', W.scrollY < m.offsetHeight - 60); }
+  W.addEventListener('scroll', f, { passive: true }); f();
+})(window, document);

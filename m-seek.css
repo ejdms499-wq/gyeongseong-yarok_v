@@ -265,3 +265,15 @@ body.mb-scrolled .msk-board,.mb-bar.on~.msk-board{top:48px}
 .cd-im img.xf.on,.msk-low .sk-l-img img.xf.on{opacity:1}
 .cd-im figcaption,.msk-low .sk-l-img figcaption{z-index:2}
 .msk-card[data-k="chair"] .cd-im{aspect-ratio:4/5}
+/* 첫 화면은 빈 의자 — 수배 고양이는 아래 광고면으로 */
+.msk-cvph{position:absolute;inset:0;margin:0;z-index:0}
+.msk-cvph img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.5)}
+.msk-cvph::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.4),transparent 30%,rgba(0,0,0,.9) 75%)}
+.msk-cvph .rt{position:absolute;right:12px;top:52px;z-index:2}
+.msk-cover{position:relative;min-height:88svh;display:flex;flex-direction:column;justify-content:flex-end}
+.msk-cover>.cv-top,.msk-cover>.cv-t{position:relative;z-index:2}
+.msk-cover>.cv-top{position:absolute;left:0;right:0;top:0}
+.msk-wanted{padding:30px var(--g) 10px;background:#0b0b0b}
+.mw-k{margin-bottom:12px;font:500 10.5px/1 var(--sans);letter-spacing:.22em;color:#e07a72}
+.msk-wanted .sk-mug{margin:0;max-width:300px}
+.msk-wanted .cv-mug{margin-top:14px}

@@ -572,3 +572,5 @@ html,body.mm{background:var(--paper)}
 .bdl-tab{padding-left:30px}
 .bdl-body figure,.bdl-body p{margin-left:30px}
 .bdl-go{width:calc(100% - 46px);margin-left:30px}
+.mm-bar .mm-brand{transition:opacity .35s,transform .35s}
+body.mm-attop .mm-bar .mm-brand{opacity:0;transform:translateY(-6px);pointer-events:none}
