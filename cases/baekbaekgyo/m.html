@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<script>
+(function() {
+  if (window.matchMedia && window.matchMedia('(min-width: 601px)').matches) {
+    var s = location.search;
+    if (!s || s.indexOf('m=1') === -1) {
+      location.replace('index.html' + s + location.hash);
+    }
+  }
+})();
+</script>
+
+<!-- 경성야록 · 백백교 사건 — 폰판 (폰에서 index.html 이 이 쪽으로 넘김 · 컴퓨터판은 index.html?pc=1)
+     글 · 출처 · 그림은 컴퓨터판(index.html · bb.js · bb-night.js)의 것을 그대로 옮김. 새로 지어낸 사실 없음.
+     이 사건만의 꼴 — 「흰색이 지운다」: 다른 사건과 거꾸로, 읽을수록 글이 하얗게 바래고 진상의 장에서 검게 뒤집힘 -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#f6f5f2">
+<title>경성야록 · 희게, 더 희게</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="stylesheet" href="../../case/fonts/fonts.css">
+<link rel="stylesheet" href="../yk-mbook.css?v=23">
+<link rel="stylesheet" href="./m-bb-book.css?v=12">
+<link rel="stylesheet" href="./m-bb-white.css?v=3">
+<link rel="stylesheet" href="../m-case-end.css?v=10">
+<script>
+(function() {
+  function hideParentBox(img) {
+    if (!img) return;
+    var box = img.closest('.mb-fig, .mb-doc, figure');
+    if (box) box.style.display = 'none';
+  }
+  window.addEventListener('error', function(e) {
+    var t = e.target;
+    if (t && t.tagName === 'IMG') hideParentBox(t);
+  }, true);
+  function checkBroken() {
+    var imgs = document.querySelectorAll('.mb-fig img, .mb-doc img, figure img');
+    for (var i = 0; i < imgs.length; i++) {
+      var img = imgs[i];
+      if (img.loading === 'lazy' || img.getAttribute('loading') === 'lazy') continue;
+      if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) {
+        hideParentBox(img);
+      }
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkBroken);
+  } else {
+    checkBroken();
+  }
+  window.addEventListener('load', checkBroken);
+})();
+</script>
+</head>
+<body class="bb-m bb-w" data-bgm="../../case/audio/baekbaekgyo/baekbaekgyo-bg.mp3" data-bell="../jukcheomjeong/audio/bell.mp3" data-whoosh="../jukcheomjeong/audio/whoosh.mp3">
+
+<div class="mb-bar"><a href="../../index.html">‹ 본지</a><span class="mb-now" data-def="희게, 더 희게"></span><button data-open="mbToc">차례</button><i class="mb-prog"></i></div>
+
+<!-- 표지 — 하얗게 날아간 사진 -->
+<header class="mb-cover bb-cover">
+  <div class="bg" style="background-image:url(../../assets/noir/bb_cover.jpg)"></div><div class="fd"></div>
+  <div class="top"><a href="../../index.html">‹ 본지</a><span>경제면 · 넷째 면</span></div>
+  <span class="tag">그림 · 재현</span>
+  <div class="t">
+    <div class="k"><span>소화 십이 년 · 왕십리에서 용문산까지</span><b>● 다섯 막</b></div>
+    <h1>희게,<span>더 희게</span></h1>
+    <p class="lede">「한 사람의 흰 것으로 천하를 희게」 — 백백교.<br>그 흰 것이 덥고 잇든 것은 — 땅 속의 삼백여 명이엇소.</p>
+    <div class="src"><b>原文</b><span>조선일보 1937.4.13 호외 · 동아일보 1937.6.3 ~ 12.11</span></div>
+    <span class="down">아래로</span>
+  </div>
+</header>
+
+<!-- 서막 -->
+<div class="bb-act a0" aria-hidden="true" data-noko><small>서막</small><b>백색의 초대</b><i></i></div>
+<section class="mb-sec act0" id="brief">
+  <h2 class="mb-h"><small>이 지면이 쫏는 물음</small>세 가지</h2>
+  <p class="mb-src"><b>原文</b><span>조선일보 1937.4.13 호외 · 동아일보 1937.6.3 ~ 12.11</span></p>
+  <ol class="mb-steps">
+    <li class="mb-rv"><b>一</b><div><strong>무엇을 미덧나</strong><p>흰 것 하나로 천하를 희게 한다는 말. 그 말 아래, 사람들은 재산과 식구를 내노앗소.</p></div></li>
+    <li class="mb-rv"><b>二</b><div><strong>무엇을 숨겻나</strong><p>처음에는 교조의 죽음을 숨겻소. 그 뒤로는 — 사람을 숨겻소.</p></div></li>
+    <li class="mb-rv seal" id="briefSeal"><b>三</b><div><strong>무엇이 남앗나 <i class="stamp">봉함</i></strong>
+      <p class="sealed">지면 끗에서 드러나오.<button type="button" id="briefOpen">눌러 먼저 뜻기</button></p>
+      <p class="opened" hidden>스무 곳 남짓한 땅, 셀 때마다 달라지는 수, 그리고 — 병 하나.</p></div></li>
+  </ol>
+  <p class="mb-note">출처 · 조선일보 1937년 4월 13일 호외 · 동아일보 1937년 6월 3일(속간) · 6월 9일 · 9월 23일 · 10월 17일 · 11월 17일 · 12월 11일자 · 한국민족문화대백과사전</p>
+</section>
+
+<!-- 序 · 흰 옷 -->
+<section class="mb-open wh"><i class="bg" style="" data-lbg="./img/mj/bb_white.jpg"></i>
+  <span class="n">序章</span><h2>흰 옷</h2>
+  <p>한 사람의 흰 것으로<br>천하를 희게 하자.</p><small>백백교가 내건 말</small>
+</section>
+<section class="mb-sec bb-pale act0" id="c0" data-ch="흰 옷" data-no="서장" data-kj="서장" data-sub="한 사람의 흰 것으로">
+  <h2 class="mb-h"><small>序章 · 흰 옷</small>천하를 희게 하자</h2>
+  <p class="mb-p bl">백백교가 내건 말이오. 그 시절, 조선 사람은 누구나 흰 옷을 입엇소.</p>
+  <p class="mb-p bl">그래서 — <em>누가 신도인지, 겉으로는 아모도 몰랏소.</em></p>
+  <figure class="mb-fig mb-rv bb-wfig"><div class="im"><img src="./img/mj/bb_hero2.jpg" alt="안개 속 흰 옷 입은 사람들의 행렬 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>흰 옷의 행렬 · 재현 그림</figcaption></figure>
+  <p class="mb-p bl">교주는 말하엿소 — 곳 물과 불로 심판하는 날이 오리라. 살 곳은 전국 쉰세 곳의 피난처뿐이라.</p>
+  <p class="mb-p bl">그 피난처로 가려면 — <em>가진 것을 바쳐야 하엿소.</em></p>
+  <div class="ch-m" id="bbChant">
+    <small class="ch-k">신도들이 외든 주문</small>
+    <p class="ch-t"><span>백백백</span> <span>의의의</span> <span>적적적</span> <span>감응감감응</span> <span>하시옵숭성</span></p>
+    <button type="button" class="ch-hold" id="chantBtn"><b>눌러서 외시압</b><small>손을 떼면 멈추오</small><i class="ch-n" id="chN"></i></button>
+  </div>
+  <p class="mb-note">근거 · 한국민족문화대백과사전 「백백교」 · 흰 옷의 그림은 재현</p>
+  <figure class="mb-fig mb-rv bb-seat"><div class="im"><img src="./img/mj/bb_empty_seat.jpg" alt="흰 방석이 줄지어 놓인 흰 방, 맨 앞자리가 비어 있다 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>흰 방, 줄지은 방석 — 맨 압 자리 하나가 비어 잇소. 누구의 자리인지 아모도 뭇지 안앗소. · 재현 그림 · 연출</figcaption></figure>
+  <p class="mb-q">그 말을 내건 사람을,<br>신도들은 「대원님」이라 불럿소.</p>
+</section>
+
+<!-- 人物 · 대원님 -->
+<section class="mb-sec bb-pale act0" id="who" data-ch="대원님 · 얼굴 업는 사람" data-no="인" data-kj="인물" data-sub="얼굴을 남기지 안은 사람">
+  <h2 class="mb-h"><small>人物 · 얼굴을 남기지 안은 사람</small>대원님, 전용해</h2>
+  <p class="mb-p">백백교의 교주. 신이 되려 한 사람 — <em>이 지면의 모든 장은 그에게서 나왓소.</em></p>
+  <div class="bb-mask mb-rv" id="bbMask">
+    <div class="mk-ph"><img src="./img/mj/bb_masks.jpg" alt="벽에 걸린 여러 개의 가면 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span><b class="mk-q">얼굴 대신 — 가면</b></div>
+    <dl class="mb-facts">
+      <div><dt>일홈</dt><dd>전용해 — 백백교 교주</dd></div>
+      <div><dt>불린 일홈</dt><dd>대원님</dd></div>
+      <div><dt>스스로 이른 것</dt><dd>하느님의 아들. 하늘의 자리에 오를 사람.</dd></div>
+      <div><dt>아버지</dt><dd>전정운 — 백도교를 연 교조</dd></div>
+      <div><dt>형제</dt><dd>형 전용주는 인천도를, 아우 전용석은 도화교를 세웟소.</dd></div>
+      <div><dt>가명</dt><dd>김두선 등 열여섯</dd></div>
+      <div><dt>얼굴</dt><dd>사진 한 장 남기지 안앗소. 오래 함께 산 첩들조차 그 얼굴을 바로 보지 못하엿다 하오. 얼굴을 아는 이는 이인자와 아들뿐이엇소.</dd></div>
+    </dl>
+  </div>
+  <ol class="mb-flow bb-who">
+    <li class="mb-rv"><p>그는 교조 전정운의 둘째 아들이엇소. 한 아버지 아래에서 — 세 아들이 저마다 교단을 세웟소.</p></li>
+    <li class="mb-rv"><p>그는 독립을 자기가 이끈다 하엿소. 그날이 오면 — 바친 만큼 벼슬을 내린다 하엿소.</p></li>
+    <li class="mb-rv"><p>신도의 재산으로 사치를 누렷소. 재산이 모자란 집에는 — 딸을 바치게 하엿소.</p></li>
+    <li class="mb-rv"><p>여신도들을 욕보이고, 그것을 「신의 행사」라 불럿소.</p></li>
+    <li class="mb-rv"><p>그는 신도들에게 그림 한 장을 보엿소. 큰 독수리가 나무가지를 물고 잇고, 그 가지에 거북들이 다닥다닥 붙어 잇는 그림이엇소.</p></li>
+    <li class="mb-rv"><p>— 독수리가 입을 열면 가지가 떨어져 모다 죽고, 거북 하나가 입을 열면 그 거북만 떨어져 죽는다 하엿소. <em>입을 연 신도는, 「기도하러 가자」는 말을 드럿소.</em></p></li>
+    <li class="mb-rv bl"><p><b>그리고 그는 — 얼굴을 숨겻소.</b></p></li>
+  </ol>
+  <figure class="mb-fig mb-rv"><div class="im"><img src="./img/mj/bb_dais.jpg" alt="휘장 너머의 자리 앞에 엎드린 신도들 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>휘장 너머의 자리 · 재현 그림 — 신도들은 그 얼굴을 보지 못하엿소</figcaption></figure>
+  <button class="mb-doc" type="button" data-zoom="./img/scan/donga_1940_seiki.jpg" data-cap="「세기의 살인마교 정체」 · 동아일보 소화 십오 년 삼월">
+    <img src="./img/scan/donga_1940_seiki.jpg" alt="동아일보 1940년 3월 「세기의 살인마교 정체」" loading="lazy">
+    <span><small><b>當時 紙面</b></small><strong>「세기의 살인마교 정체」</strong><small>동아일보 · 소화 십오 년 삼월, 공판을 하로 압둔 날. 「희생된 생령 삼백구 명」 「우민의 고혈 짜낸 것만 십팔만 원」 — 그리고 한 줄, 「부전자전의 참극사」.</small><u>크게 보기</u></span>
+  </button>
+    <figure class="mb-fig mb-rv"><div class="im"><img src="./img/mj/bb_leader_room.jpg" alt="흰 병풍과 걸린 흰 옷, 빈 의자 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>대원님의 방 — 흰 병풍, 걸린 흰 옷, 빈 의자 · 재현 그림</figcaption></figure>
+  <p class="mb-note">근거 · 한국민족문화대백과사전 「백백교」 · 동아일보 1940년 3월 「세기의 살인마교 정체」 (희생 309명 · 18만 원 · 부전자전의 참극사) · 독수리와 거북의 그림 — 중앙일보 1974.8.2 「범죄감식」 (2004.2.25 재수록) · 얼굴을 아는 이 — KBS 역사자료</p>
+  <p class="mb-q">그의 이야기는 —<br>아버지의 죽음을 숨기는 데서 시작하엿소.</p>
+</section>
+
+<!-- 제1막 -->
+<div class="bb-act a1" aria-hidden="true" data-noko><small>제1막</small><b>아름다운 질서</b><i></i></div>
+<section class="mb-open wh act1"><i class="bg" style="" data-lbg="./img/mj/bb_paper1.jpg"></i>
+  <span class="n">第一章</span><h2>쓰지 못한 부고</h2>
+  <p>대정 팔 년, 한 교조가 죽엇소.<br>그러나 그 죽음을 알리는 종이는 — 끗내 돌지 아넛소.</p><small>계보 · 백도교에서 백백교로</small>
+</section>
+<section class="mb-sec bb-pale act1" id="c1" data-ch="계보 · 쓰지 못한 부고" data-no="01" data-kj="1장" data-sub="아버지의 죽음을 덮은 흰 종이">
+  <h2 class="mb-h"><small>계보 · 訃告</small>아버지의 죽음을 덮은 흰 종이</h2>
+  <p class="mb-p">흰 종이 아래에 — 쓰다 만 부고가 잇소. <em>눌러 들추시압.</em></p>
+  <div class="ob-m" id="obPaper" role="button" tabindex="0" aria-label="흰 종이 들추기">
+    <div class="ob-under">
+      <p class="ob-t">부　고</p>
+      <p class="ob-l">백도교 교조 전정운 선생께서</p>
+      <p class="ob-l">대정 팔 년 ○월 ○일</p>
+      <p class="ob-l">세상을 떠나셧기에</p>
+      <p class="ob-l">삼가 알리나이다</p>
+      <p class="ob-s">집안 ○○○ 삼가 올림 <i>재구성</i></p>
+      <i class="ob-wash" aria-hidden="true"></i>
+      <p class="ob-end">쓰엿스나 — 끗내 돌지 아넛소.</p>
+    </div>
+    <div class="ob-cover"><img src="./img/mj/bb_paper1.jpg" alt="" loading="lazy"><span>흰 종이를 눌러 들추시압<small>그 아래에 — 쓰다 만 부고가 잇소</small></span></div>
+    <p class="ob-hint" id="obHint"></p>
+  </div>
+  <figure class="mb-fig mb-rv"><div class="im"><img src="./img/mj/bb_mountain.jpg" alt="안개 낀 밤의 산 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>그 밤의 산 · 재현 그림 — 알리지 안코, 몰래 묻엇소</figcaption></figure>
+  <ol class="mb-flow">
+    <li class="mb-rv"><b>1912 · 백도교</b><p>전정운이 강원도 김화 오성산에서 백도교를 열엇소. 신도가 일만을 넘엇다 하오.</p></li>
+    <li class="mb-rv"><b>1919 · 숨긴 죽음</b><p>교조가 죽엇소. 아들 전용해 등은 알리지 안코 몰래 묻엇소.</p></li>
+    <li class="mb-rv"><b>1920 · 드러남</b><p>정성희의 고소로 숨긴 죽음이 드러낫소.</p></li>
+    <li class="mb-rv"><b>그 뒤 · 백백교</b><p>갈라진 무리 하나를 전용해가 이끌엇소. 신도들은 그를 「대원님」이라 불럿소.</p></li>
+  </ol>
+  <figure class="mb-fig mb-rv"><div class="im"><img src="./img/mj/bb_obituary.jpg" alt="날짜 칸이 빈 부고 종이와 붓 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>날짜 칸이 빈 부고 — 쓰이지 못한 종이 · 재현 그림</figcaption></figure>
+  <p class="mb-q bl">아버지의 죽음을 덥헛든 그 손이,<br>뒤에 — 더 만흔 것을 덥헛소.</p>
+  <p class="mb-note">근거 · 한국민족문화대백과사전 · 부고 문안은 재구성</p>
+</section>
+
+<!-- 第二章 · 장부 -->
+<section class="mb-open wh act1"><i class="bg" style="" data-lbg="./img/mj/bb_ledger.jpg"></i>
+  <span class="n">第二章</span><h2>헌납 장부</h2>
+  <p>대원님에게 가는 길은,<br>장부 한 권을 지나야 하엿소.</p><small>장부 · 바칠수록 놉흔 벼슬</small>
+</section>
+<section class="mb-sec bb-pale act1" id="c2" data-ch="장부 · 바칠수록 놉흔 벼슬" data-no="02" data-kj="2장" data-sub="헌납 장부">
+  <h2 class="mb-h"><small>장부 · 獻納</small>바칠수록 놉흔 벼슬</h2>
+  <p class="mb-p">바친 만큼, 「독립이 되는 날」의 벼슬을 약속하엿소. <em>바칠 것을 하나씩 내 보시압.</em></p>
+  <div class="lg2" id="lgBook">
+    <div class="lg2-stage">
+      <div class="lg2-stack" id="lgStack">
+        <article class="lg2-card base"><p class="h">任 命 狀</p><p class="to">아무개 귀하</p><p class="rank">· · ·</p><p class="b">바칠 것을 내면,<br>여긔에 벼슬이 적히오.</p><p class="f"><span>大元</span><i>大元<br>之印</i></p></article>
+      </div>
+      <b class="lg2-void" id="lgVoid">無效</b>
+      <p class="lg2-n"><span>임명장</span><b id="lgN">0</b><span>장</span></p>
+    </div>
+    <p class="lg2-say" id="lgSay">아래에서 하나씩 바치시압. 바친 만큼 — 벼슬이 올라가오.</p>
+    <div class="lg2-give" id="lgGive">
+      <button type="button" data-g="논밭">논밭</button><button type="button" data-g="집">집</button><button type="button" data-g="모은 돈">모은 돈</button><button type="button" data-g="패물">패물</button><button type="button" data-g="가진 것 전부">가진 것 전부</button>
+    </div>
+    <ol class="lg2-led" id="lgLed"><li class="hd"><span>헌납 장부</span><span>바친 것</span><span>약속된 벼슬</span></li></ol>
+    <button type="button" class="mb-btn ghost" id="lgReset" hidden>처음부터</button>
+  </div>
+  <p class="mb-q">임명장은, 한 장도 지켜지지 아넛소.<br>그리고 — 신도들은 딸까지 바쳣소.</p>
+  <p class="mb-note">근거 · 한국민족문화대백과사전 · 벼슬의 높낮이와 바친 것의 짝, 장부와 임명장의 모양은 재구성</p>
+</section>
+
+<!-- 第三章 · 한 집 -->
+<section class="mb-sec bb-pale act1" id="c3" data-ch="한 집 · 떠날 수 업는 구조" data-no="03" data-kj="3장" data-sub="흐터진 한 집">
+  <p class="mb-q bl" style="margin-top:0">바친 것이 다하면 — 다음은 식구엿소.</p>
+  <h2 class="mb-h"><small>第三章 · 한 집</small>흐터진 한 집</h2>
+  <p class="mb-p">한 집 식구를 여러 곳에 나누어 살게 하엿소. 하나가 떠나면 — 남은 식구가 볼모가 되엇소. <em>직접 해 보시압.</em></p>
+  <div class="hs2" id="hsFam" data-step="0">
+    <div class="hs2-box" id="hsBox">
+      <button type="button" class="hs2-c" data-i="0" disabled><i class="v"></i><span class="pl">가 지부</span><b class="who">아버지</b><em class="st"></em></button>
+      <button type="button" class="hs2-c" data-i="1" disabled><i class="v"></i><span class="pl">나 지부</span><b class="who">어머니</b><em class="st"></em></button>
+      <button type="button" class="hs2-c" data-i="2" disabled><i class="v"></i><span class="pl">다 지부</span><b class="who">맛아들</b><em class="st"></em></button>
+      <button type="button" class="hs2-c far" data-i="3" disabled><i class="v"></i><span class="pl">대원님 곁</span><b class="who">딸</b><em class="st"></em></button>
+      <span class="rt">한 집 · 재현 그림</span>
+    </div>
+    <p class="hs2-say" id="hsSay">방석 네 장 — 한 집 식구요.</p>
+    <div class="hs2-ctl"><button type="button" class="mb-btn" id="hsGo">지부로 나누시오</button><button type="button" class="mb-btn ghost" id="hsReset" hidden>처음부터</button></div>
+  </div>
+  <dl class="mb-facts">
+    <div><dt>벽력사</dt><dd>말을 듯지 안는 이, 떠나려는 이, 비밀을 아는 이 — 그들을 맡은 무리가 따로 잇섯소.</dd></div>
+    <div><dt>볼모</dt><dd>식구가 흐터져 잇스니, 누구도 혼자서는 떠날 수 업섯소.</dd></div>
+  </dl>
+  <p class="mb-note">근거 · 한국민족문화대백과사전 · 식구와 지부의 짝은 재구성</p>
+  <p class="mb-q bl">소화 십이 년 이월 십륙일 밤.<br>왕십리의 한 집에, 불이 아즉 켜져 잇섯소.</p>
+</section>
+
+<!-- 제2막 · 균열 — 흰 종이에 난 검은 틈 -->
+<div class="bb-act a2" aria-hidden="true" data-noko><small>제2막</small><b>균열</b><i></i></div>
+<section class="bb-night2 act2" id="c4" data-ch="그 밤 · 왕십리" data-no="04" data-kj="4장" data-sub="이월 십륙일 밤 · 왕십리">
+  <div class="dr" id="ngDoor"></div>
+  <p class="mb-note dr-note">왕십리의 방 · 재현 그림 · 장면의 순서와 연출은 재구성 · 근거 · 후대 회고 기사 (3만 원 헌금 약속 · 인삼과 녹용 · 하왕십리)</p>
+</section>
+
+<!-- 第五章 · 쉰세 날 -->
+<section class="mb-sec dark bb-mute act2" id="c5" data-ch="말할 수 업든 신문" data-no="05" data-kj="5장" data-sub="쉰세 날의 침묵">
+  <h2 class="mb-h"><small>第五章 · 말할 수 업든 신문</small>쉰세 날의 침묵</h2>
+  <p class="mb-src"><b>소화 십이 년</b><span>이월 십륙일 — 사월 십삼일</span></p>
+  <p class="mb-p">이월 십구일부터 사월 십이일까지, 이 일은 어느 신문에도 실릴 수 업섯소.</p>
+  <div class="mu-cal" id="muCal">
+    <div class="mu-top"><b id="muN">0</b><span>날 동안<br>— 아모 말도 업섯소</span></div>
+    <div class="mu-grid" id="muGrid"></div>
+    <ul class="mu-key">
+      <li><i class="k-n"></i><b>2.16</b>그 밤</li>
+      <li><i class="k-b"></i><b>2.19 – 4.12</b>보도 금지</li>
+      <li><i class="k-d"></i><b>2.21</b>경찰이 본 교주의 죽은 날</li>
+      <li><i class="k-f"></i><b>사월 초</b>용문산에서 발견</li>
+      <li><i class="k-o"></i><b>4.13</b>금지가 풀림</li>
+    </ul>
+  </div>
+  <figure class="mb-fig mb-rv"><div class="im"><img src="./img/mj/bb_telegraph.jpg" alt="도장 찍힌 통지가 엎어진 신문사 전보실 책상 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>전보실 — 엎어 둔 통지 한 장. 쓸 수 업는 날이 쉰세 날이엇소. · 재현 그림</figcaption></figure>
+  <p class="mb-q">그 쉰세 날 동안 —<br>교주는 이미, 산에 누워 잇섯소.</p>
+</section>
+
+<!-- 第六章 · 용문산 -->
+<section class="mb-open act2"><i class="bg" style="" data-lbg="./img/mj/bb_mountain.jpg"></i>
+  <span class="n">第六章</span><h2>얼굴 업는 수배</h2>
+  <p>이월 십륙일 밤, 교주는 사라졋소.<br>경찰이 그를 쫏앗소.</p><small>양평 · 용문산</small>
+</section>
+<section class="mb-sec dark bb-mount act2" id="c6" data-ch="용문산 · 얼굴 업는 수배" data-no="06" data-kj="6장" data-sub="양평 용문산 기슭">
+  <h2 class="mb-h"><small>第六章 · 용문산</small>얼굴 업는 수배</h2>
+  <div class="wp" id="wp">
+    <div class="wp-under"><img src="./img/mj/bb_watch.jpg" alt="금시계와 지폐, 동전 (재현 그림)" loading="lazy" decoding="async"><p><b>주머니에 남은 것</b>엘진 금시계 하나와 팔십 원.<br>그를 알아본 것은 — 그의 아들이엇소.</p></div>
+    <div class="wp-paper" id="wpPaper">
+      <img class="wp-img" src="./img/mj/bb_poster.jpg" alt="얼굴 자리가 비어 있는 수배지 (재현 그림)" loading="lazy" decoding="async">
+      <div class="wp-face" id="wpFace">
+        <div class="wp-names" id="wpNames"></div>
+        <canvas class="wp-cv" id="wpCv"></canvas>
+        <b class="wp-stamp">身元不明</b>
+      </div>
+      <i class="wp-hand" id="wpHand" aria-hidden="true"></i>
+    </div>
+    <span class="rt">그림 · 재현</span>
+  </div>
+  <div class="wp-meter"><span>얼굴을 문지르시압</span><i><b id="wpBar"></b></i><em id="wpN">일홈 0 / 16</em></div>
+  <p class="mt-cap" id="mtCap">손가락으로 얼굴 자리를 문질러 보시압. 그 아래에 — 그가 써 온 일홈들이 잇소.</p>
+  <p class="mb-p">그가 써 온 일홈만 — 「김두선」 등 <em>열여섯 개</em>엿소.</p>
+  <p class="mb-q">천하를 희게 한다든 이는,<br>열여섯 개의 일홈 뒤에 숨엇소.</p>
+  <ol class="mb-flow">
+    <li class="mb-rv"><b>사월 초</b><p>쉰 날 남짓 지난 사월 초, 양평 용문산 기슭에서 그를 차잣소. 이미 숨이 업섯소.</p></li>
+    <li class="mb-rv"><b>경찰의 결론</b><p>경찰은, 그가 이월 이십일일에 스스로 목숨을 끈엇다고 결론지엇소.</p></li>
+    <li class="mb-rv"><b>주머니</b><p>주머니에 남은 것은 엘진 금시계 하나와 팔십 원. 그를 알아본 것은 — 그의 아들이엇소.</p></li>
+    <li class="mb-rv"><b>의문</b><p>그러나 — 얼굴은 알아볼 수 업슬 만큼 상해 잇섯소. 죽은 날을 두고도 의문이 남앗고, 신문에는 「다른 이로 꾸며 달아낫다」는 소문도 실렷소.</p></li>
+  </ol>
+  <p class="mb-note">근거 · 한국민족문화대백과사전 「백백교」 · 당시 보도</p>
+  <p class="mb-q">사월 십삼일, 금지가 풀렷소.<br>그날 — 신문은 산을 파는 이야기로 가득 찻소.</p>
+</section>
+
+<!-- 第七章 · 땅 -->
+<section class="mb-sec dark bb-land act2" id="c7" data-ch="땅 · 세어 보시오" data-no="07" data-kj="7장" data-sub="땅이 내노은 것">
+  <h2 class="mb-h"><small>第七章 · 發掘</small>땅이 내노은 것</h2>
+  <p class="mb-p">경성 근교에서 황해도, 강원도까지 — 이십여 곳의 산자락에서 주검이 나왓소. <em>묻힌 자리마다 흰 표지를 하나씩 꼬자 본다면 — 세어 보시압.</em></p>
+  <button class="mb-doc" type="button" data-zoom="./img/scan/chosun_19370413_hoe.jpg" data-cap="조선일보 호외 · 소화 십이 년 사월 십삼일">
+    <img src="./img/scan/chosun_19370413_hoe.jpg" alt="조선일보 1937년 4월 13일 호외" loading="lazy">
+    <span><small><b>號外 · 사월 십삼일</b></small><strong>「흉포의 극 · 참학의 절 · 마도 백백교 죄상」</strong><small>금지가 풀린 날, 처음 세상에 나온 조선일보 지면이오. 동아일보는 그때 — 손긔졍 사건으로 정간 중이엇소.</small><u>크게 보기</u></span>
+  </button>
+  <div class="ld-m" id="ldHill">
+    <div class="ld-ph"><img src="./img/mj/bb_dig.jpg" alt="흰 표지를 꽂은 산비탈 (재현 그림)" loading="lazy"><i class="ld-tags" id="ldTags"></i><span class="rt">그림 · 재현</span>
+      <div class="ld-end" id="ldEnd"><b>314</b><p>아모도 — 끗내 다 세지 못하엿소.</p></div></div>
+    <div class="ld-ct"><b id="ldN">0</b><span>세엇소</span><button type="button" class="mb-btn" id="ldAll" hidden>나머지를 다 세기</button></div>
+    <p class="ld-say" id="ldSay">한 번 누르면 — 열 사람이오. 산비탈을 눌러, 열 사람씩 세어 보시압.</p>
+  </div>
+  <p class="mb-note">흰 표지를 꼬즌 산비탈 · 재현 그림 · 표지는 묻힌 자리를 나타낸 상징이오 — 실제로 꼬친 것은 아니오</p>
+  <h3 class="mb-ct">긔록에 남은 수</h3>
+  <dl class="ld-count">
+    <div class="mb-rv"><dt>158</dt><dd>조선일보 사월 십삼일 호외 — 「현재 판명된 자」</dd></div>
+    <div class="mb-rv"><dt>사백여</dt><dd>가튼 호외 — 「피살된 자로 추정」</dd></div>
+    <div class="mb-rv"><dt>314</dt><dd>뒤에 가장 흔히 적히는 수</dd></div>
+    <div class="mb-rv"><dt>380</dt><dd>동아일보 류월 구일자 — 평강 · 안변 이백륙, 연천 팔십여</dd></div>
+    <div class="mb-rv"><dt>346</dt><dd>동아일보 십일월 십칠일자</dd></div>
+    <div class="mb-rv"><dt>350여</dt><dd>또 다른 긔록</dd></div>
+  </dl>
+  <p class="mb-q">신문마다, 날마다 수가 달랏소.<br>아모도 — 끗내 다 세지 못하엿소.</p>
+  <figure class="mb-fig mb-rv"><div class="im"><img src="./img/mj/bb_shovel.jpg" alt="눈 남은 산비탈에 꽂힌 삽 한 자루 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>이십여 곳의 산자락 — 삽 한 자루 · 재현 그림</figcaption></figure>
+  <p class="mb-note">근거 · 조선일보 1937.4.13 호외 (「피살된 자 사백여 명 추정 · 현재 판명된 자 158명」 · KBS 역사자료 인용) · 동아일보 1937.6.9 「발굴시체 삼백팔십」 · 1937.11.17 · 표지를 세는 장치는 재구성</p>
+</section>
+
+<!-- 보도 · 지면이 따라간 반년 -->
+<section class="mb-sec dark act2" id="c8" data-ch="보도 · 지면이 따라간 반년" data-no="보" data-kj="보도" data-sub="여섯 날의 지면">
+  <h2 class="mb-h"><small>보도 · 紙面</small>지면이 따라간 반년</h2>
+  <p class="mb-src"><b>原文</b><span>조선일보 1937.4.13 호외 · 동아일보 6.9 ~ 12.11</span></p>
+  <p class="mb-p">속간한 동아일보는, 그 뒤 반년 동안 백백교를 따라 걸엇소. <em>첫 장은 조선일보 호외, 그 뒤는 류월 삼일에 속간한 동아일보요.</em></p>
+  <button class="mb-doc" type="button" data-zoom="./img/scan/donga_19370603.jpg" data-cap="동아일보 속간 · 소화 십이 년 류월 삼일">
+    <img src="./img/scan/donga_19370603.jpg" alt="1937년 6월 3일 동아일보 속간호 1면" loading="lazy">
+    <span><small><b>續刊 · 류월 삼일</b></small><strong>다시 찍힌 1면</strong><small>아홉 달 남짓 만에 다시 찍힌 1면 아래칸에 「축 동아일보 속간」.</small><u>크게 보기</u></span>
+  </button>
+  <button class="mb-dev" type="button" data-open="shPaper">
+    <div class="ph" style="background-position:center 20%" data-lbg="./img/scan/19370413.jpg"></div>
+    <div class="tx"><div class="kk"><span>裝置 · 여섯 날의 지면</span><b>원문 · 오늘 말로 · 간추려</b></div>
+      <strong>호외부터 —<br>그해의 지면을 펴 보시압</strong>
+      <span class="d">사월 십삼일 호외에서 십이월 십일일까지. 지면 맨 아래칸의 그날 광고도 함께 보이오.</span>
+      <span class="go">지면 펴기<i>→</i></span></div>
+  </button>
+  <p class="mb-q">신문이 다 적지 못한 일은 —<br>삼 년의 조서에 남앗소.</p>
+</section>
+
+<!-- 제3막 · 침식 -->
+<div class="bb-act a3" aria-hidden="true" data-noko><small>제3막</small><b>침식</b><i></i></div>
+<section class="mb-sec dark bb-dos act3" id="c9" data-ch="조서 · 먹줄 아래" data-no="조" data-kj="조서" data-sub="수사 · 예심 삼 년">
+  <h2 class="mb-h"><small>調書 · 수사 · 예심 삼 년</small>조서가 밝힌 것</h2>
+  <p class="mb-p">신문이 다 적지 못한 것 — 삼 년의 수사와 예심이 조서에 남겻소. <em>먹줄을 하나씩 거더 읽으시압.</em></p>
+  <ol class="ds-m" id="dsList">
+    <li><small>첫째</small><b>딸</b><div class="ds-b"><p>재산이 모자란 신도에게는 딸을 바치게 하엿소. 그 가운데 몇은 교주의 첩이 되엇고, 나머지는 간부들에게 넘겨졋소. 재판에는 「외설」의 죄목이 부텃소.</p><button type="button" class="ds-ink" aria-label="먹줄 걷기"></button></div></li>
+    <li><small>둘째</small><b>벽력사</b><div class="ds-b"><p>죽이는 일은 「벽력사」라 불린 광신도들이 맡앗소.</p><button type="button" class="ds-ink" aria-label="먹줄 걷기"></button></div></li>
+    <li><small>셋째</small><b>죽인 까닭</b><div class="ds-b"><p>떠날 것 가튼 이. 비밀이 샐 것 가튼 이. 먹여 살리기 버거운 이. 경찰 눈에 띌 만큼 커진 무리. — 그것이 까닭이엇소.</p><button type="button" class="ds-ink" aria-label="먹줄 걷기"></button></div></li>
+    <li><small>넷째</small><b>묻은 곳</b><div class="ds-b"><p>팔십여 차례에 걸쳐, 삼백오십여 명을 죽여 산에 묻엇다고 전하오. 마포 · 청량리 · 양평 · 연천 · 사리원 · 세포 · 양주 — 이십여 곳의 아지트에서 나왓소.</p><button type="button" class="ds-ink" aria-label="먹줄 걷기"></button></div></li>
+    <li><small>그 뿌리</small><b>아버지 때부터</b><div class="ds-b"><p>일천구백십오 년 무렵, 교조 전정운은 오성산에서 첩 넷을 산 채로 묻엇소. 그 일은 십오 년 뒤에야 드러낫소. 아들은 — 그 길을 더 크게 걸엇소.</p><button type="button" class="ds-ink" aria-label="먹줄 걷기"></button></div></li>
+  </ol>
+  <p class="mb-q">구원을 바라고 들어간 곳에서 —<br>비밀을 알앗다는 까닭 하나로, 죽을 수 잇섯소.</p>
+  <h3 class="mb-ct">그해의 지면들 · 넘겨 보시압</h3>
+  <div class="ds-docs">
+    <button type="button" data-zoom="./img/scan/keijo_19370413_hoe.jpg" data-cap="경성일보 호외 · 사월 십삼일 — 「놀라운 범죄」"><img src="./img/scan/keijo_19370413_hoe.jpg" alt="경성일보 1937년 4월 13일 호외" loading="lazy"><span>경성일보 호외 · 사월 십삼일 — 「놀라운 범죄」</span></button>
+    <button type="button" data-zoom="./img/scan/donga_1937_chamhyeolsa.jpg" data-cap="동아일보 · 소화 십이 년 — 「살인사교의 참혈사!」"><img src="./img/scan/donga_1937_chamhyeolsa.jpg" alt="동아일보 1937년 「살인사교의 참혈사」" loading="lazy"><span>동아일보 · 소화 십이 년 — 「살인사교의 참혈사!」 걸린 것은 백백교 본원의 간판</span></button>
+    <button type="button" data-zoom="./img/scan/donga_1937_balgul.jpg" data-cap="동아일보 · 소화 십이 년 — 「시체 발굴 탐험대, 충북 방면으로 출동」"><img src="./img/scan/donga_1937_balgul.jpg" alt="동아일보 1937년 발굴 기사" loading="lazy"><span>동아일보 · 소화 십이 년 — 「시체 발굴 탐험대, 충북 방면으로 출동」</span></button>
+    <button type="button" data-zoom="./img/scan/trial_1940_clip.jpg" data-cap="「살인 백백교의 죄상」 — 경성법원에 피고 스물넷이 나왓다는 재판 기사 (긔소는 스물다섯)"><img src="./img/scan/trial_1940_clip.jpg" alt="백백교 재판 기사 스크랩" loading="lazy"><span>「살인 백백교의 죄상」 — 피고 스물넷이 나왓다는 재판 기사 (긔소는 스물다섯)</span></button>
+  </div>
+  <p class="mb-note">근거 · 한국민족문화대백과사전 「백백교」 (314명 살해 혐의 기소) · 경성일보 1937.4.13 호외 · 동아일보 1937 (살인사교의 참혈사 · 시체 발굴 탐험대) · 재판 기사 스크랩</p>
+  <p class="mb-q">교주는 업섯소.<br>남은 이들이 — 법정에 섯소.</p>
+</section>
+
+<!-- 第八章 · 판결 -->
+<section class="mb-sec dark bb-vd act3" id="c10" data-ch="판결 · 스물다섯 자리" data-no="08" data-kj="8장" data-sub="소화 십오 년 삼월">
+  <h2 class="mb-h"><small>第八章 · 判決 · 소화 십오 년 삼월</small>스물다섯 자리</h2>
+  <p class="mb-p">수사 삼백일 일. 살인 · 사체유긔 · 사긔 · 공갈 — 열 가지 죄목. <em>그러나 맨 압 자리는 — 비어 잇섯소.</em></p>
+  <figure class="mb-fig mb-rv"><div class="im"><img src="./img/mj/bb_court.jpg" alt="빈 법정, 맨 앞의 빈 의자 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>빈 법정 · 재현 그림 — 맨 압 자리의 주인은 이미 죽은 뒤엿소</figcaption></figure>
+  <div class="vd-m" id="vdSeats">
+    <div class="vd-front"><i></i><span>맨 압 자리<small>— 비어 잇섯소</small></span></div>
+    <ol class="vd-grid" id="vdGrid" aria-label="피고 스물다섯 명 중 사형 열둘, 무기징역 둘"></ol>
+    <button type="button" class="mb-btn" id="vdGo">판결을 듯기</button>
+  </div>
+  <dl class="vd-sum">
+    <div><dt>25</dt><dd>긔소</dd></div>
+    <div><dt>18</dt><dd>사형 구형</dd></div>
+    <div><dt>12</dt><dd>사형 선고</dd></div>
+    <div><dt>2</dt><dd>무긔징역</dd></div>
+  </dl>
+  <p class="mb-p" style="margin-top:14px">나머지는 징역. 검사는 무긔 이하 여섯에 대해 다시 다투겟다 하엿소.</p>
+  <button class="mb-doc" type="button" data-zoom="./img/scan/donga_1940_kyuhyeong.jpg" data-cap="구형 · 동아일보 소화 십오 년 삼월">
+    <img src="./img/scan/donga_1940_kyuhyeong.jpg" alt="동아일보 1940년 3월 구형 기사" loading="lazy">
+    <span><small><b>求刑</b></small><strong>「마의 백백교에 마츰내 단죄의 선언」</strong><small>문봉조 등 열여덟 명 사형. 그날 지면의 한 줄 — 「지하의 삼백 령혼은 영면하라! 두마 전용해를 단죄 못함이 원통」</small><u>크게 보기</u></span>
+  </button>
+  <button class="mb-doc" type="button" data-zoom="./img/scan/donga_1940_pangyeol.jpg" data-cap="판결 · 동아일보 소화 십오 년 삼월">
+    <img src="./img/scan/donga_1940_pangyeol.jpg" alt="동아일보 1940년 3월 판결 기사" loading="lazy">
+    <span><small><b>判決</b></small><strong>「살인 백백교에 단죄」</strong><small>문봉조 등 열둘 사형 — 경성법원 재판장 언도</small><u>크게 보기</u></span>
+  </button>
+  <p class="mb-p bb-dim">그 사형이 실제로 집행되엇는지는 — 긔록이 차자지지 아넛다는 말도 잇소.</p>
+  <p class="mb-note">근거 · 동아일보 1940년 3월 (구형 — 18명 사형 구형 · 판결 — 12명 사형 · 2명 무기 · 검사 항소 · KBS 역사자료는 「열넷 사형 · 넷 징역」으로 적음 — 긔록마다 다르오) · 한국민족문화대백과사전 「백백교」 (12명 사형) · 동아일보 1937.12.11 (수사 301일)</p>
+  <figure class="mb-fig mb-rv bb-seat dk"><div class="im"><img src="./img/mj/bb_empty_seat.jpg" alt="맨 앞자리가 빈 흰 방 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></div><figcaption>서장의 그 방 — 스물다섯 자리가 다 차도, 맨 압 자리는 끗내 비어 잇섯소. · 재현 그림 · 연출</figcaption></figure>
+  <p class="mb-q">그런데 — 그 혼자만은,<br>땅에 묻히지 아넛소.</p>
+</section>
+
+<!-- 第九章 · 병 -->
+<section class="mb-sec dark bb-jar act3" id="c11" data-ch="병 · 칠십사 년" data-no="09" data-kj="9장" data-sub="선반 우의 병">
+  <h2 class="mb-h"><small>第九章 · 標本</small>선반 우의 병</h2>
+  <p class="mb-p">그는 땅에 묻히지 아넛소. <em>칠십사 년 동안 — 병 속에 잇섯소.</em></p>
+  <div class="jr2" id="jarStage"></div>
+  <p class="mb-q">병이 비워지고 —<br>그는 재가 되엇소.</p>
+  <p class="mb-note">선반 우의 병 · 재현 그림 — 속은 알아볼 수 업게 그렷소 · 근거 · 한국민족문화대백과사전 「백백교」 · 2011년 화장 · 위령제 보도</p>
+</section>
+
+<!-- 종막 · 백색 -->
+<div class="bb-act a4" aria-hidden="true" data-noko><small>종막</small><b>백색</b><i></i></div>
+<section class="bb-fin2 act4" id="finale" data-ch="흰 것" data-no="끝" data-kj="끝" data-sub="왕십리에서 용문산까지">
+  <div class="fn" id="fnRoot"></div>
+</section>
+
+<!-- 덧붙임 · 라듸오 -->
+<section class="mb-sec act5" id="c12" data-ch="덧붙임 · 닫힌 무리의 주파수" data-no="부록" data-kj="덧붙임" data-sub="흰 옷은 벗엇어도">
+  <p class="mb-q" style="margin-top:0">그리고 — 흰 것을 내세운 무리는,<br>그 뒤에도 일홈을 바꾸어 나타낫소.</p>
+  <h2 class="mb-h"><small>덧붙임 · 그 뒤</small>흰 옷은 벗엇어도</h2>
+  <p class="mb-p">라듸오를 켜고 다이알을 돌리시압. 소화 십이 년의 그 장부에서, 다른 닫힌 무리들이 잡히오. <em>일홈은 달랏고, 장부는 비슷하엿소.</em></p>
+  <button class="mb-dev" type="button" data-open="shRadio">
+    <div class="ph" style="" data-lbg="./img/case/room.jpg"></div>
+    <div class="tx"><div class="kk"><span>裝置 · 긔록 수신긔</span><b>다섯 주파수</b></div>
+      <strong>닫힌 문 안의 일은,<br>늘 늣게 들리오</strong>
+      <span class="d">다이알을 손가락으로 돌리시압. 주파수 사이에서는, 한 시대에서 다음 시대로 이어지는 말이 들리오.</span>
+      <span class="go">라듸오 켜기<i>→</i></span></div>
+  </button>
+</section>
+
+<!-- 다른 사건 -->
+<section class="mb-sec act5" id="next" data-ch="다른 사건 · 부록 · 사료" data-no="부록" data-kj="" data-sub="이어 읽기 · 그해의 지면 · 근거">
+  <h2 class="mb-h"><small>다른 사건</small>경성야록 일면에서 이어 읽으시압</h2>
+  <p class="mb-p">네 사건은 모두 한 시대의 지면이오.</p>
+  <div class="mb-next">
+    <a href="../maria/m.html"><span class="ph" style="" data-lbg="../../assets/noir/mr_cover.jpg"></span><span class="tx"><small>사회면 02 · 소화 륙 년 · 부산</small><b>부산 마리아 참살사건</b></span></a>
+    <a href="../jukcheomjeong/m.html"><span class="ph" style="" data-lbg="../../assets/noir/jk_cover.jpg"></span><span class="tx"><small>사회면 01 · 소화 팔 년 · 경성</small><b>죽첨정 골목의 어린 주검</b></span></a>
+    <a href="../sonkijeong/m.html"><span class="ph" style="" data-lbg="../../assets/noir/sk_cover.jpg"></span><span class="tx"><small>문화예술면 03 · 소화 십일 년 · 경성</small><b>손기정 일장기 말소 사건</b></span></a>
+  </div>
+  <button class="mb-dev" type="button" data-open="shHogoe" style="margin-top:30px">
+    <div class="ph" style="background-position:center 30%" data-lbg="../../assets/behind/bb1.jpg"></div>
+    <div class="tx"><div class="kk"><span>호외 · 다시 읽기</span><b>두 장</b></div>
+      <strong>호외요, 호외!</strong>
+      <span class="d">이 사건의 호외 두 장을 넘겨 읽으시압.</span>
+      <span class="go">호외 펴기<i>→</i></span></div>
+  </button>
+  <button class="mb-dev" type="button" data-open="shYear" style="margin-top:14px">
+    <div class="tx"><div class="kk"><span>부록 · 읽고 난 뒤</span><b>1937</b></div>
+      <strong>그해의 지면 —<br>1937년의 경성</strong>
+      <span class="d">이 사건 하나만 보면 한 장의 일이오. 그해의 신문을 펴 보면 — 그 밧게선 무슨 일이 잇섯는지 보이오.</span>
+      <span class="go">펴 보기<i>→</i></span></div>
+  </button>
+</section>
+
+<!-- 사료 -->
+<section class="mb-sec gray" id="colophon">
+  <h2 class="mb-h"><small>이 긔사의 사료</small>근거를 밝히오</h2>
+  <h3 class="mb-ct">당시 지면 (신문 아카이브)</h3>
+  <ul class="mb-cl">
+    <li><b>조선일보 사월 십삼일 호외</b>흉포의 극 · 마도 백백교 죄상 — 보도 금지 해제</li>
+    <li><b>동아일보 류월 삼일자</b>속간호</li>
+    <li><b>동아일보 류월 구일자</b>발굴시체 삼백팔십</li>
+    <li><b>동아일보 구월 이십삼일자</b>삼십 명 송국 예정</li>
+    <li><b>동아일보 시월 십칠일자</b>십 개월 만에 취조 단락</li>
+    <li><b>동아일보 십일월 십칠일자</b>끝없는 「지옥」 — 346명</li>
+    <li><b>동아일보 십이월 십일일자</b>301일 만에 송국</li>
+  </ul>
+  <h3 class="mb-ct">그 밧긔 자료</h3>
+  <ul class="mb-cl plain">
+    <li>한국민족문화대백과사전 「백백교」 — 계보 · 교리 · 관직 약속 · 판결</li>
+    <li>한국민족문화대백과사전 「일장기 말소 사건」 — 동아일보 정간과 속간</li>
+    <li>라듸오 원고 (1962 · 1987 · 1990년대 · 1996)</li>
+    <li>재현 그림 — 재현(AI 생성), 그림마다 '재현' 표기</li>
+  </ul>
+  <h3 class="mb-ct">이 긔사가 지킨 것</h3>
+  <ul class="mb-cl kept">
+    <li>화를 당한 이들의 일홈과 얼굴은 싯지 아넛소</li>
+    <li>주검과 피는 그리지 아넛소</li>
+    <li>첫 보도는 조선일보 호외라 바로 적엇소</li>
+    <li>수가 엇갈리는 곳은 엇갈리는 대로 적엇소</li>
+    <li>재현 그림은 그림마다 '재현'이라 밝혓소</li>
+  </ul>
+</section>
+
+<footer class="mb-end page-foot">
+  <span class="seal">경성<br>야록</span>
+  <p>경제면 · 백백교 사건 · 끗</p>
+  <a href="../../index.html">본지로 도라가기</a>
+</footer>
+
+<!-- ══════ 장치 시트 ══════ -->
+<div class="mb-sheet" id="mbToc" role="dialog" aria-label="목차">
+  <div class="mb-sh-hd"><b><small>차례</small>희게, 더 희게</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-bd"><nav class="mb-toc"></nav><a class="toc-x" href="#colophon" data-goto="colophon">사료 · 근거 ↓</a></div>
+</div>
+
+<div class="mb-sheet light" id="shPaper" role="dialog" aria-label="지면이 따라간 반년">
+  <div class="mb-sh-hd"><b><small>보도 · 장치</small>지면이 따라간 반년 · 여섯 날</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <nav class="mb-tabs" id="ppTabs"></nav>
+  <div class="mb-sh-bd" id="ppBody"></div>
+</div>
+
+<div class="mb-sheet" id="shRadio" role="dialog" aria-label="긔록 수신긔">
+  <div class="mb-sh-hd"><b><small>덧붙임 · 장치 · 재현</small>경성야록 긔록 수신긔</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-bd" id="rdBody"></div>
+</div>
+
+
+<div class="mb-sheet light" id="shYear" role="dialog" aria-label="그해의 지면">
+  <div class="mb-sh-hd"><b><small>부록 · 해설</small>그해의 지면 · 1937</b><button class="mb-sh-x" data-close aria-label="닫기">×</button></div>
+  <div class="mb-sh-bd yr">
+    <h4>그해 신문이 할 수 잇던 말</h4>
+    <ol class="yr-line">
+      <li><b>1920</b><i>創刊</i>신문이 생김</li>
+      <li><b>1927 ~ 1933</b><i>檢閱</i>검열 아래</li>
+      <li><b>1936</b><i>停刊</i>동아일보 정간</li>
+      <li class="me"><b>1937 · 이 사건</b><i>續刊</i>속간 · 전시 체제</li>
+      <li><b>1940</b><i>廢刊</i>폐간</li>
+    </ol>
+    <p class="yr-note"><b>1937</b> 전쟁이 시작된 해 — 멈추엇다 도라온 신문이 땅 속의 일을 쫏앗소.</p>
+    <div class="yr-card"><small>그 시대의 큰일 · 1936.8 ~ 1937.6</small><b>동아일보 정간</b><p>바로 이 정간 때문에, 동아일보는 백백교의 첫 소식을 싣지 못햇소. 첫 보도는 조선일보 호외엿소.</p><p class="s">손긔졍 사건 — 바로 전 해, 이 일로 동아일보가 멈추엇소.</p></div>
+    <div class="yr-card"><small>그 시대의 큰일 · 1937.7</small><b>전쟁의 시작</b><p>동아일보가 속간한 지 한 달 남짓 — 전쟁이 시작되엇소. 백백교 수사는 그 뒤로도 이어져, 삼백일 일 만에 송국되엇소.</p></div>
+    <div class="yr-card me"><small>경성야록 사건 · 1937.2</small><b>백백교, 흰 것이 덥은 것</b><p>정간에서 도라온 신문이 쫏기 시작한 사교(邪敎) 사건이오.</p><p class="s">지금 읽은 이 사건이오.</p></div>
+    <h4>이 사건으로 읽는 그 시대</h4>
+    <details class="yr-w"><summary>근대 도시 경성</summary><p>근대 도시 경성 바로 곁 왕십리에서 벌어진 일이오. 바친 만큼 「독립이 되는 날」의 벼슬을 약속하며 재산과 식구를 내노케 햇소.</p></details>
+    <details class="yr-w"><summary>언론 · 쉰세 날</summary><p>이월 십구일부터 사월 십이일까지 쉰세 날, 이 일은 어느 신문에도 실릴 수 업섯소. 동아일보는 정간 중이라 첫 소식을 놋쳣고, 류월 삼일 속간한 뒤에야 따라갓소.</p></details>
+    <details class="yr-w"><summary>전쟁 · 아래칸</summary><p>동아일보가 속간한 지 한 달 남짓 중일전쟁이 일어낫소. 십이월 십일일 지면 아래칸엔 총 멘 병사를 그린 광고가 실렷소 (보도 장).</p></details>
+    <h4>讀者 投稿 <small>함께 생각해 볼 물음</small></h4>
+    <details class="yr-w q"><summary><i>問 1</i>신도들은 웨 재산도, 식구도 내노앗을까?</summary><ul><li>제이장 장부 — 바친 만큼 「독립이 되는 날」의 벼슬을 약속하엿소.</li><li>제삼장 한 집 — 식구를 흐터 살게 해, 떠날 수 업게 하엿소.</li><li>오늘의 닫힌 무리와 견주어 보시압 (덧붙임 라듸오).</li></ul></details>
+    <details class="yr-w q"><summary><i>問 2</i>쉰세 날 동안 어느 신문도 이 일을 실을 수 업섯소. 보도가 막히면 무엇이 달라질까?</summary><ul><li>제오장 — 이월 십구일부터 사월 십이일까지의 침묵.</li><li>그 사이 교주는 이미 산에 누워 잇섯소.</li><li>알 권리와 수사 — 오늘은 어떠케 하는가?</li></ul></details>
+    <details class="yr-w q"><summary><i>問 3</i>가튼 장 우에선 사교의 죄상을, 아래칸에선 전쟁과 돈벌이를 팔앗소. 함께 보면 무엇이 보일까?</summary><ul><li>보도 장 십이월 십일일 지면 맨 아래칸을 보시압.</li><li>「利殖の道(돈 불리는 길)」 광고와, 재산을 바치게 한 장부를 견주어 보시압.</li></ul></details>
+    
+  </div>
+</div>
+
+<script src="./m-bb-ko.js?v=2"></script>
+<script src="../yk-news26.js?v=2"></script>
+<script src="../yk-mbook.js?v=26"></script>
+<script src="./m-bb-book.js?v=10"></script>
+<script src="./m-bb-film.js?v=7"></script>
+<script src="./m-bb-white.js?v=3"></script>
+<script src="./bb-chant.js?v=2"></script>
+
+<script src="../../shared/yk-reward.js?v=20261020"></script>
+<script src="../yk-share.js?v=1"></script>
+<script src="../m-case-end.js?v=12"></script>
+<script src="../yk-press.js?v=7" data-case="bb"></script>
+<script src="../../shared/case-navigator.js?v=20261020"></script>
+</body>
+</html>

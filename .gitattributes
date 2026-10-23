@@ -1,0 +1,11 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# 업로드 묶음(git archive)에서 제외할 항목
+_to_delete/ export-ignore
+tests/ export-ignore
+tools/ export-ignore
+수정기록/ export-ignore
+githooks/ export-ignore
+.agent/ export-ignore
+node_modules/ export-ignore

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>경성야록 · 라디오 장치</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-screen="room">
+  <div class="room-bg" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <canvas id="noise" class="noise" aria-hidden="true"></canvas>
+
+  <button id="toRoom" class="to-room" type="button">← 응접실로</button>
+
+  <main class="stage">
+    <!-- 화면 1: 응접실 -->
+    <section class="screen screen-room">
+      <button id="radioBtn" class="radio" type="button" aria-label="라디오 켜기">
+        <span class="radio-glow" aria-hidden="true"></span>
+        <img class="radio-img" src="assets/radio.png" alt="진공관 라디오">
+      </button>
+      <p class="hint hint-room">라디오를 눌러 주파수를 맞추시압</p>
+    </section>
+
+    <!-- 화면 2: 다이얼 -->
+    <section class="screen screen-tune">
+      <div class="dial-wrap">
+        <div class="dial-mark" aria-hidden="true"></div>
+        <div id="dial" class="dial" tabindex="0" role="slider" aria-label="주파수 다이얼" aria-valuemin="550" aria-valuemax="1500">
+          <img class="dial-img" src="assets/dial.png" alt="">
+        </div>
+      </div>
+
+      <div class="readout">
+        <p class="freq"><span id="freqNum">550</span><small>kHz</small></p>
+        <div class="meter" aria-hidden="true"><span id="meterFill"></span></div>
+      </div>
+
+      <p class="hint hint-tune">다이얼을 돌려 또렷한 방송을 찾으시압</p>
+    </section>
+
+    <!-- 화면 3: 방송 중 -->
+    <section class="screen screen-air">
+      <div class="scrap-shadow">
+        <article class="scrap">
+          <header class="scrap-kicker">
+            <span>京城放送局 · JODK</span>
+            <span class="scrap-freq"><span id="airFreq">1150</span> kHz</span>
+          </header>
+          <hr class="scrap-rule">
+          <h2 class="scrap-title">심야의 특별 방송</h2>
+          <p class="scrap-cast">제1방송 · 아나운서 이옥경</p>
+
+          <div class="player">
+            <button id="playBtn" class="play" type="button" aria-label="재생">
+              <svg class="icon-play" viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20"></polygon></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24"><rect x="5" y="4" width="4" height="16"></rect><rect x="15" y="4" width="4" height="16"></rect></svg>
+            </button>
+            <canvas id="wave" class="wave"></canvas>
+          </div>
+
+          <p id="fileNote" class="scrap-note"></p>
+          <button id="retune" class="retune" type="button">다시 맞추기</button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

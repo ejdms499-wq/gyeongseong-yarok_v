@@ -1,0 +1,405 @@
+/* 경성야록 · 손긔졍 폰판 장치 — 그 밤 · 지면 · 시상대 · 붓 · 명부 · 빈 날 · 엽서 · 라듸오
+   글 데이터는 컴퓨터판 sk.js 의 것을 그대로 옮김 */
+(function (W, D) {
+  'use strict';
+  var ARTS = [
+    { d: ['팔월 십일', '8월 10일'], tag: ['우승 속보 · 호외', '우승 속보 · 호외'], paper: '조선일보', date: '1936.08.10', img: '19360810.jpg',
+      title: '손기정 1위, 남승룡 3위 — 베를린에서 날아온 지급전보',
+      lead: '1936년 8월 10일, 조선일보는 호외를 찍었다. 「대망의 세계 마라손 제패 완성」 「조선남아 의기충천!」',
+      body: ['베를린 올림픽 스타디움발 지급전보는 "30여 개국 56명이 출장한 마라톤에서 손기정 군이 2시간 29분 19초 2로 일착, 남승룡 군이 삼착"이라고 전했다.',
+             '경기는 한국 시각 8월 9일 밤 11시 2분에 출발했다. 2위는 영국의 하퍼, 2시간 31분 23초 2였다.',
+             '이 호외는 동아일보가 아니라 조선일보의 것이다. 그날 경성의 신문들은 앞다투어 같은 소식을 찍었다.'],
+      sum: ['손기정 1위(2시간 29분 19초 2), 남승룡 3위(2시간 31분 42초).', '30여 개국 56명이 달린 경기, 출발은 한국 시각 밤 11시 2분.', '이 지면은 조선일보 호외다 — 신문들이 앞다투어 같은 소식을 전했다.'],
+      keys: ['손기정', '남승룡', '호외'],
+      qa: [['이 보도의 요점은 무엇이오?', '이 보도의 핵심은 무엇인가요?', '손기정 1위(2시간 29분 19초 2), 남승룡 3위(2시간 31분 42초). 30여 개국 56명이 달린 경기였다.'], ['소식은 엇더케 닿앗소?', '소식은 어떻게 전해졌나요?', '베를린 올림픽 스타디움발 지급전보로 왔고, 신문사들은 이튿날 호외를 찍었다.'], ['이 지면에서 눈여겨볼 대목은 어대요?', '이 지면에서 주목할 부분은 어디인가요?', '이 호외는 조선일보 것이다. 이 사건에선 「어느 신문이었나」가 끝까지 중요해진다.']] },
+    { d: ['팔월 십일일', '8월 11일'], tag: ['세계 제패', '세계 제패'], paper: '동아일보', date: '1936.08.11', img: '19360811.jpg',
+      title: '세계 제패의 개가 — "이미 헐린 성일망정"',
+      lead: '동아일보는 1면 머리에 「세계 제패의 개가」를 걸고, 「성전의 경과」로 그날의 레이스를 되짚었다.',
+      body: ['1면 머리는 「세계 제패의 개가」였다. 같은 날 2면에는 연재 「조선의 아들 손기정 세계의 영웅이 되기까지」 첫 회와, 두 사람의 남북 고향의 축하 소식을 담은 「개선의 기쁨이 충천한 양웅의 남북 고향」이 실렸다.',
+             '지면은 마라톤 승자를 맞으려 성벽을 헐었다는 그리스 고사를 들어 이렇게 썼다. "우리는 이미 헐린 성일망정 새 힘과 새 마음으로 우리 두 용사를 맞어 드리리라."',
+             '「일본」이라는 말 대신 「조선」과 「우리」가 지면을 채웠다.'],
+      sum: ['1면 「세계 제패의 개가」, 2면 「조선의 아들 손기정」 연재 첫 회.', '"이미 헐린 성일망정" — 나라를 잃은 현실을 헐린 성에 빗댔다.', '지면은 「일본」 대신 「조선」과 「우리」를 썼다.'],
+      keys: ['세계제패', '라디오중계', '헐린성'],
+      qa: [['이 보도의 요점은 무엇이오?', '이 보도의 핵심은 무엇인가요?', '1면 머리에 「세계 제패의 개가」를 걸었다. 2면에는 그가 걸어온 길을 되짚는 연재가 시작됐다.'], ['그 밤 경성은 엇더하엿소?', '그날 밤 경성은 어땠나요?', '장맛비 속에 시민들이 동아일보사 앞에 모여 스피커로 라디오 중계를 들었다. 새벽 1시 30분, 우승 소식에 거리로 쏟아져 나왔다. (동아일보 2006년 4월 1일 창간특집)'], ['지면이 고른 말에 무엇이 숨어 잇소?', '신문이 고른 말에 무엇이 숨어 있나요?', '「일본」 대신 「조선」과 「우리」를 썼다. 지면은 이미, 할 수 있는 만큼 그 표지를 비켜 가고 있었다.']] },
+    { d: ['팔월 십이일', '8월 12일'], tag: ['환영하자', '환영하자'], paper: '동아일보', date: '1936.08.12', img: '19360812p.jpg',
+      title: '「우리 민족의 최대의 영예에 전체적으로 환영하자」',
+      lead: '우승 사흘째, 동아일보는 한 면을 환영으로 채웠다. 조선체육회가 앞장서 여러 단체가 함께 두 선수를 맞자는 기사였다.',
+      body: ['지면 가운데에는 「우리 민족의 최대의 영예에 전체적으로 환영하자」는 제목이 섰다. 조선체육회 주최로 여러 단체가 연합해 환영하자는 내용이다.',
+             '옆에는 「첩보에 만도 환희」 — 승전 소식에 온 도시가 기뻐했다는 기사와 사진이, 손기정의 고향 신의주 거리의 만세 소리가 함께 실렸다.',
+             '신문은 「민족」이라는 말을 머리에 걸었다. 축하는 이날 절정에 올랐다 — 그리고 곧, 마음껏 축하할 수 없는 날들이 온다.'],
+      sum: ['조선체육회를 중심으로 「전체적으로 환영하자」는 기사가 실렸다.', '온 도시의 기쁨과 신의주 거리의 만세 소리가 함께 실렸다.', '「민족」이라는 말이 머리에 걸린 날 — 축하는 이날 절정이었다.'],
+      keys: ['전체적으로환영하자', '조선체육회', '신의주'],
+      qa: [['이날 지면은 무엇을 말하엿소?', '이날 신문은 무엇을 말했나요?', '「우리 민족의 최대의 영예에 전체적으로 환영하자」 — 조선체육회가 앞장서 함께 환영하자는 기사다.'], ['어대서 기뻐하엿소?', '어디서 기뻐했나요?', '경성과 그의 고향 신의주 — 거리마다 만세 소리가 났다고 지면은 적었다.'], ['이 날이 중요한 까닭은?', '이 날이 중요한 이유는?', '축하가 절정에 오른 날이다. 다음 날, 다른 판의 사진에서 처음으로 가슴이 지워진다.']] },
+    { d: ['팔월 십삼일', '8월 13일'], tag: ['같은 날, 다른 판', '같은 날, 다른 판'], paper: '동아일보', date: '1936.08.13', img: '19360813.jpg', note: ['이 지면(일반판)에는 지운 사진이 업소. 지운 사진은 같은 날 지방판 조간 이면과 조선중앙일보 사면에 실렷소.', '이 지면(일반판)에는 지운 사진이 없습니다. 지운 사진은 같은 날 지방판 조간 2면과 조선중앙일보 4면에 실렸습니다.'],
+      title: '「조선의 아들 손기정」 — 그리고 같은 날, 다른 판의 가슴',
+      lead: '동아일보는 연재 「조선의 아들 손기정」 셋째 회에서 그가 세계의 패왕이 되기까지를 적었다.',
+      body: ['1932년 경성–영등포 마라톤 2위. 그 길로 양정고보에 들어가 본격적으로 달리기 시작했고, 1935년에는 2시간 26분 42초를 기록했다.',
+             '같은 날, 조선중앙일보 4면과 동아일보 지방판 조간 2면에 손기정의 사진이 실렸다. 가슴의 일장기는 — 이미 지워져 있었다. 화면의 이 지면은 일반판이라 그 사진이 없다.',
+             '이때는 아무도 문제 삼지 않았다. 같은 가슴은 열이틀 뒤, 다시 지워진다.'],
+      sum: ['연재 「조선의 아들 손기정」이 그가 걸어온 길을 되짚었다.', '같은 날 조선중앙일보 4면과 동아일보 지방판 2면이 일장기를 지운 사진을 실었다.', '이때는 아무도 문제 삼지 않았다 — 열이틀 뒤, 같은 일이 다시 일어난다.'],
+      keys: ['조선의아들', '양정고보', '같은날다른판'],
+      qa: [['이 연재는 무엇을 적엇소?', '이 연재는 무엇을 다뤘나요?', '1932년 경성–영등포 마라톤 2위부터 양정고보 입학, 1935년 2시간 26분 42초까지 — 그가 걸어온 길이다.'], ['같은 날 다른 판에선 무슨 일이 잇섯소?', '같은 날 다른 판에선 무슨 일이 있었나요?', '지방판 조간 2면과 조선중앙일보 4면에, 일장기를 지운 사진이 실렸다. 화면의 이 일반판에는 그 사진이 없다.'], ['그때 문제가 되엇소?', '그때 문제가 됐나요?', '아무도 문제 삼지 않았다. 열이틀 뒤, 같은 일이 다시 일어난다.']] }
+  ];
+  var ST = [
+    { y: '1936', ang: 18, no: '제0호', when: '1936년 · 동아일보', au: null, moon: 70,
+      h: '붓 한 번에,<br><em>아홉 달</em>',
+      t: ['붓 한 번에, 아홉 달', '붓 한 번에, 아홉 달'],
+      b: ['8월 25일 일장기를 지운 사진 → 8월 29일 무기정간', '기자 여덟 명 구속 · 약 40일 · 사장·주필·편집국장 사임'],
+      d: ['이 칸은 녹음이 업소. 소화 십일 년 팔월의 지면이 남긴 것만 화면으로 전하오. 다이알을 돌리면, 그 빈자리가 지나온 세월이 잡히오.', '이 칸은 녹음이 없습니다. 1936년 8월의 지면이 남긴 것만 화면으로 전합니다. 다이얼을 돌리면, 그 빈자리가 지나온 세월이 잡힙니다.'],
+      link: '모든 주파수는 이 한 장의 사진에서 시작된다 — 지운 가슴.' },
+    { y: '1968', ang: 90, no: '제1호', when: '1968년 · 신동아', au: 'sonkijeong_radio01.mp3', card: 'sonkijeong-case01.jpg', moon: 28,
+      h: '차관 기사 한 줄에<br>정권은 <em>기자</em>를 겨눴다',
+      t: ['차관 긔사 한 줄에, 정권은 긔자를 겨누엇다', '차관 기사 한 줄에, 정권은 기자를 겨눴다'],
+      b: ['월간 《신동아》가 외자 도입과 정치자금 의혹을 보도', '해당 호 압수, 관련 언론인 구속'],
+      d: ['긔사 한 편이 긔자의 구속으로 도라온 일이오. 그때의 긔록을 라듸오로 꾸며 노앗소.', '기사 한 편이 기자의 구속으로 돌아온 일입니다. 당시 기록을 라디오 형식으로 재구성했습니다.'],
+      link: '1936년의 『신동아』도 같은 사진을 실었다가 잡지부장이 끌려갔다. 서른두 해 뒤, 같은 잡지가 다시 겨눠졌다.' },
+    { y: '1974', ang: 162, no: '제2호', when: '1974~1975년 · 동아일보', au: 'sonkijeong_radio02.mp3', card: 'sonkijeong-case02.jpg', moon: 22,
+      h: '가장 큰 기사는<br><em>비어 있는 광고면</em>이었다',
+      t: ['가장 큰 긔사는 비어 잇는 광고면이엇다', '가장 큰 기사는 비어 있는 광고면이었다'],
+      b: ['자유언론실천선언 이후 광고 계약이 대규모로 해약됨', '채워지지 않은 광고면이 압박의 증거가 됨'],
+      d: ['빈 지면이 도리어 가장 큰 말이 된 일이오. 그때 긔록을 라듸오로 다시 드러 보시압.', '빈 지면이 오히려 가장 큰 말이 된 일입니다. 당시 기록을 라디오로 다시 들어 보세요.'],
+      link: '1936년엔 가슴이 비었고, 1974년엔 광고면이 비었다. 독자는 두 번 다 — 무엇이 지워졌는지 알아보았다.' },
+    { y: '1980', ang: 234, no: '제3호', when: '1980년 · 언론 검열', au: 'sonkijeong_radio03.mp3', card: 'sonkijeong-case03.jpg', moon: 76,
+      h: '검열이 지운 자리를<br>그대로 <em>비워</em> 뒀다',
+      t: ['검열이 지운 자리를 그대로 비워 두엇다', '검열이 지운 자리를 그대로 비워 뒀다'],
+      b: ['비상계엄 확대 이후 사전 검열 강화', '삭제된 자리를 다른 글로 메우지 않고 빈칸으로 남김'],
+      d: ['지운 자리를 숨기지 안코 비워 둔 일이오. 그때 긔록을 라듸오로 꾸며 노앗소.', '지운 자리를 숨기지 않고 비워 둔 일입니다. 당시 기록을 라디오 형식으로 재구성했습니다.'],
+      link: '지운 자리를 감추지 않는 것 — 그것이 지면에 남은 마지막 말이었다.' },
+    { y: '1986', ang: 306, no: '제4호', when: '1986년 · 보도지침 폭로', au: 'sonkijeong_radio04.mp3', card: 'sonkijeong-case04.jpg', moon: 34,
+      h: '정부가 매일 보낸<br><em>보도지침</em>이 세상에 나왔다',
+      t: ['정부가 매일 보낸 보도지침이 세상에 나왓다', '정부가 매일 보낸 보도지침이 세상에 나왔다'],
+      b: ['무엇을 쓸지, 사진의 크기와 기사의 자리까지 정한 문서', '폭로한 언론인들이 구속됨'],
+      d: ['무엇을 지우라고 시킨 문서가 처음으로 드러난 일이오. 그때 긔록을 라듸오로 다시 드러 보시압.', '무엇을 지우라고 시킨 문서가 처음으로 드러난 일입니다. 당시 기록을 라디오로 다시 들어 보세요.'],
+      link: '1936년의 붓은 기자가 들었다. 1986년엔 — 무엇을 지울지 정하는 손이 따로 있었다.' }
+  ];
+  var GAPS = [
+    ['1936', '1968', '정간이 풀리고, 해방이 오고, 전쟁이 지나도 — 지면을 겨누는 손은 남앗소.', '정간이 풀리고, 해방이 오고, 전쟁이 지나도 — 신문을 겨누는 손은 남았다.'],
+    ['1968', '1974', '긔자를 잡아가는 대신, 이번에는 돈줄을 쥐엇소.', '기자를 잡아가는 대신, 이번에는 돈줄을 쥐었다.'],
+    ['1974', '1980', '비운 광고면 다음엔, 비운 긔사면이 왓소.', '비운 광고면 다음엔, 비운 기사면이 왔다.'],
+    ['1980', '1986', '지우는 일이, 날마다 내려오는 문서가 되엇소.', '지우는 일이, 날마다 내려오는 문서가 되었다.'],
+    ['1986', '1936', '그 문서를 거슬러 올라가면 — 다시 소화 십일 년, 흰 옷 입은 가슴.', '그 문서를 거슬러 올라가면 — 다시 1936년, 흰 옷 입은 가슴.']
+  ];
+  var $ = function (s, r) { return (r || D).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || D).querySelectorAll(s)); };
+  var t0 = function (x) { return x == null ? '' : (Array.isArray(x) ? x[0] : x); };
+  var tone = function (k) { if (W.mb.tone) W.mb.tone(k); };
+  var A = function () { return W.mb.audio; };
+
+  /* 물음 셋 · 봉함 */
+  $('#briefOpen').onclick = function () { var s = $('#briefSeal'); $('.sealed', s).hidden = true; $('.opened', s).hidden = false; s.classList.add('open'); };
+
+  /* 기록 영상 (소리 업슴) */
+  $$('.sk-film').forEach(function (f) {
+    var v = $('video', f), b = $('.sf-play', f);
+    b.addEventListener('click', function () { if (v.paused) { v.play().catch(function () {}); f.classList.add('on'); } else { v.pause(); f.classList.remove('on'); } });
+    v.addEventListener('ended', function () { f.classList.remove('on'); });
+  });
+
+  /* ════ 序 · 그 밤 — 내리는 만큼 달림 (백림의 길 ↔ 세종로의 비) ════
+     킬로 · 시각은 근거의 구간 기록에서 (8km 26분 · 15km 49분 45초 · 28km 자바라 낙오 · 31km 1시간 46분 · 결승 2시간 29분 19초 2)
+     경성 시각 = 출발(밤 열한 시 이 분) + 지난 시간 · 백림 시각 = 오후 세 시 + 지난 시간 */
+  (function () {
+    var root = $('#race'); if (!root) return;
+    var MJ = './img/mj/';
+    /* 그림 — 미드저니 새 그림(앞)이 잇으면 그것, 업스면 잇는 그림(뒤) */
+    var BG = {
+      seoul: [MJ + 'sk_radio.jpg', MJ + 'sk_radio.jpg'],
+      horn: [MJ + 'sk_radio.jpg', MJ + 'sk_radio.jpg'],
+      start: ['./img/film/sk_start.jpg', './img/film/sk_start.jpg'],
+      road: [MJ + 'sk_road.jpg', MJ + 'sk_road.jpg'],
+      road2: [MJ + 'sk_road.jpg', MJ + 'sk_road.jpg'],
+      road3: [MJ + 'sk_road.jpg', MJ + 'sk_road.jpg'],
+      road4: [MJ + 'sk_road.jpg', MJ + 'sk_road.jpg'],
+      dark: [MJ + 'sk_road.jpg', MJ + 'sk_road.jpg'],
+      stadium: [MJ + 'sk_stadium.jpg', MJ + 'sk_stadium.jpg'],
+      cheer: [MJ + 'sk_radio.jpg', MJ + 'sk_radio.jpg']
+    };
+    var K = [[0, 0], [.08, 0], [.24, 8], [.38, 15], [.47, 17.5], [.56, 17.5], [.70, 28], [.77, 31], [.90, 42.195], [1, 42.195]];
+    var T = [[0, 0], [8, 26 * 60], [15, 49 * 60 + 45], [17.5, 58 * 60], [31, 106 * 60], [42.195, 2 * 3600 + 29 * 60 + 19.2]];
+    var B = [
+      { p: 0, at: 'seoul', bg: 'seoul', k: '경성 · 세종로', t: '세종로', b: '사옥의 스피커로 라듸오 중계가 세종로에 울렷소.', rain: 1 },
+      { p: .08, at: 'berlin', bg: 'start', wm: '出發', k: '백림 · 올림픽 스타디움', t: '출발', b: '오십륙 명이 출발선에 섯소. 그 가운데, 조선의 두 청년.' },
+      { p: .20, at: 'berlin', bg: 'road', wm: '八', k: '선두 자바라 · 이십륙 분', t: '8km', b: '손 군은 넷재, 영국의 하퍼와 나란히 달렷소.', rank: 4 },
+      { p: .34, at: 'berlin', bg: 'road2', wm: '十五', k: '자바라 · 사십구 분', t: '15km', b: '선두와는 이 분 십 초 차. 그는 아즉 서두르지 아넛소.', rank: 4 },
+      { p: .46, at: 'seoul', bg: 'horn', k: '경성 · 세종로 · 밤 열두 시', t: '중계가 끈혓소', b: '손 군이 넷재로 십칠 킬로 반을 지날 즈음 — 중계가 끈혓소.', cut: 1, rain: 1, rank: 4 },
+      { p: .56, at: 'berlin', bg: 'dark', wm: '·', k: '백림 · 세종로에는 들리지 안는 길', t: '　', b: '', mute: 1, rank: 4 },
+      { p: .68, at: 'berlin', bg: 'road3', wm: '廿八', k: '이십팔 킬로', t: '28km', b: '자바라가 넘어젓소.', fall: 1, rank: 4 },
+      { p: .76, at: 'berlin', bg: 'road4', wm: '卅一', k: '선두로 · 한 시간 사십륙 분', t: '31km', b: '손 군이 압으로 나섯소.', rank: 1, heart: 1 },
+      { p: .89, at: 'berlin', bg: 'stadium', wm: '決勝', k: '두 시간 이십구 분 십구 초 이', t: '42.195km', b: '일착 손긔졍. 삼착 남승룡 — 조선의 두 청년이 함께 시상대에 올랏소.', rank: 1, fin: 1, roar: .5 },
+      { p: .955, at: 'seoul', bg: 'cheer', k: '경성 · 세종로 · 새벽 한 시 반', t: '「손긔졍 군이 —」', b: '사옥 이층 창문에서 한 녀자가 외첫소. 「손긔졍 군이 우승을 차지햇고 — 」 사람들은 우산을 내던젓소.', rain: 1, hot: 1, roar: 1, rank: 1 }
+    ];
+    var used = {}; B.forEach(function (x) { used[x.bg] = 1; });
+    root.innerHTML =
+      '<div class="rx-stage" id="rxStage">' +
+        '<div class="rx-bgs">' + Object.keys(used).map(function (k) { return '<i class="rx-bg" data-bg="' + k + '" style="background-image:url(' + BG[k][1] + ')"></i>'; }).join('') + '</div>' +
+        '<i class="rx-speed" aria-hidden="true"></i><i class="rx-vig" aria-hidden="true"></i><span class="rx-rt">그림 · 재현</span>' +
+        '<div class="rx-hud"><div class="rx-cl"><small>백림</small><b id="rxBer">15:00</b></div><div class="rx-clock"><small>경긔 시각</small><b id="rxClock">0:00:00</b></div><div class="rx-cl r"><small>경성</small><b id="rxSeo">23:02</b></div></div>' +
+        '<b class="rx-wm" id="rxWm"></b>' +
+        '<div class="rx-cap" id="rxCap"><p class="k" id="rxK"></p><h3 id="rxT"></h3><p class="b" id="rxB"></p><ol class="rx-board" id="rxBoard"><li><b>1</b>손긔졍<em>2:29:19.2</em></li><li><b>2</b>하퍼 · 영국<em>2:31:23.2</em></li><li><b>3</b>남승룡<em>2:31:42</em></li></ol></div>' +
+        '<div class="rx-prog"><i id="rxProg"></i></div>' +
+        '<div class="rx-low">' + '<div class="rx-guide" id="rxGuide"><i></i><b>화면을 위로 밀어 올리시압</b><small>손가락으로 내리는 만큼 — 그가 달리오</small></div>' +
+          '<div class="rx-air" id="rxAir"><span class="sp" aria-hidden="true"></span><canvas id="rxWv" width="240" height="40"></canvas><em id="rxAirT">세종로 스피커 · 중계 중</em></div>' +
+          '<div class="rx-run"><div class="rx-km"><b id="rxKm">0.0</b><small>km</small></div><div class="rx-rank" id="rxRank"><small>순위</small><b>—</b></div></div>' +
+          '<div class="rx-track"><i class="ln"></i><i class="done" id="rxDone"></i>' +
+            [8, 15, 17.5, 28, 31].map(function (k) { return '<span class="mk' + (k === 17.5 ? ' cut' : '') + '" style="left:' + (k / 42.195 * 100) + '%"><i></i><small>' + (k === 17.5 ? '중계 끈김' : k) + '</small></span>'; }).join('') +
+            '<span class="fl" style="left:100%"><small>결승</small></span>' +
+            '<em class="ld" id="rxLead"><small>선두 자바라</small></em><em class="me" id="rxMe"><small>손</small></em></div>' +
+        '</div>' +
+      '</div>';
+    var st = $('#rxStage'), bgs = {}, cur = -1, p = 0, inside = false;
+    $$('.rx-bg', st).forEach(function (el) { bgs[el.dataset.bg] = el; });
+    /* 미드저니 그림이 잇으면 바꿔 끼움 */
+    Object.keys(used).forEach(function (k) { var im = new Image(); im.onload = function () { bgs[k].style.backgroundImage = 'url(' + BG[k][0] + ')'; bgs[k].classList.add('mj'); }; im.src = BG[k][0]; });
+
+    function lerpK(q) { for (var i = 1; i < K.length; i++) if (q <= K[i][0]) { var a = K[i - 1], b = K[i], t = (q - a[0]) / Math.max(1e-6, b[0] - a[0]); return a[1] + (b[1] - a[1]) * t; } return 42.195; }
+    function secAt(km) { for (var i = 1; i < T.length; i++) if (km <= T[i][0]) { var a = T[i - 1], b = T[i], t = (km - a[0]) / (b[0] - a[0]); return a[1] + (b[1] - a[1]) * t; } return T[T.length - 1][1]; }
+    var z = function (n) { return (n < 10 ? '0' : '') + n; };
+    function hm(base, s) { var m = Math.floor(base + s / 60), h = Math.floor(m / 60) % 24; return z(h) + ':' + z(m % 60); }
+
+    /* 소리 — 발소리 · 군중 · 끈김 */
+    var ctx = function () { return W.mb.ctx; }, roarG = null, lastStep = 0, vel = 0, lastY = W.scrollY, lastT = performance.now();
+    function step(fin) {
+      var c = ctx(); if (!c || W.mb.muted && W.mb.muted()) return;
+      try {
+        var len = .07, buf = c.createBuffer(1, c.sampleRate * len, c.sampleRate), d = buf.getChannelData(0);
+        for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+        var s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+        f.type = 'lowpass'; f.frequency.value = fin ? 900 : 520; g.gain.value = .55;
+        s.buffer = buf; s.connect(f); f.connect(g); g.connect(c.destination); s.start();
+      } catch (e) {}
+    }
+    function roar(v) {
+      var c = ctx(); if (!c) return;
+      try {
+        if (!roarG) {
+          var len = 2, buf = c.createBuffer(1, c.sampleRate * len, c.sampleRate), d = buf.getChannelData(0);
+          for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+          var s = c.createBufferSource(), f = c.createBiquadFilter(), f2 = c.createBiquadFilter(); roarG = c.createGain();
+          s.buffer = buf; s.loop = true; f.type = 'bandpass'; f.frequency.value = 900; f.Q.value = .6; f2.type = 'lowpass'; f2.frequency.value = 2400;
+          roarG.gain.value = 0; s.connect(f); f.connect(f2); f2.connect(roarG); roarG.connect(c.destination); s.start();
+        }
+        roarG.gain.setTargetAtTime((W.mb.muted && W.mb.muted()) ? 0 : v * .16, c.currentTime, v ? 1.2 : .8);
+      } catch (e) {}
+    }
+    /* 스피커 소리결 */
+    var wv = $('#rxWv'), wx = wv.getContext('2d'), live = true, ph = 0;
+    function wave() {
+      if (!inside) return; ph += .18; wx.clearRect(0, 0, 240, 40); wx.strokeStyle = live ? '#e9e8e4' : '#555'; wx.lineWidth = 1.4; wx.beginPath();
+      for (var x = 0; x <= 240; x += 3) { var a = live ? (Math.sin(x * .09 + ph) * .5 + Math.sin(x * .23 - ph * 1.7) * .35) * (8 + Math.random() * 7) : 0; x ? wx.lineTo(x, 20 + a) : wx.moveTo(x, 20 + a); }
+      wx.stroke(); requestAnimationFrame(wave);
+    }
+
+    function beat(i) {
+      if (i === cur) return; var prev = cur; cur = i; var x = B[i];
+      Object.keys(bgs).forEach(function (k) { bgs[k].classList.toggle('on', k === x.bg); });
+      st.className = 'rx-stage ' + x.at + (x.mute ? ' mute' : '') + (x.fin ? ' fin' : '') + (x.hot ? ' hot' : '') + (x.cut ? ' cut' : '') + (i > 4 ? ' after' : '');
+      var cap = $('#rxCap'); cap.classList.remove('in'); void cap.offsetWidth;
+      $('#rxK').textContent = x.k; $('#rxT').textContent = x.t; $('#rxB').textContent = x.b; cap.classList.add('in');
+      var wm = $('#rxWm'); wm.textContent = x.wm || (x.at === 'seoul' ? '京城' : ''); wm.classList.remove('in'); void wm.offsetWidth; wm.classList.add('in');
+      $('#rxRank b').textContent = x.rank || '—'; $('#rxRank').classList.toggle('one', x.rank === 1);
+      if (W.mb.rain) W.mb.rain(!!x.rain && inside);
+      if (A()) A().heart(!!x.heart);
+      roar(x.roar || 0);
+      live = i < 4;
+      $('#rxAir').classList.toggle('dead', i >= 4 && i < 9);
+      $('#rxAirT').textContent = i < 4 ? '세종로 스피커 · 중계 중' : i < 9 ? '세종로 스피커 · 끈김 — 소식 업슴' : '세종로 · 이층 창문의 외침';
+      if (x.cut && prev < i && A()) { A().noiseOn(); A().noiseLevel(.5); setTimeout(function () { A().noiseLevel(.04); }, 1500); setTimeout(function () { A().noiseLevel(0); }, 3200); }
+      if (x.fall && prev < i) tone('stamp');
+      if (x.fin && prev < i) { tone('gavel'); }
+      if (x.hot && prev < i) { if (W.mb.sfx) W.mb.sfx('bell'); }
+    }
+    function frame() {
+      var r = root.getBoundingClientRect(), h = W.innerHeight, span = r.height - (h - 48);
+      p = Math.max(0, Math.min(1, (48 - r.top) / Math.max(1, span)));
+      var km = lerpK(p), s = secAt(km);
+      $('#rxKm').textContent = km >= 42.19 ? '42.195' : km.toFixed(1);
+      var hh = Math.floor(s / 3600), mm = Math.floor(s % 3600 / 60), ss = s % 60;
+      $('#rxClock').textContent = hh + ':' + z(mm) + ':' + (km >= 42.19 ? '19.2' : z(Math.floor(ss)));
+      $('#rxBer').textContent = hm(15 * 60, s); $('#rxSeo').textContent = hm(23 * 60 + 2, s);
+      var pc = km / 42.195 * 100; $('#rxMe').style.left = pc + '%'; $('#rxDone').style.width = pc + '%';
+      var lead = $('#rxLead'); lead.style.left = (km < 28 ? Math.min(100, pc + 7) : 28 / 42.195 * 100) + '%'; lead.classList.toggle('down', km >= 28);
+      $('#rxGuide').classList.toggle('gone', p > .02); $('#rxProg').style.height = (p * 100) + '%';
+      var bi = 0; B.forEach(function (x, i) { if (p >= x.p) bi = i; }); beat(bi);
+      var bg = bgs[B[bi].bg], nx = B[bi + 1], lp = (p - B[bi].p) / ((nx ? nx.p : 1) - B[bi].p);
+      if (bg) bg.style.transform = 'scale(' + (1.04 + Math.max(0, Math.min(1, lp)) * (B[bi].at === 'berlin' ? .34 : .1)).toFixed(3) + ')';
+    }
+    function loop() {
+      if (!inside) return;
+      var now = performance.now(), y = W.scrollY, v = Math.abs(y - lastY) / Math.max(1, now - lastT); lastY = y; lastT = now;
+      vel = vel * .85 + v * .15; st.style.setProperty('--v', Math.min(1, vel * 1.6).toFixed(3));
+      var b = B[Math.max(0, cur)], running = b.at === 'berlin' && vel > .05 && p < .95;
+      var gap = 330 - Math.min(110, lerpK(p) * 2.6);
+      if (running && now - lastStep > gap) { lastStep = now; step(b.fin); }
+      requestAnimationFrame(loop);
+    }
+    W.addEventListener('scroll', function () { if (inside) frame(); }, { passive: true });
+    W.addEventListener('resize', frame);
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        inside = e.isIntersecting;
+        if (inside) { frame(); loop(); wave(); if (B[Math.max(0, cur)].rain && W.mb.rain) W.mb.rain(true); }
+        else { if (W.mb.rain) W.mb.rain(false); if (A()) A().heart(false); roar(0); }
+      });
+    }, { threshold: 0 }).observe(root);
+    frame();
+  })();
+
+  /* ════ 第一章 · 네 날의 지면 (공통 장치) ════ */
+  var ADB = '../assets/ads/day/sk_';
+  W.mb.paper({ arts: ARTS, imgBase: './img/scan/', era: '소화 십일 년', sec: '문화예술면', n26: { sec: '스포츠', sub: '올림픽' }, shop: '../shop.html#ad-sk-',
+    ads: { '19360811': { top: .76, h: .23, img: ADB + '19360811_band.jpg' },
+      '19360812p': { top: .75, h: .245, img: ADB + '19360812_band.jpg', sk: '19360812', cap: '「조선의 두 아들」을 노래한 팔월 십이일 지면, 그 맨 아래칸이오. 일본말로 쓴 화장품 광고(「ユキワリソ」 · 「お顔ふき容器 進呈」)가 칸을 채웟소.', say: '가튼 장 우에선 조선의 아들을 노래하고, 아래칸은 일본말이 채웟소.' },
+      '19360813': { top: .82, h: .16, img: ADB + '19360813_band.jpg' } } });
+
+  /* ════ 第二章 · 시상대 — 두 가슴을 차례로 비춤 ════ */
+  (function () {
+    var P = [{ x: 61, y: 43, r: 17, cap: '<b>가운데 — 손긔졍.</b> 묘목 화분이 가슴의 표지를 가리고 잇소.' }, { x: 8, y: 60, r: 9, cap: '<b>왼편 — 남승룡.</b> 그의 가슴에는, 가릴 것이 업섯소.' }];
+    var root = $('#pd2'), spot = $('#pdSpot'), k = -1;
+    function show(i) { k = i; var p = P[i]; root.classList.add('lit'); spot.style.left = p.x + '%'; spot.style.top = p.y + '%'; spot.style.width = spot.style.height = (p.r * 2) + '%';
+      $('#pdCap').innerHTML = p.cap; $$('[data-pd]', root).forEach(function (b, j) { b.classList.toggle('on', j === i); }); tone('tick'); }
+    $('.pd2-ph', root).addEventListener('click', function () { show((k + 1) % 2); });
+    $$('[data-pd]', root).forEach(function (b) { b.addEventListener('click', function () { show(+b.dataset.pd); }); });
+  })();
+
+  /* ════ 第三章 · 하나 — 붓: 손가락으로 가슴의 표지를 문지름 (1019 되살림) ════ */
+  (function () {
+    var pl = $('#bsPlate'); if (!pl) return;
+    var cv = $('#bsCv'), ctx = cv.getContext('2d'), meter = $('#bsMeter'), steps = $$('#bsSteps li'), ring = $('#bsRing'), br = $('#bsBrush'), autoB = $('#bsAuto');
+    var w = 0, h = 0, flag = null, done = false, last = null, rub = 0, lastTk = -1, brT = 0;
+    var FX = 233 / 560, FY = 382 / 810, FW = 112 / 560, FH = 101 / 810;
+    ring.style.left = FX * 100 + '%'; ring.style.top = FY * 100 + '%'; ring.style.width = FW * 100 + '%'; ring.style.height = FH * 100 + '%';
+    function size() { var r = pl.getBoundingClientRect(); if (!r.width || (r.width === w && r.height === h)) return; w = cv.width = r.width; h = cv.height = r.height; flag = { x: FX * w, y: FY * h, w: FW * w, h: FH * h }; }
+    /* 붓 자국 — 먹이 아니라 흰 안료: 거칠게, 조금 번지게 */
+    function dab(a, b) {
+      var rad = Math.max(8, w / 26); ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      ctx.strokeStyle = 'rgba(232,229,221,.82)'; ctx.lineWidth = rad * 1.5; ctx.shadowColor = 'rgba(232,229,221,.9)'; ctx.shadowBlur = rad * .7;
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      ctx.globalAlpha = .35; ctx.lineWidth = rad * .5; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.beginPath(); ctx.moveTo(a.x + rad * .2, a.y - rad * .15); ctx.lineTo(b.x + rad * .2, b.y - rad * .15); ctx.stroke();
+      ctx.restore();
+    }
+    function cover() { if (!flag) return 0; var d = ctx.getImageData(flag.x | 0, flag.y | 0, Math.max(1, flag.w | 0), Math.max(1, flag.h | 0)).data, n = 0, t = 0; for (var i = 3; i < d.length; i += 28) { t++; if (d[i] > 150) n++; } return t ? n / t : 0; }
+    function show(c) { steps.forEach(function (li) { li.classList.toggle('on', c >= +li.dataset.at); }); meter.style.width = Math.min(100, c * 100) + '%'; var tk = Math.floor(c * 6); if (tk !== lastTk) { lastTk = tk; if (tk > 0) tone('type'); } }
+    function finish() {
+      if (done) return; done = true; show(1); pl.classList.add('printed'); if (A()) A().noiseLevel(0); if (autoB) autoB.disabled = true; pl.classList.remove('hand');
+      setTimeout(function () { tone('stamp'); pl.classList.add('stamped'); if (navigator.vibrate) try { navigator.vibrate([20, 40, 20]); } catch (e) {} }, 1400);
+      /* 다 지웟으면 — 아래 「견줌」으로 눈을 끌어 줌 */
+      setTimeout(function () { var c = $('#cmp'); if (c) { c.classList.add('ready'); } }, 2200);
+    }
+    function at(e) { var r = pl.getBoundingClientRect(), t = e.touches ? e.touches[0] : e; return { x: t.clientX - r.left, y: t.clientY - r.top }; }
+    function move(e) {
+      size(); if (done) return; var p = at(e); if (last) dab(last, p); else dab(p, { x: p.x + .1, y: p.y + .1 }); last = p;
+      if (br) { br.style.left = p.x + 'px'; br.style.top = p.y + 'px'; pl.classList.add('hand'); clearTimeout(brT); brT = setTimeout(function () { pl.classList.remove('hand'); }, 500); }
+      if (A()) { A().noiseOn(); A().noiseLevel(.07); clearTimeout(rub); rub = setTimeout(function () { A().noiseLevel(0); }, 160); }
+      var c = cover() / .8; show(Math.min(.99, c)); if (c >= 1) finish();
+    }
+    pl.addEventListener('touchstart', function (e) { last = null; move(e); }, { passive: true });
+    pl.addEventListener('touchmove', function (e) { if (!done) e.preventDefault(); move(e); }, { passive: false });
+    pl.addEventListener('touchend', function () { last = null; });
+    pl.addEventListener('mousemove', function (e) { if (e.buttons) move(e); else last = null; });
+    if (autoB) autoB.addEventListener('click', function () {
+      size(); if (done) return; var i = 0, rows = 9;
+      (function stroke() { if (done) return; if (i >= rows) { finish(); return; } var y = flag.y + flag.h * (i + .5) / rows; dab({ x: flag.x - 6, y: y }, { x: flag.x + flag.w + 6, y: y }); if (br) { br.style.left = (flag.x + flag.w) + 'px'; br.style.top = y + 'px'; pl.classList.add('hand'); } i++; show(Math.min(.99, cover() / .8)); setTimeout(stroke, 220); })();
+    });
+    W.addEventListener('resize', function () { if (!done) { w = 0; size(); } }); setTimeout(size, 600);
+  })();
+
+  /* ════ 第三章 · 둘 — 두 장의 사진: 금을 밀어 원판과 지면을 견줌 ════
+     왼편 원판(팔월 구일 백림) · 오른편 동아일보 지면(팔월 이십오일 석간). 지면 사진은 원판에 맞춰 자리와 크기를 맞춰 겹침(사진 자체는 손대지 안음) */
+  (function () {
+    var fr = $('#cmpFr'); if (!fr) return;
+    var pw = $('#cmpPw'), hd = $('#cmpHd'), meter = $('#cmpMeter'), steps = $$('#cmpSteps li'), lbL = $('.cmp-lb.l', fr), lbR = $('.cmp-lb.r', fr), auto = $('#cmpAuto');
+    var k = .5, done = false, moved = false, drag = null, anim = 0, lastTick = -1;
+    function set(v, user) {
+      k = Math.max(0, Math.min(1, v));
+      pw.style.clipPath = 'inset(0 0 0 ' + (k * 100).toFixed(2) + '%)'; hd.style.left = (k * 100).toFixed(2) + '%';
+      var q = 1 - k;   /* 지면이 덥은 만큼 — 금을 왼편으로 밀수록 석간이 원판을 덥소 */
+      meter.style.width = (q * 100).toFixed(1) + '%';
+      lbL.style.opacity = k > .22 ? 1 : 0; lbR.style.opacity = k < .78 ? 1 : 0;
+      steps.forEach(function (li) { li.classList.toggle('on', q >= +li.dataset.at); });
+      if (user && !moved && Math.abs(k - .5) > .04) { moved = true; fr.classList.add('moved'); }
+      var tk = Math.floor(k * 8); if (tk !== lastTick) { lastTick = tk; if (user) tone('type'); }
+      if (q >= .985 && !done) { done = true; fr.classList.add('printed'); if (auto) auto.disabled = true; setTimeout(function () { tone('stamp'); }, 300); }
+    }
+    function glide(to, ms) {
+      cancelAnimationFrame(anim); var from = k, t0 = performance.now(), d = ms || 1400;
+      (function f(now) { var t = Math.min(1, (now - t0) / d), e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; set(from + (to - from) * e, true); if (t < 1) anim = requestAnimationFrame(f); })(t0);
+    }
+    function px(e) { var r = fr.getBoundingClientRect(); return (e.clientX - r.left) / Math.max(1, r.width); }
+    fr.addEventListener('pointerdown', function (e) { cancelAnimationFrame(anim); drag = { x: e.clientX, t: performance.now(), mv: false }; try { fr.setPointerCapture(e.pointerId); } catch (x) {} });
+    fr.addEventListener('pointermove', function (e) { if (!drag) return; if (!drag.mv && Math.abs(e.clientX - drag.x) < 4) return; drag.mv = true; set(px(e), true); });
+    function up(e) {
+      if (!drag) return; var d = drag; drag = null;
+      if (!d.mv && performance.now() - d.t < 400) { glide(k < .5 ? 1 : 0, 1600); }   /* 톡 — 금이 건너감 */
+    }
+    fr.addEventListener('pointerup', up); fr.addEventListener('pointercancel', function () { drag = null; });
+    if (auto) auto.addEventListener('click', function () { glide(1, 500); setTimeout(function () { glide(0, 2600); }, 560); });
+    set(.5);
+  })();
+
+  /* ════ 第四章 · 명부 — 내려갈 때마다 도장 ════ */
+  (function () {
+    var ps = $$('.ro2-p'); if (!('IntersectionObserver' in W)) { ps.forEach(function (p) { p.classList.add('on'); }); return; }
+    var q = [], busy = false;
+    function next() { if (!q.length) { busy = false; return; } busy = true; var p = q.shift(); p.classList.add('on'); tone('stamp'); setTimeout(next, 420); }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); q.push(e.target); if (!busy) next(); } }); }, { threshold: .9 });
+    ps.forEach(function (p) { io.observe(p); });
+  })();
+
+  /* ════ 第五章 · 이백칠십팔 일 — 누르고 잇는 동안 달력이 찢겨 나감 ════ */
+  (function () {
+    var btn = $('#calBtn'), page = $('#calPage'), n = 0, hold = false, tmr = 0, speed = 260, pause = false;
+    var MK = { 0: '정간', 7: '조선중앙일보도 스스로 문을 닷앗소', 49: '손긔졍 군, 여의도 비행장에 내리다', 277: '마지막 빈 날 — 이튿날 속간' };
+    /* (1019) 날마다 그림 — 빈 날들이 그냥 숫자로만 넘어가지 안케, 지면마다 그날의 그림이 비침 (재현 그림 · 실제 기록 사진은 따로 적음) */
+    var IM = [
+      [0, './img/mj/sk_shut.jpg', '닫힌 문 · 재현 그림'],
+      [1, './img/mj/sk_newsroom.jpg', '불 꺼진 편집국 · 재현 그림'],
+      [7, './img/mj/sk_shut.jpg', '조선중앙일보, 스스로 닫은 문 · 재현 그림'],
+      [9, './img/mj/sk_shut.jpg', '닫힌 문 · 재현 그림'],
+      [14, './img/mj/sk_desk.jpg', '빈 책상들 · 재현 그림'],
+      [30, './img/mj/sk_press.jpg', '멈춘 윤전긔 · 재현 그림'],
+      [49, './img/rec/rec19361017.jpg', '여의도 비행장 · 실제 기록 사진'],
+      [50, './img/mj/sk_shut.jpg', '그 뒤로도 닫힌 문 · 재현 그림'],
+      [90, './img/mj/sk_calendar.jpg', '찢겨 나간 날들 · 재현 그림'],
+      [125, './img/mj/sk_newsroom.jpg', '소화 십이 년 정월, 눈 덮인 광화문통 · 재현 그림'],
+      [160, './img/mj/sk_newsroom.jpg', '겨울 밤의 편집국 · 재현 그림'],
+      [200, './img/mj/sk_desk.jpg', '봄이 와도 · 재현 그림'],
+      [250, './img/mj/sk_shut.jpg', '마지막 달 · 재현 그림'],
+      [272, './img/mj/sk_press.jpg', '유월의 새벽 — 신문 뭉치를 실은 자전거들 · 재현 그림'],
+      [277, './img/scan/19370603p.jpg', '유월 삼일자 지면 · 실제 동아일보']
+    ], imK = -1, loaded = false;
+    function imAt(k) { var r = IM[0]; for (var i = 0; i < IM.length; i++) if (IM[i][0] <= k) r = IM[i]; return r; }
+    function preload() { if (loaded) return; loaded = true; IM.forEach(function (x) { var im = new Image(); im.src = x[1]; }); }
+    var d0 = new Date(1936, 7, 29);
+    function draw() {
+      var d = new Date(d0); d.setDate(d0.getDate() + n);
+      $('#calY').textContent = d.getFullYear(); $('#calD').textContent = (d.getMonth() + 1) + '.' + d.getDate(); $('#calW').textContent = MK[n] || '빈 지면';
+      $('#calN').textContent = n + 1; $('#calBar').style.width = ((n + 1) / 278 * 100) + '%';
+      page.classList.toggle('mk', !!MK[n]); $$('.cal2-mk li').forEach(function (li) { li.classList.toggle('on', +li.dataset.k <= n); });
+      var cur = imAt(n), nxt = imAt(n + 1);
+      $('#calIm').style.backgroundImage = 'url(' + cur[1] + ')'; $('#calIm2').style.backgroundImage = 'url(' + nxt[1] + ')';
+      page.classList.toggle('photo', /실제/.test(cur[2]));
+      var cp = $('#calCap'); if (cp && cp.textContent !== cur[2]) { cp.textContent = cur[2]; cp.classList.remove('in'); void cp.offsetWidth; cp.classList.add('in'); }
+    }
+    function tear() {
+      if (n >= 277) { stop(); btn.textContent = '이백칠십팔 일 — 그리고 속간'; btn.disabled = true; tone('stamp'); return; }
+      page.classList.remove('tear'); void page.offsetWidth; page.classList.add('tear'); n++; draw();
+      if (n % 3 === 0) tone('type');
+      if (MK[n]) { pause = true; tone('stamp'); setTimeout(function () { pause = false; if (hold) loop(); }, 1500); return; }
+      speed = Math.max(55, speed * .9); loop();
+    }
+    function loop() { clearTimeout(tmr); if (!hold || pause) return; tmr = setTimeout(tear, speed); }
+    function start(e) { if (e) e.preventDefault(); if (btn.disabled) return; preload(); hold = true; speed = 260; loop(); btn.classList.add('hold'); }
+    if ('IntersectionObserver' in W) { var pio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { preload(); pio.disconnect(); } }); }, { rootMargin: '600px 0px' }); pio.observe(page); }
+    function stop() { hold = false; clearTimeout(tmr); btn.classList.remove('hold'); }
+    btn.addEventListener('touchstart', start, { passive: false }); btn.addEventListener('touchend', stop); btn.addEventListener('touchcancel', stop);
+    btn.addEventListener('mousedown', start); W.addEventListener('mouseup', stop);
+    draw();
+  })();
+
+  /* ════ 第六章 · 엽서 뒤집기 · 공식 긔록 ════ */
+  $('#pcFlip').addEventListener('click', function () { var c = $('#pc2'); c.classList.toggle('flip'); this.textContent = c.classList.contains('flip') ? '재현 엽서로 도라가기' : '엽서를 뒤집어 실물 보기'; W.mb.sfx('whoosh', .3); });
+  $('#orBtn').addEventListener('click', function () { var o = $('#or2'); o.classList.toggle('kr'); this.textContent = o.classList.contains('kr') ? '다시 — 지금의 공식 긔록으로' : '누르면 — 그가 엽서에 적은 말로'; tone('stamp'); });
+
+  /* ════ 第七章 · 라듸오 (공통 장치) ════ */
+  W.mb.radio({ cardBase: './img/case/', linkLabel: '1936년과 겹치는 자리', dial: './img/case/dial.png', st: ST, gaps: GAPS, audioBase: '../../case/audio/sonkijeong/', staticSrc: '../../case/audio/radio-static.mp3', endLine: '빈자리는, 무엇이 지워졌는지를 말하오.' });
+})(window, document);

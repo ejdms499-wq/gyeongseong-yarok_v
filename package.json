@@ -1,0 +1,14 @@
+{
+  "name": "gyungsung-yarok",
+  "version": "1.0.0",
+  "description": "경성야록 (1930s Gyeongseong Newsroom & Sikjasil 3D)",
+  "scripts": {
+    "check": "node tests/check_all_syntax.cjs && node tests/check_encoding.cjs && node tests/check_format.cjs",
+    "test": "node --test tests/*.test.cjs",
+    "test:smoke": "node tools/run_smoke_tests.cjs",
+    "hooks:install": "git config core.hooksPath githooks"
+  },
+  "dependencies": {
+    "playwright": "^1.64.1"
+  }
+}

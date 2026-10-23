@@ -1,0 +1,189 @@
+/* 경성야록 · 백백교 폰판 — 《백색의 계율》 다섯 막 (1018)
+   서막 백색의 초대 → 제1막 아름다운 질서 → 제2막 균열 → 제3막 침식 → 종막 백색
+   색은 흰 종이와 먹뿐. 붉은빛은 이 사건에선 쓰지 안음. 읽을수록 바탕은 희어지고 글은 옅어짐 */
+/* 백백교 화이트 테마 (bb-w) */
+body.bb-w{--pale:#f6f5f2;--red:#1f1f1d;--ink:#1a1a18;background:var(--pale)}
+.bb-w .mb-sheet:not(.light),.bb-w .bb-night2,.bb-w .fw-st{--red:#cfcfca}
+.bb-w .mb-sec{border-top:0}
+.bb-w .mb-bar{background:rgba(246,245,242,.94)}
+
+/* ── 막 머리 — 흰 여백 한가운대 작은 글자 하나 ── */
+.bb-act{position:relative;overflow-x:clip;padding:24vh var(--g) 10vh;text-align:center;background:var(--pale);color:#1a1a18}
+.bb-act small{display:block;font:500 10.5px/1 var(--sans);letter-spacing:.44em;text-indent:.44em;color:#8a8a86}
+.bb-act b{display:block;margin-top:18px;font:300 clamp(26px,8vw,34px)/1.3 var(--serif);letter-spacing:.08em}
+.bb-act i{display:block;width:1px;height:48px;margin:24px auto 0;background:#1a1a18;opacity:.3}
+.bb-act.a2{background:#0b0b0b;color:#e9e8e3}
+.bb-act.a2 small{color:#8a8a86}
+.bb-act.a2 i{background:#fff;opacity:.35}
+.bb-act.a2::before,.bb-act.a2::after{content:"";position:absolute;left:-8%;right:-8%;height:1px;background:#e9e8e3;pointer-events:none;opacity:.55}
+.bb-act.a2::before{top:46%;transform:rotate(-2.4deg)}
+.bb-act.a2::after{top:52%;transform:rotate(1.3deg);opacity:.25}
+.bb-act.a3{background:#050505;color:#9a9994}
+.bb-act.a3 small{color:#6f6e6a}
+.bb-act.a3 i{background:#fff;opacity:.14}
+/* 제2막·제3막은 검정 — 장 머리도 검게 (흰 → 검 → 흰) */
+.bb-w .act2,.bb-w .act3{--pale:#0b0b0b}
+.bb-w .mb-open.act3{background:#050505}
+.bb-act.a4{background:#fff;color:#a3a39f;padding-bottom:14vh}
+.bb-act.a4 i{opacity:.08}
+
+/* ── 서막 · 백색의 초대 — 정돈된 대칭, 고요 ── */
+.bb-w .act0{background:var(--pale)}
+.bb-w .act0 .mb-h,.bb-w .act0 .mb-q,.bb-w .act0 .mb-src,.bb-w .act0 .mb-note{text-align:center}
+.bb-w .act0 .mb-q{border-left:0;padding-left:0}
+.bb-w .act0 .mb-h::after{content:"";display:block;width:28px;height:1px;margin:18px auto 0;background:#1a1a18;opacity:.5}
+.bb-w .bb-cover .bg{filter:grayscale(1) brightness(1.7) contrast(.5)!important}
+
+/* ── 제1막 · 아름다운 질서 — 줄 친 종이, 가튼 틀의 반복 ── */
+.bb-w .act1.mb-sec{background:#f7f6f3 repeating-linear-gradient(180deg,rgba(0,0,0,.05) 0 1px,transparent 1px 30px)}
+.bb-w .act1 .mb-h{text-align:center}
+.bb-w .act1 .mb-h::after{content:"";display:block;width:28px;height:1px;margin:18px auto 0;background:#1a1a18;opacity:.5}
+.bb-w .act1 .mb-q{text-align:center;border-left:0;padding-left:0}
+.bb-w .mb-open.act1{background:#f3f2ee;padding-bottom:82px}
+.bb-chant-band{position:absolute;left:0;right:0;bottom:12px;z-index:2;margin:0;padding:0 var(--g);overflow:hidden;white-space:nowrap;font:500 10px/1.9 var(--sans);letter-spacing:.34em;color:rgba(26,26,24,.28);pointer-events:none}
+.bb-chant-band + .bb-chant-band{bottom:32px;color:rgba(26,26,24,.16)}
+
+/* ── 제2막 · 균열 — (1019) 제2막·제3막은 다시 검정. 아래 .wh2/.wh3 규칙은 쓰이지 안음(남겨 둠) ── */
+.bb-w .wh2{position:relative;overflow-x:clip;background:#efeeea;color:var(--ink)}
+.bb-w .wh2::before,.bb-w .wh2::after{content:"";position:absolute;left:-8%;right:-8%;top:30px;height:1px;background:#111;pointer-events:none;z-index:0}
+.bb-w .wh2::before{transform:rotate(-1.8deg)}
+.bb-w .wh2::after{top:44px;transform:rotate(1.1deg);opacity:.4}
+.bb-w .wh2>*{position:relative;z-index:1}
+.bb-np{position:absolute!important;right:4%;top:6px;z-index:0!important;width:66%;height:170px;background-size:cover;background-position:center 20%;filter:grayscale(1) contrast(1.3);opacity:.09;transform:rotate(2.5deg);mix-blend-mode:multiply;pointer-events:none;-webkit-mask-image:linear-gradient(to left,#000 40%,transparent);mask-image:linear-gradient(to left,#000 40%,transparent)}
+.bb-w .wh2 .mb-p{color:#2a2a28;font-weight:400}
+.bb-w .wh2 .mb-p em{color:#000;box-shadow:inset 0 -.38em 0 rgba(0,0,0,.1)}
+.bb-w .wh2 .mb-note,.bb-w .wh2 .mb-src,.bb-w .wh2 .mb-fig figcaption,.bb-w .wh2 .mb-q small{color:#6b6b68}
+.bb-w .wh2 .mb-facts div{border-color:#cfcfca}
+.bb-w .wh2 .mb-facts dt{color:#6b6b68}
+.bb-w .wh2 .mb-ct{border-color:#1a1a18;color:#1a1a18}
+.bb-w .wh2 .mb-flow li{border-color:#cfcfca}
+.bb-w .mb-open.act2{background:#0b0b0b}
+
+/* ── 제3막 · 침식 — 검은 글자와 사진이 흰빛에 잠식됨. 장이 갈수록 바탕은 더 희고 글은 더 옅음 ── */
+.bb-w .wh3{position:relative;background:#f8f8f6;color:#2a2a28}
+.bb-w .wh3.w2{background:#fbfbfa;color:#3f3f3c}
+.bb-w .wh3.w3{background:#fdfdfc}
+.bb-w .wh3 .mb-h{color:#2a2a28}
+.bb-w .wh3.w2 .mb-h{color:#4a4a47}
+.bb-w .wh3.w3 .mb-h{color:#5a5a57}
+.bb-w .wh3 .mb-h small,.bb-w .wh3 .mb-src,.bb-w .wh3 .mb-note{color:#8a8a86}
+.bb-w .wh3 .mb-p{color:#4a4a47;font-weight:400}
+.bb-w .wh3.w2 .mb-p{color:#5f5f5c}
+.bb-w .wh3.w3 .mb-p{color:#6f6f6b}
+.bb-w .wh3 .mb-p em{color:#1a1a18;box-shadow:inset 0 -.38em 0 rgba(0,0,0,.08)}
+.bb-w .wh3 .mb-q{color:#55554f;border-color:#cfcfca}
+.bb-w .wh3.w2 .mb-q{color:#6b6b68}
+.bb-w .wh3 .mb-fig figcaption{color:#8a8a86}
+.bb-w .wh3 .mb-fig .im img{filter:grayscale(1) contrast(.95) brightness(1.08)}
+.bb-w .wh3.w2 .mb-fig .im img{filter:grayscale(1) contrast(.9) brightness(1.18);opacity:.85}
+.bb-w .wh3 .mb-doc{background:#fff;border:1px solid #e3e3df}
+.bb-w .wh3 .mb-doc img{opacity:.9}
+.bb-w .wh3.w2 .mb-doc img{opacity:.78}
+.bb-w .wh3 .mb-ct{border-color:#bbb;color:#55554f}
+.bb-ghost{position:absolute;right:-8%;top:40px;z-index:0;width:64%;aspect-ratio:3/4;background:center/cover no-repeat;filter:grayscale(1) contrast(.8) brightness(1.1);opacity:.07;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse at 50% 45%,#000 38%,transparent 72%);mask-image:radial-gradient(ellipse at 50% 45%,#000 38%,transparent 72%)}
+.bb-w .wh3>*{position:relative;z-index:1}
+.bb-w .wh3>.bb-ghost{z-index:0}
+/* 병 — 칠십사 년이 지나며 흰빛이 번져 사진을 삼킴 */
+.jx-veil{position:absolute;inset:0;z-index:3;background:#fdfdfc;opacity:0;pointer-events:none;will-change:opacity}
+.jx-st.wht .jx-cap{text-shadow:none}
+.jx-st.wht .jx-cap .k{color:#6b6b68}
+.jx-st.wht .jx-cap .b{color:#2a2a28}
+.jx-st.wht .jx-yr{text-shadow:none}
+.jx-st.wht .jx-yr b{color:#2a2a28}
+.jx-st.wht .jx-yr small{color:#6b6b68}
+.jx-st.wht .jx-rule{background:rgba(0,0,0,.12)}
+.jx-st.wht .jx-rule i{background:#1a1a18}
+.jx-st.wht .jx-rt{background:rgba(255,255,255,.7);color:#555}
+.jx-st .jx-cap,.jx-st .jx-yr,.jx-st .jx-rule,.jx-st .jx-rt{z-index:4}
+.bb-w .jx-cap .k{color:#bdbcb7}
+
+/* ── 종막 · 백색 — 흰 천 뒤엔 한 문장만 ── */
+.bb-w .fw-st{background:#050505}
+.bb-w .fw-big{position:absolute;left:0;right:0;top:50%;z-index:2;transform:translateY(-50%);margin:0;padding:0 calc(var(--g) + 6px);text-align:center;font:900 clamp(26px,8.4vw,34px)/1.5 var(--serif);color:#fff;text-shadow:0 2px 18px #000;opacity:0;will-change:opacity}
+.bb-w .fw-sheet::before{background:#fff}
+.bb-w .fw-sheet i{background:linear-gradient(#fff,rgba(255,255,255,.85) 40%,rgba(255,255,255,0))}
+.bb-w .fw-out{top:50%}
+.bb-w .fw-one{margin:0;font:300 clamp(19px,5.6vw,23px)/1.9 var(--serif);letter-spacing:-.005em;color:#2a2a28;opacity:0;will-change:opacity}
+.bb-w .fw-note{display:block;margin-top:22px;font:500 9.5px/1 var(--sans);letter-spacing:.26em;color:#b5b5b1;opacity:0}
+.bb-w .fw-rec{display:inline-flex;flex-direction:column;align-items:center;gap:10px;margin-top:11vh;color:#8a8a86;text-decoration:none;font:500 11px/1 var(--sans);letter-spacing:.36em;text-indent:.36em;opacity:0}
+.bb-w .fw-rec i{display:block;width:1px;height:34px;background:#8a8a86;opacity:.6}
+.bb-w .fw-st.w .fw-hint{opacity:0}
+
+/* ── 그 뒤 — 흰 뒤에 남은 긔록(덧붙임 · 다른 사건 · 사료)은 조용한 회백색 ── */
+.bb-w .act5{background:#f3f3f0;color:#2a2a28}
+.bb-w .act5 .mb-h{color:#2a2a28}
+.bb-w .act5 .mb-p{color:#4a4a47;font-weight:400}
+.bb-w .act5 .mb-q{color:#55554f;border-color:#cfcfca}
+.bb-w #colophon{background:#eeeeeb}
+.bb-w .mb-end{background:#e9e9e6;color:#55554f}
+
+/* ── 사진 설명 · 작은 글자는 어디서나 닑히게 ── */
+.bb-w .mb-fig .rt,.bb-w .rt{background:rgba(0,0,0,.55);color:#ddd}
+@media (prefers-reduced-motion:reduce){.bb-act i{display:none}}
+/* 차례의 막 이름 */
+.bb-w .mb-toc .toc-act{display:flex;align-items:baseline;gap:10px;margin:18px 0 6px;padding-top:14px;border-top:1px solid rgba(255,255,255,.14)}
+.bb-w .mb-toc .toc-act:first-child{margin-top:0;padding-top:0;border-top:0}
+.bb-w .mb-toc .toc-act small{font:500 10px/1 var(--sans);letter-spacing:.3em;color:#8a8a86}
+.bb-w .mb-toc .toc-act b{font:700 13px/1.3 var(--serif);color:#fff}
+.bb-w .mb-toc-sum{color:#bdbcb7}
+.bb-w .mb-toc a.on em{background:#fff;color:#111}
+.bb-w .mb-toc a.on b{color:#fff}
+.bb-w .mb-toc .toc-act{padding-left:var(--g);padding-right:var(--g)}
+.bb-w .mb-steps .sealed button{background:#1a1a18;border-color:#1a1a18;color:#fff}
+.bb-w .mb-steps li.seal>b{color:#1a1a18}
+.bb-w .stamp{color:#1a1a18}
+
+/* ── 이 지면엔 붉은 것이 업소 — 엔진·공용 장치의 붉은 글자·띠를 잿빛으로 ── */
+.bb-w .mb-p em{box-shadow:inset 0 -.38em 0 rgba(0,0,0,.09)}
+.bb-w .dark .mb-p em,.bb-w .bb-night2 .mb-p em{box-shadow:inset 0 -.38em 0 rgba(255,255,255,.22)}
+.bb-w .mb-resume small,.bb-w .mb-tip .k,
+.bb-w .mce-hg-hd span,.bb-w .mce-k,.bb-w .mce-say,.bb-w .mce-nb em,
+.bb-w .hs2-c.far .pl,.bb-w .dr-sub .k,.bb-w .cm-sub .k,.bb-w .jm-cap .k,.bb-w .wp-under p b,.bb-w .sf-frame .k,.bb-w .sf-pulse span,
+.bb-w .flp-k,.bb-w .fl-hd span:first-child,.bb-w .fl-sub .k,.bb-w .fl-end .k,.bb-w .wq-after .k,.bb-w .fz-red,.bb-w .jx-cap .k{color:#b5b5b0}
+.bb-w .wh2 .wp-under p b,.bb-w .wh2 .cm-sub .k,.bb-w .wh2 .dr-sub .k,.bb-w .wh2 .sf-frame .k,.bb-w .wh2 .sf-pulse span,
+.bb-w .wh3 .jm-cap .k,.bb-w .wh3 .fl-hd span:first-child,.bb-w .wh3 .fl-sub .k,.bb-w .wh3 .fl-end .k,.bb-w .wh3 .flp-k,.bb-w .wh3 .wq-after .k,.bb-w .act0 .hs2-c.far .pl{color:#76766f}
+.bb-w .mce-nb-i{border-left-color:#1a1a18}
+.bb-w .mce-nb.done{background:#fff;color:#111}
+.bb-w .mce-nb.done em{color:#111}
+.bb-w .mce-hg{--red:#cfcfca}
+.bb-w .mce-pass{--red:#1a1a18}
+.bb-w .mce-pass+.mce-go{background:#fff;color:#111}
+/* 종막 끗 — 다음 장 단추는 흰 바탕에 맞춰 */
+.bb-w #finale .mb-nextch{background:#fff;color:#1a1a18;border-color:#dcdcd7;border-left-color:#1a1a18;margin-top:0}
+.bb-w #finale .mb-nextch i{background:#1a1a18}
+.bb-w .bb-fin2{transition:background .6s}
+.bb-w .bb-fin2.w{background:#fff}
+.bb-w #finale .mb-nextch{margin-top:18px}
+.bb-w .fw-hint{bottom:calc(78px + env(safe-area-inset-bottom))}
+
+/* ── 1019 第二章 · 임명장 — 더 임명장답게 (호수 · 겹테 · 붓으로 쓰는 벼슬 · 쿵 찍히는 인) ── */
+.bb-w .lg2-stage{height:min(118vw,470px);background:#e4e3df}
+.bb-w .lg2-card{padding:26px 18px 14px;border:3px double #1a1a18;outline:1px solid #1a1a18;outline-offset:-9px;background:#fbfbf9 repeating-linear-gradient(0deg,rgba(0,0,0,.018) 0 1px,transparent 1px 4px)}
+.bb-w .lg2-card::before,.bb-w .lg2-card::after{content:"";position:absolute;left:14px;right:14px;height:1px;background:#1a1a18;opacity:.5}
+.bb-w .lg2-card::before{top:14px}.bb-w .lg2-card::after{bottom:14px}
+.bb-w .lg2-card .no{position:absolute;left:18px;top:18px;font:500 10px/1 var(--sans);letter-spacing:.22em;color:#6b6b68}
+.bb-w .lg2-card .h{margin-top:4px;font:900 24px/1 var(--serif);letter-spacing:.42em;text-indent:.42em}
+.bb-w .lg2-card .to{margin-top:10px;font:400 12px/1.5 var(--serif);color:#555}
+.bb-w .lg2-card .rank{margin:auto 0 4px;font:900 clamp(36px,12vw,50px)/1.05 var(--serif);letter-spacing:.02em;display:flex;gap:.02em}
+.bb-w .lg2-card .rank span{opacity:0;filter:blur(6px);transform:translateY(4px);transition:opacity .5s,filter .6s,transform .5s}
+.bb-w .lg2-card .rank span.on{opacity:1;filter:none;transform:none}
+.bb-w .lg2-card .b{font:500 14.5px/1.75 var(--serif)}
+.bb-w .lg2-card .date{margin-top:6px;font:400 11px/1.4 var(--serif);color:#6b6b68;letter-spacing:.06em}
+.bb-w .lg2-card .f{margin-top:6px;font:500 11.5px/1.4 var(--serif);color:#333;letter-spacing:.06em}
+.bb-w .lg2-card .f i.seal{width:46px;height:46px;border:0;background:#1a1a18;color:#fbfbf9;font:700 10.5px/1.15 var(--serif);letter-spacing:.08em;border-radius:2px;box-shadow:inset 0 0 0 1.5px #fbfbf9,inset 0 0 0 3px #1a1a18;transform:rotate(-6deg) scale(1.9);opacity:0;transition:transform .32s cubic-bezier(.3,1.5,.5,1),opacity .18s}
+.bb-w .lg2-card.sealed .f i.seal{transform:rotate(-6deg) scale(1);opacity:.96}
+.bb-w .lg2-card.base .f i{border:1.5px solid #ccc;background:none;color:#ccc;box-shadow:none;transform:rotate(-6deg);opacity:1}
+.bb-w .lg2-card.base .rank{display:block}
+.bb-w .lg2-void{border-color:#1a1a18;color:#1a1a18;background:rgba(251,251,249,.5)}
+.bb-w .lg2-led li.dau{color:#1a1a18;border-bottom-color:#1a1a18}
+.bb-w .lg2-led li.dau span:first-child{color:#1a1a18}
+.bb-w .lg2-give button{border-color:#1a1a18}
+@media (prefers-reduced-motion:reduce){.bb-w .lg2-card .rank span{transition:none}.bb-w .lg2-card .f i.seal{transition:none}}
+.bb-w .mb-dev .kk b{color:#cfcfca}
+.bb-w .mb-dev .go i{background:#fff;color:#111}
+
+.bb-w .act2,.bb-w .act3{overflow-x:clip}
+/* 빈 자리 — 서장의 흰 방과 8장의 메아리 */
+.bb-seat .im img{filter:grayscale(1) contrast(.92) brightness(1.08)}
+.bb-seat.dk .im img{filter:grayscale(1) contrast(1.15) brightness(.7)}
+.bb-w .mce-black{background:#fff;color:#b5b5b0}

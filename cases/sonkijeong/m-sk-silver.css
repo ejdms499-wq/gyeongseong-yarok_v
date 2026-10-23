@@ -1,0 +1,272 @@
+/* 경성야록 · 손긔졍 폰판 — 《지워진 표식》 여섯 막 (1018)
+   서막 결승선 → 제1막 사진이 도착하엿소 → 제2막 두 장의 사진 → 제3막 편집국의 밤 → 제4막 멈춘 인쇄긔 → 종막 끝내 지워지지 안은 것
+   색은 은회색과 흑백뿐 — 사진 필름 · 인화지 · 윤전긔의 쇠. 붉은빛은 이 사건에선 쓰지 안음 */
+/* 손기정 실버 테마 (sk-s) */
+body.sk-s{--paper:#eeeeec;--paper2:#e4e4e1;--ink:#121211;--red:#3a3a38;--line:#c9c9c5;--mute:#6b6b68;background:var(--paper)}
+.sk-s .mb-sec.dark,.sk-s .mb-open,.sk-s .mb-cover,.sk-s .mb-finale,.sk-s .mb-sheet:not(.light),.sk-s .rx-stage,.sk-s .sk-act,.sk-s .mce-hg,.sk-s .ro2-oath{--red:#cfcfcb}
+.sk-s .mce-pass{--red:#1a1a18}
+.sk-s .mb-bar{background:rgba(238,238,236,.94)}
+.sk-s .mb-prog{background:#121211}
+.sk-s .mb-bar .mb-ko.on b{background:#121211;border-color:#121211}
+.sk-s .mb-bar .mb-snd.on{color:#121211}
+.sk-s .mb-sec+.mb-sec{border-top-color:#c9c9c5}
+.sk-s .mb-cover .k b{color:#bdbdb9}
+.sk-s .mb-cover h1 span{color:#9a9a97}
+.sk-s .mb-cover .bg{filter:grayscale(1) contrast(1.08) brightness(.72)}
+
+/* ── 붉은 자국 지우기 — 엔진·공용 장치의 붉은 글자·띠 ── */
+.sk-s .mb-p em{box-shadow:inset 0 -.38em 0 rgba(0,0,0,.09)}
+.sk-s .dark .mb-p em{box-shadow:inset 0 -.38em 0 rgba(255,255,255,.2)}
+.sk-s .mb-steps .sealed button{background:#1a1a18;border-color:#1a1a18;color:#fff}
+.sk-s .mb-btn.red{background:#1a1a18!important;color:#fff!important}
+.sk-s .mb-resume small,.sk-s .mb-tip .k,.sk-s .mb-toc-sum,.sk-s .mce-hg-hd span,.sk-s .mce-k,.sk-s .mce-say,.sk-s .mce-nb em,
+.sk-s .rx-air.dead em,.sk-s .rx-track .mk.cut small{color:#b5b5b0}
+.sk-s .mce-nb-i{border-left-color:#1a1a18}
+.sk-s .mce-nb.done{background:#fff;color:#111}
+.sk-s .mce-nb.done em{color:#111}
+.sk-s .mce-pass+.mce-go{background:#fff;color:#111}
+.sk-s .mb-toc a.on em{background:#fff;color:#111}
+.sk-s .mb-toc a.on b{color:#fff}
+.sk-s .sk-film .sf-play{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.7)}
+.sk-s .pd2.lit .pd2-spot{outline-color:rgba(255,255,255,.8)}
+.sk-s .pd2-btn button.on{border-color:#fff;background:rgba(255,255,255,.1)}
+.sk-s .ro2-p.on b{text-decoration-color:rgba(0,0,0,.4)}
+.sk-s .rx-air.dead{border-color:#444}
+.sk-s .rx-stage.fin .rx-wm{color:rgba(255,255,255,.13)}
+.sk-s .rx-track .mk.cut i{background:#cfcfca}
+.sk-s .rx-stage.fin .rx-track .me::before,.sk-s .rx-stage.hot .rx-track .me::before{background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.22)}
+.sk-s .rx-rank.one b,.sk-s .rx-board li:first-child b{color:#fff}
+.sk-s .rx-guide i::after{background:#fff}
+.sk-s .rx-stage.cut .rx-cap h3{color:#cfcfca}
+.sk-s .rc-sc.fin h3{color:#fff}
+.sk-s .rc-bar i{background:#cfcfca}
+.sk-s .cal2-page{border-top-color:#2a2a29}
+.sk-s .cal2-page.mk span{color:#111}
+.sk-s .cal2-mk li.on b{color:#fff}
+.sk-s .cal2-bar i{background:#cfcfca}
+.sk-s .pc2-sign .kr{color:#111}
+.sk-s .or2-r em i.b{color:#111;text-decoration:underline;text-underline-offset:3px}
+.sk-s .mk2 li.now .y{color:#fff}
+.sk-s .mb-finale .red{color:#fff;font-weight:700}
+.sk-s .mb-end .seal{border-color:#4a4a48;color:#cfcfcb}
+.sk-s .stamp{color:#3a3a38;border-color:#3a3a38}
+.sk-s .mb-src b{border-color:#5b5b58;color:#5b5b58}
+.sk-s .mb-h small{color:#6b6b68;font-family:var(--sans)}
+.sk-s .dark .mb-h small,.sk-s .sk-desk .mb-h small{color:#9a9a97}
+.sk-s .mb-dev .go i,.sk-s .mb-nextch i{background:#1a1a18}
+.sk-s .dark .mb-dev .go i,.sk-s .dark .mb-nextch i{background:#e6e6e3;color:#111}
+
+/* ── 막 머리 — 필름 한 컷 ── */
+.sk-act{position:relative;overflow-x:clip;padding:21vh var(--g) 13vh;background:#0c0c0c;color:#e8e8e5;text-align:center}
+.sk-act::before,.sk-act::after{content:"";position:absolute;left:0;right:0;height:12px;background:repeating-linear-gradient(90deg,#0c0c0c 0 10px,#333332 10px 22px,#0c0c0c 22px 30px)}
+.sk-act::before{top:calc(21vh - 46px)}
+.sk-act::after{bottom:calc(13vh - 34px)}
+.sk-act em{position:absolute;right:var(--g);top:calc(21vh - 30px);font:500 10px/1 var(--sans);letter-spacing:.24em;color:#6b6b68;font-style:normal}
+.sk-act small{display:block;font:500 10.5px/1 var(--sans);letter-spacing:.44em;color:#8d8d8a;margin-bottom:16px}
+.sk-act b{display:block;font:300 26px/1.45 var(--serif);letter-spacing:.04em;color:#f0f0ed}
+.sk-act i{display:block;width:1px;height:38px;margin:26px auto 0;background:#4a4a48}
+.sk-act.a5 b{font-weight:400}
+
+/* ── 서막 — 기록 영상은 필름 째로 ── */
+.sk-s .sk-film{background:#0a0a0a}
+.sk-s .sf-fr{position:relative;padding:0 14px;background:#0a0a0a}
+.sk-s .sf-fr::before,.sk-s .sf-fr::after{content:"";position:absolute;top:0;bottom:0;width:14px;background:repeating-linear-gradient(#0a0a0a 0 6px,#2e2e2d 6px 15px,#0a0a0a 15px 22px)}
+.sk-s .sf-fr::before{left:0}
+.sk-s .sf-fr::after{right:0}
+.sk-s .sk-film video{aspect-ratio:16/10}
+.sk-s .sk-film .sf-play{top:50%}
+
+/* ── 제1막 — 사진 편집대 ── */
+.sk-s .sk-desk{background:#242423;color:#ecebe7;border-top:0;overflow-x:clip}
+.sk-s .sk-desk::before{content:"";position:absolute;left:50%;top:0;width:150vw;height:46vh;transform:translateX(-50%);background:radial-gradient(ellipse 50% 60% at 50% 0%,rgba(255,255,255,.11),rgba(255,255,255,0) 70%);pointer-events:none}
+.sk-s .sk-desk>*{position:relative}
+.sk-s .sk-desk .mb-h{color:#f0f0ed}
+.sk-s .sk-desk .mb-src{color:#9a9a97}
+.sk-s .sk-desk .mb-src b{border-color:#777;color:#cfcfcb}
+.sk-s .sk-desk .mb-p{color:#d9d8d3;font-weight:300}
+.sk-s .sk-desk .mb-p em{color:#fff;box-shadow:inset 0 -.38em 0 rgba(255,255,255,.2)}
+.sk-s .sk-desk .mb-note{color:#8d8d8a}
+.sk-s .sk-desk .mb-q{color:#f0f0ed;border-color:#5b5b58}
+.sk-s .sk-desk .mb-ct{color:#cfcfcb;border-color:#555}
+/* 지면 뭉치는 인화지 한 장처럼 */
+.sk-s .sk-desk .mb-dev{overflow:visible;background:#f1f1ee!important;color:#121211!important;box-shadow:0 1px 0 #d5d5d1,0 14px 30px -14px rgba(0,0,0,.9)!important;transform:rotate(-1.1deg);margin:26px 4px 30px}
+.sk-s .sk-desk .mb-dev .kk{color:#777!important}
+.sk-s .sk-desk .mb-dev .kk b{color:#121211!important}
+.sk-s .sk-desk .mb-dev span.d{color:#555!important}
+.sk-s .sk-desk .mb-dev .go{border-color:#cfcfca!important}
+.sk-s .sk-desk .mb-dev .go i{background:#121211;color:#fff}
+.sk-s .sk-desk .mb-dev .ph{margin:8px 8px 0;filter:grayscale(1) contrast(1.08)!important}
+.sk-s .sk-desk .mb-dev::after,.sk-s .sk-desk .mb-fig .im::after{content:"";position:absolute;right:-9px;bottom:-9px;width:18px;height:18px;background:linear-gradient(#9a9a97,#9a9a97) center/100% 1px no-repeat,linear-gradient(#9a9a97,#9a9a97) center/1px 100% no-repeat;pointer-events:none}
+.sk-s .sk-desk .mb-dev::before,.sk-s .sk-desk .mb-fig .im::before{content:"";position:absolute;left:-9px;top:-9px;width:18px;height:18px;background:linear-gradient(#9a9a97,#9a9a97) center/100% 1px no-repeat,linear-gradient(#9a9a97,#9a9a97) center/1px 100% no-repeat;pointer-events:none;z-index:2}
+.sk-s .sk-desk .mb-dev::before{display:none}
+/* 시상대 사진 — 인화지 테두리 · 타자로 친 꼬리표 */
+.sk-s .sk-desk .pd2{margin:22px 6px 10px}
+.sk-s .sk-desk .pd2-ph{overflow:hidden;border:8px solid #f2f2f0;border-bottom-width:12px;background:#f2f2f0;box-shadow:0 16px 34px -16px rgba(0,0,0,.95);transform:rotate(.6deg)}
+.sk-s .sk-desk .pd2-ph>img{filter:grayscale(1) contrast(1.06)}
+.sk-s .sk-desk .pd2-ph::before,.sk-s .sk-desk .pd2-ph::after{display:none}
+.sk-s .sk-desk .pd2-tag{display:block;padding:12px var(--g) 0;font:500 9.5px/1 var(--sans);letter-spacing:.22em;color:#8d8d8a}
+.sk-s .sk-desk .pd2-tag b{color:#e8e8e5;font-weight:600;margin-right:8px}
+.sk-s .sk-desk .pd2-cap{color:#d9d8d3}
+.sk-s .sk-desk .pd2-src{color:#9a9a97}
+.sk-s .sk-desk .mb-fig{margin:26px 4px}
+.sk-s .sk-desk .mb-fig .im{padding:8px 8px 26px;background:#f1f1ee;box-shadow:0 14px 30px -14px rgba(0,0,0,.9);transform:rotate(-.7deg)}
+.sk-s .sk-desk .mb-fig .rt{right:16px;bottom:34px}
+.sk-s .sk-desk .mb-fig figcaption{padding-top:14px}
+.sk-s .sk-desk .mb-fig .im img{filter:grayscale(1) contrast(1.06)}
+.sk-s .sk-desk .mb-fig figcaption{color:#8d8d8a}
+.sk-s .sk-desk .sk-tree li{border-color:#3a3a39}
+.sk-s .sk-desk .mb-flow li{color:inherit}
+.sk-s .sk-desk .mb-flow li p{color:#d9d8d3}
+.sk-s .sk-desk .mb-flow li b{color:#fff}
+.sk-s .sk-desk .mb-flow li::before{border-color:#777;background:#242423}
+.sk-s .sk-desk .mb-flow li:last-child::before{background:#e6e6e3;border-color:#e6e6e3}
+.sk-s .sk-desk .mb-flow::before{background:#444}
+.sk-s .sk-desk .sk-castle{color:#f0f0ed}
+
+/* ── 제2막 — 두 장의 사진 (금을 밀어 견줌) ── */
+.cmp{margin:18px 0 10px}
+.cmp-hint{font:400 14px/1.75 var(--sans);color:#bdbcb7;margin-bottom:12px}
+.cmp-hint b{color:#fff}
+.cmp-fr{position:relative;width:100%;max-width:360px;margin:0 auto;aspect-ratio:560/790;background:#1a1a1a;overflow:hidden;touch-action:pan-y;user-select:none;-webkit-user-select:none;box-shadow:0 30px 50px -20px #000;cursor:ew-resize}
+.cmp-fr img{position:absolute;left:0;top:0;width:100%;pointer-events:none;-webkit-user-drag:none}
+.cmp-fr img.o{height:100%;object-fit:cover;object-position:top;filter:grayscale(1) contrast(1.04)}
+.cmp-pw{position:absolute;inset:0;overflow:hidden;clip-path:inset(0 0 0 50%);will-change:clip-path}
+.cmp-pw img.p{height:auto;transform-origin:0 0;transform:translate(-5.927%,-3.084%) matrix(1.06028,-.00428,.00428,1.06028,0,0);filter:grayscale(1) contrast(1.08) brightness(.98)}
+.cmp-ring{position:absolute;left:41.6%;top:48.35%;width:20%;height:12.8%;border:1.5px dashed rgba(255,255,255,.85);border-radius:3px;pointer-events:none;transition:opacity .6s}
+.cmp-fr.moved .cmp-ring{opacity:0}
+.cmp-lb{position:absolute;top:10px;z-index:3;padding:6px 8px;background:rgba(10,10,10,.72);color:#e8e8e5;font:600 10.5px/1.3 var(--sans);letter-spacing:.12em;transition:opacity .3s;pointer-events:none}
+.cmp-lb small{display:block;font-weight:400;font-size:9.5px;letter-spacing:.1em;color:#b5b5b0;margin-top:3px}
+.cmp-lb.l{left:10px}
+.cmp-lb.r{right:10px;text-align:right}
+.cmp-hd{position:absolute;top:0;bottom:0;left:50%;z-index:4;width:0;pointer-events:none}
+.cmp-hd i{position:absolute;left:-1px;top:0;bottom:0;width:2px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.cmp-hd b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:space-between;width:46px;height:46px;padding:0 9px;border-radius:50%;background:#fff;color:#111;font:700 17px/1 var(--sans);box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.cmp-stamp{position:absolute;right:10px;bottom:10px;z-index:3;display:grid;place-items:center;width:62px;height:62px;border:3px solid #e8e8e5;color:#e8e8e5;font:900 16px/1 var(--serif);letter-spacing:.06em;background:rgba(10,10,10,.55);opacity:0;transform:scale(2.2) rotate(-14deg);transition:opacity .2s,transform .35s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.cmp-fr.printed .cmp-stamp{opacity:1;transform:rotate(-8deg)}
+.cmp-meter{max-width:360px;height:4px;margin:12px auto 0;background:#2a2a2a}
+.cmp-meter i{display:block;height:100%;width:0;background:#cfcfca}
+.cmp-steps{list-style:none;margin:18px 0 0}
+.cmp-steps li{padding:10px 0 10px 16px;border-left:2px solid #333;font:300 15.5px/1.8 var(--serif);color:#55544f;transition:color .8s,border-color .8s}
+.cmp-steps li.on{color:#efeeea;border-color:#cfcfca}
+.cmp-auto{display:block;margin:14px auto 0;padding:9px 12px;font:500 11.5px/1 var(--sans);color:#8d8d8a;border:1px solid #333}
+.cmp-auto:disabled{opacity:.4}
+
+/* ── 제3막 — 편집국의 밤 ── */
+.sk-s .sk-night{overflow-x:clip;background:#111 radial-gradient(ellipse 60% 34% at 24% 0%,rgba(255,255,255,.09),rgba(255,255,255,0) 70%);color:#ecebe7;border-top:0}
+.sk-s .sk-night .mb-h{color:#f0f0ed}
+.sk-s .sk-night .mb-src{color:#9a9a97}
+.sk-s .sk-night .mb-src b{border-color:#777;color:#cfcfcb}
+.sk-s .sk-night .mb-p{color:#d9d8d3;font-weight:300}
+.sk-s .sk-night .mb-p em{color:#fff;box-shadow:inset 0 -.38em 0 rgba(255,255,255,.2)}
+.sk-s .sk-night .mb-note{color:#8d8d8a}
+.sk-s .sk-night .mb-q{color:#f0f0ed;border-color:#5b5b58}
+.sk-s .sk-night .mb-ct{color:#cfcfcb;border-color:#444}
+.sk-s .sk-night .ro2{box-shadow:0 24px 44px -20px #000;border-color:#000}
+.sk-s .sk-night .ro2-oath{background:#1c1c1b;border:1px solid #333}
+.sk-s .sk-night .mb-fig figcaption{color:#8d8d8a}
+.sk-s .sk-night .mb-doc{background:#e8e7e3}
+.sk-s .sk-night .mr-rid>div{border-color:#3a3a39}
+.sk-s .sk-night .mr-rid b{color:#cfcfcb}
+.sk-s .sk-night .mr-rid strong{color:#fff}
+.sk-s .sk-night .mr-rid p{color:#cfcec9}
+/* 두 개의 긔록 — 보고와 회고, 나란히 */
+.tr-k{font:500 11px/1.6 var(--sans);letter-spacing:.18em;color:#9a9a97;margin:0 0 12px}
+.tr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tr-doc{position:relative;padding:14px 12px 16px;background:#f1f1ee;color:#121211;box-shadow:0 18px 34px -18px #000}
+.tr-doc.a{font-family:var(--sans);transform:rotate(-.8deg)}
+.tr-doc.b{transform:rotate(.7deg)}
+.tr-doc small{display:block;font:500 9.5px/1.4 var(--sans);letter-spacing:.16em;color:#6b6b68;margin-bottom:8px}
+.tr-doc h4{font:700 14px/1.4 var(--serif);letter-spacing:-.01em;margin:0 0 8px;padding-bottom:8px;border-bottom:1px solid #121211}
+.tr-doc.a h4{font-family:var(--sans)}
+.tr-doc p{font:400 12.5px/1.7 var(--serif);color:#222}
+.tr-doc.a p{font-family:var(--sans);font-size:12px}
+.tr-doc p b{font-weight:700;color:#121211;box-shadow:inset 0 -.36em 0 rgba(0,0,0,.08)}
+.tr-doc ol{margin:8px 0 0;padding-left:16px;font:400 11px/1.6 var(--sans);color:#444}
+.tr-doc em{display:block;margin-top:10px;font:500 9.5px/1.4 var(--sans);letter-spacing:.1em;color:#8d8d8a;font-style:normal}
+.tr-doc{padding-bottom:34px}
+.tr-doc .tr-st{position:absolute;right:10px;bottom:9px;padding:3px 5px;border:1.5px solid #3a3a38;color:#3a3a38;font:800 9.5px/1 var(--sans);letter-spacing:.14em;transform:rotate(-6deg)}
+.tr-q{display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:start;margin:18px 0 6px;padding:14px 0;border-top:1px solid #3a3a39;border-bottom:1px solid #3a3a39;font:700 15.5px/1.6 var(--serif);color:#fff}
+.tr-q b{font:900 26px/1 var(--serif);color:#cfcfcb}
+.tr-q span{display:block;margin-top:4px;font:400 13.5px/1.7 var(--serif);color:#cfcec9}
+@media (max-width:359px){.tr-grid{grid-template-columns:1fr}}
+
+/* ── 제4막 — 멈춘 인쇄긔 ── */
+.sk-press{position:relative;margin:22px calc(var(--g) * -1) 10px;padding:14px var(--g) 16px;background:#0e0e0e;border-top:1px solid #2a2a29;border-bottom:1px solid #2a2a29}
+.pr-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;font:500 10.5px/1 var(--sans);letter-spacing:.2em;color:#8d8d8a}
+.pr-hd b{font-weight:600;color:#e8e8e5}
+.pr-hd b::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#e8e8e5;margin-right:8px;vertical-align:1px}
+.sk-press.stop .pr-hd b::before{background:#555}
+.pr-m{position:relative;height:150px;display:grid;grid-template-rows:18px 1fr 18px;gap:4px}
+.pr-roll{display:block;border-radius:9px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 2px,rgba(0,0,0,0) 2px 7px),linear-gradient(#5a5a58,#222 45%,#444 60%,#1a1a1a);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.pr-web{position:relative;overflow:hidden;background:#dcdcd8}
+.pr-strip{position:absolute;inset:0;background-repeat:repeat-x;background-size:auto 230%;background-position:0 50%;filter:grayscale(1) contrast(1.08);will-change:background-position}
+.pr-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,0) 18%,rgba(0,0,0,0) 82%,rgba(0,0,0,.55)),linear-gradient(rgba(0,0,0,.25),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 70%,rgba(0,0,0,.3));pointer-events:none}
+.sk-press.stop .pr-web::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35)}
+.pr-cap{margin-top:12px;font:400 13.5px/1.7 var(--serif);color:#cfcec9;min-height:2.6em}
+.pr-cap em{font-style:normal;color:#8d8d8a;font-size:12px}
+.pr-cap b{color:#fff}
+.sk-press.mini{margin-top:18px;padding:10px var(--g) 12px}
+.sk-press.mini .pr-m{height:76px;grid-template-rows:12px 1fr 12px}
+.sk-press.mini .pr-roll{border-radius:6px}
+.sk-press.mini .pr-cap{margin-top:8px;font-size:12.5px;min-height:0}
+
+/* ── 종막 ── */
+.sk-s .sk-fin .fin-bg{filter:grayscale(1) contrast(1.12) brightness(.62)}
+.sk-s .mb-finale .k{color:#8d8d8a}
+.sk-s .mb-finale .big{color:#fff}
+
+/* ── 차례 — 막 표시 ── */
+.sk-s .mb-toc .toc-act{display:flex;align-items:baseline;gap:10px;margin:18px 0 6px;padding:14px var(--g) 0;border-top:1px solid rgba(255,255,255,.14)}
+.sk-s .mb-toc .toc-act:first-of-type{margin-top:0;padding-top:0;border-top:0}
+.sk-s .mb-toc .toc-act small{font:500 10px/1 var(--sans);letter-spacing:.3em;color:#8a8a86}
+.sk-s .mb-toc .toc-act b{font:700 13px/1.3 var(--serif);color:#fff}
+
+@media (prefers-reduced-motion:reduce){
+  .sk-s .sk-desk .mb-dev,.sk-s .sk-desk .pd2-ph,.tr-doc{transform:none}
+}
+
+/* ── 1019 第三章 하나 · 붓 (되살림) — 은회색 · 붉은빛 업시 ── */
+.sk-step{display:flex;align-items:center;gap:10px;margin:22px 0 10px;font:500 11px/1 var(--sans);letter-spacing:.3em;color:#8d8d8a}
+.sk-step b{display:grid;place-items:center;width:26px;height:26px;border:1px solid #555;border-radius:50%;font:700 11px/1 var(--serif);letter-spacing:0;color:#e8e8e5}
+.sk-step::after{content:"";flex:1;height:1px;background:#333}
+.bs2{margin:0 0 26px}
+.bs2-plate{background:#111;box-shadow:0 30px 50px -20px #000,0 0 0 1px #2a2a2a;cursor:crosshair}
+.bs2-plate img{filter:grayscale(1) contrast(1.04)}
+.bs2-plate .p{object-fit:cover;object-position:50% 48%;filter:grayscale(1) contrast(1.08) brightness(.98)}
+.bs2-ring{border:1.5px dashed rgba(255,255,255,.85);border-radius:3px;box-shadow:0 0 0 9999px rgba(0,0,0,0);animation:none}
+.bs2-plate::after{content:"점선 안을 문지르시압";position:absolute;left:50%;top:calc(47% + 70px);transform:translateX(-50%);padding:5px 9px;background:rgba(10,10,10,.72);color:#e8e8e5;font:500 10.5px/1 var(--sans);letter-spacing:.12em;white-space:nowrap;transition:opacity .5s;pointer-events:none}
+.bs2-plate.hand::after,.bs2-plate.printed::after{opacity:0}
+.bs2-brush{position:absolute;left:-100px;top:-100px;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:1.5px solid rgba(255,255,255,.9);background:radial-gradient(circle,rgba(255,255,255,.35),rgba(255,255,255,0) 70%);opacity:0;transition:opacity .2s;pointer-events:none;z-index:3}
+.bs2-plate.hand .bs2-brush{opacity:1}
+.bs2-stamp{border-color:#e8e8e5;color:#e8e8e5;background:rgba(10,10,10,.55);right:10px;top:auto;bottom:10px;letter-spacing:.06em}
+.bs2-meter{background:#2a2a2a}
+.bs2-meter i{background:#cfcfca}
+.bs2-steps li.on{color:#efeeea;border-color:#cfcfca}
+.bs2-auto{color:#8d8d8a;border-color:#333}
+.bs2-auto:disabled{opacity:.4}
+.cmp{position:relative;transition:opacity .8s}
+.cmp.ready .sk-step b{background:#e8e8e5;color:#111;border-color:#e8e8e5}
+.cmp.ready .cmp-hd b{animation:cmpNudge 1.6s ease-in-out 2}
+@keyframes cmpNudge{0%,100%{transform:translate(-50%,-50%)}30%{transform:translate(calc(-50% - 10px),-50%)}70%{transform:translate(calc(-50% + 10px),-50%)}}
+@media (prefers-reduced-motion:reduce){.cmp.ready .cmp-hd b{animation:none}}
+
+/* ── 1019 第五章 · 달력 — 지면마다 그림이 비침 ── */
+.cal2-pad.big{width:min(260px,72vw);height:min(300px,83vw)}
+.cal2-page,.cal2-under{overflow:hidden}
+.cal2-im{position:absolute;inset:0;background:center/cover no-repeat;filter:grayscale(1) contrast(1.05);opacity:.55;z-index:0;transition:opacity .4s}
+.cal2-under .cal2-im{opacity:.45}
+.cal2-page.photo .cal2-im{opacity:.8}
+.cal2-page::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(rgba(10,10,10,.25),rgba(10,10,10,.55) 55%,rgba(10,10,10,.78))}
+.cal2-page small,.cal2-page b,.cal2-page span{position:relative;z-index:1}
+.sk-s .cal2-page{background:#111;color:#f0efeb;border-top-color:#2a2a29}
+.sk-s .cal2-page small{color:#bdbcb7}
+.sk-s .cal2-page span{color:#d9d8d3;text-shadow:0 1px 6px #000}
+.sk-s .cal2-page.mk span{color:#fff;font-weight:700}
+.sk-s .cal2-under{background:#1a1a1a}
+.cal2-cap{margin-top:14px;font:500 11px/1.4 var(--sans);letter-spacing:.14em;color:#8d8d8a}
+.cal2-cap.in{animation:calCap .5s ease}
+@keyframes calCap{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.cal2-cap.in{animation:none}}
+.sk-wide{margin-left:calc(var(--g) * -1);margin-right:calc(var(--g) * -1)}
+.sk-wide .im img{aspect-ratio:3/4;object-fit:cover;max-height:72vh}
+.mb-q small{display:block;margin-top:8px;font:500 10.5px/1 var(--sans);letter-spacing:.14em;color:#8d8d8a}

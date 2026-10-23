@@ -1,0 +1,25 @@
+{
+  "name": "경성야록 (京城野錄)",
+  "short_name": "경성야록",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#15110c",
+  "theme_color": "#2a1f18",
+  "description": "1930년대 동아일보 지면과 4대 미제 사건을 탐색하는 인터랙티브 역사 아카이브 & 3D 가상 식자실",
+  "icons": [
+    {
+      "src": "shared/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "shared/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

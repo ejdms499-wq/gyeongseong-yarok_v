@@ -1,0 +1,406 @@
+/* =========================================================
+   경성야록 4대 사건 수사 일지 퀵 네비게이터 (Quick Case Drawer)
+   1930년대 고문서·수사 서류철 테마
+   - 경량 슬림 탭 & Scroll-Hide & 4분면 무충돌 HUD
+   ========================================================= */
+
+/* 1. 플로팅 슬림 탭 트리거 버튼 */
+.case-nav-trigger {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 99998;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 38px;
+  max-width: 38px;
+  height: 38px;
+  padding: 0;
+  box-sizing: border-box;
+  background: #251c14;
+  color: #eeddbb;
+  border: 1px solid #735338;
+  border-radius: 4px;
+  font-family: "Nanum Myeongjo", "Noto Serif KR", serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1), padding 0.25s ease, background 0.25s, opacity 0.3s ease, box-shadow 0.25s;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.case-nav-trigger .icon {
+  font-size: 16px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-nav-trigger .label,
+.case-nav-trigger .tag {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, max-width 0.25s ease;
+  pointer-events: none;
+}
+
+.case-nav-trigger:hover,
+.case-nav-trigger:focus-visible {
+  max-width: 220px;
+  padding: 0 12px;
+  gap: 6px;
+  background: #3d2d1f;
+  border-color: #a67c52;
+  color: #fff1d6;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+}
+
+.case-nav-trigger:hover .label,
+.case-nav-trigger:focus-visible .label {
+  opacity: 1;
+  max-width: 120px;
+  pointer-events: auto;
+}
+
+.case-nav-trigger:hover .tag,
+.case-nav-trigger:focus-visible .tag {
+  opacity: 1;
+  max-width: 80px;
+  pointer-events: auto;
+}
+
+.case-nav-trigger .tag {
+  display: inline-block;
+  background: #8b251b;
+  color: #fff;
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0;
+}
+
+/* 스크롤 시 자동 숨김 (Scroll-Hide) */
+.case-nav-trigger.scroll-hidden {
+  transform: translateY(-70px) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 어두운 배경 오버레이 */
+.case-nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(14, 10, 7, 0.78);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.case-nav-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 슬라이드 드로어 (비활성 시 완전히 숨겨 접근성 및 레이아웃 충돌 방지) */
+.case-nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(440px, 92vw);
+  z-index: 100000;
+  background-color: #e9dec6;
+  background-image: 
+    radial-gradient(circle at 50% 30%, rgba(255, 250, 240, 0.55) 0%, rgba(195, 175, 140, 0.35) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.75' numOctaves='2' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .25 0 0 0 0 .15 0 0 0 .4 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+  color: #1f1710;
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.75);
+  transform: translateX(100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overscroll-behavior: contain;
+  border-left: 2px solid #5a3c22;
+  font-family: "Nanum Myeongjo", "Noto Serif KR", "Batang", serif;
+}
+
+.case-nav-drawer.open {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* 드로어 헤더 */
+.case-nav-header {
+  padding: 22px 24px 18px;
+  background: #2b1e15;
+  color: #eedcba;
+  border-bottom: 2px double #6e4b2d;
+  position: relative;
+}
+
+.case-nav-header h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.case-nav-header p {
+  margin: 0;
+  font-size: 12.5px;
+  color: #c4b08d;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+.case-nav-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: transparent;
+  border: 1px solid #705238;
+  color: #eedcba;
+  padding: 4px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.case-nav-close:hover {
+  background: #8b251b;
+  border-color: #8b251b;
+  color: #fff;
+}
+
+/* 사건 리스트 영역 */
+.case-nav-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 18px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: #8b251b #dfd5c0;
+}
+.case-nav-body::-webkit-scrollbar {
+  width: 6px;
+}
+.case-nav-body::-webkit-scrollbar-thumb {
+  background: #8b251b;
+  border-radius: 3px;
+}
+.case-nav-body::-webkit-scrollbar-track {
+  background: #dfd5c0;
+}
+
+/* 사건 카드 */
+.case-nav-card {
+  flex-shrink: 0;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: #fbf7ef;
+  border: 1px solid #cbba9d;
+  border-radius: 4px;
+  padding: 14px 16px;
+  position: relative;
+  transition: all 0.22s ease;
+  box-shadow: 0 2px 5px rgba(50, 35, 20, 0.08);
+}
+
+.case-nav-card:hover {
+  background: #fff;
+  border-color: #8b251b;
+  transform: translateX(-4px);
+  box-shadow: 0 4px 12px rgba(139, 37, 27, 0.18);
+}
+
+.case-nav-card.active {
+  border: 2px solid #8b251b;
+  background: #fff8f6;
+}
+
+.case-nav-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.case-nav-card-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 2px;
+  background: #3a2a1d;
+  color: #f0e2c8;
+  letter-spacing: 0.05em;
+}
+
+.case-nav-card.active .case-nav-card-badge {
+  background: #8b251b;
+  color: #fff;
+}
+
+.case-nav-stamp {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #8b251b;
+  border: 1px solid #8b251b;
+  padding: 1px 6px;
+  border-radius: 2px;
+  transform: rotate(-3deg);
+  letter-spacing: 0.06em;
+}
+
+.case-nav-card-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1f160e;
+  margin: 0 0 5px;
+  line-height: 1.38;
+}
+
+.case-nav-card-desc {
+  font-size: 13px;
+  color: #5a4635;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.case-nav-card-meta {
+  margin-top: 9px;
+  font-size: 11.5px;
+  color: #8c735d;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 3D 식자실 비활성/잠금 카드: 회색(disabled) 및 툴팁 스타일 */
+.case-nav-card.locked-easter-egg {
+  flex-shrink: 0;
+  background: #e3ded6;
+  border: 1.5px dashed #a2988c;
+  opacity: 0.8;
+  cursor: not-allowed;
+  position: relative;
+  overflow: hidden;
+  filter: grayscale(0.8);
+}
+
+.case-nav-card.locked-easter-egg:hover {
+  background: #e8e3dc;
+  border-color: #887b6e;
+  transform: none;
+  box-shadow: 0 2px 5px rgba(50, 35, 20, 0.08);
+}
+
+.case-nav-card.locked-easter-egg .case-nav-card-badge {
+  background: #63574d;
+  color: #ddd4c8;
+}
+
+.case-nav-card.locked-easter-egg .lock-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #6b2620;
+  border: 1.5px solid #8b3c34;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  border-radius: 3px;
+  background: rgba(139, 37, 27, 0.08);
+  transform: rotate(-2deg);
+}
+
+.case-nav-card.locked-easter-egg .hint-box {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(43, 33, 24, 0.06);
+  border-left: 2px solid #8b251b;
+  font-size: 11.5px;
+  color: #4a3828;
+  line-height: 1.5;
+}
+
+.case-nav-card.special-sikja {
+  flex-shrink: 0;
+  background: #172820;
+  color: #f1f8f3;
+  border: 1.5px solid #2d7a52;
+}
+
+.case-nav-card.special-sikja:hover {
+  background: #20352a;
+  border-color: #4ea87d;
+  box-shadow: 0 4px 14px rgba(40, 110, 75, 0.3);
+}
+
+.case-nav-card.special-sikja .case-nav-card-title {
+  color: #ffffff;
+}
+
+.case-nav-card.special-sikja .case-nav-card-desc {
+  color: #a4cebb;
+}
+
+.case-nav-card.special-sikja .case-nav-card-badge {
+  background: #1c5f3f;
+  color: #e6f7ef;
+}
+
+/* 하단 닫기/안내 */
+.case-nav-footer {
+  padding: 12px 20px;
+  background: #eae0cb;
+  border-top: 1px solid #c7b597;
+  font-size: 11px;
+  color: #65513f;
+  text-align: center;
+}
+
+/* 반응형 (모바일 768px 이하) 대응: 수사 일지 트리거 버튼 규격 */
+@media (max-width: 768px) {
+  .case-nav-trigger {
+    top: 66px !important;
+    right: 12px !important;
+    width: 36px !important;
+    height: 36px !important;
+    z-index: 92 !important;
+  }
+  .case-nav-trigger:hover {
+    width: 36px !important;
+    padding: 0 !important;
+    transform: none !important;
+  }
+  .case-nav-trigger:hover .label,
+  .case-nav-trigger:hover .tag {
+    opacity: 0 !important;
+    max-width: 0 !important;
+  }
+}

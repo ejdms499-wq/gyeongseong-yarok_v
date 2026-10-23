@@ -1,0 +1,25 @@
+__pycache__/
+_to_delete/
+*.pyc
+node_modules/
+tests/screenshots/
+tools/*.png
+
+# 예전 버전 보관함 · 참고 자료 · 화면 캡처
+_backup/
+_reference/
+_screens/
+
+# 압축 파일 · 설치용 더블클릭 파일
+*.zip
+*.zip.old
+*이거하나만_더블클릭.bat
+
+# 윈도우 · 맥이 저절로 만드는 파일
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 테스트 검사용 스크린샷 산출물
+tests/**/*.png
+tests/**/*.jpg

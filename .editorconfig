@@ -1,0 +1,5 @@
+# 경성야록 · 편집기 공통 설정 — 모든 글 파일은 UTF-8(BOM 없음)로 저장
+root = true
+
+[*]
+charset = utf-8

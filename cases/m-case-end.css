@@ -1,0 +1,168 @@
+/* 네 사건 폰판 공용 — 호외 · 사건 도장 · 기자 출입증 (흑 · 백 · 붉은빛 하나) */
+.ykr-tel{display:none!important}
+
+/* ── 호외 ── */
+.mce-hg{position:fixed;inset:0;z-index:9500;display:flex;align-items:flex-end;background:rgba(0,0,0,0);transition:background .38s}
+.mce-hg[hidden]{display:none}
+.mce-hg.on{background:rgba(0,0,0,.82)}
+.mce-hg-in{width:100%;max-height:96vh;max-height:96svh;overflow:auto;overscroll-behavior:contain;padding:0 0 calc(18px + env(safe-area-inset-bottom));background:#0b0b0b;color:#ecebe7;transform:translateY(100%);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.mce-hg.on .mce-hg-in{transform:none}
+.mce-hg-hd{position:relative;padding:18px 56px 12px 22px;border-bottom:1px solid #2a2a2a}
+.mce-hg-hd b{display:block;font:900 24px/1.2 var(--serif);color:#fff}
+.mce-hg-hd span{display:block;margin-top:6px;font:500 11px/1.4 var(--sans);letter-spacing:.1em;color:#e07a72}
+.mce-hg-x{position:absolute;right:10px;top:12px;width:44px;height:44px;border:0;background:none;color:#ecebe7;font:300 30px/1 var(--sans)}
+.mce-hg-tr{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.mce-hg-tr::-webkit-scrollbar{display:none}
+.mce-hg-sl{flex:0 0 100%;width:100%;min-width:100%;margin:0;padding:14px 18px 0;display:grid;place-items:start center;scroll-snap-align:start;scroll-snap-stop:always;box-sizing:border-box}
+.mce-hg-sl img{display:block;width:auto;max-width:100%;height:auto;max-height:66vh;max-height:66svh;object-fit:contain;background:#0b0b0b;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.mce-hg-tr>img{flex:0 0 100%;width:100%;max-height:68vh;max-height:68svh;object-fit:contain;scroll-snap-align:start;padding:14px 18px 0;background:#0b0b0b}
+.mce-hg-n{padding:10px 22px 0;text-align:center;font:500 12px/1.4 var(--sans);color:#9a9994}
+.mce-hg-ok{display:block;width:calc(100% - 44px);margin:14px auto 0;height:50px;border:0;background:#fff;color:#0b0b0b;font:800 14.5px/50px var(--serif);letter-spacing:.06em}
+.mce-tab{position:fixed;left:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:80;display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border:0;background:#0b0b0b;color:#fff;box-shadow:0 8px 20px rgba(0,0,0,.45);transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.mce-tab[hidden]{display:none}
+.mce-tab.in,.mce-tab:not([hidden]){transform:none}
+.mce-tab img{width:32px;height:40px;object-fit:cover;object-position:top}
+.mce-tab b{font:800 13px/1 var(--serif);letter-spacing:.1em}
+
+/* ── 끗 · 도장 · 출입증 ── */
+.mce{padding:44px var(--g,22px) 40px;background:#0b0b0b;color:#ecebe7;text-align:center}
+.mce-k{font:500 11px/1 var(--sans);letter-spacing:.24em;color:#e07a72}
+.mce h2{margin-top:14px;font:900 27px/1.4 var(--serif);color:#fff}
+.mce-board{margin:26px 0 0;padding:18px 14px 20px;border:1px solid #2c2c2b}
+.mce-bh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;font:700 12px/1 var(--sans);letter-spacing:.14em;color:#9a9994}
+.mce-bh span{font:800 15px/1 var(--serif);color:#fff;letter-spacing:.06em}
+.mce-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.mce-s{display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;color:#6f6e6a}
+.mce-s i{display:grid;place-items:center;width:62px;height:62px;border-radius:50%;border:1.5px dashed #444;font:700 14px/1 var(--serif);font-style:normal;color:#555}
+.mce-s b{font:600 12px/1.2 var(--sans)}
+.mce-s.me i{border-color:#9a9994}
+.mce-s.on{color:#ecebe7}
+.mce-s.on i{border:3px solid var(--red,#b3261e);color:var(--red,#b3261e);font:900 15px/1 var(--serif);transform:rotate(-10deg);box-shadow:inset 0 0 0 2px rgba(179,38,30,.25)}
+.mce-s.fresh i{animation:mceStamp .55s cubic-bezier(.5,0,.6,1.4) .25s both}
+@keyframes mceStamp{0%{transform:rotate(-10deg) scale(2.4);opacity:0}60%{transform:rotate(-10deg) scale(.92);opacity:1}100%{transform:rotate(-10deg) scale(1)}}
+.mce-left{margin:22px 0 14px;font:400 14.5px/1.8 var(--serif);color:#bdbcb7}
+.mce-left b{color:#fff}
+.mce-go{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:0 14px 0 0;background:#fff;color:#0b0b0b;text-decoration:none;font:800 15px/1.35 var(--serif);text-align:left}
+.mce-go .ph{flex:none;width:64px;height:64px;background:center/cover;filter:grayscale(1)}
+.mce-go small{display:block;margin-bottom:3px;font:600 10.5px/1 var(--sans);letter-spacing:.1em;color:var(--red,#b3261e)}
+.mce-pass+.mce-go{justify-content:center;margin-top:16px;padding:0 14px;background:var(--red,#b3261e);color:#fff;letter-spacing:.06em}
+.mce-pass{position:relative;margin:56px auto 0;max-width:330px;padding:28px 22px 20px;background:#f4f3f0;color:#0e0e0e;border:2px solid #0e0e0e;outline:1px solid #0e0e0e;outline-offset:-8px;text-align:left;transform:rotate(-1.2deg)}
+.mce-pass.fresh{animation:mcePass .8s cubic-bezier(.2,.8,.2,1) .6s both}
+@keyframes mcePass{0%{transform:translateY(-60px) rotate(-6deg);opacity:0}100%{transform:rotate(-1.2deg);opacity:1}}
+.mce-strap{position:absolute;left:50%;bottom:100%;width:14px;height:56px;margin-left:-7px;background:repeating-linear-gradient(0deg,#1a1a1a 0 3px,#0b0b0b 3px 6px);box-shadow:inset 0 0 0 1px #333}
+.mce-p-top{display:flex;justify-content:space-between;padding-bottom:7px;border-bottom:2px solid #0e0e0e;font:800 10.5px/1 var(--sans);letter-spacing:.14em}
+.mce-p-top span{color:var(--red,#b3261e);font-weight:500}
+.mce-pass h3{margin:16px 0 14px;text-align:center;font:900 26px/1.2 var(--serif);letter-spacing:.16em}
+.mce-p-who{display:flex;align-items:center;gap:10px;font:600 12px/1 var(--sans);color:#6b6b68}
+.mce-p-who input{flex:1;min-width:0;height:44px;padding:0 10px;border:0;border-bottom:1.5px solid #0e0e0e;background:#fff;font:800 19px/1 var(--serif);color:#0e0e0e;border-radius:0}
+.mce-p-who input:focus{outline:0;border-color:var(--red,#b3261e)}
+.mce-key{display:block;width:100%;margin-top:16px;padding:12px 0;border:0;border-top:1px solid #0e0e0e;border-bottom:1px solid #cfcfca;background:none;text-align:center}
+.mce-key small{display:block;font:500 10.5px/1 var(--sans);letter-spacing:.2em;color:#6b6b68}
+.mce-key strong{display:block;margin-top:8px;font:900 36px/1 var(--serif);letter-spacing:.4em;color:#0e0e0e;filter:blur(9px);transition:filter .8s}
+.mce-key.on strong{filter:none}
+.mce-p-s{margin-top:10px;text-align:center;font:400 11.5px/1.5 var(--sans);color:#6b6b68}
+.mce-p-stamp{position:absolute;right:16px;top:50px;padding:6px 7px 4px;border:3px solid var(--red,#b3261e);color:var(--red,#b3261e);font:900 15px/1.15 var(--serif);transform:rotate(-12deg);opacity:.9}
+.mce-pass.fresh .mce-p-stamp{animation:mceStamp2 .5s cubic-bezier(.5,0,.6,1.4) 1.5s both}
+@keyframes mceStamp2{0%{transform:rotate(-12deg) scale(2.2);opacity:0}100%{transform:rotate(-12deg) scale(1);opacity:.9}}
+.mce-share{display:grid;grid-template-columns:1.3fr 1fr;gap:8px;margin-top:14px}
+.mce-share button{min-height:48px;border:1px solid #444;background:none;color:#ecebe7;font:600 13px/1 var(--sans)}
+.mce-share button:first-child{border-color:#ecebe7}
+.mce-say{margin-top:10px;font:500 12px/1.5 var(--sans);color:#e07a72}
+@media (prefers-reduced-motion:reduce){.mce *{animation:none!important}}
+
+/* ── v2 아래 고정 두 단추: 왼편 기자수첩 · 오른편 호외 ── */
+.mce-tab{left:auto;right:12px}
+.mce-nb{position:fixed;left:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:80;display:flex;align-items:center;gap:8px;height:50px;padding:0 14px 0 10px;border:0;background:#0b0b0b;color:#fff;box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.mce-nb-i{width:22px;height:28px;background:#f4f3f0;border-left:4px solid var(--red,#b3261e);box-shadow:inset 0 -5px 0 -3px #999,inset 0 -11px 0 -9px #999,inset 0 -17px 0 -15px #999}
+.mce-nb b{font:800 13px/1 var(--serif);letter-spacing:.06em}
+.mce-nb em{font:600 12px/1 var(--sans);font-style:normal;color:#e07a72}
+.mce-nb.done{background:var(--red,#b3261e)}.mce-nb.done em{color:#fff}
+.mce-nb.pop{animation:mceNbPop .6s ease}
+@keyframes mceNbPop{30%{transform:scale(1.12)}60%{transform:scale(.97)}}
+.mce-tab{height:50px}
+/* 도장 쾅 */
+.mce-stp{position:fixed;left:24px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:81;pointer-events:none}
+.mce-stp i{display:grid;place-items:center;width:74px;height:74px;border-radius:50%;border:3px solid var(--red,#b3261e);color:var(--red,#b3261e);background:rgba(244,243,240,.94);font:900 17px/1 var(--serif);font-style:normal;opacity:0;transform:rotate(-12deg) scale(2.2)}
+.mce-stp.on i{animation:mceStp 1.9s cubic-bezier(.5,0,.6,1.4) both}
+@keyframes mceStp{0%{opacity:0;transform:rotate(-12deg) scale(2.2)}18%{opacity:1;transform:rotate(-12deg) scale(.94)}26%,72%{opacity:1;transform:rotate(-12deg) scale(1)}100%{opacity:0;transform:rotate(-12deg) scale(.6) translate(-20px,60px)}}
+/* 수첩 펼침 */
+.mce-bk-bd{padding:18px 22px 0}
+.mce-bk{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;list-style:none;margin:0;padding:0}
+.mce-bk button{display:flex;flex-direction:column;align-items:center;gap:7px;width:100%;border:0;background:none;color:#6f6e6a}
+.mce-bk i{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;border:1.5px dashed #444;font:700 14px/1 var(--serif);font-style:normal;color:#555}
+.mce-bk small{font:600 11.5px/1 var(--sans)}
+.mce-bk .on{color:#ecebe7}
+.mce-bk .on i{border:3px solid var(--red,#b3261e);color:var(--red,#b3261e);font:900 14px/1 var(--serif);transform:rotate(-10deg);background:rgba(179,38,30,.06)}
+.mce-bk-s{margin-top:16px;text-align:center;font:400 13px/1.6 var(--serif);color:#9a9994}
+.mce-bk-4{margin-top:20px;padding:14px;border:1px solid #2c2c2b}
+.mce-bk-4>p:first-child{display:flex;justify-content:space-between;font:700 12px/1 var(--sans);letter-spacing:.12em;color:#9a9994}
+.mce-bk-4>p:first-child span{color:#fff}
+.mce-bk-4>div{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:12px}
+.mce-bk-4>div>*{display:flex;flex-direction:column;align-items:center;gap:6px;font:600 11.5px/1 var(--sans);color:#6f6e6a;text-decoration:none}
+.mce-bk-4>div i{width:14px;height:14px;border-radius:50%;border:1.5px solid #555}
+.mce-bk-4>div .on{color:#ecebe7}.mce-bk-4>div .on i{background:var(--red,#b3261e);border-color:var(--red,#b3261e)}
+.mce-bk-4>div .me{color:#fff}
+.mce-bk-t{margin-top:12px;font:400 13px/1.7 var(--serif);color:#bdbcb7;text-align:center}
+.mce-bk-t strong{color:#fff;font-weight:900;letter-spacing:.2em}
+.mce-bk-t a{color:#e07a72}
+.mce-book .mce-share{margin:16px 22px 0}
+
+/* ── 기자증 (yk-press.js) — 폰판: 아래서 올라오는 한 장 · 흑백 ── */
+.ykp-veil{place-items:end stretch!important;padding:0!important;background:rgba(0,0,0,.86)!important}
+.ykp-box{width:100%!important;max-height:94svh!important;padding:20px 18px calc(22px + env(safe-area-inset-bottom))!important;background:#0b0b0b!important;color:#ecebe7!important;box-shadow:none!important;border-top:3px solid var(--red,#b3261e)}
+.ykp-k{letter-spacing:.2em!important;color:#e07a72!important;font-size:10.5px!important}
+.ykp-box h3{margin:10px 0 6px!important;font:900 19px/1.45 var(--serif)!important;color:#fff}
+.ykp-box .s{font:400 13px/1.65 var(--serif)!important;color:#9a9994!important}
+.ykp-cv{margin-top:14px!important;transform:none!important;filter:drop-shadow(0 14px 22px rgba(0,0,0,.7))!important;border-radius:8px}
+.ykp-x{right:10px!important;top:8px!important;width:44px;height:44px;display:grid!important;place-items:center;font-size:28px!important;color:#ecebe7!important}
+.ykp-steps{gap:18px!important;margin-top:18px!important}
+.ykp-st{grid-template-columns:1fr!important;gap:8px!important}
+.ykp-st>b{font:700 11.5px/1 var(--sans)!important;letter-spacing:.16em!important;color:#e07a72!important}
+.ykp-st>small{grid-column:1!important;color:#6f6e6a!important}
+.ykp-name{height:52px;background:#f4f3f0!important;border-bottom:3px solid var(--red,#b3261e)!important;font:800 20px/1 var(--serif)!important;color:#0e0e0e!important;border-radius:0}
+.ykp-pics{flex-wrap:nowrap!important;overflow-x:auto;gap:8px!important;margin:0 -18px;padding:2px 18px 6px;scrollbar-width:none}
+.ykp-pics::-webkit-scrollbar{display:none}
+.ykp-pic{flex:0 0 62px!important;width:62px!important;display:flex!important;flex-direction:column!important;align-items:center!important}
+.ykp-pic img,.ykp-pic i{width:62px!important;height:78px!important;filter:grayscale(1) contrast(1.05)!important;border:2px solid #333!important;background:#161616!important;color:#9a9994!important}
+.ykp-pic.on img,.ykp-pic.on i{border-color:#fff!important;box-shadow:0 0 0 2px var(--red,#b3261e)!important;filter:grayscale(1) contrast(1.15)!important}
+.ykp-pic span{color:#9a9994!important;font-size:10.5px!important}
+.ykp-pic.on span{color:#fff!important}
+.ykp-sh{display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important}
+.ykp-s{display:flex!important;align-items:center!important;justify-content:center!important;min-height:48px!important;padding:0 10px!important;box-sizing:border-box!important;border:1px solid #444!important;color:#ecebe7!important;font:600 13px/1 var(--sans)!important}
+.ykp-s.main{grid-column:1/-1;background:var(--red,#b3261e)!important;border-color:var(--red,#b3261e)!important;color:#fff!important}
+.ykp-s[data-a="mail"],.ykp-s[data-a="x"],.ykp-s[data-a="fb"]{display:none!important}
+.ykp-msg{color:#e07a72!important}
+.ykp-gate{border-color:var(--red,#b3261e)!important;color:#cfcfca}
+.ykp-gate b{color:#e07a72!important}.ykp-gate a{color:#fff!important}
+.mce-press{display:block;width:100%;margin-top:16px;height:54px;border:0;background:var(--red,#b3261e);color:#fff;font:800 15px/54px var(--serif);letter-spacing:.06em}
+.mce-bk-p{margin-top:14px;text-align:center;font:400 13px/1.6 var(--serif);color:#9a9994}
+.mce-bk-p b{color:#fff}
+/* 아래 두 단추 — 읽는 동안엔 숨음 */
+.mce-nb,.mce-tab{transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .35s}
+body:not(.mce-dock) .mce-nb,body:not(.mce-dock) .mce-tab{transform:translateY(160%)!important;opacity:0;pointer-events:none}
+.mce-nb,.mce-tab{height:44px!important}
+.mce-nb{padding:0 12px 0 9px}
+.mce-tab img{width:28px;height:34px}
+
+/* ── 1019 기자수첩 단추 — 사건을 다 보고 난 뒤에야 ── */
+body:not(.mce-nb-on) .mce-nb{display:none!important}
+body:not(.mce-nb-on) .mce-stp{display:none!important}
+/* ── 1019 표지 소리 안내 · 끗 뒤 검은 화면 · 접힌 부록 ── */
+.mce-snd{display:flex;align-items:center;gap:8px;margin:14px 0 4px;font:500 11.5px/1.4 var(--sans);letter-spacing:.08em;color:#cfcfca}
+.mce-snd i{font-style:normal;display:grid;place-items:center;width:22px;height:22px;border:1px solid #777;border-radius:50%;font-size:11px}
+.mce-black{min-height:100svh;min-height:100vh;display:flex;align-items:flex-end;justify-content:center;padding:0 22px 22vh;background:#000;color:#6f6e6a}
+.mce-black p{margin:0;font:500 11px/1.6 var(--sans);letter-spacing:.3em;text-align:center}
+.mce-unfold{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;padding:34px 22px 40px;border:0;border-top:1px solid #222;background:#0b0b0b;color:#cfcfca}
+.mce-unfold small{font:500 10px/1 var(--sans);letter-spacing:.3em;color:#77756f}
+.mce-unfold b{font:700 16px/1.4 var(--serif);color:#fff}
+.mce-unfold i{font-style:normal;font:500 12px/1 var(--sans);letter-spacing:.12em;color:#9a9994;margin-top:4px}
+.mce-fold{height:0;overflow:hidden}
+.mce-fold.open{height:auto;overflow:visible}
+/* 팝업 머리 그림 — 호외 소년 · 기자수첩 */
+.mce-hg-art{position:relative;height:120px;background:center 35%/cover no-repeat;filter:grayscale(1) contrast(1.05)}
+.mce-hg-art.nb{background-position:center 45%}
+.mce-hg-art::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(11,11,11,0) 40%,#0b0b0b)}
+.mce-hg-art span{position:absolute;right:10px;top:10px;z-index:1;font:500 9px/1 var(--sans);letter-spacing:.18em;padding:4px 5px;background:rgba(0,0,0,.6);color:#bbb}
+.mce-hg-art+.mce-hg-hd{margin-top:-34px;position:relative;z-index:1;border-bottom:0}
+@media (max-height:700px){.mce-hg-art{height:84px}}
+.mce-hg-art.nb{background-color:#141414;background-size:auto 170%;background-position:50% 48%}
