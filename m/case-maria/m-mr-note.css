@@ -1,0 +1,178 @@
+/* 경성야록 · 마리아 폰판 — 《관사 15호, 그날의 긔록》 다섯 막 (1018)
+   서막 편집국에 도착한 전보 → 제1막 관사 15호 → 제2막 그날의 열두 시간 → 제3막 엇갈리는 진술 → 종막 긔자의 마지막 원고
+   색은 먹과 종이뿐 — 수첩의 괘선 · 연필의 잿빛. 붉은빛은 쓰지 안음 */
+body.mr-n{--red:#2a2a28;--ink:#0e0e0e}
+.mr-n .mb-sec.dark,.mr-n .mb-open,.mr-n .mb-cover,.mr-n .mb-finale,.mr-n .mb-sheet:not(.light),.mr-n .mr-interro,.mr-n .mr-courtroom,.mr-n .mr-act,.mr-n .mce-hg{--red:#d4d4cf}
+.mr-n .mce-pass{--red:#1a1a18}
+.mr-n .mb-prog{background:#0e0e0e}
+.mr-n .mb-bar .mb-ko.on b{background:#0e0e0e;border-color:#0e0e0e}
+.mr-n .mb-bar .mb-snd.on{color:#0e0e0e}
+.mr-n .mb-cover .k b{color:#bdbdb9}
+.mr-n .mb-p em{box-shadow:inset 0 -.38em 0 rgba(0,0,0,.09)}
+.mr-n .dark .mb-p em,.mr-n .mr-interro .mb-p em{box-shadow:inset 0 -.38em 0 rgba(255,255,255,.2)}
+.mr-n .mb-steps .sealed button{background:#1a1a18;border-color:#1a1a18;color:#fff}
+.mr-n .mb-btn.red{background:#1a1a18!important;color:#fff!important}
+.mr-n .mb-sheet:not(.light) .mb-btn.red{background:#ecebe7!important;color:#0e0e0e!important}
+.mr-n .mb-resume small,.mr-n .mb-tip .k,.mr-n .mb-toc-sum,.mr-n .mce-hg-hd span,.mr-n .mce-k,.mr-n .mce-say,.mr-n .mce-nb em{color:#b5b5b0}
+.mr-n .mce-nb-i{border-left-color:#1a1a18}
+.mr-n .mce-nb.done{background:#fff;color:#111}
+.mr-n .mce-nb.done em{color:#111}
+.mr-n .mce-pass+.mce-go{background:#fff;color:#111}
+.mr-n .mb-toc a.on em{background:#fff;color:#111}
+.mr-n .mb-toc a.on b{color:#fff}
+.mr-n .mr-tel .ts{border-color:#2a2a28;color:#2a2a28}
+.mr-n .t-conf{background:#ecebe7;color:#0e0e0e;border-color:#ecebe7!important}
+.mr-n .t-let{color:#d4d4cf;border-color:#d4d4cf!important}
+.mr-n .mr-tl small{color:#bdbcb7}
+.mr-n .mr-tl li.key::before{background:#fff;border-color:#fff}
+.mr-n .mr-three div b{text-decoration-color:#9a9994}
+.mr-n .ck-big .ss{stroke:#bdbcb7}
+.mr-n .ck-big .pin{fill:#ecebe7}
+.mr-n #c3.scream .ck-stage{background:radial-gradient(ellipse 70% 60% at 50% 45%,rgba(255,255,255,0),rgba(255,255,255,.07))}
+.mr-n .mr-cast i{color:#2a2a28;border-color:#2a2a28}
+.mr-n .al q::after{color:#6b6b68}
+.mr-n .al.on q{text-decoration-color:#9a9994}
+.mr-n .al i{color:#2a2a28;border-color:#2a2a28}
+.mr-n .st-clue span,.mr-n .dy-clue span{color:#cfcec9}
+.mr-n .mr-rid b{color:#6b6b68}
+.mr-n .mr-rid strong i{color:#2a2a28;border-color:#2a2a28}
+.mr-n .mb-finale .red{color:#fff;font-weight:700}
+.mr-n .mb-end .seal{border-color:#4a4a48;color:#cfcfcb}
+.mr-n .stamp{color:#2a2a28;border-color:#2a2a28}
+.mr-n .mb-src b{border-color:#5b5b58;color:#5b5b58}
+.mr-n .mb-h small{color:#6b6b68}
+.mr-n .dark .mb-h small,.mr-n .mr-interro .mb-h small,.mr-n .mr-courtroom .mb-h small{color:#9a9a97}
+.mr-n .mb-dev .go i,.mr-n .mb-nextch i{background:#1a1a18}
+.mr-n .dark .mb-dev .go i,.mr-n .dark .mb-nextch i{background:#e6e6e3;color:#111}
+.mr-n .mb-open .n{color:#bdbdb9}
+
+/* ── 막 머리 — 수첩 한 장 ── */
+.mr-act{position:relative;overflow-x:clip;padding:21vh var(--g) 13vh;background:#f1f1ee repeating-linear-gradient(transparent 0 31px,rgba(0,0,0,.07) 31px 32px);color:#0e0e0e;text-align:center}
+.mr-act::before{content:"";position:absolute;left:38px;top:0;bottom:0;width:1px;background:rgba(0,0,0,.14)}
+.mr-act em{position:absolute;right:var(--g);top:calc(21vh - 30px);font:500 10px/1 var(--sans);letter-spacing:.24em;color:#8d8d8a;font-style:normal}
+.mr-act small{display:block;font:500 10.5px/1 var(--sans);letter-spacing:.44em;color:#6b6b68;margin-bottom:16px}
+.mr-act b{display:block;font:400 26px/1.45 var(--serif);letter-spacing:.02em;color:#0e0e0e}
+.mr-act i{display:block;width:34px;height:2px;margin:28px auto 0;background:#0e0e0e}
+
+/* ── 서막 — 수첩을 받다 ── */
+.nt-hand{margin:22px 0 6px;padding:16px 16px 14px;border:1px solid #3a3a3a;background:#141414;color:#ecebe7}
+.nt-hand small{display:block;font:500 9.5px/1 var(--sans);letter-spacing:.24em;color:#9a9994;margin-bottom:8px}
+.nt-hand p{font:400 14.5px/1.75 var(--serif);color:#d4d3ce;margin:0 0 10px}
+.nt-hand p b{color:#fff}
+.nt-hand button{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid #777;font:500 12px/1 var(--sans);letter-spacing:.12em;color:#fff}
+.nt-hand button::before{content:"";width:14px;height:18px;background:#f4f3f0;border-left:3px solid #1a1a18;box-shadow:inset 0 -4px 0 -2px #999,inset 0 -8px 0 -6px #999}
+
+/* ── 수첩에 적는 단추 · 토스트 ── */
+.nt-add{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:6px 10px 6px 8px;border:1px solid #444;font:500 10.5px/1 var(--sans);letter-spacing:.1em;color:#bdbcb7;background:none;-webkit-tap-highlight-color:transparent}
+.nt-add i{width:9px;height:12px;background:#ecebe7;border-left:2px solid #1a1a18}
+.mr-tl li.noted .nt-add{border-color:#ecebe7;color:#ecebe7}
+.mr-tl li.noted .nt-add span::after{content:" 적음"}
+.nt-tap{cursor:pointer}
+.nt-tap.noted{box-shadow:inset 3px 0 0 #ecebe7}
+.nt-toast{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom));z-index:9000;transform:translate(-50%,16px);min-width:220px;max-width:calc(100% - 40px);padding:10px 14px;background:#f4f3f0;color:#0e0e0e;border-left:4px solid #0e0e0e;box-shadow:0 10px 24px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}
+.nt-toast.on{opacity:1;transform:translate(-50%,0)}
+.nt-toast small{display:block;font:500 9.5px/1 var(--sans);letter-spacing:.2em;color:#6b6b68;margin-bottom:5px}
+.nt-toast b{font:700 13.5px/1.4 var(--serif)}
+
+/* ── 공용 기자수첩 속 「취재 긔록」 ── */
+.nt-book{margin:0 0 18px;padding:0 0 14px;border-bottom:1px solid #2a2a2a}
+.nt-hd{display:flex;justify-content:space-between;align-items:baseline;padding:0 0 10px;border-bottom:1px solid #333}
+.nt-hd b{font:800 15px/1 var(--serif);letter-spacing:.06em;color:#ecebe7}
+.nt-hd span{font:500 11px/1 var(--sans);letter-spacing:.1em;color:#9a9994}
+.nt-empty{padding:12px 0 0;font:400 13px/1.7 var(--serif);color:#9a9994}
+.nt-book h5{margin:14px 0 6px;font:500 10.5px/1 var(--sans);letter-spacing:.24em;color:#9a9994}
+.nt-book h5 em{font-style:normal;color:#ecebe7;margin-left:6px}
+.nt-book ul{list-style:none;margin:0;padding:0}
+.nt-book li{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;padding:9px 0;border-top:1px solid #222;cursor:pointer}
+.nt-book li i{grid-row:1/3;align-self:start;margin-top:3px;font:800 9px/1 var(--sans);font-style:normal;letter-spacing:.14em;padding:4px 5px;border:1.5px solid #777;color:#bdbcb7;white-space:nowrap}
+.nt-book li.fact i{border-color:#ecebe7;color:#ecebe7}
+.nt-book li.clash i{border-style:dashed;border-color:#ecebe7;color:#ecebe7}
+.nt-book li b{font:700 13px/1.4 var(--serif);color:#ecebe7}
+.nt-book li span{font:400 12px/1.6 var(--serif);color:#bdbcb7}
+.nt-go{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;font:500 12px/1.4 var(--sans)}
+.nt-go a{color:#ecebe7;text-decoration:underline;text-underline-offset:3px}
+.nt-go button{font:500 10.5px/1 var(--sans);letter-spacing:.1em;color:#8d8d8a;border:1px solid #444;padding:6px 8px}
+
+/* ── 제2막 — 시계 겻 작은 평면도 ── */
+.ck-plan{position:absolute;right:var(--g);top:14px;width:118px;opacity:.55;transition:opacity .6s}
+#c3.scream .ck-plan{opacity:.85}
+.ck-plan small{display:block;font:500 9px/1 var(--sans);letter-spacing:.2em;color:#9a9994;margin-bottom:6px;text-align:right}
+.ck-plan svg{display:block;width:100%}
+.ck-plan rect{fill:rgba(255,255,255,.04);stroke:#777;stroke-width:3}
+.ck-plan rect.o{stroke-dasharray:10 8}
+.ck-plan text{font:600 40px var(--sans);fill:#8d8d8a;text-anchor:middle}
+.ck-plan g.on rect{fill:rgba(255,255,255,.9);stroke:#fff}
+.ck-plan g.on text{fill:#0e0e0e}
+.ck-plan b{display:block;margin-top:6px;font:500 10px/1.4 var(--sans);letter-spacing:.06em;color:#ecebe7;text-align:right;word-break:keep-all}
+@media (max-width:360px){.ck-plan{width:100px}}
+
+/* ── 종막 — 긔자의 마지막 원고 ── */
+.dr{margin:22px calc(var(--g) * -1) 10px;padding:18px var(--g) 22px;overflow-x:clip;background:#f7f7f4;color:#0e0e0e;border-top:3px double #0e0e0e;border-bottom:3px double #0e0e0e}
+.dr-mast{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-bottom:10px;border-bottom:1px solid #0e0e0e}
+.dr-mast b{font:900 22px/1 var(--serif);letter-spacing:.3em}
+.dr-mast span{font:500 10px/1.5 var(--sans);letter-spacing:.14em;color:#555;text-align:right}
+.dr-h{margin:16px 0 4px;font:900 28px/1.3 var(--serif);letter-spacing:-.03em}
+.dr-sub{font:500 11px/1.6 var(--sans);letter-spacing:.1em;color:#555;margin-bottom:14px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.dr-sub b{font:800 12px/1 var(--sans);color:#0e0e0e}
+.dr-st{display:inline-grid;place-items:center;width:58px;height:58px;border:2.5px solid #0e0e0e;color:#0e0e0e;font:900 14px/1.1 var(--serif);text-align:center;transform:rotate(-10deg) scale(1.6);opacity:0;transition:opacity .3s,transform .4s cubic-bezier(.3,1.6,.5,1)}
+.dr-st.on{opacity:1;transform:rotate(-10deg)}
+.dr-body{display:grid;gap:16px}
+.dr-col h4{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 6px;padding:8px 0 6px;border-top:2px solid #0e0e0e;border-bottom:1px solid #0e0e0e}
+.dr-col h4 b{font:800 14px/1 var(--serif);letter-spacing:.1em}
+.dr-col h4 small{font:500 9.5px/1.4 var(--sans);letter-spacing:.1em;color:#6b6b68;text-align:right}
+.dr-col.clash h4{border-top-style:dashed}
+.dr-col.open h4{border-top-style:dotted}
+.dr-it{display:block;padding:9px 0;border-bottom:1px solid #d9d9d4;text-decoration:none;color:inherit}
+.dr-it b{display:block;font:700 12.5px/1.4 var(--serif);letter-spacing:.02em;margin-bottom:3px}
+.dr-it p{margin:0;font:400 13.5px/1.7 var(--serif);color:#222}
+.dr-it:not(.on) b{color:#8d8d8a}
+.dr-it:not(.on) p i{display:block;height:9px;margin:6px 0;background:repeating-linear-gradient(90deg,#d9d9d4 0 6px,transparent 6px 9px);border-radius:2px}
+.dr-it:not(.on) p i.s{width:62%}
+.dr-it:not(.on) p span{display:block;margin-top:6px;font:500 10.5px/1.4 var(--sans);letter-spacing:.08em;color:#6b6b68;text-decoration:underline;text-underline-offset:3px}
+.dr-it.on b::before{content:"■ ";font-size:8px;vertical-align:2px}
+.dr-note{margin-top:14px;font:400 11.5px/1.6 var(--sans);color:#6b6b68}
+#draft.done .dr-h::after{content:" — 탈고";font-size:16px;font-weight:500;color:#6b6b68}
+
+/* ── 차례 — 막 표시 ── */
+.mr-n .mb-toc .toc-act{display:flex;align-items:baseline;gap:10px;margin:18px 0 6px;padding:14px var(--g) 0;border-top:1px solid rgba(255,255,255,.14)}
+.mr-n .mb-toc .toc-act:first-of-type{margin-top:0;padding-top:0;border-top:0}
+.mr-n .mb-toc .toc-act small{font:500 10px/1 var(--sans);letter-spacing:.3em;color:#8a8a86}
+.mr-n .mb-toc .toc-act b{font:700 13px/1.3 var(--serif);color:#fff}
+
+@media (prefers-reduced-motion:reduce){.nt-toast{transition:none}.dr-st{transition:none}}
+
+/* ── 붉은 자국 마저 지움 (이 사건은 먹과 종이뿐) ── */
+.mr-n .t-let,.mr-n .sl.open em,.mr-n .mr-ad small,.mr-n .bk-j i,.mr-n .hs2-cnt span,.mr-n .ck-rail.key .ck-read b,.mr-n .ct2.witness .ct2-who{color:#cfcec9}
+.mr-n .hs-ex circle{stroke:#cfcec9}
+.mr-n .hs-ex text{fill:#cfcec9}
+.mr-n .hs-ex.on circle{fill:#cfcec9}
+.mr-n .bk-j u{box-shadow:inset 0 -.4em 0 rgba(255,255,255,.28)}
+.mr-n .lt-spot.on{background:rgba(255,255,255,.08)}
+.mr-n .bk-leaf .bk-q{background:rgba(0,0,0,.05)}
+.mr-n .qa .d.w{box-shadow:0 0 30px rgba(255,255,255,.08)}
+.mr-n .hs2-svg.lit .hot rect{stroke:#fff;fill:rgba(255,255,255,.1)}
+.mr-n .hs2-svg.lit .hot.on rect{fill:rgba(255,255,255,.28)}
+.mr-n .hs2-svg.lit .hx circle{stroke:#e9e5da}
+.mr-n .hs2-svg.lit .hx text{fill:#e9e5da}
+.mr-n .hs2-ph.red::after{background:radial-gradient(ellipse 70% 60% at 50% 45%,rgba(255,255,255,.04),rgba(0,0,0,.9)),linear-gradient(transparent 55%,#030303)}
+.mr-n .hs2-ph.red img{filter:grayscale(1) contrast(1.15) brightness(.7)}
+.mr-n #c3.scream .ck-big .rim{stroke:#fff}
+.mr-n #c3.scream .ck-t{color:#fff}
+.mr-n .ck-face .pin{fill:#ecebe7}
+.mr-n .ck-rail.key .ck-face circle:first-child{stroke:#fff}
+.mr-n .mr-tl li.key.now::before{background:#fff;box-shadow:0 0 0 6px rgba(255,255,255,.12)}
+.mr-n .bk-circ path{stroke:#1a1a18}
+.mr-n .lt-take.stamped .l{color:#d8433a;text-shadow:0 0 30px rgba(179,38,30,.45)}
+.mr-n .lt-match{border-color:#ecebe7;color:#ecebe7}
+.nt-mid{padding-top:8px;padding-bottom:8px}
+.nt-hand button em{font-style:normal;font-weight:400;opacity:.75;margin-left:4px}
+.nt-intro{font-size:14.5px!important;color:#bdbcb7!important}
+/* 1019 평면도 — 크게, 사람 일홈을 방 우에 */
+.ck-plan{width:min(200px,50vw);opacity:.8}
+.ck-plan .ck-who text{font:800 44px var(--sans);fill:#fff;stroke:#0e0e0e;stroke-width:10px;paint-order:stroke;text-anchor:middle}
+.ck-plan g.on text{fill:#0e0e0e;font-size:34px}
+
+/* (1019c) 괴투서 끗 줄 — 「신문에 난 것은, 전부 거짓말이오.」 · 「내가 한 것이오.」 붉은 먹 */
+.lt-text p.r,.mr-n .lt-text p.r{color:#a3201a!important;font-weight:700}
+/* (1019c) 3화 평면도 뺌 */
+.ck-plan{display:none!important}

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<!-- 경성야록 독자 호외 — 폰 전용판 (폰에서 hogoe.html 이 이리로 넘김)
+     만드는 장치(글 엮기 · 그림 저장 · 공유 · 사진관)는 컴퓨터판과 같은 hogoe.js · hg-photo.js 를 쓰고, 판은 폰에 맞게 새로 짬.
+     폰은 흰 종이 · 검은 먹 · 붉은빛 하나. 독자가 지어 낸 이약이이며 실제 사건이 아님. -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#0b0b0b">
+<title>경성야록 · 당신이 찍는 호외</title>
+<link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
+<link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts-m.css?v=2">
+<link rel="stylesheet" href="yk-mbook.css?v=28">
+<link rel="stylesheet" href="hogoe.css?v=10">
+<link rel="stylesheet" href="m-hogoe.css?v=3">
+<script>window.HG_TONE = { bg: '#f4f3f0', ink: '#0e0e0e', dbg: '#0e0e0e', dink: '#ecebe7', vig: 'rgba(0,0,0,.10)', filter: 'grayscale(1) contrast(1.15)' };</script>
+</head>
+<body class="mhg">
+<div class="mb-bar"><a href="index.html">‹ 본지</a><span class="mb-now" data-def="독자 호외 · 자정의 인쇄소"></span><label class="mhg-snd"><input type="checkbox" id="hgSnd" checked><span>소리</span></label><i class="mb-prog"></i></div>
+
+<header class="mb-cover mhg-cover">
+  <img class="cv-bg" id="mhgCv" src="assets/hg3/m_hg_cover.jpg" alt="자정의 인쇄소 (재현 그림)">
+  <div class="cv-top"><a href="index.html">‹ 본지</a><span>독자판 · 그림 · 재현</span></div>
+  <div class="cv-t">
+    <p class="cv-k">독자 호외 · 자정의 인쇄소</p>
+    <h1>당신이 찍는<br><span>호외</span></h1>
+    <p class="cv-s">활자 서랍을 열고, 사진을 고르고, 종이와 잉크를 정하고, 원고를 넘기면 — 윤전기가 한 장짜리 호외를 찍어 내오.</p>
+    <p class="cv-n" id="h2Count"></p>
+    <button type="button" class="cv-go" id="mhgGo">인쇄소로 드러가기 ↓</button>
+  </div>
+</header>
+
+<!-- 단계 -->
+<div class="h2-stage mhg-stage" id="mhgStage">
+  <nav class="mhg-steps" id="mhgSteps" aria-label="단계"></nav>
+  <aside class="h2-desk mhg-desk" id="mhgDesk" aria-label="인쇄소 작업대">
+    <section class="h2-part ph-type" data-step="활자">
+      <h2><b>활자</b><span>서랍 · 무슨 이약이</span></h2>
+      <p class="mhg-q">어떤 이약이를 찍겟소? 서랍 하나를 여시오.</p>
+      <div class="drawers" data-k="topic">
+        <button type="button" class="drawer" data-v="mystery" aria-pressed="true"><span class="plate"><b>괴</b><i>괴담</i></span><span class="knob"></span><span class="type" aria-hidden="true"></span></button>
+        <button type="button" class="drawer" data-v="daily" aria-pressed="false"><span class="plate"><b>일</b><i>일상</i></span><span class="knob"></span><span class="type" aria-hidden="true"></span></button>
+        <button type="button" class="drawer" data-v="history" aria-pressed="false"><span class="plate"><b>세</b><i>세상</i></span><span class="knob"></span><span class="type" aria-hidden="true"></span></button>
+        <button type="button" class="drawer" data-v="free" aria-pressed="false"><span class="plate"><b>자</b><i>자유</i></span><span class="knob"></span><span class="type" aria-hidden="true"></span></button>
+      </div>
+    </section>
+
+    <section class="h2-part" data-step="종이">
+      <h2><b>종이</b><span>지면 꼴</span></h2>
+      <p class="mhg-q">어떤 종이에 찍겟소?</p>
+      <div class="papers" data-k="style">
+        <button type="button" class="paper p-classic" data-v="classic" aria-pressed="true"><span class="pp"><i></i><i></i><i></i></span><em>정통 지면</em></button>
+        <button type="button" class="paper p-horror" data-v="horror" aria-pressed="false"><span class="pp"><i></i><i></i><i></i></span><em>괴담 먹지</em></button>
+        <button type="button" class="paper p-breaking" data-v="breaking" aria-pressed="false"><span class="pp"><i></i><i></i><i></i></span><em>특보</em></button>
+      </div>
+    </section>
+
+    <section class="h2-part" data-step="잉크">
+      <h2><b>잉크</b><span>분위기</span></h2>
+      <p class="mhg-q">무슨 기분으로 쓰겟소?</p>
+      <div class="inks" data-k="tone">
+        <button type="button" class="ink" data-v="serious" aria-pressed="true" style="--ink:#0e0e0e"><i class="bt"></i><em>진지하게</em></button>
+        <button type="button" class="ink" data-v="tense" aria-pressed="false" style="--ink:#b3261e"><i class="bt"></i><em>조마조마</em></button>
+        <button type="button" class="ink" data-v="tender" aria-pressed="false" style="--ink:#4a4a48"><i class="bt"></i><em>애틋하게</em></button>
+        <button type="button" class="ink" data-v="funny" aria-pressed="false" style="--ink:#8a8984"><i class="bt"></i><em>우습게</em></button>
+      </div>
+    </section>
+
+    <section class="h2-part" data-step="원고">
+      <h2><b>원고</b><span>이약이</span></h2>
+      <div class="ms-tabs" role="tablist"><button type="button" role="tab" data-mode="kw" aria-selected="true">낱말 몃 개</button><button type="button" role="tab" data-mode="story" aria-selected="false">직접 쓰기</button></div>
+      <div class="ms" data-for="kw">
+        <input id="hgKw" maxlength="60" placeholder="전차, 우산, 자정" autocomplete="off" enterkeyhint="done">
+        <p class="mhg-hint">아래 활자를 누르면 원고에 박히오.</p>
+        <div class="types" id="hgSugg" aria-label="추천 활자"></div>
+      </div>
+      <div class="ms" data-for="story" hidden>
+        <textarea id="hgStory" rows="5" maxlength="300" placeholder="오늘 내 짝꿍이 김치볶음밥이 먹고 싶다고 했다."></textarea>
+        <p class="ms-n"><span id="hgCnt">0</span> / 300</p>
+      </div>
+      <label class="ms-name"><span>투고자</span><input id="hgName" maxlength="10" placeholder="아무개" autocomplete="off" enterkeyhint="done"><em>생</em></label>
+    </section>
+
+    <section class="h2-part press ph-press" data-step="찍기">
+      <h2><b>윤전기</b><span>찍기</span></h2>
+      <p class="mhg-q">손잡이를 아래로 끌어 내리시오.</p>
+      <div class="mhg-lever" id="mhgLever">
+        <div class="lv-rail"><i class="lv-fill" id="mhgFill"></i></div>
+        <button type="button" class="lv-knob" id="mhgKnob" aria-label="윤전기 손잡이 — 아래로 끌기"><span>당기기</span></button>
+        <button type="button" class="lever" id="hgPress" aria-label="윤전기 손잡이 당기기 (바로 찍기)">바로 찍기</button>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<!-- 교정쇄 -->
+<section class="mhg-sheet" id="mhgSheet">
+  <div class="h2-sheetwrap">
+    <div class="h2-sheetbar"><span id="hgLab">교정쇄 · 고르는 대로 바뀌오</span><span class="bar-r"><button type="button" class="reroll" id="hgReroll"><span>제목 다시</span></button><button type="button" class="cens-b" id="hgCens"><span>검열관</span></button></span></div>
+    <div class="h2-proof" id="hgProof">
+      <article class="sh classic" id="hgSheet">
+        <header class="sh-mh">
+          <span class="sh-no"><b>독자판</b><i id="hgNo">제 일 호</i></span>
+          <span class="sh-name"><b>경성야록</b><em>호외</em></span>
+          <span class="sh-date"><b id="hgDate"></b><i>정가 · 공짜</i></span>
+        </header>
+        <p class="sh-kick" id="hgKick"></p>
+        <h3 class="sh-h" id="hgHead" spellcheck="false"></h3>
+        <p class="sh-sub" id="hgSub" spellcheck="false"></p>
+        <div class="sh-main">
+          <figure class="sh-fig" id="hgFig"><span class="sh-art" id="hgArt"></span><figcaption id="hgCap"></figcaption></figure>
+          <div class="sh-body" id="hgBody" spellcheck="false"></div>
+        </div>
+        <div class="sh-boxes">
+          <div><b>자정의 날씨</b><p id="hgW"></p></div>
+          <div><b>광고</b><p id="hgAd"></p></div>
+          <div><b>독자 운세</b><p id="hgF"></p></div>
+        </div>
+        <footer class="sh-ft"><span id="hgBy"></span><span>※ 독자가 지어 낸 이약이 · 실제 사건 아님</span></footer>
+        <span class="sh-stamp" aria-hidden="true">발<br>행</span>
+      </article>
+      <span class="roller" aria-hidden="true"></span>
+    </div>
+    <p class="h2-msg" id="hgMsg" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- 찍은 뒤 -->
+<div class="h2-after mhg-after" id="hgAfter" hidden>
+  <button type="button" class="act dark" id="hgShare"><b>부치기</b><span>카톡 · SNS</span></button>
+  <button type="button" class="act" id="hgPng"><b>간직</b><span>사진첩</span></button>
+  <button type="button" class="act" id="hgHang"><b>널기</b><span>빨랫줄에</span></button>
+  <button type="button" class="act ghost" id="hgAgain"><b>새로</b><span>다시 찍기</span></button>
+</div>
+
+<!-- 부치기 -->
+<div class="shm mhg-shm" id="hgShareBox" hidden role="dialog" aria-modal="true" aria-label="호외 부치기">
+  <div class="shm-card">
+    <button type="button" class="shm-x" id="shmX" aria-label="닫기">×</button>
+    <p class="shm-k">호외 부치기</p>
+    <div class="shm-grid">
+      <div class="shm-prev"><img id="shmImg" alt="보낼 호외 그림"></div>
+      <div class="shm-side">
+        <button type="button" class="shm-b main" data-sh="kakao"><b>공유하기 · 카톡 · 인스타 · 문자</b><small>폰의 공유 창이 열리오 — 호외 그림째 감</small></button>
+        <button type="button" class="shm-b" data-sh="save"><b>사진첩에 저장</b><small>호외 한 장을 그림 파일로</small></button>
+        <button type="button" class="shm-b" data-sh="link"><b>링크 복사</b><small>누르면 이 호외가 그대로 펼쳐지는 주소</small></button>
+        <div class="shm-msg" id="shmMsg" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 빨랫줄 -->
+<section class="mhg-line" id="mhgLine">
+  <figure class="ln-pic"><img src="assets/hg3/m_hg_line.jpg" alt="골목 빨랫줄에 널린 호외 (재현 그림)" loading="lazy"><span class="rt">그림 · 재현</span></figure>
+  <p class="ln-k">오늘 밤 이 폰에서 찍어 널은 호외</p>
+  <div class="ln-row" id="mhgRow"></div>
+</section>
+
+<div class="mhg-dawn"><img src="assets/hg3/m_hg_dawn.jpg" alt="새벽 골목을 달리는 호외 (재현 그림)" loading="lazy"><p>오늘 밤 찍은 호외는<br>동트기 전 골목을 다리오</p><small>새벽 배달 · 그림 · 재현</small></div>
+<footer class="mhg-foot"><p>※ 독자 호외는 독자가 지어 낸 창작이오. 실제 력사 사건이나 당시 긔사와 다르오. 찍은 것은 이 폰에만 남소.</p><a href="index.html">본지로 도라가시압</a></footer>
+
+<script src="hg-art.js"></script>
+<script src="hg-photos.js?v=1"></script>
+<script src="hg-photo.js?v=2"></script>
+<script src="yk-kakao.js"></script>
+<script src="yk-share.js?v=1"></script>
+<script src="hogoe.js?v=8"></script>
+<script src="yk-mko-all.js?v=1"></script>
+<script src="yk-mbook.js?v=33"></script>
+<script src="m-hogoe.js?v=3"></script>
+</body>
+</html>

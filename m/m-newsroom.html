@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<!-- 경성야록 자정의 편집국 — 폰 전용판 (폰에서 newsroom.html 이 이리로 넘김)
+     출입증 · 원고 접수 · 데스크(AI) · 교열 · 게재 장치는 컴퓨터판과 같은 newsroom.js · nr-store.js 를 쓰고, 판은 폰에 맞게 새로 짬 -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#0b0b0b">
+<title>경성야록 · 자정의 편집국</title>
+<link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
+<link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts-m.css?v=2">
+<link rel="stylesheet" href="yk-mbook.css?v=28">
+<link rel="stylesheet" href="newsroom.css?v=6">
+<link rel="stylesheet" href="m-newsroom.css?v=2">
+</head>
+<body class="mnr">
+<div class="mb-bar on"><a href="index.html">‹ 본지</a><span class="mb-now">자정의 편집국 · 기자 전용</span><i class="mb-prog"></i></div>
+<div aria-labelledby="gateT" aria-modal="true" class="nr-gate" id="gate" role="dialog">
+<div aria-hidden="true" class="gt-bg"><img alt="" onerror="this.remove()" src="assets/nr3/m_gate.jpg"/></div>
+<form autocomplete="off" class="gt-pass" id="gateForm"><i aria-hidden="true" class="ps-strap"></i>
+<span aria-hidden="true" class="ps-hole"></span>
+<p class="gt-top"><b>경성야록 편집국</b><i>관계자 외 출입 금지</i></p>
+<h2 id="gateT">기 자 출 입 증</h2>
+<p class="gt-s">이 문 안은 야록 기자만 드나듭니다. 출입증을 보이세요.</p>
+<label class="nr-f"><span>성명 <small>기사에 이름이 실립니다</small></span><input id="fName" maxlength="12" placeholder="예) 아무개"/></label>
+<label class="nr-f"><span>출입 암호 <small>편집국 기자끼리 정한 말</small></span><input autocomplete="off" id="fPass" lang="ko" placeholder="한글 두 글자" spellcheck="false" type="text"/></label>
+<p class="gt-hint" id="gateHint"></p>
+<button class="nr-go" id="gateGo" type="submit"><span>출입</span></button>
+<p aria-live="polite" class="nr-help gt-err" id="gateErr"></p>
+<a class="gt-back" href="index.html">← 본지로 도라가기</a>
+<span aria-hidden="true" class="ps-stamp">출입<br/>확인</span>
+</form>
+</div>
+<main class="mnr-page">
+<section class="nr-desk" id="desk">
+<div class="nr-staff" id="staff"><span class="st-l">사내 전용 · <span class="hj" data-ko="독자에게 보이지 않는 면" tabindex="0">독자에게 보이지 안는 면</span></span><span class="st-r"><button class="st-wire" id="wireBtn" type="button"><i></i><span id="wireTxt">전신 끊김</span></button>당번 · <b id="whoName">—</b> 기자<button class="nr-link" id="leave" type="button">퇴근</button></span></div>
+<header class="nr-top">
+<div aria-hidden="true" class="nr-top-img"><img alt="" onerror="this.remove()" src="assets/nr3/m_desk.jpg"/><span class="dk-lamp"></span></div>
+<div class="nr-top-t">
+<p class="k"><span class="hj" data-ko="경성야록 편집국 · 기자 전용" tabindex="0">경성야록 편집국 · 기자 전용</span></p>
+<h1><span class="hj" data-ko="자정의 편집국" tabindex="0">자정의 편집국</span></h1>
+<p class="s"><span class="hj" data-ko="원고를 접수하면 데스크가 풀이 · 라디오 원고 · 삽화를 엮습니다. 교열을 마친 원고만 본지에 실립니다." tabindex="0">원고를 접수하면 데스크가 풀이 · 라듸오 원고 · 삽화를 엮소. 교열을 마친 원고만 본지에 실니오.</span></p>
+</div>
+<span class="nr-top-src"><span class="hj" data-ko="편집국 · 재현 그림" tabindex="0">편집국 · 재현 그림</span></span>
+</header>
+<ol aria-label="순서" class="nr-steps">
+<li data-s="1"><b>1</b><span>원고 접수</span></li>
+<li data-s="2"><b>2</b><span>데스크</span></li>
+<li data-s="3"><b>3</b><span>교열</span></li>
+<li data-s="4"><b>4</b><span>조판 · 게재</span></li>
+</ol>
+<div class="nr-grid">
+<div class="nr-main">
+<!-- 통신실 : AI 데스크와 잇는 전신 회선 = OpenAI 키. 한 번 꽂아 두면 됨 -->
+<section class="nr-box nr-wire" hidden="" id="wire">
+<header class="label"><b>통신실</b><i>전</i><em>AI 데스크로 가는 전신 회선</em></header>
+<p class="nr-help wr-s">데스크 · 삽화부 · 방송부는 전신으로 원고를 받습니다. 회선 번호(OpenAI 키)를 한 번만 꽂아 두세요.</p>
+<label class="nr-f"><span>회선 번호 <small>OpenAI 키 · sk-로 시작</small></span><input autocomplete="off" id="fKey" placeholder="sk-…" spellcheck="false" type="password"/></label>
+<div class="nr-row">
+<label class="nr-check"><input id="fRemember" type="checkbox"/> 이 폰에 회선 기억하기</label>
+<button class="nr-btn" id="wireOk" type="button">회선 잇기</button>
+</div>
+<p class="nr-help">키 주인에게 쓴 만큼 요금이 나갑니다. 키는 OpenAI에만 보내고 다른 곳에는 보내지 않습니다.</p>
+</section>
+<!-- 二 원고 -->
+<section class="nr-box" id="bSrc">
+<header class="label"><b>접수</b><i>1</i><em>옛 기사 원문</em></header>
+<label class="nr-f"><span>원문 기사 <small>필수</small></span>
+<textarea id="fBody" maxlength="50000" placeholder="옛 신문 기사 본문을 그대로 붙여 넣으세요." rows="9"></textarea></label>
+<div class="nr-two">
+<label class="nr-f"><span>신문 이름 <small>필수</small></span><input id="fPaper" value="동아일보"/></label>
+<label class="nr-f"><span>실린 날짜 <small>필수</small></span><input id="fDate" max="1990-12-31" min="1880-01-01" type="date"/></label>
+</div>
+<label class="nr-f"><span>제목 <small>비우면 AI가 원문에서 짓습니다</small></span><input id="fTitle"/></label>
+<label class="nr-f"><span>원문 출처 링크 <small>선택</small></span><input id="fSource" placeholder="https://" type="url"/></label>
+<details class="nr-more">
+<summary>자세히 · 삽화와 목소리</summary>
+<label class="nr-check"><input checked="" id="fImg" type="checkbox"/> 삽화 두 장도 같이 그리기 <small>(요금 · 시간이 더 듭니다)</small></label>
+<div class="nr-two">
+<label class="nr-f"><span>목소리 서비스</span><select id="fProv"><option value="openai">OpenAI</option><option value="elevenlabs">ElevenLabs</option></select></label>
+<label class="nr-f" id="wVoice"><span>목소리</span><select id="fVoice"></select></label>
+<label class="nr-f" hidden="" id="wElId"><span>ElevenLabs 목소리 ID</span><input id="fElId" placeholder="기존 라디오 목소리 ID"/></label>
+</div>
+<label class="nr-f" hidden="" id="wElKey"><span>ElevenLabs API 키</span><input autocomplete="off" id="fElKey" type="password"/></label>
+<label class="nr-f" id="wTone"><span>말투 · 속도</span><textarea id="fTone" maxlength="2000" rows="3"></textarea></label>
+</details>
+</section>
+<!-- 三 엮기 -->
+<div class="nr-go-row">
+<button class="nr-go" id="go" type="button"><span>데스크에 넘기기</span></button>
+<p class="nr-help" id="goHint">열쇠와 원문 · 신문 이름 · 날짜를 넣으면 눌러집니다.</p>
+</div>
+<ol class="nr-prog" hidden="" id="prog">
+<li data-k="text">데스크 · 풀이와 라디오 원고</li>
+<li data-k="img0">삽화부 · 첫째 장</li>
+<li data-k="img1">삽화부 · 둘째 장</li>
+<li data-k="voice">방송부 · 라디오 목소리</li>
+</ol>
+<p class="nr-err" hidden="" id="err" role="alert"></p>
+<!-- 四 검토 -->
+<section class="nr-review" hidden="" id="review">
+<header class="label"><b>교열</b><i>3</i><em id="rvState">교열 중 · 아직 실리지 않음</em></header>
+<div class="nr-preview" id="preview"></div>
+<details class="nr-edit" id="editBox">
+<summary>교열 · 글 고치기</summary>
+<label class="nr-f"><span>제목</span><input id="eTitle"/></label>
+<label class="nr-f"><span>핵심 정리</span><textarea id="eSummary" rows="3"></textarea></label>
+<label class="nr-f"><span>요즘 말 풀이</span><textarea id="eModern" rows="6"></textarea></label>
+<label class="nr-f"><span>라디오 원고 <small>고치면 목소리를 다시 만들어야 합니다</small></span><textarea id="eScript" maxlength="4000" rows="7"></textarea></label>
+<div class="nr-two">
+<label class="nr-f"><span>인물 <small>한 줄에 하나</small></span><textarea id="ePeople" rows="3"></textarea></label>
+<label class="nr-f"><span>장소 <small>한 줄에 하나</small></span><textarea id="ePlaces" rows="3"></textarea></label>
+<label class="nr-f"><span>사건 날짜 <small>한 줄에 하나</small></span><textarea id="eDates" rows="3"></textarea></label>
+<label class="nr-f"><span>남은 물음 <small>한 줄에 하나</small></span><textarea id="eUnc" rows="3"></textarea></label>
+</div>
+<button class="nr-btn" id="save" type="button">고친 것 저장</button>
+</details>
+<div class="nr-actions">
+<button class="nr-btn" id="reImg" type="button">삽화 다시 그리기</button>
+<button class="nr-btn" id="reVoice" type="button">목소리 다시 만들기</button>
+<button class="nr-btn dark" id="pub" type="button">교열 마침 · 조판하여 싣기</button>
+<button class="nr-link" id="del" type="button">이 원고 버리기</button>
+</div>
+<p class="nr-help">AI 풀이는 사실 확인을 대신하지 않습니다. 원문과 「남은 물음」을 꼭 읽고 실어 주세요.</p>
+</section>
+</div>
+<!-- 보관함 -->
+<aside class="nr-side">
+<header class="label"><b>원고 꽂이</b><em>이 폰에만</em></header>
+<button class="nr-new" id="newDoc" type="button">＋ 새 원고</button>
+<ol class="nr-list" id="list"></ol>
+<p class="nr-help nr-side-note">원고는 이 폰 브라우저 안에만 보관되오. 다른 기계에서는 보이지 안소.</p>
+</aside>
+</div>
+</section>
+<section class="nr-read" hidden="" id="read"></section>
+</main>
+<footer class="mnr-foot"><p>※ 편집국 긔사는 AI가 원문을 풀어 다시 엮은 것이오 (재구성). 삽화는 AI가 그린 그림이며 긔록 사진이 아니오.</p><a href="index.html">본지로 도라가시압</a></footer>
+<script src="yk-reward.js?v=20"></script>
+<script src="nr-store.js?v=1"></script>
+<script src="newsroom.js?v=8"></script>
+<script src="yk-mko-all.js?v=1"></script>
+<script src="yk-mbook.js?v=33"></script>
+<script src="m-newsroom.js?v=2"></script>
+</body>
+</html>

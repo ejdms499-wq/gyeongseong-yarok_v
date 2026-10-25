@@ -1,0 +1,132 @@
+/* 경성야록 · 268호의 경성 산책 — 흰 종이 · 검은 먹 · 붉은빛은 발바닥 인주 하나 */
+:root{--ink:#0e0e0e;--paper:#f4f3f0;--mute:#5e5d59;--rule:#cfcfcb;--paw:#9c1f17;--g:20px}
+body.wk{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif,"Noto Serif KR",serif);-webkit-text-size-adjust:100%}
+.wk-cover{padding:76px var(--g) 22px;text-align:center;border-bottom:1px solid var(--ink)}
+.wk-cv-k{margin:0 0 18px;font:500 11px/1 var(--sans);letter-spacing:.3em;color:var(--mute)}
+.wk-poster{position:relative;width:62%;max-width:260px;margin:0 auto 22px;border:1px solid var(--ink);padding:8px;background:#fff;transform:rotate(-1.5deg);box-shadow:0 10px 24px rgba(0,0,0,.12)}
+.wk-poster img{display:block;width:100%;filter:grayscale(1) contrast(1.1)}
+.wk-poster .rt{position:absolute;right:12px;top:12px;font:500 9.5px/1 var(--sans);letter-spacing:.14em;padding:4px 5px;background:rgba(0,0,0,.6);color:#ddd}
+.wk-closed{position:absolute;left:50%;top:46%;padding:8px 12px 7px;border:3px solid var(--paw);color:var(--paw);background:rgba(244,243,240,.82);font:900 22px/1.1 var(--serif);letter-spacing:.12em;transform:translate(-50%,-50%) rotate(-12deg) scale(1.8);opacity:0;transition:opacity .4s,transform .5s cubic-bezier(.3,1.6,.5,1);text-align:center}
+.wk-closed small{display:block;margin-top:4px;font:700 12px/1 var(--sans);letter-spacing:.3em}
+.wk-poster.closed .wk-closed{opacity:1;transform:translate(-50%,-50%) rotate(-12deg) scale(1)}
+.wk-t{margin:0 0 16px;font:900 38px/1.2 var(--serif);letter-spacing:.02em}
+.wk-s{margin:0 0 12px;font:400 15.5px/1.85 var(--serif);text-align:left}
+.wk-s b{font-weight:700;border-bottom:1px solid var(--ink)}
+.wk-note{margin:14px 0 0;font:500 11.5px/1.6 var(--sans);color:var(--mute);text-align:left}
+.wk-cnt{margin:18px 0 0;font:500 12px/1 var(--sans);letter-spacing:.14em}
+.wk-cnt b{font:900 22px/1 var(--serif);margin:0 4px 0 2px;vertical-align:-3px}
+/* 발바닥 여덟 칸 — 우에 붙음 */
+.wk-bar{position:sticky;top:48px;z-index:20;display:grid;grid-template-columns:repeat(8,1fr);gap:4px;padding:8px var(--g);background:rgba(244,243,240,.96);border-bottom:1px solid var(--rule)}
+.wk-bar a{display:grid;place-items:center;height:30px;border:1px dashed #b9b8b3;color:#c9c8c3;text-decoration:none}
+.wk-bar a i{display:block;width:16px;height:16px}
+.wk-bar a svg{width:100%;height:100%}
+.wk-bn{display:none}
+.wk-bar a.on{border:1px solid var(--paw);color:var(--paw);background:rgba(156,31,23,.06)}
+/* 목격지 한 곳 */
+.wk-st{padding:38px var(--g) 30px;border-bottom:1px solid var(--rule)}
+.wk-k{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0 0 8px;font:500 11px/1.3 var(--sans);letter-spacing:.14em;color:var(--mute)}
+.wk-k b{color:var(--ink);font-weight:700;letter-spacing:.2em}
+.wk-h{margin:0 0 16px;font:900 30px/1.25 var(--serif)}
+.wk-ph{position:relative;margin:0;aspect-ratio:3/4;overflow:hidden;background:#111;cursor:crosshair;touch-action:manipulation;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+.wk-ph img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.wk-ph img[src$="walk_01.jpg"]{filter:grayscale(1) contrast(1.08) brightness(.92)}
+.wk-ph .rt{position:absolute;right:8px;top:8px;font:500 9.5px/1 var(--sans);letter-spacing:.14em;padding:4px 5px;background:rgba(0,0,0,.6);color:#ddd;z-index:4}
+.wk-cat{position:absolute;z-index:2;transform:translate(-50%,-50%);aspect-ratio:60/70;pointer-events:none;transition:filter .4s,transform .4s}
+.wk-cat svg{display:block;width:100%;height:100%}
+.wk-cat .b{fill:#0a0a0a;stroke:rgba(255,255,255,.14);stroke-width:1}
+.wk-cat .t{fill:none;stroke:#0a0a0a;stroke-width:5;stroke-linecap:round}
+.wk-cat .e{fill:#e9e4cf}
+.wk-hit{position:absolute;z-index:3;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%}
+.wk-ph.hint .wk-cat .e{animation:wkBlink 3.2s ease-in-out infinite}
+@keyframes wkBlink{0%,86%,100%{opacity:1}90%,94%{opacity:.15}}
+.wk-paw{position:absolute;z-index:3;width:22%;aspect-ratio:1;transform:translate(-50%,-50%) rotate(-14deg) scale(1.8);opacity:0;color:var(--paw);pointer-events:none;transition:opacity .25s,transform .4s cubic-bezier(.3,1.6,.5,1)}
+.wk-paw svg{width:100%;height:100%;filter:drop-shadow(0 0 1px rgba(255,255,255,.6))}
+.wk-st.found .wk-paw{opacity:.88;transform:translate(-50%,-65%) rotate(-14deg) scale(1)}
+.wk-st.found .wk-cat{filter:drop-shadow(0 0 6px rgba(255,255,255,.55))}
+.wk-st.found .wk-ph{cursor:default}
+.wk-miss{position:absolute;z-index:5;transform:translate(-50%,-140%);padding:5px 8px;background:rgba(10,10,10,.82);color:#ecebe7;font:500 11.5px/1 var(--sans);white-space:nowrap;opacity:0;pointer-events:none}
+.wk-miss.on{animation:wkMiss 1.4s ease forwards}
+@keyframes wkMiss{0%{opacity:0;transform:translate(-50%,-110%)}15%,70%{opacity:1;transform:translate(-50%,-140%)}100%{opacity:0;transform:translate(-50%,-160%)}}
+.wk-tip{margin:12px 0 0;font:500 12px/1.6 var(--sans);color:var(--mute)}
+.wk-st.found .wk-tip{display:none}
+.wk-open{display:none}
+.wk-st.found .wk-open{display:block;animation:wkOpen .6s ease both}
+@keyframes wkOpen{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.wk-seen{margin:18px 0 0;padding:14px 16px;background:#0e0e0e;color:#ecebe7;font:400 15px/1.8 var(--serif)}
+.wk-seen small{display:block;margin-bottom:6px;font:500 10.5px/1 var(--sans);letter-spacing:.2em;color:#a9a8a3}
+.wk-f{margin:18px 0 0;padding:0;list-style:none;counter-reset:f}
+.wk-f li{position:relative;padding:10px 0 10px 30px;border-top:1px solid var(--rule);font:400 15px/1.75 var(--serif)}
+.wk-f li::before{counter-increment:f;content:counter(f);position:absolute;left:2px;top:11px;font:900 15px/1.6 var(--serif);color:var(--mute)}
+.wk-src{margin:6px 0 0;padding-top:10px;border-top:1px solid var(--rule);font:500 11.5px/1.6 var(--sans);color:var(--mute)}
+.wk-go{display:inline-block;margin-top:14px;padding:11px 14px;border:1px solid var(--ink);color:var(--ink);font:700 13px/1 var(--sans);letter-spacing:.06em;text-decoration:none}
+/* (1020) 다른 목격 그림 · 당시 지면 — 옆으로 넘기는 띠 */
+.wk-gk{margin:22px 0 8px;font:700 11px/1 var(--sans);letter-spacing:.22em;color:var(--mute)}
+.wk-more,.wk-arc{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(var(--g) * -1);padding:0 var(--g) 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.wk-more::-webkit-scrollbar,.wk-arc::-webkit-scrollbar{display:none}
+.wk-more figure,.wk-arc figure{flex:0 0 auto;margin:0;scroll-snap-align:start;position:relative}
+.wk-more figure{width:62%;aspect-ratio:3/4;background:#ddd}
+.wk-more img{display:block;width:100%;height:100%;object-fit:cover}
+.wk-more .rt{position:absolute;right:6px;top:6px;font:500 9.5px/1 var(--sans);letter-spacing:.14em;padding:4px 5px;background:rgba(0,0,0,.6);color:#ddd}
+.wk-arc figure{width:70%;max-width:320px;padding:8px;background:#fff;border:1px solid var(--rule)}
+.wk-arc img{display:block;width:100%;max-height:300px;object-fit:contain;background:#efeee9}
+.wk-arc figcaption{margin-top:8px;font:500 11.5px/1.55 var(--sans);color:var(--mute)}
+.wk-arc figcaption b{display:block;color:var(--ink);font:700 13px/1.5 var(--serif)}
+.wk-end-art{position:relative;width:78%;max-width:340px;margin:0 auto 20px;padding:8px;background:#fff;border:1px solid var(--ink);transform:rotate(1.2deg)}
+.wk-end-art img{display:block;width:100%}
+.wk-end-art .rt{position:absolute;right:12px;top:12px;font:500 9.5px/1 var(--sans);letter-spacing:.14em;padding:4px 5px;background:rgba(0,0,0,.6);color:#ddd}
+/* 끗 */
+.wk-end{padding:44px var(--g) 30px;text-align:center}
+.wk-end-k{margin:0 0 10px;font:500 11px/1 var(--sans);letter-spacing:.3em;color:var(--mute)}
+.wk-end-h{margin:0 0 14px;font:900 24px/1.4 var(--serif)}
+.wk-end-p{margin:0 0 22px;font:400 15px/1.8 var(--serif)}
+.wk-end .b,body.wk-done .wk-end .a{display:none}
+body.wk-done .wk-end .b{display:inline}
+body.wk-done .wk-end-h .b{color:var(--paw)}
+.wk-btn{display:block;margin:0 0 10px;padding:14px;border:1px solid var(--ink);background:var(--ink);color:#f4f3f0;font:700 14px/1 var(--sans);text-decoration:none}
+.wk-btn.ghost{background:transparent;color:var(--ink)}
+.wk-reset{margin-top:8px;border:0;background:none;color:var(--mute);font:500 12px/1 var(--sans);text-decoration:underline;text-underline-offset:3px}
+.wk-foot{padding:20px var(--g) calc(30px + env(safe-area-inset-bottom));text-align:center;font:500 10.5px/1.6 var(--sans);letter-spacing:.14em;color:var(--mute);border-top:1px solid var(--ink)}
+@media (prefers-reduced-motion:reduce){.wk-ph.hint .wk-cat .e,.wk-miss.on{animation:none}}
+
+/* ═══ (1020) 컴퓨터 화면 — 가운데 한 장 지면 · 목격지는 그림 왼편 · 글 오른편 ═══ */
+@media (min-width:900px){
+  body.wk{background:#e9e8e4}
+  .wk-cover,.wk-bar,#wkList,.wk-end,.wk-foot{max-width:1040px;margin-left:auto;margin-right:auto;background:var(--paper)}
+  .wk-cover{display:grid;grid-template-columns:300px 1fr;grid-template-areas:"k k" "p t" "p s" "p s2" "p n" "p c";column-gap:48px;padding:96px 64px 44px;text-align:left;align-items:start}
+  .wk-cv-k{grid-area:k;text-align:center}
+  .wk-poster{grid-area:p;width:100%;max-width:none;margin:0}
+  .wk-t{grid-area:t;font-size:52px;margin-top:6px}
+  .wk-cover .wk-s:nth-of-type(2){grid-area:s}
+  .wk-cover .wk-s:nth-of-type(3){grid-area:s2}
+  .wk-note{grid-area:n}
+  .wk-cnt{grid-area:c;text-align:left}
+  .wk-bar{padding:10px 64px;gap:8px}
+  .wk-bar a{height:36px}
+  .wk-st{display:grid;grid-template-columns:420px 1fr;grid-template-areas:"k k" "ph h" "ph tip" "ph op";column-gap:48px;padding:52px 64px 48px;align-items:start}
+  .wk-k{grid-area:k;margin-bottom:14px}
+  .wk-h{grid-area:h;font-size:40px;margin-top:4px}
+  .wk-ph{grid-area:ph}
+  .wk-tip{grid-area:tip;margin-top:0;font-size:13px}
+  .wk-open{grid-area:op}
+  .wk-st.found .wk-open{margin-top:-10px}
+  .wk-seen{margin-top:0}
+  .wk-end{padding:64px 64px 44px}
+  .wk-end .wk-btn{display:inline-block;min-width:280px;margin:0 6px 10px}
+  .wk-miss{font-size:13px}
+  .wk-more,.wk-arc{margin:0;padding:0 0 6px}
+  .wk-more figure{width:44%}
+  .wk-arc figure{width:56%}
+}
+@media (min-width:900px){
+  body.wk{max-width:none!important;box-shadow:none!important}
+  body.wk .mb-bar{max-width:1040px!important;left:0;right:0;margin:0 auto}
+  body.wk .mb-tip{max-width:520px;left:auto;right:24px}
+}
+
+/* (1020) 크게 보기 */
+.wkp-lb{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px;background:rgba(8,8,8,.9)}
+.wkp-lb figure{margin:0;max-width:100%;text-align:center}
+.wkp-lb img{display:block;max-width:100%;max-height:78vh;margin:0 auto;background:#f4f3f0}
+.wkp-lb figcaption{margin-top:10px;color:#ecebe7;font:500 12.5px/1.6 var(--sans)}
+.wkp-lb figcaption b{display:block;font:700 15px/1.5 var(--serif)}
+.wk-more figure,.wk-arc figure{cursor:zoom-in}

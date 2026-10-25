@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<title>경성야록 — 응접실의 라디오</title>
+<link rel="icon" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<!--
+  1016 · 이 파일이 루트의 옛 index.html(신문 지면)로 덮여 있어 라디오가 뜨지 않던 것 복구.
+  app.js 가 찾는 요소: dial · freqNum · meterFill · noise · wave · playBtn · fileNote · radioBtn · toRoom · retune · airFreq
+  화면은 body[data-screen] 로 바뀜: room(응접실) → tune(다이얼) → air(방송)
+-->
+</head>
+<body data-screen="room">
+  <div class="room-bg" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <button type="button" class="to-room" id="toRoom">← 응접실로</button>
+
+  <main class="stage">
+    <!-- 화면 1 · 응접실 -->
+    <section class="screen screen-room" aria-label="응접실">
+      <button type="button" class="radio" id="radioBtn" aria-label="라디오 켜기">
+        <span class="radio-glow" aria-hidden="true"></span>
+        <img class="radio-img" src="assets/radio.png" alt="응접실의 진공관 라디오 (재현 그림)" draggable="false">
+      </button>
+      <p class="hint hint-room">라디오를 눌러 켜시압</p>
+    </section>
+
+    <!-- 화면 2 · 다이얼 -->
+    <section class="screen screen-tune" aria-label="주파수 맞추기">
+      <div class="dial-wrap">
+        <span class="dial-mark" aria-hidden="true"></span>
+        <div class="dial" id="dial" role="slider" tabindex="0" aria-label="주파수 다이얼" aria-valuemin="550" aria-valuemax="1500" aria-valuenow="550" aria-valuetext="550 킬로사이클">
+          <img class="dial-img" src="assets/dial.png" alt="" draggable="false">
+        </div>
+      </div>
+      <div class="readout">
+        <p class="freq"><span id="freqNum">550</span><small>kc</small></p>
+        <div class="meter" aria-hidden="true"><span id="meterFill"></span></div>
+      </div>
+      <p class="hint hint-tune">손가락으로 다이얼을 돌려 잡음이 걷히는 곳을 찾으시압</p>
+    </section>
+
+    <!-- 화면 3 · 방송 (신문 스크랩) -->
+    <section class="screen screen-air" aria-label="방송">
+      <div class="scrap-shadow">
+        <article class="scrap">
+          <p class="scrap-kicker"><span>京城放送局 · 수신</span><span class="scrap-freq"><span id="airFreq">—</span> kc</span></p>
+          <hr class="scrap-rule">
+          <h1 class="scrap-title">밤의 주파수에서<br>들려오는 목소리</h1>
+          <p class="scrap-cast">경성야록 · 라디오 장치 (재현)</p>
+          <div class="player">
+            <button type="button" class="play" id="playBtn" aria-label="재생">
+              <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
+              <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+            </button>
+            <canvas class="wave" id="wave" aria-hidden="true"></canvas>
+          </div>
+          <p class="scrap-note" id="fileNote" hidden>※ 방송 파일(assets/broadcast.mp3)이 아직 없어 파형만 움직이오.</p>
+          <button type="button" class="retune" id="retune">다시 돌리기</button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <canvas class="noise" id="noise" aria-hidden="true"></canvas>
+  <script src="app.js"></script>
+</body>
+</html>

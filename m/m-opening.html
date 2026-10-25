@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<!-- 경성야록 — 폰 전용 오프닝 「먹을 벗기시압」
+     실제 동아일보 소화 팔 년 오월 십칠일 지면(assets/op-wall/today_scan.jpg)이 어둠 속에 놓임 → 자정 종과 함께 검열의 먹줄이 지면을 덮음
+     → 손가락으로 먹을 문질러 벗기면 지면이 드러나고, 테두리 친 한 줄의 긔사가 붉게 깨여남 → 제호 → 본지(m-main.html)
+     그림은 실물 지면 한 장뿐 · 번쩍임 업슴 · 소리는 파일 업시 브라우저가 만듦 -->
+<meta charset="UTF-8"><script>/* 폰은 오프닝 업시 본지로 (이 파일은 보관용) */(function(){try{if(/[?&]keep=1/.test(location.search))return;location.replace(/Mobi|Android|iPhone|iPod/i.test(navigator.userAgent)?'m-main.html':'opening.html')}catch(e){}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#000000">
+<title>경성야록 — 먹을 벗기시압</title>
+<link rel="icon" type="image/svg+xml" href="case-baekbaekgyo/favicon.svg">
+<link rel="stylesheet" href="case-jukcheomjeong/fonts/fonts-m.css?v=2">
+<link rel="preload" as="image" href="assets/op-wall/today_scan.jpg">
+<style>
+:root{--red:#b3261e;--serif:"Noto Serif KR","Nanum Myeongjo",serif;--sans:"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;color:#ecebe7;overflow:hidden;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;touch-action:none;overscroll-behavior:none}
+#st{position:fixed;inset:0;overflow:hidden}
+/* 지면 */
+#pg{position:absolute;inset:0;transform-origin:0 0;will-change:transform;transition:transform 2.4s cubic-bezier(.6,0,.15,1)}
+#pg img{position:absolute;display:block;filter:grayscale(1) contrast(1.32) brightness(1.06)}
+#pg::after{content:"";position:absolute;inset:-20%;pointer-events:none;background:rgba(150,172,190,.16);mix-blend-mode:multiply}
+#lamp{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 34vmax 52vmax at var(--lx,50%) var(--ly,40%),transparent 0,rgba(4,6,8,.5) 60%,rgba(2,3,4,.97) 100%);transition:opacity 2.4s}
+#veil{position:absolute;inset:0;background:#000;transition:opacity 2.2s ease}
+#veil.off{opacity:0}
+#ink{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#frame{position:absolute;box-shadow:0 0 0 1.5px var(--red),0 0 0 9999px rgba(0,0,0,0);opacity:0;transition:opacity .8s,box-shadow 1.6s}
+#frame.on{opacity:1}
+#frame.dim{box-shadow:0 0 0 1.5px var(--red),0 0 0 9999px rgba(3,5,7,.82)}
+.grain{position:absolute;inset:-50%;pointer-events:none;opacity:.06;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 1.2s steps(6) infinite}
+@keyframes gr{to{transform:translate(8%,-6%)}}
+/* 글 */
+.top{position:absolute;left:20px;right:20px;top:calc(16px + env(safe-area-inset-top));display:flex;justify-content:space-between;align-items:center;font:400 10px/1.4 var(--sans);letter-spacing:.2em;color:#6f7a83;z-index:5;transition:opacity .8s}
+.skip{border:0;background:none;color:#cfcfca;font:500 12px/1 var(--sans);letter-spacing:.1em;padding:10px 0 10px 14px}
+.cap{position:absolute;left:22px;right:22px;bottom:calc(30px + env(safe-area-inset-bottom));z-index:5;min-height:5em}
+.cap p{position:absolute;left:0;right:0;bottom:0;font:300 17px/1.85 var(--serif);letter-spacing:.01em;color:#eef2f5;text-shadow:0 2px 14px #000,0 0 4px #000;opacity:0;transform:translateY(8px);transition:opacity .9s,transform .9s}
+.cap p.on{opacity:1;transform:none}
+.cap p b{font-weight:700;color:#fff}
+.cap p small{display:block;margin-bottom:10px;font:500 10px/1 var(--sans);letter-spacing:.32em;color:#8f9aa3}
+.cap p.hint{font:400 13px/1.6 var(--sans);letter-spacing:.24em;color:#dfe6ea;text-align:center;animation:br 2.4s ease-in-out infinite}
+@keyframes br{50%{opacity:.4}}
+.gate{position:absolute;inset:0;z-index:6;display:grid;place-items:center;text-align:center;background:#000;transition:opacity 1s}
+.gate div{padding:0 30px}
+.gate small{font:500 10px/1 var(--sans);letter-spacing:.4em;color:#6f7a83}
+.gate h2{margin-top:20px;font:300 28px/1.5 var(--serif);letter-spacing:.04em;color:#eef2f5}
+.gate p{margin-top:34px;font:400 12px/1.8 var(--sans);letter-spacing:.24em;color:#9aa5ad;animation:br 2.4s ease-in-out infinite}
+.gate em{display:block;margin-top:8px;font:400 11px/1.5 var(--sans);font-style:normal;color:#6f6e6a}
+/* 제호 */
+.sheet{position:absolute;left:0;right:0;top:100%;height:100%;z-index:7;background:#0b0b0b;color:#fff;border-top:1px solid #2a2a2a;transition:transform 1s cubic-bezier(.6,0,.15,1)}
+.sheet.up{transform:translateY(-100%)}
+.sheet .in{position:absolute;left:22px;right:22px;top:calc(70px + env(safe-area-inset-top))}
+.sheet .ml{display:flex;justify-content:space-between;font:500 10px/1 var(--sans);letter-spacing:.2em;color:#6f6e6a}
+.sheet .lg{display:flex;align-items:center;gap:14px;padding:26px 0 18px}
+.sheet .lg svg{width:64px;height:64px;color:#ecebe7}
+.sheet h1{font:900 clamp(52px,16vw,68px)/1 var(--serif);letter-spacing:-.02em}
+.sheet .rule{height:3px;background:var(--red);transform-origin:0 50%;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.6,0,.2,1) .5s}
+.sheet.up .rule{transform:none}
+.sheet .sub{margin-top:16px;font:400 14px/1.7 var(--serif);color:#8f8e89;opacity:0;transition:opacity .8s 1.1s}
+.sheet.up .sub{opacity:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<svg aria-hidden="true" height="0" style="position:absolute" width="0"><symbol id="mmLogo" viewBox="0 0 100 100"><defs><clipPath id="mmC"><circle cx="50" cy="50" r="49"></circle></clipPath><mask id="mmRing"><rect fill="#000" height="100" width="100"></rect><circle cx="50" cy="50" fill="#fff" r="49"></circle><circle cx="32.4" cy="50" fill="#000" r="52.6"></circle></mask></defs><g clip-path="url(#mmC)" fill="currentColor"><rect height="100" width="2.7" x="4.0" y="0"></rect><rect height="100" width="2.7" x="8.6" y="0"></rect><rect height="100" width="2.7" x="13.2" y="0"></rect><rect height="100" width="2.7" x="17.8" y="0"></rect><rect height="100" width="2.7" x="22.4" y="0"></rect><rect height="100" width="2.7" x="27.0" y="0"></rect><rect height="100" width="2.7" x="31.6" y="0"></rect><rect height="100" width="2.7" x="36.2" y="0"></rect><rect height="100" width="2.7" x="40.8" y="0"></rect><rect height="100" width="2.7" x="45.4" y="0"></rect></g><rect fill="#b3261e" height="98.8" width="3.4" x="47.6" y="0.6"></rect><g fill="currentColor" mask="url(#mmRing)"><rect height="2.5" width="46" x="54" y="1.5"></rect><rect height="2.5" width="46" x="54" y="6.0"></rect><rect height="2.5" width="46" x="54" y="10.5"></rect><rect height="2.5" width="46" x="54" y="15.0"></rect><rect height="2.5" width="46" x="54" y="19.5"></rect><rect height="2.5" width="46" x="54" y="24.0"></rect><rect height="2.5" width="46" x="54" y="28.5"></rect><rect height="2.5" width="46" x="54" y="33.0"></rect><rect height="2.5" width="46" x="54" y="37.5"></rect><rect height="2.5" width="46" x="54" y="42.0"></rect><rect height="2.5" width="46" x="54" y="46.5"></rect><rect height="2.5" width="46" x="54" y="51.0"></rect><rect height="2.5" width="46" x="54" y="55.5"></rect><rect height="2.5" width="46" x="54" y="60.0"></rect><rect height="2.5" width="46" x="54" y="64.5"></rect><rect height="2.5" width="46" x="54" y="69.0"></rect><rect height="2.5" width="46" x="54" y="73.5"></rect><rect height="2.5" width="46" x="54" y="78.0"></rect><rect height="2.5" width="46" x="54" y="82.5"></rect><rect height="2.5" width="46" x="54" y="87.0"></rect><rect height="2.5" width="46" x="54" y="91.5"></rect><rect height="2.5" width="46" x="54" y="96.0"></rect></g></symbol></svg>
+<div id="st">
+  <div id="pg"><img id="pgImg" src="assets/op-wall/today_scan.jpg" alt="동아일보 소화 팔 년 오월 십칠일 지면 (실물)"></div>
+  <div id="lamp"></div>
+  <canvas id="ink" aria-hidden="true"></canvas>
+  <div id="frame"></div>
+  <div id="veil"></div>
+  <div class="grain"></div>
+  <div class="top" id="top"><span>동아일보 · 소화 팔 년 오월 십칠일 · 실물 지면</span><button type="button" class="skip" id="skip">건너뛰기</button></div>
+  <div class="cap" id="cap"></div>
+  <div class="gate" id="gate"><div><small>경성야록</small><h2>자정이 되면<br>지면이 깨여나오</h2><p>소리를 켜고 화면을 누르시압</p><em>손가락을 쓰는 오프닝이오 · 이십 초쯤</em></div></div>
+  <div class="sheet" id="sheet"><div class="in"><div class="ml"><span>괴사 문고 · 납량 특집</span><span>제일호</span></div><div class="lg"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#mmLogo"></use></svg><h1>경성야록</h1></div><div class="rule"></div><p class="sub">신문 아래 칸, 한 줄로 끗난 사건들이<br>오늘 밤 다시 깨여나오.</p></div></div>
+</div>
+<script>
+(function (W, D) {
+  'use strict';
+  var NEXT = 'm-main.html', $ = function (i) { return D.getElementById(i); }, T = [], stage = 0, done = false;
+  try { sessionStorage.setItem('ykop-seen', '1'); } catch (e) {}
+  var buzz = function (p) { if (navigator.vibrate) try { navigator.vibrate(p); } catch (e) {} };
+  function at(s, f) { T.push(setTimeout(f, s * 1000)); }
+
+  /* ── 소리 (파일 업시) ── */
+  var AC = null, out = null, room = null, rub = null;
+  function ac() { if (!AC) try { AC = new (W.AudioContext || W.webkitAudioContext)(); out = AC.createDynamicsCompressor(); out.connect(AC.destination); } catch (e) {} if (AC && AC.state === 'suspended') AC.resume(); return AC; }
+  function noiseBuf(sec, brown) { var a = ac(), b = a.createBuffer(1, a.sampleRate * sec, a.sampleRate), d = b.getChannelData(0), l = 0; for (var i = 0; i < d.length; i++) { var w = Math.random() * 2 - 1; if (brown) { l = (l + .02 * w) / 1.02; d[i] = l * 3.2; } else d[i] = w; } return b; }
+  function roomOn() { var a = ac(); if (!a || room) return; var n = a.createBufferSource(); n.buffer = noiseBuf(4); n.loop = true; var bp = a.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 3200; bp.Q.value = .4; var g = a.createGain(); g.gain.value = 0; g.gain.linearRampToValueAtTime(.035, a.currentTime + 3); var lfo = a.createOscillator(), lg = a.createGain(); lfo.frequency.value = .13; lg.gain.value = .018; lfo.connect(lg); lg.connect(g.gain); lfo.start(); n.connect(bp); bp.connect(g); g.connect(out); n.start();
+    var o = a.createOscillator(), og = a.createGain(); o.frequency.value = 41; og.gain.value = 0; og.gain.linearRampToValueAtTime(.06, a.currentTime + 4); o.connect(og); og.connect(out); o.start(); room = g; room.o = og; }
+  function tick() { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), g = a.createGain(); o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(80, t + .06); g.gain.setValueAtTime(.14, t); g.gain.exponentialRampToValueAtTime(.0001, t + .08); o.connect(g); g.connect(out); o.start(t); o.stop(t + .1); }
+  function bell() { var a = ac(); if (!a) return; var t = a.currentTime; [[196, .28], [392.6, .12], [588, .07], [1180, .035], [1567, .02]].forEach(function (p) { var o = a.createOscillator(), g = a.createGain(); o.frequency.value = p[0]; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(p[1], t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + 8); o.connect(g); g.connect(out); o.start(t); o.stop(t + 8.2); }); }
+  function swish(v) { var a = ac(); if (!a) return; var t = a.currentTime, n = a.createBufferSource(); n.buffer = noiseBuf(.3); var bp = a.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.setValueAtTime(900, t); bp.frequency.exponentialRampToValueAtTime(260, t + .25); var g = a.createGain(); g.gain.setValueAtTime(v || .25, t); g.gain.exponentialRampToValueAtTime(.0001, t + .28); n.connect(bp); bp.connect(g); g.connect(out); n.start(t); }
+  function thud(v) { var a = ac(); if (!a) return; var t = a.currentTime, o = a.createOscillator(), g = a.createGain(); o.frequency.setValueAtTime(70, t); o.frequency.exponentialRampToValueAtTime(30, t + .3); g.gain.setValueAtTime((v || .4) * .6, t); g.gain.exponentialRampToValueAtTime(.0001, t + .35); o.connect(g); g.connect(out); o.start(t); o.stop(t + .4); }
+  function rubOn() { var a = ac(); if (!a || rub) return; var n = a.createBufferSource(); n.buffer = noiseBuf(2); n.loop = true; var hp = a.createBiquadFilter(); hp.type = 'bandpass'; hp.frequency.value = 2400; hp.Q.value = .6; var g = a.createGain(); g.gain.value = 0; n.connect(hp); hp.connect(g); g.connect(out); n.start(); rub = g; }
+  function rubLevel(v) { if (rub) rub.gain.setTargetAtTime(Math.min(.22, v), AC.currentTime, .05); }
+
+  /* ── 지면 자리 (화면을 덮도록) · 테두리 친 긔사 자리 (원본 픽셀) ── */
+  var IW = 1064, IH = 1436, BOX = [542, 546, 858, 895], img = $('pgImg'), K = 1, OX = 0, OY = 0;
+  function place() {
+    var w = innerWidth, h = innerHeight; K = Math.max(w / IW, h / IH) * 1.06;
+    var cx = (BOX[0] + BOX[2]) / 2, cy = (BOX[1] + BOX[3]) / 2;
+    OX = Math.min(0, Math.max(w - IW * K, w * .5 - cx * K * .82 - w * .02)); OY = Math.min(0, Math.max(h - IH * K, h * .44 - cy * K));
+    img.style.cssText = 'left:' + OX + 'px;top:' + OY + 'px;width:' + IW * K + 'px;height:' + IH * K + 'px';
+    var f = $('frame'); f.style.left = (OX + BOX[0] * K) + 'px'; f.style.top = (OY + BOX[1] * K) + 'px'; f.style.width = ((BOX[2] - BOX[0]) * K) + 'px'; f.style.height = ((BOX[3] - BOX[1]) * K) + 'px';
+  }
+  place();
+
+  /* ── 먹 (캔버스) ── */
+  var cv = $('ink'), cx = cv.getContext('2d'), DPR = Math.min(2, W.devicePixelRatio || 1), CW = 0, CH = 0;
+  function sizeInk() { CW = cv.width = innerWidth * DPR; CH = cv.height = innerHeight * DPR; }
+  sizeInk();
+  /* 먹줄 한 가닥 — 세로 줄 (옛 신문은 세로쓰기) · 가장자리가 고르지 안케 */
+  function inkBar(x, w, y0, y1) {
+    cx.fillStyle = '#030405'; cx.beginPath(); cx.moveTo(x, y0);
+    for (var y = y0; y <= y1; y += 14 * DPR) cx.lineTo(x + (Math.random() - .5) * 3 * DPR, y);
+    for (var y2 = y1; y2 >= y0; y2 -= 14 * DPR) cx.lineTo(x + w + (Math.random() - .5) * 3 * DPR, y2);
+    cx.closePath(); cx.fill();
+    cx.fillStyle = 'rgba(40,40,40,.5)'; for (var k = 0; k < 6; k++) cx.fillRect(x + Math.random() * w, y0 + Math.random() * (y1 - y0), 1 * DPR, 30 * DPR * Math.random());
+  }
+  function censor(cb) {
+    /* 오른편 칸부터 왼편으로 (세로쓰기 읽는 차례) — 먹줄이 내려옴 */
+    var col = 34 * DPR, n = Math.ceil(CW / col) + 1, i = 0;
+    (function step() {
+      if (i >= n) { cx.fillStyle = '#030405'; cx.fillRect(0, 0, CW, CH); cb(); return; }
+      var x = CW - (i + 1) * col, y1 = CH; (function drop(y) { var y2 = Math.min(y1, y + CH / 6); inkBar(x - 2 * DPR, col + 4 * DPR, y, y2); if (y2 < y1) requestAnimationFrame(function () { drop(y2); }); })(0);
+      if (i % 2 === 0) swish(.12 + Math.random() * .1); if (i % 4 === 0) buzz(6);
+      i++; setTimeout(step, 70);
+    })();
+  }
+  /* 손가락으로 먹 벗기기 */
+  var rubbing = false, lx = 0, ly = 0, lastT = 0, cleared = 0;
+  function brush(x, y) { x *= DPR; y *= DPR; var r = 34 * DPR; cx.globalCompositeOperation = 'destination-out'; var g = cx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, 'rgba(0,0,0,.95)'); g.addColorStop(.6, 'rgba(0,0,0,.45)'); g.addColorStop(1, 'rgba(0,0,0,0)'); cx.fillStyle = g; cx.beginPath(); cx.arc(x, y, r, 0, Math.PI * 2); cx.fill();
+    /* 먹이 결대로 갈라짐 — 세로 긁힘 몃 가닥 */
+    for (var k = 0; k < 3; k++) { cx.fillStyle = 'rgba(0,0,0,.5)'; cx.fillRect(x + (Math.random() - .5) * r * 1.4, y - r * .9, 1.4 * DPR, r * 1.8 * Math.random()); }
+    cx.globalCompositeOperation = 'source-over'; }
+  function stroke(x, y) { var d = Math.hypot(x - lx, y - ly), n = Math.max(1, Math.floor(d / 8)); for (var i = 1; i <= n; i++) brush(lx + (x - lx) * i / n, ly + (y - ly) * i / n); var now = performance.now(), v = d / Math.max(8, now - lastT); rubLevel(v * .2); if (d > 18) buzz(4); lx = x; ly = y; lastT = now; }
+  function measure() { var s = 24, gx = Math.floor(CW / s), gy = Math.floor(CH / s), d = cx.getImageData(0, 0, CW, CH).data, clear = 0, tot = 0; for (var y = 0; y < CH; y += s * 4) for (var x = 0; x < CW; x += s * 4) { tot++; if (d[(y * CW + x) * 4 + 3] < 120) clear++; } return clear / tot; }
+  var st = $('st');
+  st.addEventListener('pointerdown', function (e) { if (stage !== 3 || e.target.closest('#skip')) return; rubbing = true; lx = e.clientX; ly = e.clientY; lastT = performance.now(); rubOn(); stroke(e.clientX, e.clientY); hideHint(); });
+  st.addEventListener('pointermove', function (e) { if (!rubbing) return; stroke(e.clientX, e.clientY); });
+  function up() { if (!rubbing) return; rubbing = false; rubLevel(0); cleared = measure(); if (cleared > .3) wake(); }
+  st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up);
+  var chk = setInterval(function () { if (stage === 3 && rubbing) { cleared = measure(); if (cleared > .36) { rubbing = false; rubLevel(0); wake(); } } }, 400);
+
+  /* ── 글 ── */
+  function say(h, cls) { var c = $('cap'), o = c.querySelector('p.on'); if (o) { o.classList.remove('on'); setTimeout(function () { o.remove(); }, 900); } var p = D.createElement('p'); if (cls) p.className = cls; p.innerHTML = h; c.appendChild(p); requestAnimationFrame(function () { requestAnimationFrame(function () { p.classList.add('on'); }); }); }
+  function hideHint() { var h = $('cap').querySelector('p.hint'); if (h) { h.classList.remove('on'); } }
+
+  /* ── 차례 ── */
+  function begin() {
+    if (stage) return; stage = 1; ac(); roomOn(); buzz(15);
+    $('gate').style.opacity = '0'; setTimeout(function () { $('gate').remove(); }, 1000);
+    $('veil').classList.add('off');
+    /* 등잔이 지면을 더듬음 */
+    var t0 = performance.now(), L = $('lamp');
+    (function f(t) { if (stage > 1) return; var k = (t - t0) / 1000; L.style.setProperty('--lx', (50 + Math.sin(k * .35) * 26) + '%'); L.style.setProperty('--ly', (42 + Math.cos(k * .27) * 14) + '%'); requestAnimationFrame(f); })(t0);
+    var s = 0, iv = setInterval(function () { tick(); s++; if (s > 5) clearInterval(iv); }, 1000); T.push(iv);
+    at(.8, function () { say('<small>소화 팔 년 · 밤 열한 시 오십구 분</small>그날의 사건은<br>한 줄로 실리고, 끗낫소.'); });
+    at(4.2, function () { say('그런 줄이 — <b>셀 수 업시</b> 잇소.'); });
+    at(6.8, midnight);
+  }
+  function midnight() {
+    stage = 2; bell(); buzz([60, 120, 60]); $('lamp').style.opacity = '0';
+    say('<small>자정</small>쓰지 못한 말은<br>먹으로 지웟소.');
+    at(.6, function () { censor(function () { at(.6, function () { stage = 3; say('손가락으로 — 먹을 벗기시압', 'hint'); }); }); });
+  }
+  function wake() {
+    if (stage !== 3) return; stage = 4; clearInterval(chk); thud(.45); buzz([30, 70, 30]);
+    /* 남은 먹이 스르르 빠짐 */
+    var o = 1; (function f() { o -= .05; cv.style.opacity = Math.max(0, o); if (o > 0) requestAnimationFrame(f); })();
+    at(.9, function () { $('frame').classList.add('on'); swish(.2); });
+    at(1.6, function () {
+      /* 테두리 친 한 줄로 다가감 */
+      var w = innerWidth, h = innerHeight, bw = (BOX[2] - BOX[0]) * K, bh = (BOX[3] - BOX[1]) * K, z = Math.min(w * .86 / bw, h * .52 / bh), bx = OX + BOX[0] * K, by = OY + BOX[1] * K;
+      var tx = w / 2 - (bx + bw / 2) * z, ty = h * .4 - (by + bh / 2) * z;
+      $('pg').style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + z + ')';
+      var f = $('frame'); f.style.transition = 'opacity .8s, box-shadow 1.6s, transform 2.4s cubic-bezier(.6,0,.15,1)'; f.style.transformOrigin = '0 0'; f.style.left = '0px'; f.style.top = '0px'; f.style.transform = 'translate(' + (tx + bx * z) + 'px,' + (ty + by * z) + 'px)'; f.style.width = bw * z + 'px'; f.style.height = bh * z + 'px';
+      f.classList.add('dim'); say('<small>동아일보 · 소화 팔 년 오월 십칠일</small>시내 형사 총출동, 팔방 활동도 수포 —<br><b>그 한 줄에서, 사건이 깨여나오.</b>');
+    });
+    at(5.4, function () { say('이 밤의 지면엔 — <b>아즉 다 세지 못한</b> 사건들이 잇소.'); });
+    at(8.4, masthead);
+  }
+  function masthead() { if (done) return; done = true; stage = 5; thud(.35); $('cap').innerHTML = ''; $('top').style.opacity = '0'; $('sheet').classList.add('up'); buzz([20, 60, 20]); if (room) room.gain.setTargetAtTime(0, AC.currentTime, .6); at(3, go); }
+  function go() { T.forEach(function (x) { clearTimeout(x); clearInterval(x); }); location.replace(NEXT); }
+  $('gate').addEventListener('click', begin);
+  $('skip').addEventListener('click', function (e) { e.stopPropagation(); if (stage === 5) go(); else { T.forEach(function (x) { clearTimeout(x); clearInterval(x); }); done = false; masthead(); } });
+  $('sheet').addEventListener('click', go);
+  addEventListener('resize', function () { if (stage < 2) { place(); sizeInk(); } });
+})(window, document);
+</script>
+</body>
+</html>

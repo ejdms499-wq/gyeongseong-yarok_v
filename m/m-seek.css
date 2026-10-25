@@ -1,0 +1,303 @@
+/* 경성야록 심인 광고면 — 폰 전용판 v3
+   들어오는 첫 장은 검은 「음화」, 광고면은 하얀 「흑백 활판」. 붉은빛은 #b3261e 하나, 아껴 씀. 그림은 모다 흑백 */
+html,body.msk{background:var(--paper)}
+.msk{color:var(--ink);font-family:var(--serif);-webkit-tap-highlight-color:transparent}
+.msk img{filter:grayscale(1) contrast(1.06);-webkit-user-drag:none;user-select:none;-webkit-user-select:none}
+.msk .rt{position:absolute;right:8px;top:8px;z-index:4;font:500 9px/1 var(--sans);letter-spacing:.16em;padding:4px 5px;background:rgba(0,0,0,.62);color:#ddd;pointer-events:none}
+.msk .hj{cursor:pointer}
+.msk .hj.ko{background:linear-gradient(transparent 62%,rgba(179,38,30,.16) 62%)}
+.mb-bar .msk-pc{font-size:11px}
+
+/* ── 첫 장 · 음화 ── */
+.msk-cover{position:relative;background:var(--night);color:var(--nink);padding:0 0 30px;overflow:hidden}
+.cv-top{display:flex;justify-content:space-between;align-items:center;height:48px;padding:0 var(--g);font:500 11px/1 var(--sans);letter-spacing:.14em;color:var(--nmute)}
+.cv-top a{color:var(--nink);text-decoration:none}
+.sk-mug{position:relative;margin:4px var(--g) 0;aspect-ratio:520/690;overflow:hidden;border:1px solid #2a2a2a;touch-action:manipulation;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+.sk-mug img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.95);transition:transform .25s ease}
+.sk-mug.press img{transform:scale(.985)}
+.sk-paw{position:absolute;left:6%;top:6%;width:30%;aspect-ratio:1;opacity:0;transform:scale(1.4) rotate(-12deg);transition:opacity .25s,transform .35s cubic-bezier(.3,1.6,.5,1);background:radial-gradient(circle at 50% 66%,rgba(179,38,30,.82) 0 24%,transparent 25%),radial-gradient(circle at 22% 36%,rgba(179,38,30,.82) 0 10%,transparent 11%),radial-gradient(circle at 41% 20%,rgba(179,38,30,.82) 0 10%,transparent 11%),radial-gradient(circle at 61% 20%,rgba(179,38,30,.82) 0 10%,transparent 11%),radial-gradient(circle at 80% 36%,rgba(179,38,30,.82) 0 10%,transparent 11%);mix-blend-mode:multiply;pointer-events:none}
+.sk-mug.inked .sk-paw{opacity:1;transform:none}
+.cv-t{padding:22px var(--g) 0}
+.cv-k{font:500 11px/1 var(--sans);letter-spacing:.26em;color:var(--nmute)}
+.msk-cover h1{margin-top:12px;font:900 54px/1.08 var(--serif);letter-spacing:.06em;color:#fff}
+.msk-cover .sp-s{margin-top:16px;font:400 15px/1.85 var(--serif);color:#cfcfca}
+.cv-mug{margin-top:18px;padding-top:14px;border-top:1px solid #2a2a2a;font:400 13px/1.8 var(--serif);color:#9a9994}
+.cv-mug b{display:block;margin-bottom:4px;font:700 14px/1.4 var(--serif);color:#fff;letter-spacing:.04em}
+.cv-mug em{font-style:normal;color:#e4e3df}
+.cv-mug small{display:block;margin-top:6px;font:400 11px/1.5 var(--sans);color:#6b6b68}
+.cv-snd{display:flex;align-items:center;gap:10px;margin-top:20px;height:44px;padding:0 16px;border:1px solid #3a3a3a;background:none;color:#cfcfca;font:500 12px/1 var(--sans);letter-spacing:.06em}
+.cv-snd i{width:16px;height:16px;border-radius:50%;background:repeating-radial-gradient(circle,#0b0b0b 0 1.5px,#444 1.5px 2.5px);box-shadow:0 0 0 1px #555}
+.cv-snd[aria-pressed="true"]{color:#fff;border-color:#ecebe7}
+.cv-snd[aria-pressed="true"] i{animation:mskSpin 1.6s linear infinite}
+@keyframes mskSpin{to{transform:rotate(360deg)}}
+
+/* ── 실적판 (위에 붙음) ── */
+.msk-board{position:sticky;top:0;z-index:30;display:flex;gap:14px;align-items:baseline;padding:13px var(--g) 12px;background:rgba(244,243,240,.96);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-bottom:3px double var(--ink);font:500 11px/1 var(--sans);letter-spacing:.06em;color:var(--mute);transition:top .35s ease}
+body.mb-scrolled .msk-board,.mb-bar.on~.msk-board{top:48px}
+.msk-board em{font:900 16px/1 var(--serif);font-style:normal;color:var(--ink);margin-left:3px}
+.msk-board span:last-of-type{margin-left:auto}
+.msk-board span:last-of-type em{font-size:12px;font-weight:700}
+.msk-board em.bump{animation:mskBump .5s ease}
+@keyframes mskBump{40%{color:var(--red);transform:scale(1.35)}}
+.bd-bar{position:absolute;left:0;right:0;bottom:-3px;height:3px;background:transparent}
+.bd-bar b{display:block;height:100%;background:var(--red);transform-origin:0 50%;transform:scaleX(0)}
+
+/* ── 마당 ── */
+.msk-main{padding-bottom:20px}
+.msk-sec{padding:34px 0 8px;border-bottom:1px solid var(--ink)}
+.sec-no{margin:0 var(--g) 14px;display:flex;align-items:center;gap:10px;font:700 11px/1 var(--sans);letter-spacing:.32em;color:var(--ink)}
+.sec-no::after{content:"";flex:1;height:1px;background:var(--ink)}
+
+/* ── 큰 광고 ── */
+.msk-big{position:relative}
+.msk-big h2{margin:0 var(--g) 18px;font:900 38px/1.15 var(--serif);letter-spacing:.14em}
+.msk-ph{position:relative;margin:0;aspect-ratio:3/4;overflow:hidden;background:#111;touch-action:manipulation}
+.msk-ph>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.98)}
+.msk-ph .ix-b{opacity:0;transition:opacity .9s ease}
+#crewPh .ix-b{object-position:62% 50%}
+.msk-ph.swap .ix-b{opacity:1}
+.msk-ph.shake{animation:mskShake .45s ease}
+@keyframes mskShake{20%{transform:translateX(-5px) rotate(-.4deg)}45%{transform:translateX(5px) rotate(.4deg)}70%{transform:translateX(-3px)}}
+.msk-ph .ix-hot{position:absolute;z-index:3;border:0;background:none;padding:0;cursor:pointer}
+.msk-ph .ix-hot::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:1.5px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.5);animation:mskPing 2.2s ease-out infinite;opacity:.9}
+.msk-ph .ix-hot.got::after,.msk-ph .ix-hot.seen::after{animation:none;opacity:0}
+@keyframes mskPing{0%{transform:scale(.6);opacity:1}70%{transform:scale(2.2);opacity:0}100%{opacity:0}}
+.msk-ph .ph-ping{display:none}
+.msk-ph.dim>img{filter:grayscale(1) brightness(.35)}
+.msk-ph .ix-shadow{position:absolute;z-index:2;top:2%;left:-30%;width:26%;height:30%;background:linear-gradient(90deg,transparent,rgba(0,0,0,.85) 40%,rgba(0,0,0,.85) 60%,transparent);filter:blur(6px);opacity:0;pointer-events:none}
+.msk-ph .ix-shadow.on{animation:mskPass 2.6s ease-in-out forwards}
+@keyframes mskPass{0%{opacity:0;left:40%}20%{opacity:1}80%{opacity:1}100%{opacity:0;left:110%}}
+.msk-ph .sk-nophoto{display:none}
+
+/* 말풍선 — 사진 아래, 사진을 가리지 안음 */
+.msk-say{min-height:58px;margin:0;padding:14px var(--g) 12px;background:var(--ink);color:#ecebe7;font:400 15px/1.6 var(--serif);opacity:1!important;transform:none!important;position:static!important;box-shadow:none!important;border:0!important}
+.msk-say:empty::before{content:"사진 속을 눌러 보시오";color:#6b6b68;font:400 12px/1.6 var(--sans);letter-spacing:.06em}
+.msk-say b{display:inline-block;margin-right:8px;padding:2px 6px;background:#ecebe7;color:var(--ink);font:700 11px/1.4 var(--sans);letter-spacing:.1em;vertical-align:1px}
+.msk-say.on{animation:mskSay .4s ease}
+@keyframes mskSay{from{color:#6b6b68}}
+
+.msk-clues{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px var(--g) 0;list-style:none;padding:0}
+.msk-clues li{height:40px;display:grid;place-items:center;border:1px dashed #aaa;font:500 12px/1 var(--sans);color:#bbb;letter-spacing:.08em;transition:all .35s}
+.msk-clues li.on{border:1px solid var(--ink);background:var(--ink);color:#fff;font-weight:700}
+.msk-clues li.on:last-child{animation:mskBump .5s}
+
+.msk .ix-tip{margin:12px var(--g) 0;font:500 12px/1.6 var(--sans);color:var(--mute)}
+.msk .ix-tip b{color:var(--ink)}
+.msk .ix-tip.done{color:var(--red);font-weight:700}
+
+.msk .sk-spec{margin:22px var(--g) 0;border-top:2px solid var(--ink)}
+.msk .sk-spec div{display:grid;grid-template-columns:5.2em 1fr;gap:12px;padding:12px 0 11px;border-bottom:1px solid var(--line)}
+.msk .sk-spec dt{font:700 12px/1.7 var(--sans);letter-spacing:.12em;color:var(--mute)}
+.msk .sk-spec dd{margin:0;font:400 15px/1.7 var(--serif)}
+.msk .sk-tail{margin:18px var(--g) 0;font:400 14px/1.8 var(--serif)}
+.msk .sk-tail b{font-weight:900}
+.msk .sk-tail small{display:block;margin-top:4px;font:400 12px/1.7 var(--sans);color:var(--mute)}
+.msk .sk-go{display:block;width:calc(100% - var(--g)*2);margin:22px var(--g) 0;height:56px;border:0;background:var(--ink);color:#fff;font:700 16px/1 var(--serif);letter-spacing:.3em;text-indent:.3em}
+.msk .sk-go:active{background:#333}
+.msk .sk-ad.big.found .sk-go{display:none}
+.msk .sk-found:empty{display:none}
+.msk .sk-found{margin:20px var(--g) 0;padding:18px 16px;border:2px solid var(--ink);font:400 14px/1.8 var(--serif)}
+.msk .sk-found small{display:block;margin-top:8px;font:400 11px/1.6 var(--sans);color:var(--mute)}
+.msk .sk-found button{margin-top:12px;padding:10px 14px;border:1px solid var(--ink);background:none;font:500 12px/1 var(--sans)}
+.msk .sk-verdict{display:block;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--line);text-align:center}
+.msk .sk-verdict b{display:inline-block;padding:6px 14px 5px;border:3px double var(--red);color:var(--red);font:900 18px/1 var(--serif);letter-spacing:.3em;transform:rotate(-4deg);animation:mskStamp .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes mskStamp{from{transform:scale(2) rotate(-12deg);opacity:0}}
+.msk .sk-verdict em{display:block;margin-top:12px;font:400 12px/1.6 var(--sans);font-style:normal;color:var(--mute)}
+.msk .sk-verdict strong{display:block;margin-top:6px;font:900 18px/1.5 var(--serif)}
+.msk .sk-verdict i{display:block;margin-top:8px;font:500 10px/1 var(--sans);font-style:normal;letter-spacing:.3em;color:var(--mute)}
+
+/* ── 작은 광고 — 옆으로 넘기는 쪽지 ── */
+.msk-deck{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--g) 6px;scroll-padding:0 var(--g);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.msk-deck::-webkit-scrollbar{display:none}
+.msk-card{flex:0 0 82%;scroll-snap-align:start;border:1px solid var(--ink);outline:1px solid var(--ink);outline-offset:-5px;background:#fbfaf7;padding:20px 18px 20px;position:relative}
+.cd-k{display:flex;justify-content:space-between;align-items:center}
+.cd-k b{background:var(--ink);color:#fff;font:700 11px/1 var(--sans);letter-spacing:.3em;padding:5px 6px 4px 9px}
+.cd-k span{font:500 10px/1 var(--sans);color:var(--mute);letter-spacing:.1em}
+.msk-card h3{margin-top:14px;font:900 21px/1.35 var(--serif);letter-spacing:.04em}
+.cd-im{position:relative;margin:14px 0 0;aspect-ratio:16/10;overflow:hidden;border:1px solid var(--ink);background:#fff}
+.cd-im img{width:100%;height:100%;object-fit:cover}
+.cd-im img.tall{object-fit:contain}
+.cd-im figcaption{position:absolute;right:5px;bottom:5px;padding:3px 5px;background:rgba(0,0,0,.65);color:#ddd;font:500 9px/1 var(--sans);letter-spacing:.14em}
+.msk-card>.cd-in>p:not(.cd-k){margin-top:12px;font:400 14px/1.8 var(--serif)}
+.cd-up{max-height:0;overflow:hidden;transition:max-height .6s ease}
+.cd-up .sk-up{display:block!important;margin-top:12px;padding:12px 12px;border-left:3px solid var(--red);background:#f1efe9;font:400 13.5px/1.75 var(--serif)}
+.msk-card.upd .cd-up{max-height:260px}
+.msk-card .sk-upb{margin-top:14px;padding:10px 14px;border:1px dashed var(--ink);background:none;font:700 12px/1 var(--sans);letter-spacing:.2em}
+.msk-card.upd .sk-upb{display:none}
+.msk-card.mew{animation:mskShake .45s ease}
+.msk-card .cat-box{display:none}
+.msk-dots{display:flex;justify-content:center;gap:6px;padding:14px 0 18px}
+.msk-dots i{width:6px;height:6px;border-radius:50%;background:#c7c6c1;transition:all .3s}
+.msk-dots i.on{width:18px;border-radius:3px;background:var(--ink)}
+
+/* ── 아래칸 넷 ── */
+.msk-low{margin:0 var(--g) 18px;padding:0 0 18px;border:1px solid var(--ink);background:#fbfaf7;position:relative;text-align:center}
+.msk-low .sk-l-img{position:relative;margin:0 0 16px;aspect-ratio:16/10;overflow:hidden;border-bottom:1px solid var(--ink)}
+.msk-low .sk-l-img img{width:100%;height:100%;object-fit:cover}
+.msk-low.sk-knock .sk-l-img{aspect-ratio:4/3}
+.msk-low.sk-knock .sk-l-img img{object-position:50% 30%}
+.msk-low .sk-l-img figcaption{position:absolute;right:6px;bottom:6px;padding:3px 6px;background:rgba(0,0,0,.65);color:#ddd;font:500 10px/1 var(--sans)}
+.msk-low .sk-l-k{display:inline-block;padding:5px 14px 4px;border:1px solid var(--ink);font:700 12px/1 var(--sans);letter-spacing:.3em}
+.msk-low h3{margin:12px 16px 0;font:900 22px/1.35 var(--serif)}
+.msk-low>p{margin:10px 18px 0;font:400 14px/1.8 var(--serif)}
+.msk-low .sk-l-s{font:400 12.5px/1.7 var(--sans);color:var(--mute)}
+.msk-low .sk-l-b{margin-top:14px;min-width:140px;height:46px;padding:0 18px;border:1px solid var(--ink);background:var(--ink);color:#fff;font:700 14px/1 var(--serif);letter-spacing:.2em}
+.msk-low .sk-l-b:disabled{opacity:.4}
+.msk-low .sk-l-clock{font:400 12px/1 var(--sans);color:var(--mute)}
+.msk-low .sk-l-clock b{display:block;margin-top:8px;font:900 34px/1 var(--serif);letter-spacing:.06em;color:var(--red);font-variant-numeric:tabular-nums}
+.msk-low.near .sk-l-clock b{animation:mskBump 1s infinite}
+.msk-low .sk-run,.msk-low .sk-obit-msg{min-height:1.6em;font:700 14px/1.6 var(--serif)}
+.msk-low.flee{animation:mskShake .45s ease}
+.msk-low.lit .sk-l-img img{filter:grayscale(1) brightness(1.08)}
+.msk-low .sk-fix{list-style:none;margin:12px 18px 0;padding:0;text-align:left}
+.msk-low .sk-fix li{padding:10px 0;border-top:1px dotted #999;font:400 13.5px/1.7 var(--serif);animation:mskSay .5s}
+.msk-low .sk-fix b{display:block;font:700 11px/1.4 var(--sans);letter-spacing:.14em;color:var(--red)}
+.msk-low.shake{animation:mskKnock .3s ease}
+@keyframes mskKnock{30%{transform:translateX(-3px)}60%{transform:translateX(3px)}}
+.msk-low.back .sk-l-img img{animation:mskBack 1.2s ease}
+@keyframes mskBack{30%{transform:scale(1.04)}}
+.msk-low.sk-sorry,.msk-low.sk-knock{cursor:pointer}
+
+/* ── 납량란에서 넘어온 이 ── */
+.msk .sk-np{margin:26px var(--g) 0;padding:18px 16px;border:2px solid var(--red);text-align:center}
+.msk .sk-np .sk-kind b{color:var(--red);font:700 12px/1 var(--sans);letter-spacing:.3em}
+.msk .sk-np h2{margin-top:10px;font:900 24px/1.3 var(--serif)}
+.msk .sk-np-t{margin-top:10px;font:400 14px/1.8 var(--serif);text-align:left}
+.msk .sk-np .sk-go{width:100%;margin:14px 0 0}
+.msk .sk-np-r{margin-top:10px;font:700 14px/1.6 var(--serif);color:var(--red)}
+
+.msk .sk-note{margin:22px var(--g) 0;font:400 11.5px/1.75 var(--sans);color:var(--mute)}
+
+/* ── 자수서 · 통지서 — 아래에서 올라오는 한 장 ── */
+.msk .sk-modal{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;opacity:0;transition:opacity .28s ease}
+.msk .sk-modal[hidden]{display:none}
+.msk .sk-modal.on{opacity:1}
+.msk .sk-card{position:relative;width:100%;max-height:92vh;max-height:92dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:var(--paper);border-top:3px double var(--ink);padding:18px var(--g) calc(20px + env(safe-area-inset-bottom));transform:translateY(40px);transition:transform .32s cubic-bezier(.2,.8,.2,1);box-sizing:border-box}
+.msk .sk-modal.on .sk-card{transform:none}
+.msk .sk-card::before{content:"";display:block;width:40px;height:4px;margin:0 auto 14px;background:#bbb}
+.msk .sk-x{position:absolute;right:10px;top:10px;width:44px;height:44px;border:0;background:none;font:300 30px/1 var(--sans);color:var(--ink)}
+.msk .sk-card-to{display:flex;gap:10px;align-items:baseline;padding-bottom:12px;border-bottom:1px solid var(--line);font:400 11px/1.4 var(--sans);color:var(--mute)}
+.msk .sk-card-to b{font:700 13px/1.4 var(--serif);color:var(--ink)}
+.msk .sk-card h3{margin-top:16px;font:900 28px/1 var(--serif);letter-spacing:.4em}
+.msk .sk-card-s{margin-top:10px;font:400 14px/1.75 var(--serif);color:#333}
+.msk .sk-fields{display:none}
+.msk .sk-fields.on{display:block}
+.msk .sk-f{display:block;margin-top:18px;border:0;padding:0;min-width:0}
+.msk .sk-f>span,.msk .sk-f legend>span{display:block;margin-bottom:8px;font:700 13px/1.4 var(--sans);letter-spacing:.06em}
+.msk .sk-f small{font-weight:400;color:var(--mute);margin-left:6px;font-size:11px}
+.msk .sk-f input,.msk .sk-f select,.msk .sk-f textarea{display:block;width:100%;box-sizing:border-box;min-width:0;padding:12px 12px;border:1px solid var(--ink);border-radius:0;background:#fff;font:400 16px/1.4 var(--serif);color:var(--ink);-webkit-appearance:none;appearance:none}
+.msk .sk-f select{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230e0e0e' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 14px center}
+.msk .sk-f textarea{min-height:110px;resize:vertical}
+.msk .sk-f [aria-invalid="true"]{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+.msk .sk-crime{display:block!important}
+.msk .sk-crime label{display:flex;align-items:center;gap:10px;padding:11px 12px;margin-top:6px;border:1px solid var(--line);background:#fff;font:400 14px/1.4 var(--serif)}
+.msk .sk-crime input{width:20px;height:20px;padding:0;flex:none;-webkit-appearance:auto;appearance:auto;accent-color:var(--red)}
+.msk .sk-crime label:has(input:checked){border-color:var(--ink)}
+.msk .sk-tabs{display:grid;grid-template-columns:1fr 1fr;margin-top:18px;border:1px solid var(--ink)}
+.msk .sk-tabs button{height:44px;border:0;background:none;font:700 13px/1 var(--sans)}
+.msk .sk-tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+.msk .sk-send{display:block;width:100%;margin-top:22px;height:56px;border:0;background:var(--ink);color:#fff;font:700 16px/1 var(--serif);letter-spacing:.4em;text-indent:.4em}
+.msk .sk-card-n{margin-top:12px;font:400 11px/1.7 var(--sans);color:var(--mute);text-align:center}
+
+/* ── 가장자리 고양이 ── */
+.msk-catpeek{position:fixed;z-index:60;width:96px;bottom:22%;right:-100px;transition:right .5s cubic-bezier(.3,1.4,.5,1),left .5s cubic-bezier(.3,1.4,.5,1);cursor:pointer;touch-action:manipulation}
+.msk-catpeek img{width:100%;display:block;filter:grayscale(1) contrast(1.1)}
+.msk-catpeek.l{right:auto;left:-100px}
+.msk-catpeek.l img{transform:scaleX(-1)}
+.msk-catpeek.on{right:-30px}
+.msk-catpeek.l.on{left:-30px}
+.msk-catpeek.got img{animation:mskHop .5s ease}
+@keyframes mskHop{40%{transform:translateY(-14px)}}
+.msk-catpeek.l.got img{animation:mskHopL .5s ease}
+@keyframes mskHopL{0%,100%{transform:scaleX(-1)}40%{transform:scaleX(-1) translateY(-14px)}}
+.msk-toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));z-index:150;transform:translate(-50%,20px);max-width:calc(100% - 40px);padding:12px 16px;background:var(--ink);color:#fff;font:500 13px/1.5 var(--sans);opacity:0;pointer-events:none;transition:all .35s ease;text-align:center}
+.msk-toast.on{opacity:1;transform:translate(-50%,0)}
+
+.msk-foot{padding:26px var(--g) calc(40px + env(safe-area-inset-bottom));text-align:center;font:400 12px/1.7 var(--sans);color:var(--mute)}
+.msk-foot a{display:inline-block;margin:12px 8px 0;padding-bottom:3px;border-bottom:1px solid var(--ink);color:var(--ink);text-decoration:none;font-weight:700}
+
+@media (prefers-reduced-motion:reduce){.msk *{animation:none!important;transition:none!important}}
+.msk .cat-found{margin:14px 0 0}
+.msk .cf-img img{filter:grayscale(1) contrast(1.08)!important;box-shadow:0 0 0 1px var(--ink)!important}
+.msk .cf-rp{background:rgba(0,0,0,.65)!important;color:#ddd!important;font:500 9px/1.4 var(--sans)!important}
+.msk .cat-found figcaption{color:var(--ink)!important;font:400 13.5px/1.75 var(--serif)!important}
+
+/* ═══ 1017 쪽지 · 아래칸 — 손을 대면 움직이는 그림 ═══ */
+.cd-im{touch-action:manipulation;cursor:pointer}
+.cd-im img{transition:transform .25s ease,opacity .26s ease}
+.cd-im img.sw,.msk-low .sk-l-img img.sw{opacity:0}
+.cd-fx{position:absolute;inset:0;pointer-events:none}
+.cd-hint{min-height:1.6em;margin-top:8px;font:500 12px/1.6 var(--sans);color:var(--mute)}
+.cd-hint.pop{animation:mskSay .4s ease;color:var(--ink)}
+.cd-im.jolt,.msk-low .sk-l-img.jolt{animation:mskShake .4s ease}
+.cd-act{margin-top:10px;width:100%;height:44px;border:1px solid var(--ink);background:var(--ink);color:#fff;font:700 13px/1 var(--sans);letter-spacing:.06em}
+.cd-act i{font-style:normal;display:inline-block;min-width:20px;margin-left:6px;padding:2px 5px;background:#fff;color:var(--ink)}
+.cd-act:disabled{opacity:.4}
+/* 원고 — 새가 퍼덕일수록 그림이 들썩 */
+.msk-card[data-k="page"] .cd-im img{transform:translateY(calc(var(--fly,0) * -2px)) rotate(calc(var(--fly,0) * -.6deg))}
+/* 어제의 나 — 등불 */
+.cd-im.lamp .cd-fx{background:radial-gradient(circle at var(--lx,50%) var(--ly,50%),transparent 0 46px,rgba(0,0,0,.93) 80px);transition:opacity .8s}
+.cd-im.lamp:not(.lit) .cd-fx{background:rgba(0,0,0,.9)}
+.cd-im.lamp:not(.lit)::after{content:"손가락을 대시오";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:500 12px/1 var(--sans);color:#aaa;letter-spacing:.1em;pointer-events:none}
+.cd-im.lamp{touch-action:none}
+.cd-im.lamp.found .cd-fx{opacity:0}
+.cd-im.lamp.found::after{display:none}
+/* 고양이 — 누르면 휙 */
+.cd-im.dash img{animation:mskDash .45s ease}
+@keyframes mskDash{30%{transform:translateX(-14px) scale(1.04)}60%{transform:translateX(10px)}}
+/* 우산 — 끌어내리기 */
+.cd-im.pull{touch-action:none}
+/* 아래칸 */
+.msk-low .sk-l-img img{transition:transform .5s cubic-bezier(.3,1.2,.4,1),opacity .26s}
+.lw-smoke{position:absolute;left:0;right:0;bottom:0;height:100%;pointer-events:none;opacity:calc(var(--sm,0) * .9);background:radial-gradient(ellipse 30% 40% at 30% 70%,rgba(255,255,255,.55),transparent 70%),radial-gradient(ellipse 25% 45% at 70% 60%,rgba(255,255,255,.5),transparent 70%);filter:blur(6px);transition:opacity 1s}
+.sk-l-img.puff .lw-smoke{animation:mskSmoke 2.4s ease-out}
+@keyframes mskSmoke{from{transform:translateY(20px)}to{transform:translateY(-14px)}}
+.sk-l-img.alive img{animation:mskAlive 1.2s ease 2}
+@keyframes mskAlive{30%{transform:rotate(-2deg) scale(1.03)}60%{transform:rotate(2deg)}}
+.lw-ring{position:absolute;left:4%;top:18%;width:36%;height:72%;border:3px solid var(--red);border-radius:50%;opacity:0;transform:scale(1.3) rotate(-6deg);pointer-events:none}
+.lw-ring.on{opacity:.95;transform:scale(1) rotate(-6deg);transition:all .35s cubic-bezier(.3,1.6,.5,1)}
+.lw-ring b{position:absolute;right:-10px;top:-12px;padding:3px 7px;background:var(--red);color:#fff;font:700 12px/1.3 var(--sans);white-space:nowrap;transform:rotate(6deg)}
+.sk-l-img.gone img{filter:grayscale(1) brightness(1.05) contrast(.95)}
+.msk-low.sk-knock .sk-l-img.back img{animation:mskKnock .25s ease 3}
+/* 다음 장면이 겹쳐 떠오름 */
+.cd-im img.xf,.msk-low .sk-l-img img.xf{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s ease;z-index:1}
+.cd-im img.tall.xf{object-fit:contain}
+.cd-im img.xf.on,.msk-low .sk-l-img img.xf.on{opacity:1}
+.cd-im figcaption,.msk-low .sk-l-img figcaption{z-index:2}
+.msk-card[data-k="chair"] .cd-im{aspect-ratio:4/5}
+/* 첫 화면은 빈 의자 — 수배 고양이는 아래 광고면으로 */
+.msk-cvph{position:absolute;inset:0;margin:0;z-index:0}
+.msk-cvph img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.5)}
+.msk-cvph::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.4),transparent 30%,rgba(0,0,0,.9) 75%)}
+.msk-cvph .rt{position:absolute;right:12px;top:52px;z-index:2}
+.msk-cover{position:relative;min-height:88svh;display:flex;flex-direction:column;justify-content:flex-end}
+.msk-cover>.cv-top,.msk-cover>.cv-t{position:relative;z-index:2}
+.msk-cover>.cv-top{position:absolute;left:0;right:0;top:0}
+.msk-wanted{padding:30px var(--g) 10px;background:#0b0b0b}
+.mw-k{margin-bottom:12px;font:500 10.5px/1 var(--sans);letter-spacing:.22em;color:#e07a72}
+.msk-wanted .sk-mug{margin:0;max-width:300px}
+.msk-wanted .cv-mug{margin-top:14px}
+
+/* (1020) 고양이 지문 — 검은 앞발 우가 아니라 밝은 바탕 우에, 붉은 인주로 또렷이 */
+.sk-paw{background:none!important;mix-blend-mode:normal!important;right:7%!important;bottom:auto!important;top:7%;width:30%!important;opacity:0;transform:scale(1.6) rotate(-14deg);filter:drop-shadow(0 0 1px rgba(156,31,23,.4))}
+.sk-paw svg{display:block;width:100%;height:100%}
+.sk-mug.inked .sk-paw{opacity:.92;transform:rotate(-14deg)}
+.sk-paw-t{position:absolute;right:5%;top:calc(7% + 31%);padding:3px 6px;border:2px solid #9c1f17;color:#9c1f17;background:rgba(240,238,232,.7);font:900 11px/1 var(--serif);letter-spacing:.12em;transform:rotate(-6deg) scale(1.4);opacity:0;transition:opacity .3s .25s,transform .35s .25s cubic-bezier(.3,1.6,.5,1)}
+.sk-mug.inked .sk-paw-t{opacity:1;transform:rotate(-6deg)}
+/* 꾹 누르기가 안 되어도 — 한 번 눌러도 찍힘 */
+.sk-mug{cursor:pointer}
+/* (1020) 이불 속 말풍선 — 이름표와 말을 한 줄 가운데로 */
+.msk-say{display:flex;align-items:center;justify-content:center;gap:10px;min-height:62px;text-align:center;font:400 15.5px/1.5 var(--serif)}
+.msk-say b{margin:0;vertical-align:middle;flex:none;line-height:1.3}
+.msk-say b:empty{display:none}
+.msk-say:empty::before{text-align:center}
+.sk-paw{right:auto!important;left:6%;top:6%}
+.sk-paw-t{right:auto;left:4%;top:calc(6% + 31%)}
+.sk-walk{display:block;margin:12px 0 0;padding:12px 14px;border:1px solid #ecebe7;color:#ecebe7;font:500 13px/1.6 var(--sans);text-decoration:none}
+.sk-walk b{font-weight:800}
+
+/* (1021) 지문 도장은 고양이 · 팻말을 가리지 안케 왼쪽 위 빈 벽에 */
+.sk-paw{background:none}.sk-paw svg{display:block;width:100%;height:100%}
+.sk-mug.inked .sk-paw{opacity:.92;transform:rotate(-14deg)}
+.sk-paw-t{position:absolute;left:4%;top:calc(6% + 31%);padding:3px 7px;border:2px solid #9c1f17;color:#9c1f17;background:rgba(244,243,240,.8);font:900 12px/1 var(--serif);letter-spacing:.12em;transform:rotate(-6deg) scale(1.4);opacity:0;transition:opacity .3s .25s,transform .35s .25s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.sk-mug.inked .sk-paw-t{opacity:1;transform:rotate(-6deg)}

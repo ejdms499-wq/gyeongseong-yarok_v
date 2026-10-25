@@ -1,0 +1,22 @@
+/* 경성야록 · 백백교 본편 — 폰에서만 쓰는 이 지면만의 손질 (공통 틀은 ../yk-m.css) */
+@media (max-width:600px){
+  html body .bridge,html body .bb-fin + .bridge.bb-thaw{margin-left:0!important;margin-right:0!important}
+}
+@media (max-width:600px){
+  /* 밤의 활동사진 — 그림을 자르지 않고 영화처럼 위아래 검은 띠 */
+  html body .n6-i{object-fit:contain!important}
+  html body .bb-night.ng6{padding-left:0!important;padding-right:0!important}
+  html body .n6-tag span{font-size:18px!important}
+  html body .n6-sub b{font-size:22px!important}
+  html body .n6-sub p{font-size:15px!important}
+}
+
+/* 1016 · 흩어진 한 집 — 폰: 네 조각을 한 화면 안에 나란히 (가로로 넘치지 않게) · 높이는 화면의 절반 */
+@media (max-width:600px){
+  html body .hs6{padding:20px 0 12px!important}
+  html body .hs6 .h6-strips{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;width:94%!important;margin:0 auto!important}
+  html body .hs6 .h6-s{width:auto!important;min-width:0!important;max-width:none!important;aspect-ratio:auto!important;height:min(52svh,420px)!important;max-height:none!important;flex:none!important}
+  html body .hs6 .h6-cap{position:absolute!important;left:0!important;right:0!important;bottom:6px!important;width:auto!important;text-align:center!important;font-size:11px!important}
+  html body .hs6 .h6-cap small{display:none!important}
+  html body .hs6 .h6-st{font-size:10.5px!important}
+}

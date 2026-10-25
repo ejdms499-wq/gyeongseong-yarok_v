@@ -1,0 +1,132 @@
+/* 경성야록 · 죽첨정 폰판 — 《긔록의 이면》 다섯 막 (1018)
+   서막 하나의 사건, 여러 개의 긔록 → 제1막 첫 번째 문장 → 제2막 맛지 안는 시간 → 제3막 의심을 만드는 사람들 → 종막 지면 밧긔 사람들
+   색은 검은 잉크와 어두운 적색 — 붉은빛은 교정 표시로만 (틀린 말에 긋는 줄 · 도장 · 괄호) */
+body.jk-i{--pf:#7f1d18;--red:#3a3a38;--ink:#0e0e0e}
+/* (1019) 붉은빛은 「교정 표시」와 「호외」에만 — 위 띠·차례·달력·막 머리는 먹빛 */
+.jk-i .mb-sec.dark,.jk-i .mb-open,.jk-i .mb-finale,.jk-i .mb-sheet:not(.light),.jk-i .jk-act{--pf:#b84a43;--red:#9a9994}
+.jk-i .mb-p em{box-shadow:inset 0 -.38em 0 rgba(127,29,24,.14)}
+.jk-i .dark .mb-p em{box-shadow:inset 0 -.38em 0 rgba(184,74,67,.4)}
+
+/* ── 교정 부호 ── */
+.pf-s{text-decoration:line-through;text-decoration-color:var(--pf);text-decoration-thickness:2px}
+.pf-c{display:inline-block;padding:0 .18em;border:1.5px solid var(--pf);border-radius:50%/60%;line-height:1.25}
+.pf-u{text-decoration:underline dotted var(--pf);text-decoration-thickness:1.5px;text-underline-offset:4px}
+.pf-n{font:500 10.5px/1.4 var(--sans);letter-spacing:.14em;color:var(--pf)}
+
+/* ── 막 머리 — 교정지 한 장 ── */
+.jk-act{position:relative;overflow-x:clip;padding:21vh var(--g) 13vh;background:#0e0e0e;color:#ecebe7;text-align:center}
+.jk-act::before{content:"";position:absolute;left:var(--g);right:var(--g);top:calc(21vh - 42px);height:1px;background:#2e2e2e}
+.jk-act em{position:absolute;right:var(--g);top:calc(21vh - 32px);font:500 10px/1 var(--sans);letter-spacing:.24em;color:#6b6b68;font-style:normal}
+.jk-act small{display:block;font:500 10.5px/1 var(--sans);letter-spacing:.44em;color:#8d8d8a;margin-bottom:16px}
+.jk-act b{display:block;font:300 26px/1.45 var(--serif);letter-spacing:.02em;color:#f0f0ed}
+.jk-act i{display:block;width:34px;height:2px;margin:28px auto 0;background:var(--red)}
+.jk-act.a0 i{width:34px}
+
+/* ── 서막 — 긔록 대조표 ── */
+.rec{margin:20px 0 0;background:#fbfbf9;border:1px solid var(--ink)}
+.rec-hd{display:grid;grid-template-columns:1fr 92px 64px;gap:8px;padding:10px 14px;border-bottom:2px solid var(--ink);font:500 10px/1 var(--sans);letter-spacing:.2em;color:var(--mute)}
+.rec-r{display:grid;grid-template-columns:1fr 92px 64px;gap:2px 8px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.rec-r:last-child{border-bottom:0}
+.rec-r b{grid-column:1;font:700 14.5px/1.4 var(--serif);letter-spacing:-.01em}
+.rec-r small{grid-column:1;font:500 10.5px/1.4 var(--sans);letter-spacing:.06em;color:var(--mute)}
+.rec-r span{grid-column:2;grid-row:1/3;font:400 11px/1.5 var(--sans);color:#4a4a48}
+.rec-r i{grid-column:3;grid-row:1/3;justify-self:end;font:800 9.5px/1 var(--sans);font-style:normal;letter-spacing:.12em;padding:5px 6px;border:1.5px solid var(--ink);color:var(--ink);transform:rotate(-5deg);white-space:nowrap}
+.rec-r i.re{border-color:#888;color:#666}
+.rec-r i.rc{border-color:var(--pf);color:var(--pf)}
+
+/* ── 제1막 — 첫 번째 문장 ── */
+.fs{margin:24px 0 10px;padding:16px 16px 14px;background:#fbfbf9;border:1px solid var(--ink);box-shadow:0 18px 30px -22px rgba(0,0,0,.6)}
+.fs-hd{display:flex;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--ink);font:500 10px/1.4 var(--sans);letter-spacing:.14em;color:var(--mute)}
+.fs-hd b{font-weight:500;color:var(--ink);text-align:right}
+.fs-h{margin:16px 0 6px;font:900 27px/1.3 var(--serif);letter-spacing:-.03em}
+.fs-sh{font:700 14px/1.6 var(--serif);color:#333;margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed #bbb}
+.fs-s{font:400 16.5px/1.9 var(--serif);margin:0 0 6px}
+.fs-s small{display:inline-block;margin-right:6px;font:500 10px/1 var(--sans);letter-spacing:.14em;color:var(--mute);vertical-align:2px}
+.fs-w{text-decoration:underline dotted var(--pf);text-decoration-thickness:1.5px;text-underline-offset:4px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .3s}
+.fs-w.on{text-decoration:none;background:rgba(127,29,24,.1);box-shadow:0 0 0 1.5px var(--pf);border-radius:40%/50%;padding:0 .1em}
+.fs-w.seen:not(.on){text-decoration-style:solid;text-decoration-color:#bbb}
+.fs-note{margin:14px -6px 0;padding:14px 14px 12px;border:1.5px solid var(--pf);background:#fff;position:relative}
+.fs-note::before{content:"";position:absolute;left:18px;top:-7px;width:12px;height:12px;background:#fff;border-left:1.5px solid var(--pf);border-top:1.5px solid var(--pf);transform:rotate(45deg)}
+.fs-note small{display:block;font:500 9.5px/1 var(--sans);letter-spacing:.24em;color:var(--pf);margin-bottom:6px}
+.fs-note b{display:block;font:800 17px/1.4 var(--serif);margin-bottom:8px}
+.fs-note p{font:400 13.5px/1.75 var(--serif);color:#222;margin:0 0 8px}
+.fs-note p em{font-style:normal;font-weight:700;color:var(--pf);margin-right:6px}
+.fs-note .fs-src{display:block;margin-top:8px;padding-top:8px;border-top:1px solid #e3e3df;font:500 10px/1.5 var(--sans);letter-spacing:.06em;color:#777}
+.fs-note .fs-src i{font-style:normal;color:var(--pf);margin-left:6px}
+.fs-tip{margin-top:12px;font:400 12px/1.6 var(--sans);color:var(--mute)}
+.fs-done{display:flex;align-items:center;gap:8px;margin-top:12px;font:500 11px/1 var(--sans);letter-spacing:.12em;color:var(--mute)}
+.fs-done i{flex:1;height:3px;background:#e4e4e1}
+.fs-done i b{display:block;height:100%;width:0;background:var(--pf);transition:width .4s}
+
+/* ── 제2막 — 맛지 안는 시간 ── */
+.tm-axis{list-style:none;margin:20px 0 26px;border-left:2px solid #333;padding:4px 0 4px 16px}
+.tm-axis li{position:relative;display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px 0;font:400 13px/1.55 var(--sans);color:#bdbcb7}
+.tm-axis li::before{content:"";position:absolute;left:-21px;top:16px;width:8px;height:8px;border-radius:50%;background:#555}
+.tm-axis li.x::before{background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.15)}
+.tm-axis li b{font:700 13.5px/1.5 var(--serif);color:#fff}
+.tm-axis li span{grid-column:1}
+.tm-axis li i{grid-column:2;grid-row:1/3;align-self:center;font:500 9.5px/1 var(--sans);font-style:normal;letter-spacing:.1em;color:#8d8d8a;border:1px solid #3a3a3a;padding:4px 5px;white-space:nowrap}
+.tm{display:grid;gap:18px}
+.tm-card{position:relative;padding:16px 16px 18px;background:#fbfbf9;color:var(--ink);border:1px solid #000;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:pan-y;transition:box-shadow .5s}
+.tm-card.lock{box-shadow:0 0 0 2px var(--pf)}
+.tm-k{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font:500 10px/1 var(--sans);letter-spacing:.2em;color:var(--mute);margin-bottom:12px}
+.tm-k b{font:800 13px/1 var(--serif);letter-spacing:.1em;color:var(--ink)}
+.tm-tag{font:800 9.5px/1 var(--sans);letter-spacing:.14em;padding:4px 6px;border:1.5px solid var(--pf);color:var(--pf);transform:rotate(-4deg);opacity:0;transition:opacity .4s}
+.tm-tag.add{border-color:#777;color:#666}
+.tm-card.lock .tm-tag,.tm-card.seen .tm-tag,.tm-card.ex .tm-tag{opacity:1}
+.tm-ly{position:relative}
+.tm-a{position:relative;z-index:1;transition:opacity .6s}
+.tm-a p,.tm-b p{font:400 15px/1.8 var(--serif);margin:0 0 4px}
+.tm-a p small,.tm-b p small{display:inline-block;min-width:4.2em;margin-right:6px;font:500 10px/1 var(--sans);letter-spacing:.12em;color:#777;vertical-align:1px}
+.tm-a .pf-s{text-decoration-color:transparent;transition:text-decoration-color .6s}
+.tm-card.hold .tm-a .pf-s,.tm-card.ex .tm-a .pf-s{text-decoration-color:var(--pf)}
+.tm-b{position:relative;z-index:2;max-height:0;overflow:hidden;color:var(--pf);opacity:0;transform:translate(6px,-14px) rotate(-.6deg);transition:opacity .7s ease,transform .7s ease,max-height .7s ease;pointer-events:none;mix-blend-mode:multiply}
+.tm-b p{font-weight:700;padding-left:10px;border-left:2px solid rgba(127,29,24,.35)}
+.tm-b p small{color:var(--pf);opacity:.8}
+.tm-card.hold .tm-b,.tm-card.ex .tm-b{opacity:1;max-height:220px;transform:translate(6px,-6px) rotate(-.6deg)}
+.tm-card.hold .tm-a,.tm-card.ex .tm-a{opacity:.5}
+.tm-br{display:none;margin:12px 0 0;padding:12px 12px 10px;border-left:3px solid var(--pf);background:rgba(127,29,24,.05);font:400 13px/1.7 var(--serif);color:#222}
+.tm-br b{display:block;font:800 11px/1 var(--sans);letter-spacing:.18em;color:var(--pf);margin-bottom:6px}
+.tm-card.ex .tm-br{display:block}
+.tm-hint{margin-top:12px;font:500 11px/1.5 var(--sans);letter-spacing:.06em;color:#888;display:flex;align-items:center;gap:8px}
+.tm-hint::before{content:"";width:14px;height:14px;border:1.5px solid #888;border-radius:50%;flex:none}
+.tm-card.ex .tm-hint{color:#aaa}
+.tm-card.ex .tm-hint::before{border-color:var(--pf);background:var(--pf)}
+.tm-close{margin:26px 0 0;padding:14px 16px;border:1px solid #333;font:400 15px/1.75 var(--serif);color:#d9d8d3}
+.tm-close b{color:#fff}
+
+/* ── 종막 — 지면 밧긔 사람들 ── */
+.out{display:grid;gap:10px;margin:22px 0 0}
+.out-c{padding:14px 14px 14px;border:1px solid var(--ink);background:#fbfbf9}
+.out-c small{display:block;font:500 9.5px/1 var(--sans);letter-spacing:.24em;color:var(--mute);margin-bottom:6px}
+.out-c h4{font:700 17px/1.4 var(--serif);letter-spacing:-.02em;margin:0 0 8px}
+.out-c p{font:400 13.5px/1.7 var(--serif);margin:0}
+.out-c p.w{color:#222}
+.out-c p.w::before{content:"지면이 쓴 말";display:inline-block;margin-right:8px;font:500 9.5px/1 var(--sans);letter-spacing:.14em;color:#777;vertical-align:1px}
+.out-c p.n{margin-top:6px;padding-top:6px;border-top:1px dashed #cfcfca;color:#444}
+.out-c p.n::before{content:"쓰지 안은 것";display:inline-block;margin-right:8px;font:500 9.5px/1 var(--sans);letter-spacing:.14em;color:var(--pf);vertical-align:1px}
+.unk{margin:16px 0 0;border-top:2px solid var(--ink)}
+.unk-r{display:grid;grid-template-columns:1fr 52px;gap:2px 10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.unk-r b{grid-column:1;font:700 15px/1.45 var(--serif)}
+.unk-r span{grid-column:1;font:400 12.5px/1.5 var(--sans);color:#666}
+.unk-r i{grid-column:2;grid-row:1/3;justify-self:center;display:grid;place-items:center;width:46px;height:46px;border:2px solid #999;color:#888;font:900 13px/1 var(--serif);font-style:normal;transform:rotate(-8deg)}
+
+/* ── 차례 — 막 표시 ── */
+.jk-i .mb-toc .toc-act{display:flex;align-items:baseline;gap:10px;margin:18px 0 6px;padding:14px var(--g) 0;border-top:1px solid rgba(255,255,255,.14)}
+.jk-i .mb-toc .toc-act:first-of-type{margin-top:0;padding-top:0;border-top:0}
+.jk-i .mb-toc .toc-act small{font:500 10px/1 var(--sans);letter-spacing:.3em;color:#8a8a86}
+.jk-i .mb-toc .toc-act b{font:700 13px/1.3 var(--serif);color:#fff}
+
+@media (prefers-reduced-motion:reduce){.tm-b{transition:none}.tm-a{transition:none}}
+.tm-br i{font-style:normal;color:#777;font-size:12px}
+
+/* 호외는 붉게 — 봉함 · 지면 · 「살인은 업섯소」 */
+.jk-i #ch5{--red:var(--pf)}
+.jk-i .jk-cal .ex{background:var(--pf);border-color:var(--pf)}
+.jk-i .dy-cells i:last-child.now{background:var(--pf);border-color:var(--pf)}
+/* 4장 장부 — 줄마다 「그 뒤」 */
+.lg .af{grid-column:1/-1;margin-top:8px;padding:8px 10px;background:rgba(0,0,0,.04);border-left:2px solid #6b6b68;font:400 12.5px/1.65 var(--serif);color:#333}
+.lg .af b{display:inline;margin-right:8px;font:600 10px/1 var(--sans);letter-spacing:.2em;color:#6b6b68}
+.jk-bridge-fig{margin:0!important;background:#0b0b0b}.jk-bridge-fig figcaption{padding:8px 22px 18px;color:#9a9994}
+.jk-i .mce-book{--red:#cfcfca}
+.jk-i .mce-book .mce-hg-hd span,.jk-i .mce-nb em{color:#b5b5b0}

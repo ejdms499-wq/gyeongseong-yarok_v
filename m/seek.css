@@ -1,0 +1,468 @@
+/* 심인 광고면 — 본지와 같은 종이 · 먹 · 괘선. 힘 뺀 블랙 코미디 */
+.sk-pg{--rule:#3a3128;--fade:#6e6250}
+.sk-head h1{letter-spacing:.4em;padding-left:.4em}
+.sk-head .sp-s{max-width:560px}
+
+.sk-page{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,.72fr) minmax(0,1fr);
+  grid-template-areas:"crew s1 reader" "crew s2 reader" "crew s3 reader" "crew s4 reader";
+  margin-top:34px;border-top:3px double var(--rule);border-bottom:1px solid var(--rule)}
+#adCrew{grid-area:crew}#adReader{grid-area:reader}
+.sk-page>.sk-ad:nth-of-type(2){grid-area:s1}.sk-page>.sk-ad:nth-of-type(3){grid-area:s2}
+.sk-page>.sk-ad:nth-of-type(5){grid-area:s3}.sk-page>.sk-ad:nth-of-type(6){grid-area:s4}
+.sk-ad{position:relative;padding:22px 20px 20px;text-align:center}
+.sk-ad:not(.big){border-left:1px solid var(--rule);border-right:1px solid var(--rule)}
+.sk-ad:not(.big)+.sk-ad:not(.big){border-top:1px solid rgba(58,49,40,.45)}
+.sk-ad.big{padding:28px 30px 26px;margin:14px;border:1px solid var(--ink);outline:1px solid var(--ink);outline-offset:3px}
+
+.sk-kind{display:flex;justify-content:center;gap:10px;align-items:center}
+.sk-kind b{background:var(--ink);color:var(--paper);font-family:var(--myeongjo);font-weight:800;font-size:12px;letter-spacing:.4em;padding:4px 6px 3px 12px}
+.sk-kind span{font-family:var(--serif);font-weight:700;font-size:12px;color:var(--seal)}
+.sk-ad h2{margin-top:16px;font-family:var(--serif);font-weight:900;font-size:clamp(30px,2.6vw,40px);letter-spacing:.32em;padding-left:.32em;line-height:1.2;color:var(--ink);position:relative;display:inline-block}
+.sk-ad h3{margin-top:12px;font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:.06em;line-height:1.4;color:var(--ink)}
+.sk-ad:not(.big) p:not(.sk-kind){margin-top:8px;font-family:var(--myeongjo);font-size:13px;line-height:1.85;color:#3a3128;text-align:left}
+
+/* 당자 사진 — 옛 심인 광고처럼 작은 망점 사진. 사진이 업스면 「차즘 중」 */
+.sk-photo{position:relative;width:min(190px,62%);aspect-ratio:3/4;margin:18px auto 0;border:1px solid var(--ink);background:#d3c6a6;overflow:hidden}
+.sk-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.35) contrast(1.25) brightness(.92)}
+.sk-photo::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.55;
+  background:radial-gradient(circle,rgba(30,25,19,.55) 0 .9px,transparent 1.2px) 0 0/3px 3px}
+.sk-photo figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:4px 0 3px;background:var(--paper);border-top:1px solid var(--ink);font-family:var(--myeongjo);font-size:10.5px;letter-spacing:.1em;color:var(--fade)}
+.sk-nophoto{position:absolute;inset:0 0 22px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--serif);font-weight:700;font-size:13px;line-height:1.7;letter-spacing:.2em;color:rgba(58,49,40,.55)}
+.sk-photo img~.sk-nophoto{display:none}
+
+.sk-spec{margin:20px 0 0;text-align:left;border-top:1px solid var(--rule)}
+.sk-spec div{display:grid;grid-template-columns:5.6em 1fr;gap:12px;padding:8px 2px 7px;border-bottom:1px dotted rgba(58,49,40,.5)}
+.sk-spec dt{font-family:var(--myeongjo);font-weight:800;font-size:12px;letter-spacing:.2em;color:var(--fade)}
+.sk-spec dd{margin:0;font-family:var(--myeongjo);font-size:14px;line-height:1.7;color:var(--ink)}
+.sk-tail{margin-top:16px;font-family:var(--myeongjo);font-size:13px;line-height:1.85;color:#3a3128;text-align:left}
+.sk-tail b{font-family:var(--serif);font-weight:900;letter-spacing:.2em;color:var(--ink)}
+.sk-tail small{display:block;font-size:11.5px;color:var(--fade)}
+.sk-go{display:inline-flex;gap:10px;align-items:center;margin-top:18px;padding:0 0 4px;border-bottom:1px solid var(--ink);font-family:var(--serif);font-size:14.5px;font-weight:700;color:var(--ink);cursor:pointer}
+.sk-go::after{content:"";width:26px;height:1px;background:var(--seal);transition:width .3s}
+.sk-go:hover::after,.sk-go:focus-visible::after{width:42px}
+.sk-go .hj.gloss{color:inherit!important}
+
+/* 차즌 뒤: 광고를 내림 — 제목에 먹줄 한 번, 귀퉁이에 發見 */
+.sk-ad h2::after{content:"";position:absolute;left:-4%;right:-4%;top:54%;height:2px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .7s cubic-bezier(.6,0,.3,1) .1s}
+.sk-ad.found h2::after{transform:scaleX(1)}
+.sk-ad.found .sk-go{display:none}
+.sk-ad::before{content:"발견";position:absolute;right:22px;top:20px;padding:6px 6px 4px;border:2.5px solid rgba(138,42,33,.72);color:rgba(138,42,33,.78);font-family:var(--serif);font-weight:900;font-size:15px;letter-spacing:.14em;writing-mode:vertical-rl;
+  transform:rotate(9deg) scale(1.9);opacity:0;pointer-events:none;transition:transform .24s cubic-bezier(.5,0,.6,1.4) .55s,opacity .15s .55s}
+.sk-ad.found::before{opacity:1;transform:rotate(9deg) scale(1)}
+.sk-found{margin-top:14px;font-family:var(--myeongjo);font-size:13.5px;line-height:1.8;color:var(--ink)}
+.sk-found:empty{display:none}
+.sk-found small{display:block;margin-top:4px;font-size:11.5px;color:var(--fade)}
+.sk-found button{margin-top:6px;font-size:11.5px;color:var(--fade);border-bottom:1px solid rgba(58,49,40,.4);cursor:pointer}
+
+.sk-note{margin-top:18px;font-family:var(--myeongjo);font-size:12px;line-height:1.8;color:var(--fade)}
+
+/* 통지서 엽서 */
+.sk-modal{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(21,19,15,.62);opacity:0;transition:opacity .3s}
+.sk-modal.on{opacity:1}
+.sk-modal[hidden]{display:none}
+.sk-card{position:relative;width:min(440px,100%);max-height:calc(100vh - 40px);overflow:auto;padding:26px 28px 20px;background:linear-gradient(180deg,#efe6cf,#e2d4b3);border:1px solid rgba(58,49,40,.6);
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.7);transform:translateY(16px) rotate(-.8deg);transition:transform .45s cubic-bezier(.3,.8,.3,1)}
+.sk-modal.on .sk-card{transform:translateY(0) rotate(-.8deg)}
+.sk-card::before{content:"";position:absolute;inset:7px;border:1px solid rgba(138,42,33,.35);pointer-events:none}
+.sk-x{position:absolute;right:14px;top:10px;font-size:22px;line-height:1;color:var(--fade);cursor:pointer}
+.sk-card-to{display:flex;gap:10px;align-items:baseline;padding-bottom:8px;border-bottom:1px solid rgba(58,49,40,.6);font-family:var(--myeongjo)}
+.sk-card-to span{font-size:11px;letter-spacing:.2em;color:var(--fade)}
+.sk-card-to b{font-weight:800;font-size:12.5px;letter-spacing:.18em;color:var(--ink)}
+.sk-card h3{margin-top:16px;font-family:var(--serif);font-weight:900;font-size:24px;letter-spacing:.3em;color:var(--ink)}
+.sk-card-s{margin:6px 0 16px;font-family:var(--myeongjo);font-size:13px;line-height:1.75;color:#3a3128}
+.sk-fields{display:none}
+.sk-fields.on{display:block}
+.sk-f{display:block;margin-bottom:14px}
+.sk-f>span{display:flex;gap:10px;align-items:baseline;margin-bottom:6px;font-family:var(--myeongjo);font-weight:800;font-size:13px;letter-spacing:.06em;color:var(--ink)}
+.sk-f small{font-weight:400;font-size:11.5px;color:var(--fade)}
+.sk-card input,.sk-card select,.sk-card textarea{display:block;width:100%;padding:9px 4px 8px;background:transparent;border:0;border-bottom:1px solid rgba(58,49,40,.7);border-radius:0;color:var(--ink);font-family:var(--myeongjo);font-size:15px;line-height:1.7}
+.sk-card textarea{resize:vertical;padding:8px 10px;border:1px solid rgba(58,49,40,.55);background:rgba(255,250,238,.35)}
+.sk-card input:focus,.sk-card select:focus,.sk-card textarea:focus{outline:0;border-bottom-color:var(--ink);background-color:rgba(255,250,238,.5)}
+.sk-card [aria-invalid=true]{border-bottom-color:var(--seal)}
+.sk-tabs{display:flex;margin-bottom:16px;border:1px solid var(--ink)}
+.sk-tabs button{flex:1;padding:8px 0 7px;font-family:var(--myeongjo);font-size:13px;letter-spacing:.1em;color:var(--ink);cursor:pointer}
+.sk-tabs button[aria-selected=true]{background:var(--ink);color:var(--paper)}
+.sk-send{width:100%;margin-top:6px;padding:12px 0 11px;background:var(--ink);color:var(--paper);font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:.4em;cursor:pointer;transition:background .25s}
+.sk-send:hover{background:#3a3128}
+.sk-card-n{margin-top:10px;font-family:var(--myeongjo);font-size:11.5px;line-height:1.7;color:var(--fade);text-align:center}
+
+.sk-foot{margin-top:46px}
+@media (max-width:980px){
+  .sk-page{grid-template-columns:1fr 1fr;grid-template-areas:"crew reader" "s1 s2" "s3 s4"}
+  .sk-ad:not(.big){border:0!important;border-top:1px solid rgba(58,49,40,.45)!important}
+}
+@media (max-width:620px){
+  .sk-page{grid-template-columns:1fr;grid-template-areas:"crew" "reader" "s1" "s2" "s3" "s4"}
+  .sk-ad.big{margin:14px 0}
+}
+@media (prefers-reduced-motion:reduce){.sk-ad::before,.sk-ad h2::after,.sk-modal,.sk-card{transition:none!important}}
+
+/* v2 — 글자를 더 크고 진하게 */
+.sk-pg .sp-s{font-size:16px;color:#2b2219}
+.sk-pg .sp-k{font-size:13px;color:#4a3f31}
+.sk-kind b{font-size:13px;padding:5px 7px 4px 13px}
+.sk-ad h3{font-size:19.5px}
+.sk-ad:not(.big) p:not(.sk-kind){font-size:15px;line-height:1.85;color:#1e1913}
+.sk-ad:not(.big){padding:26px 24px 24px}
+.sk-photo figcaption{font-size:12px;color:#3a3128}
+.sk-spec dt{font-size:13.5px;letter-spacing:.12em;color:#4a3f31}
+.sk-spec dd{font-size:16px;line-height:1.7;color:#1e1913}
+.sk-spec div{padding:10px 2px 9px;grid-template-columns:6.4em 1fr}
+.sk-tail{font-size:15px;color:#1e1913}
+.sk-tail small{font-size:13px;color:#4a3f31}
+.sk-go{font-size:16px}
+.sk-found{font-size:15px}
+.sk-found small{font-size:12.5px;color:#4a3f31}
+.sk-note{font-size:13.5px;color:#4a3f31}
+.sk-card-s{font-size:14px}
+.sk-card-n{font-size:12.5px;color:#4a3f31}
+.sk-foot .nr-note{font-size:13px;color:#4a3f31}
+.sk-pg .hj{cursor:help}
+.sk-kind b .hj,.sk-kind b .hj.gloss{color:var(--paper)!important}
+
+/* v3 — 작은 글씨도 잘 보이게 */
+.sk-tail small{margin-top:4px;font-size:14px;line-height:1.7;color:#2b2219}
+.sk-found{font-size:16px;line-height:1.8;color:#1e1913}
+.sk-found small{font-size:14px;color:#2b2219}
+.sk-found button{font-size:13px;color:#3a3128;border-bottom-color:#3a3128}
+.sk-card-n{font-size:13.5px;line-height:1.7;color:#2b2219}
+.sk-card-s{font-size:14.5px;color:#1e1913}
+.sk-photo figcaption{font-size:12.5px;color:#2b2219}
+.sk-note{font-size:14px;color:#2b2219}
+.sk-foot .nr-note{font-size:13.5px;color:#2b2219}
+.sk-spec dt{color:#2b2219}
+
+/* v3 — 작은 글씨도 잘 보이게 */
+.sk-tail small{margin-top:4px;font-size:14px;line-height:1.7;color:#2b2219}
+.sk-found{font-size:16px;line-height:1.8;color:#1e1913}
+.sk-found small{font-size:14px;color:#2b2219}
+.sk-found button{font-size:13px;color:#3a3128;border-bottom-color:#3a3128}
+.sk-card-n{font-size:13.5px;line-height:1.7;color:#2b2219}
+.sk-card-s{font-size:14.5px;color:#1e1913}
+.sk-photo figcaption{font-size:12.5px;color:#2b2219}
+.sk-note{font-size:14px;color:#2b2219}
+.sk-foot .nr-note{font-size:13.5px;color:#2b2219}
+.sk-spec dt{color:#2b2219}
+
+/* 尋猫 — 먹색 고양이가 광고 칸 위로 빼꼼 */
+.sk-cat{cursor:pointer;outline:none}
+.cat-box{position:absolute;left:50%;top:-74px;width:120px;height:74px;margin-left:-60px;overflow:hidden;pointer-events:none;z-index:3}
+.cat{position:absolute;left:0;bottom:0;width:120px;height:92px;transform:translateY(100%);transition:transform .55s cubic-bezier(.3,1.5,.5,1)}
+.c-head,.c-ear,.c-paw{fill:#1e1913}
+.c-ear-in{fill:#3a2e24}
+.c-eye{fill:#e2cf96}
+.c-pupil{fill:#1e1913;transform-box:fill-box;transform-origin:center;transition:transform .3s}
+.c-nose{fill:#6e4a3a}
+.c-wh{stroke:#8b7c66;stroke-width:1;fill:none}
+.c-type rect{fill:#9a9284;stroke:#4a443a;stroke-width:1}
+.c-type text{font:900 13px "Noto Serif KR",serif;fill:#1e1913;transform:scaleX(-1);transform-box:fill-box;transform-origin:center}
+.c-type{opacity:0;transition:opacity .2s}
+/* 손을 대면 귀만 */
+.sk-cat:hover .cat,.sk-cat:focus-visible .cat{transform:translateY(58%)}
+/* 누르면 튀어나옴 */
+.sk-cat.mew .cat{transform:translateY(20%)}
+.sk-cat.mew .c-type{opacity:1}
+.sk-cat.mew .c-pupil{transform:scaleX(2.2)}
+.cat-say{position:absolute;right:-6px;top:4px;font-family:var(--serif);font-weight:900;font-size:13px;letter-spacing:.1em;color:#1e1913;opacity:0;transform:translateY(6px) rotate(8deg);transition:opacity .25s,transform .35s}
+.sk-cat.mew .cat-say{opacity:1;transform:translateY(0) rotate(8deg)}
+.cat-box{overflow:visible;clip-path:inset(-40px -60px 0 -60px)}
+@media (prefers-reduced-motion:reduce){.cat,.cat-say{transition:none}}
+/* 고양이는 「尋猫」 딱지 뒤에서 나옴 */
+.sk-cat .sk-kind{position:relative}
+.sk-cat .sk-kind b{position:relative;z-index:4}
+.sk-cat .cat-box{top:auto;bottom:calc(100% - 4px)}
+.c-type rect{fill:#d8cfbb;stroke:#4a443a}
+.sk-cat:hover .cat,.sk-cat:focus-visible .cat{transform:translateY(62%)}
+.sk-cat.mew .cat{transform:translateY(12%)}
+
+/* ═══ 광고면 아래칸 — 블랙 코미디 네 칸 ═══ */
+.sk-low{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:3px double var(--rule);margin-top:0}
+.sk-l{position:relative;padding:20px 18px 18px;text-align:center;border-right:1px solid var(--rule)}
+.sk-l:last-child{border-right:0}
+.sk-l-k{display:inline-block;font-family:var(--myeongjo);font-weight:800;font-size:12px;letter-spacing:.4em;padding:3px 6px 2px 12px;border:1px solid var(--ink);color:var(--ink)}
+.sk-l h3{margin-top:12px;font-family:var(--serif);font-weight:900;font-size:17px;line-height:1.4;color:var(--ink)}
+.sk-l p:not(.sk-l-k){margin-top:8px;font-family:var(--myeongjo);font-size:13px;line-height:1.85;color:#3a3128;text-align:left}
+.sk-l .sk-l-s{font-size:12px;color:var(--fade);text-align:center}
+.sk-obit{border-top:0;box-shadow:inset 0 0 0 6px var(--paper),inset 0 0 0 7px var(--ink)}
+.sk-obit h3::before{content:"";display:block;width:34px;height:2px;margin:0 auto 10px;background:var(--ink)}
+.sk-l-b{margin-top:10px;padding:5px 14px 4px;border:1px solid var(--ink);background:none;font-family:var(--myeongjo);font-weight:800;font-size:12.5px;letter-spacing:.14em;color:var(--ink);cursor:pointer}
+.sk-l-b:hover{background:var(--ink);color:var(--paper)}
+.sk-obit-msg{text-align:center!important;font-size:12px!important;color:var(--seal,#8a2d1f)!important}
+.sk-obit.lit::after{content:"";position:absolute;left:50%;top:12px;width:2px;height:22px;background:linear-gradient(0deg,rgba(58,49,40,.5),transparent);filter:blur(1px);animation:incense 3s ease-in-out infinite}
+@keyframes incense{50%{transform:translateX(3px) skewX(8deg);opacity:.6}}
+.sk-wanted h3{font-size:34px;letter-spacing:.5em;padding-left:.5em}
+.sk-l-clock{text-align:center!important;font-family:var(--myeongjo)!important}
+.sk-l-clock b{display:block;font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em;color:var(--ink);font-variant-numeric:tabular-nums}
+.sk-wanted.near .sk-l-clock b{color:var(--seal,#8a2d1f)}
+.sk-sorry{cursor:default}
+.sk-sorry .sk-l-b2{opacity:0;max-height:0;overflow:hidden;transition:opacity .8s,max-height .8s;font-style:italic}
+.sk-sorry:hover .sk-l-b2,.sk-sorry:focus .sk-l-b2{opacity:1;max-height:6em}
+.sk-knock{cursor:pointer}
+.sk-knock.shake{animation:knk .5s ease}
+@keyframes knk{20%{transform:translateX(-2px)}40%{transform:translateX(2px)}60%{transform:translateX(-1px)}}
+.sk-knock.back .sk-knock-n{color:var(--seal,#8a2d1f)}
+.sk-crime{border:0;padding:0;margin:0}
+.sk-crime legend{padding:0}
+.sk-crime label{display:inline-flex;align-items:center;gap:5px;margin:6px 12px 0 0;font-family:var(--myeongjo);font-size:13px;cursor:pointer}
+.sk-verdict{display:block;margin:0 auto 12px;max-width:300px;padding:12px 14px 10px;border:2px solid var(--seal,#8a2d1f);color:var(--seal,#8a2d1f);text-align:center;transform:rotate(-2deg);animation:verd .5s cubic-bezier(.3,1.6,.5,1)}
+.sk-verdict b{display:block;font-family:var(--serif);font-weight:900;font-size:18px;letter-spacing:.5em;padding-left:.5em}
+.sk-verdict em{display:block;font-style:normal;font-size:11.5px;margin-top:4px;color:#5a3a2a}
+.sk-verdict strong{display:block;margin-top:6px;font-family:var(--serif);font-size:15px;color:var(--ink)}
+.sk-verdict i{display:block;margin-top:6px;font-style:normal;font-size:10px;letter-spacing:.2em}
+@keyframes verd{0%{transform:scale(1.6) rotate(-2deg);opacity:0}100%{transform:scale(1) rotate(-2deg);opacity:1}}
+@media (max-width:980px){.sk-low{grid-template-columns:1fr 1fr}.sk-l:nth-child(2){border-right:0}.sk-l:nth-child(n+3){border-top:1px solid var(--rule)}}
+@media (max-width:560px){.sk-low{grid-template-columns:1fr}.sk-l{border-right:0;border-top:1px solid var(--rule)}}
+
+/* v6 · 미드저니 그림 — 아래칸 네 칸 머리 그림 · 자수서 종이 */
+.sk-l-img{margin:-6px -4px 12px;height:150px;overflow:hidden;border:1px solid var(--ink);background:#d9ccad}
+.sk-l-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.35) contrast(1.08) brightness(.95);mix-blend-mode:multiply}
+.sk-obit .sk-l-img img{object-position:50% 60%}
+.sk-wanted .sk-l-img{position:relative}
+.sk-wanted .sk-l-img::after{content:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);font-family:var(--serif);font-weight:900;font-size:30px;letter-spacing:.3em;color:rgba(40,30,20,.78);mix-blend-mode:multiply}
+.sk-sorry .sk-l-img img{filter:sepia(.25) contrast(1.05);mix-blend-mode:normal}
+.sk-card{background:linear-gradient(rgba(236,226,203,.86),rgba(230,218,192,.9)),url(assets/v3/confess.jpg) center/cover!important}
+.sk-photo img{object-position:50% 55%}
+.sk-crime{display:block}
+.sk-crime legend{margin-bottom:4px}
+.sk-crime{display:grid!important;grid-template-columns:1fr 1fr;gap:4px 14px}
+.sk-crime legend{grid-column:1/-1}
+.sk-crime label{display:flex!important;align-items:center;gap:7px;margin:0!important;white-space:nowrap;font-size:13px}
+.sk-crime input{flex:none;width:14px;height:14px;accent-color:#3a3128}
+.sk-knock .sk-l-img img{filter:grayscale(1) sepia(.3) contrast(1.15) brightness(1.7)!important}
+
+/* v7 · 글씨 또렷하게 — 크기 한 단계 키우고 먹을 진하게 */
+.sk-ad:not(.big) p:not(.sk-kind){font-size:14.5px!important;line-height:1.85!important;color:#1f1812!important}
+.sk-ad h3{font-size:18.5px!important}
+.sk-spec dt{font-size:13px!important;color:#4a3f31!important}
+.sk-spec dd{font-size:15.5px!important;color:#15100b!important}
+.sk-tail{font-size:14.5px!important;color:#1f1812!important}
+.sk-tail small{font-size:13px!important;color:#4a3f31!important}
+.sk-go{font-size:16px!important}
+.sk-photo figcaption{font-size:11.5px!important;color:#3a3128!important}
+.sk-l p:not(.sk-l-k){font-size:14.5px!important;color:#1f1812!important}
+.sk-l .sk-l-s{font-size:13px!important;color:#4a3f31!important}
+.sk-l h3{font-size:18.5px!important}
+.sk-l-k,.sk-kind b{font-size:12.5px!important}
+.sk-note{font-size:13px!important;color:#3a3128!important}
+.sk-card .sk-f>span,.sk-card legend span{font-size:14px!important;color:#15100b!important}
+.sk-card input,.sk-card select,.sk-card textarea{font-size:15px!important;color:#15100b!important}
+.sk-card-s{font-size:14.5px!important;color:#1f1812!important}
+.sk-crime label{font-size:14px!important;color:#15100b!important}
+.sk-found{font-size:14.5px!important;color:#15100b!important}
+
+/* ═══ v8 · 그림 칸 맞춤 · 유성기 · B급 손질 (1012) ═══ */
+/* 위 큰 광고 두 장 — 사진이 칸 폭에 꽉 차게 */
+.sk-ad.big .sk-photo{width:100%;aspect-ratio:4/3;margin:18px 0 0}
+.sk-ad.big .sk-photo img{object-position:50% 50%}
+#adReader .sk-photo img{object-position:50% 62%}
+/* 아래 네 칸 — 같은 높이 · 같은 빛깔 */
+.sk-l-img{position:relative;margin:-6px -4px 12px;height:170px;background:#d9ccad}
+.sk-l-img img,.sk-sorry .sk-l-img img,.sk-knock .sk-l-img img{filter:grayscale(1) sepia(.35) contrast(1.1) brightness(.95)!important;mix-blend-mode:multiply!important}
+.sk-knock .sk-l-img img{filter:grayscale(1) sepia(.35) contrast(1.15) brightness(1.55)!important}
+.sk-obit .sk-l-img img{object-fit:contain;background:#e2d6ba}
+.sk-l-img figcaption{position:absolute;right:0;bottom:0;padding:2px 7px 1px;background:var(--paper);border-top:1px solid var(--ink);border-left:1px solid var(--ink);font-family:var(--myeongjo);font-size:11px;letter-spacing:.08em;color:#3a3128}
+.sk-l{display:flex;flex-direction:column;align-items:center}
+.sk-l>p,.sk-l>ol{align-self:stretch}
+
+/* 유성기 — 심인계 행진곡 */
+.sk-head{position:relative}
+.sk-snd{position:absolute;right:0;top:18px;display:inline-flex;align-items:center;gap:9px;padding:3px 14px 3px 3px;border:1px solid var(--ink);border-radius:30px;background:rgba(236,226,203,.6);font-family:var(--myeongjo);font-size:13px;font-weight:800;letter-spacing:.14em;color:var(--ink);cursor:pointer}
+.sk-snd img{width:30px;height:30px;border-radius:50%;object-fit:cover;filter:grayscale(1) sepia(.3)}
+.sk-snd small{font-size:11px;font-weight:600;letter-spacing:.06em;color:#5a4e3e}
+.sk-snd i{width:7px;height:7px;border-radius:50%;background:#b9ab88}
+.sk-snd[aria-pressed="true"] img{animation:skspin 4s linear infinite}
+.sk-snd[aria-pressed="true"] i{background:var(--ink)}
+.sk-snd:hover{background:var(--ink);color:var(--paper)}.sk-snd:hover small{color:#cbbd9d}
+@keyframes skspin{to{transform:rotate(360deg)}}
+/* 심인계 실적판 */
+.sk-board{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;margin:18px auto 0;padding:8px 14px 7px;max-width:720px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);font-family:var(--myeongjo);font-size:13.5px;color:#2b2219}
+.sk-board b{font-weight:900;letter-spacing:.12em}
+.sk-board em{font-style:normal;font-weight:900;font-family:var(--serif);margin-left:3px}
+.sk-board em.bump{animation:skbump .6s cubic-bezier(.3,1.8,.5,1)}
+@keyframes skbump{0%{transform:scale(1.9)}100%{transform:scale(1)}}
+
+/* 작은 광고 추보 */
+.sk-up{max-height:0;opacity:0;overflow:hidden;margin-top:0!important;padding:0 10px;border:1px solid transparent;transition:max-height .6s,opacity .6s,margin .6s,padding .6s;font-weight:800}
+.sk-ad.upd .sk-up{max-height:9em;opacity:1;margin-top:10px!important;padding:7px 10px 6px;border-color:var(--ink);transform:rotate(-1deg);background:rgba(255,250,235,.35)}
+.sk-upb{margin-top:10px;padding:3px 12px 2px;border:1px dashed var(--ink);background:none;font-family:var(--myeongjo);font-size:12.5px;font-weight:800;letter-spacing:.12em;color:var(--ink);cursor:pointer}
+.sk-upb:hover{background:var(--ink);color:var(--paper)}
+.sk-ad.upd .sk-upb{display:none}
+
+/* 사과 — 누를수록 정정이 쌓임 */
+.sk-sorry{cursor:pointer}
+.sk-fix{list-style:none;margin:6px 0 0;padding:0}
+.sk-fix li{margin-top:6px;padding-top:6px;border-top:1px dotted rgba(58,49,40,.5);font-family:var(--myeongjo);font-size:13.5px;line-height:1.7;color:#1f1812;text-align:left;animation:skin .5s ease}
+.sk-fix li b{font-family:var(--serif);font-weight:900;margin-right:6px}
+@keyframes skin{0%{opacity:0;transform:translateY(-6px)}}
+/* 현상 수배 — 도망가면 마감이 더 빨리 옴 */
+.sk-run{text-align:center!important;font-size:13px!important;font-weight:800;min-height:1.6em}
+.sk-wanted.flee .sk-l-img{animation:skchase .5s ease}
+@keyframes skchase{30%{transform:translateX(10px) rotate(1deg)}60%{transform:translateX(-6px)}}
+@media (max-width:760px){.sk-snd{position:static;margin:0 auto 12px}}
+
+.sk-l>.sk-l-img{align-self:stretch}
+
+/* ═══ v9 · 덜 움직이게 · 사진 속 장난 (1012) ═══ */
+.sk-wanted .sk-l-img img{object-position:50% 50%}
+.sk-ix{overflow:hidden}
+.ix-hot{position:absolute;z-index:3;border:1px dashed transparent;background:none;cursor:pointer;padding:0}
+.ix-hot:hover,.ix-hot:focus-visible{border-color:rgba(236,226,203,.75);background:rgba(236,226,203,.08);outline:none}
+.ix-hot.seen{cursor:default}
+.ix-say{position:absolute;z-index:4;left:6%;right:6%;bottom:34px;margin:0;padding:9px 12px 8px;background:#efe5cd;border:1px solid var(--ink);box-shadow:3px 3px 0 rgba(30,25,19,.35);font-family:var(--myeongjo);font-size:14px!important;line-height:1.65;color:#15100b;text-align:left;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s;pointer-events:none}
+.ix-say.on{opacity:1;transform:none}
+.ix-say b{font-family:var(--serif);font-weight:900;margin-right:6px}
+.ix-tip{margin:8px 0 0;text-align:center;font-family:var(--myeongjo);font-size:13px;font-weight:700;color:#4a3f31;letter-spacing:.04em}
+.ix-tip b{font-family:var(--serif);font-weight:900;color:var(--ink)}
+.ix-tip.done{color:var(--ink)}
+.ix-crumb{position:absolute;z-index:2;left:44%;top:66%;width:19%;height:18%;background:radial-gradient(ellipse at 50% 55%,rgba(20,16,11,.0) 0 30%,transparent 31%);pointer-events:none;transition:background .4s}
+.sk-ix[data-bite="1"] .ix-crumb{background:radial-gradient(circle at 78% 40%,#120e0a 0 16%,transparent 17%)}
+.sk-ix[data-bite="2"] .ix-crumb{background:radial-gradient(circle at 78% 40%,#120e0a 0 16%,transparent 17%),radial-gradient(circle at 52% 34%,#120e0a 0 18%,transparent 19%)}
+.sk-ix[data-bite="3"] .ix-crumb{background:radial-gradient(ellipse at 55% 45%,#16120d 0 46%,transparent 48%)}
+.sk-ix.shake img{animation:ixsh .45s ease}
+@keyframes ixsh{25%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-2px)}}
+.sk-ix.dim img{filter:grayscale(1) sepia(.35) contrast(1.25) brightness(.55)!important;transition:filter .8s}
+.sk-ix .ix-shadow{position:absolute;z-index:2;left:64%;top:4%;width:12%;height:22%;opacity:0;transition:opacity 1.6s,transform 3s linear;pointer-events:none;background:radial-gradient(ellipse at 50% 30%,#0b0805 0 22%,transparent 23%),radial-gradient(ellipse at 50% 85%,#0b0805 0 40%,transparent 42%)}
+.sk-ix .ix-shadow.on{opacity:.9;transform:translateX(160%)}
+@media (prefers-reduced-motion:reduce){.sk-ix .ix-shadow.on{transform:none}}
+#adReader .sk-photo img{object-position:50% 70%!important}
+/* 두 번째 그림 (미드저니) — 겹쳐 두고 바꿀 때 서서히 */
+.sk-ix .ix-b{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease;z-index:1;filter:grayscale(1) sepia(.35) contrast(1.15) brightness(.95)}
+.sk-ix.swap .ix-b{opacity:1}
+.sk-ix.swap .ix-crumb{display:none}
+.sk-ix .ix-hot{transition:none}
+/* 납량란을 끝까지 닑은 독자 — 심인 급고 */
+.sk-np{max-width:640px;margin:22px auto 0;padding:18px 22px 16px;border:2px solid var(--ink);outline:1px solid var(--ink);outline-offset:3px;text-align:center;background:rgba(255,250,235,.25)}
+.sk-np h2{margin:8px 0 0;font-family:var(--serif);font-weight:900;font-size:28px;letter-spacing:.2em;color:var(--ink)}
+.sk-np-t{margin:10px 0 0;font-family:var(--myeongjo);font-size:15px;line-height:1.85;color:#15100b}
+.sk-np-r{margin:8px 0 0;font-family:var(--myeongjo);font-size:14px;font-weight:800;color:var(--ink);min-height:1.4em}
+
+
+/* 1016 — 작은 광고의 만화 그림 */
+.sk-mini{margin:8px 0 10px;position:relative}
+.sk-mini img{display:block;width:100%;border:1px solid var(--ink,#1e1913);filter:sepia(.15) contrast(1.05)}
+.sk-mini figcaption{position:absolute;right:6px;bottom:6px;padding:2px 6px;background:rgba(30,25,19,.75);color:#efe3c8;font-size:10px;letter-spacing:.12em}
+
+.sk-mini img{filter:grayscale(1) sepia(.35) contrast(1.15) brightness(.93)!important;mix-blend-mode:multiply}
+.sk-mini figcaption{background:rgba(30,25,19,.82)}
+
+/* 1016b — 작은 광고 넷은 아래 띠로 (가운데 단이 길어져 양옆이 비던 문제) */
+.sk-page{grid-template-areas:"crew s1 reader" "crew s2 reader"}
+.sk-band{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-bottom:1px solid var(--rule)}
+.sk-band>.sk-ad{border:0!important;border-right:1px solid var(--rule)!important}
+.sk-band>.sk-ad:last-child{border-right:0!important}
+.sk-band .sk-mini img{aspect-ratio:16/10;object-fit:cover}
+.sk-band .sk-mini img.tall{object-fit:contain;border:0}
+@media (max-width:980px){.sk-page{grid-template-areas:"crew reader" "s1 s2"}.sk-band{grid-template-columns:1fr 1fr}.sk-band>.sk-ad:nth-child(n+3){border-top:1px solid var(--rule)!important}}
+@media (max-width:620px){.sk-page{grid-template-areas:"crew" "reader" "s1" "s2"}.sk-band{grid-template-columns:1fr}}
+/* 떡: 검은 덧칠 대신 글로만 · 말풍선은 사진 위쪽에 */
+.ix-crumb{display:none!important}
+#readSay{top:12px;bottom:auto}
+
+/* 1017 그림을 만지면 다음 장면이 이어 그려짐 — 컴퓨터판 세피아 톤 그대로 */
+.sk-mini,.sk-l-img{overflow:hidden}
+.sk-mini.sk-play,.sk-low .sk-l-img{cursor:pointer}
+.sk-mini img,.sk-l-img img{transition:transform .9s cubic-bezier(.3,1,.4,1)}
+.sk-mini img.xf,.sk-l-img img.xf{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s ease;z-index:1}
+.sk-band .sk-mini img.tall.xf{object-fit:contain}
+.sk-mini img.xf.on,.sk-l-img img.xf.on{opacity:1}
+.sk-mini figcaption,.sk-l-img figcaption{z-index:2}
+.sk-hint{min-height:1.6em;margin:6px 0 4px;font-family:var(--myeongjo,serif);font-size:12.5px;line-height:1.6;color:var(--fade,#6e6250)}
+.sk-hint.pop{color:var(--ink,#1e1913);animation:skHint .4s ease}
+@keyframes skHint{from{opacity:.3}}
+.sk-mini.jolt,.sk-l-img.jolt{animation:skJolt .4s ease}
+@keyframes skJolt{20%{transform:translateX(-4px) rotate(-.4deg)}50%{transform:translateX(4px) rotate(.4deg)}80%{transform:translateX(-2px)}}
+.sk-mini.dash img{animation:skDash .45s ease}
+@keyframes skDash{30%{transform:translateX(-12px) scale(1.04)}60%{transform:translateX(9px)}}
+.sk-mini.lamp .sk-lamp{position:absolute;inset:0;z-index:1;pointer-events:none;background:rgba(20,15,10,.92);transition:opacity .8s}
+.sk-mini.lamp.lit .sk-lamp{background:radial-gradient(circle at var(--lx,50%) var(--ly,50%),transparent 0 44px,rgba(20,15,10,.93) 78px)}
+.sk-mini.lamp.found .sk-lamp{opacity:0}
+.sk-act{display:block;width:100%;margin:2px 0 6px;padding:9px 0 8px;border:1px solid var(--ink,#1e1913);background:var(--ink,#1e1913);color:#efe3c8;font-family:var(--serif);font-size:13px;letter-spacing:.12em;cursor:pointer}
+.sk-act i{font-style:normal;display:inline-block;min-width:18px;margin-left:6px;padding:1px 4px;background:#efe3c8;color:#1e1913}
+.sk-act:disabled{opacity:.45;cursor:default}
+.sk-smoke{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:calc(var(--sm,0) * .85);background:radial-gradient(ellipse 30% 40% at 30% 70%,rgba(255,250,235,.6),transparent 70%),radial-gradient(ellipse 25% 45% at 70% 60%,rgba(255,250,235,.55),transparent 70%);filter:blur(6px);transition:opacity 1s}
+.sk-l-img.puff .sk-smoke{animation:skSmoke 2.4s ease-out}
+@keyframes skSmoke{from{transform:translateY(18px)}to{transform:translateY(-12px)}}
+.sk-ring{position:absolute;left:4%;top:16%;width:36%;height:72%;z-index:2;border:3px solid var(--seal,#8a2a21);border-radius:50%;opacity:0;transform:scale(1.3) rotate(-6deg);pointer-events:none}
+.sk-ring.on{opacity:.95;transform:scale(1) rotate(-6deg);transition:all .35s cubic-bezier(.3,1.6,.5,1)}
+.sk-ring b{position:absolute;right:-10px;top:-12px;padding:2px 7px;background:var(--seal,#8a2a21);color:#efe3c8;font-family:var(--serif);font-size:12px;white-space:nowrap;transform:rotate(6deg)}
+
+/* ═══ (1020) 현상 수배 제 이백륙십팔 호 — 폰판에서 옮김 · 검은 띠 한 장 ═══ */
+.sk-268{margin:34px 0 0;padding:34px 40px 38px;background:#0b0b0b;color:#ecebe7}
+.sk-268-k{margin:0 0 20px;font:500 12px/1 var(--sans,"Noto Sans KR",sans-serif);letter-spacing:.3em;color:#e07a72;text-align:center}
+.sk-268-g{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,520px);gap:40px;justify-content:center;align-items:center}
+.sk-268 .sk-mug{position:relative;margin:0;aspect-ratio:520/690;overflow:hidden;border:1px solid #2a2a2a;cursor:pointer;user-select:none;transform:rotate(-1.2deg);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.sk-268 .sk-mug img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.95)!important;transition:transform .25s}
+.sk-268 .sk-mug:hover img{transform:scale(1.015)}
+.sk-268 .sk-mug .rt{position:absolute;right:8px;top:8px;font:500 10px/1 var(--sans,"Noto Sans KR",sans-serif);letter-spacing:.14em;padding:4px 5px;background:rgba(0,0,0,.6);color:#ddd}
+.sk-268 .sk-paw{position:absolute;left:6%;top:6%;width:30%;aspect-ratio:1;opacity:0;transform:scale(1.6) rotate(-14deg);transition:opacity .25s,transform .35s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.sk-268 .sk-paw svg{display:block;width:100%;height:100%}
+.sk-268 .sk-mug.inked .sk-paw{opacity:.92;transform:rotate(-14deg)}
+.sk-268 .sk-paw-t{position:absolute;left:4%;top:calc(6% + 31%);padding:3px 7px;border:2px solid #9c1f17;color:#9c1f17;background:rgba(240,238,232,.75);font:900 12px/1 var(--serif,"Noto Serif KR",serif);letter-spacing:.12em;transform:rotate(-6deg) scale(1.4);opacity:0;transition:opacity .3s .25s,transform .35s .25s cubic-bezier(.3,1.6,.5,1)}
+.sk-268 .sk-mug.inked .sk-paw-t{opacity:1;transform:rotate(-6deg)}
+.sk-268-t h3{margin:0 0 12px;font:900 30px/1.3 var(--serif,"Noto Serif KR",serif);color:#fff;letter-spacing:.04em}
+.sk-268 .cv-mug{margin:0;font:400 16px/1.9 var(--serif,"Noto Serif KR",serif);color:#bdbcb7}
+.sk-268 .cv-mug em{display:block;margin-top:6px;font-style:normal;color:#ecebe7;font-weight:700}
+.sk-268 .cv-mug small{display:block;margin-top:8px;font:400 12.5px/1.5 var(--sans,"Noto Sans KR",sans-serif);color:#8a8984}
+.sk-268 .sk-walk{display:grid;gap:6px;margin-top:24px;padding:16px 18px;border:1px solid #ecebe7;color:#ecebe7;text-decoration:none;transition:background .2s,color .2s}
+.sk-268 .sk-walk b{font:900 18px/1.3 var(--serif,"Noto Serif KR",serif)}
+.sk-268 .sk-walk span{font:400 13.5px/1.7 var(--sans,"Noto Sans KR",sans-serif);color:#bdbcb7}
+.sk-268 .sk-walk u{justify-self:start;text-decoration:none;border-bottom:1px solid currentColor;font:700 13px/1.4 var(--sans,"Noto Sans KR",sans-serif)}
+.sk-268 .sk-walk:hover{background:#ecebe7;color:#0b0b0b}
+.sk-268 .sk-walk:hover span{color:#3a3a37}
+
+/* ═══ (1020) 정렬 다듬기 — 칸마다 같은 자리: 머리 · 그림 · 안내 · 본문 · (단추는 맨 아래 한 줄) ═══ */
+/* 작은 광고 넷 · 가운데 둘 */
+.sk-band>.sk-ad,.sk-page>.sk-ad:not(.big){display:flex;flex-direction:column;align-items:stretch}
+.sk-band>.sk-ad>h3,.sk-page>.sk-ad:not(.big)>h3{min-height:1.5em}
+.sk-band .sk-mini,.sk-page>.sk-ad:not(.big) .sk-mini{align-self:stretch;margin:10px 0 0}
+.sk-band .sk-mini img,.sk-band .sk-mini img.tall,.sk-page>.sk-ad:not(.big) .sk-mini img{width:100%;aspect-ratio:16/10;height:auto;object-fit:cover;object-position:50% 30%;border:1px solid var(--ink)}
+.sk-band .sk-mini img.tall.xf{object-fit:cover}
+.sk-band .sk-hint,.sk-page>.sk-ad:not(.big) .sk-hint{min-height:3.2em;margin:10px 0 0;text-align:left}
+.sk-band>.sk-ad>p:not(.sk-kind):not(.sk-up):not(.sk-hint),.sk-page>.sk-ad:not(.big)>p:not(.sk-kind):not(.sk-up):not(.sk-hint){text-align:left}
+/* 단추 — 모두 같은 꼴(점선 테), 칸 맨 아래 가운데 */
+.sk-band>.sk-ad>.sk-upb,.sk-page>.sk-ad:not(.big)>.sk-upb{margin-top:auto;align-self:center;transform:translateY(8px)}
+.sk-band>.sk-ad>p:last-of-type{margin-bottom:6px}
+/* 멸치 — 혼자 검게 튀던 것을, 다른 단추와 같은 점선 테로 · 그림 바로 아래가 아니라 안내 아래 */
+.sk-act{display:inline-flex!important;align-items:center;justify-content:center;gap:6px;width:auto!important;align-self:center;margin:12px 0 2px!important;padding:5px 14px 4px!important;border:1px dashed var(--ink)!important;background:none!important;color:var(--ink)!important;font-family:var(--myeongjo,serif)!important;font-size:12.5px!important;font-weight:800;letter-spacing:.12em}
+.sk-act i{min-width:auto!important;margin:0!important;padding:0 5px!important;background:var(--ink)!important;color:var(--paper,#f3f2ef)!important;font:800 11px/1.5 var(--sans,sans-serif)!important}
+.sk-act:hover:not(:disabled){background:var(--ink)!important;color:var(--paper,#f3f2ef)!important}
+.sk-act:hover:not(:disabled) i{background:var(--paper,#f3f2ef)!important;color:var(--ink)!important}
+/* 아래칸 넷 — 그림 높이 · 이름표 · 제목 · 단추 줄 맞춤 */
+.sk-l{justify-content:flex-start}
+.sk-l-img{height:170px!important;align-self:stretch}
+.sk-obit .sk-l-img img{object-fit:cover!important;object-position:50% 40%!important;background:none!important}
+.sk-l h3{min-height:2.8em;display:flex;align-items:center;justify-content:center}
+.sk-obit h3{flex-direction:column}
+.sk-l p:not(.sk-l-k):not(.sk-l-s):not(.sk-l-clock){align-self:stretch}
+.sk-l>.sk-l-b{margin-top:auto!important}
+.sk-l .sk-l-s{align-self:center}
+.sk-wanted .sk-run:empty{display:none}
+.sk-wanted .sk-run{margin:6px 0 0!important}
+
+
+/* (1020) 현상 수배 제268호 — 컴퓨터판 지면 질감(누런 종이 · 먹 · 인주)으로 */
+.sk-268{background:#1e1913;color:#efe3c8;border-top:3px double var(--rule,#3a3128);border-bottom:3px double var(--rule,#3a3128);box-shadow:inset 0 0 0 6px #1e1913,inset 0 0 0 7px rgba(239,227,200,.35)}
+.sk-268-k{color:#d8a08f;font-family:var(--myeongjo,serif)}
+.sk-268 .sk-mug{background:#efe3c8;padding:8px;border:1px solid #3a3128;box-shadow:0 18px 40px rgba(0,0,0,.55)}
+.sk-268 .sk-mug img{filter:grayscale(1) sepia(.35) contrast(1.12) brightness(.95)!important}
+.sk-268 .sk-mug .rt{background:rgba(30,25,19,.8);color:#efe3c8;font-family:var(--myeongjo,serif)}
+.sk-268-t h3{color:#efe3c8;font-family:var(--serif,"Noto Serif KR",serif)}
+.sk-268 .cv-mug{color:#cbbd9f;font-family:var(--myeongjo,serif)}
+.sk-268 .cv-mug em{color:#efe3c8}
+.sk-268 .cv-mug small{color:#a8977a}
+.sk-268 .sk-walk{border-color:#efe3c8;color:#efe3c8}
+.sk-268 .sk-walk b{font-family:var(--serif,"Noto Serif KR",serif)}
+.sk-268 .sk-walk span{color:#cbbd9f;font-family:var(--myeongjo,serif)}
+.sk-268 .sk-walk:hover{background:#efe3c8;color:#1e1913}
+.sk-268 .sk-walk:hover span{color:#3a3128}
+.sk-268 .sk-paw{color:#8a2a21}
+.sk-268 .sk-paw svg g{fill:#8a2a21}
+.sk-268 .sk-paw-t{border-color:#8a2a21;color:#8a2a21;background:rgba(239,227,200,.82)}
+/* 멸치 단추 숫자칸 — 종이색 */
+.sk-act i{color:#efe3c8!important}
+.sk-act:hover:not(:disabled){color:#efe3c8!important}
+.sk-act:hover:not(:disabled) i{background:#efe3c8!important;color:#1e1913!important}
+/* (1020) 작은 광고 여섯 칸을 걷어냄 — 큰 광고 둘만 나란히 */
+.sk-page{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"crew reader"}
+@media (max-width:620px){.sk-page{grid-template-columns:1fr;grid-template-areas:"crew" "reader"}}
+.sk-268 .sk-mug{cursor:pointer}

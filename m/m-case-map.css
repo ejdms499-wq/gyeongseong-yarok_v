@@ -1,0 +1,104 @@
+/* 사건 지도 — 폰 전용판. 지도는 흑백, 점만 붉게. 그때 · 지금 칸은 크게 */
+html,body.mcm{background:#0b0b0b}
+.mcm{--ink:#0e0e0e;--paper:#f4f3f0;--rule:#0e0e0e;--fade:#6b6b68;--seal:#b3261e;--gold:#fff;--my:var(--serif);--se:var(--serif);--sa:var(--sans);color:#ecebe7;font-family:var(--serif);-webkit-tap-highlight-color:transparent}
+.mcm .sheet{max-width:none;margin:0;padding:48px 0 0;background:#0b0b0b!important;box-shadow:none}
+.mcm .sheet:after{display:none}
+.mcm-hd{padding:22px var(--g) 4px}
+.mcm-hd small{font:500 11px/1 var(--sans);letter-spacing:.2em;color:#e07a72}
+.mcm-hd h1{margin-top:10px;font:900 36px/1.1 var(--serif);color:#fff;letter-spacing:-.01em}
+.mcm .intro{margin:10px var(--g) 16px;font:400 14px/1.7 var(--serif);color:#9a9994}
+.mcm .intro b{color:#fff}
+.mcm .wrap{display:block}
+
+/* 지도 */
+.mcm .vp{height:58svh;min-height:340px;border:0;border-top:1px solid #2a2a2a;border-bottom:1px solid #2a2a2a;background:#151515}
+.mcm .stage>img{filter:grayscale(1) contrast(1.12) brightness(.92)}
+.mcm .inset{border-color:rgba(179,38,30,.8)}
+.mcm .inset span{background:var(--seal);color:#fff;font:600 12px/1 var(--sans);letter-spacing:.08em;padding:6px 9px}
+.mcm .pin i{width:32px;height:32px;background:var(--seal);color:#fff;font:800 14px/1 var(--serif);box-shadow:0 0 0 2.5px #fff,0 4px 12px rgba(0,0,0,.6)}
+.mcm .pin.dan i{background:#fff;color:var(--seal);box-shadow:0 0 0 2.5px var(--seal),0 4px 12px rgba(0,0,0,.5)}
+.mcm .pin em{transform:translate(20px,-50%) scale(calc(1/var(--z)));transform-origin:-20px 50%;font:700 14px/1 var(--serif);color:#fff;background:#0e0e0e;border:0;padding:6px 9px;letter-spacing:.02em}
+.mcm .pin.l em{transform:translate(calc(-100% - 20px),-50%) scale(calc(1/var(--z)));transform-origin:calc(100% + 20px) 50%}
+.mcm .pin.on i{background:#0e0e0e;color:#fff;box-shadow:0 0 0 3px #fff,0 0 0 7px var(--seal),0 6px 16px rgba(0,0,0,.6)}
+.mcm .pin.on em{background:var(--seal);color:#fff}
+/* 도구 — 아래쪽 한 줄 */
+.mcm .tools{left:10px;right:10px;top:auto;bottom:10px;flex-direction:row;gap:6px}
+.mcm .tools button{width:42px;height:40px;border:0;background:rgba(14,14,14,.86);color:#fff;font:700 20px/1 var(--sans);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.mcm .tools button.w{flex:1;padding:0 6px;font:600 13px/1 var(--sans);letter-spacing:.06em}
+.mcm .legend{left:10px;top:10px;bottom:auto;gap:12px;padding:7px 10px;background:rgba(14,14,14,.86);border:0;color:#cfcfca;font:500 11px/1 var(--sans)}
+.mcm .legend b{background:var(--seal);box-shadow:0 0 0 1.5px #fff}
+.mcm .legend b.d{background:#fff;box-shadow:0 0 0 1.5px var(--seal)}
+.mcm .credit{margin:0;padding:10px var(--g);border:0;background:none;gap:10px}
+.mcm .credit .ck{background:#2a2a2a;color:#9a9994;font:600 10px/1 var(--sans);letter-spacing:.1em;padding:5px 7px}
+.mcm .credit p{font:400 11px/1.6 var(--sans);color:#6f6e6a}
+.mcm .credit p b{font-weight:500;color:#8a8984}
+.mcm .credit p small{font-size:10.5px;color:#5f5e5a}
+
+/* 고른 사건 */
+.mcm .side{display:block;padding:0 var(--g) 40px}
+.mcm .card{margin-top:6px;padding:20px 18px;background:#f4f3f0;color:#0e0e0e;box-shadow:none;border-top:4px solid var(--seal)}
+.mcm .card .hint{font:400 14.5px/1.8 var(--serif);color:#3b3b39}
+.mcm .card .hint b{color:var(--seal)}
+.mcm .card .meta{font:600 11px/1 var(--sans);letter-spacing:.08em;color:#6b6b68}
+.mcm .card .meta .sec{background:var(--seal);color:#fff;padding:4px 8px;letter-spacing:.12em}
+.mcm .card .meta .sec.dan{background:none;color:var(--seal);box-shadow:inset 0 0 0 1.5px var(--seal)}
+.mcm .card h2{margin-top:12px;font:900 23px/1.35 var(--serif);color:#0e0e0e}
+.mcm .card .sum{margin-top:10px;font:400 15.5px/1.85 var(--serif);color:#2b2b29}
+.mcm .tt{display:block;margin-top:16px;border:0}
+.mcm .tt div{padding:14px 0;border-top:1px solid #0e0e0e}
+.mcm .tt div+div{border-left:0;background:none;border-top:1px solid #cfcfca}
+.mcm .tt small{font:700 11px/1 var(--sans);letter-spacing:.2em;color:#6b6b68;margin-bottom:8px}
+.mcm .tt div+div small{color:var(--seal)}
+.mcm .tt p{font:700 17px/1.5 var(--serif);color:#0e0e0e}
+.mcm .tt p span{font:400 13px/1.6 var(--sans);color:#6b6b68;margin-top:4px}
+.mcm .acts{display:grid;gap:10px;margin-top:16px}
+.mcm .acts .go{justify-content:center;min-height:54px;padding:0 14px;border:0;background:#0e0e0e;color:#fff;font:800 15px/1 var(--serif);letter-spacing:.1em}
+.mcm .acts .go.lock{background:var(--seal)}
+.mcm .acts .now{justify-self:center;padding:6px 0;font:500 13px/1 var(--sans);color:#0e0e0e;border-bottom:1px solid #0e0e0e}
+
+/* 목록 */
+.mcm .list{margin-top:28px}
+.mcm .list .tab{border:1px solid #444;margin-bottom:14px}
+.mcm .list .tab button{padding:12px 6px;color:#9a9994;font:600 13px/1 var(--sans);letter-spacing:.06em}
+.mcm .list .tab button+button{border-left:1px solid #444}
+.mcm .list .tab button.on{background:#fff;color:#0e0e0e}
+.mcm .list h3{font:700 12px/1 var(--sans);letter-spacing:.2em;color:#9a9994;margin-bottom:10px}
+.mcm .list h3:after{background:#333}
+.mcm .list ol{border-top:1px solid #333}
+.mcm .list li{border-bottom:1px solid #222}
+.mcm .list li button{grid-template-columns:30px 1fr auto;gap:12px;padding:14px 2px;color:#ecebe7}
+.mcm .list li button.on{background:#1b1b1b;color:#fff;box-shadow:inset 3px 0 0 var(--seal)}
+.mcm .list li .n{width:28px;height:28px;background:var(--seal);color:#fff;font:800 12.5px/1 var(--serif)}
+.mcm .list li .n.d{background:none;color:#e07a72;box-shadow:inset 0 0 0 1.5px #e07a72}
+.mcm .list li button.on .n.d{color:#e07a72;box-shadow:inset 0 0 0 1.5px #e07a72}
+.mcm .list li .t{font:700 15.5px/1.4 var(--serif)}
+.mcm .list li .t small{font:400 12px/1.45 var(--sans);color:#8a8984;margin-top:3px}
+.mcm .list li button.on .t small{color:#9a9994}
+.mcm .list li .y{font:500 12px/1 var(--sans);color:#6f6e6a}
+
+/* 봉함 시트 */
+#mmLock .mb-sh-bd{text-align:center;padding-bottom:calc(30px + env(safe-area-inset-bottom))}
+.lk-seal{display:grid;place-items:center;width:84px;height:84px;margin:10px auto 18px;border-radius:50%;background:var(--seal);color:#fff;font:900 22px/1 var(--serif);letter-spacing:.06em;box-shadow:0 0 0 4px rgba(179,38,30,.25);transform:rotate(-8deg)}
+.lk-t{font:900 21px/1.45 var(--serif);color:#fff}
+.lk-k{margin-top:6px;font:500 11px/1.5 var(--sans);letter-spacing:.14em;color:#e07a72}
+.lk-d{margin:16px auto 22px;max-width:20em;font:400 14.5px/1.85 var(--serif);color:#cfcfca}
+.lk-d b{color:#fff}
+.lk-go{display:block;width:100%;height:54px;border:0;background:#fff;color:#0b0b0b;font:800 15px/54px var(--serif);letter-spacing:.12em;text-decoration:none}
+.lk-x{display:block;width:100%;margin-top:10px;height:46px;border:1px solid #444;background:none;color:#9a9994;font:500 13px/44px var(--sans)}
+.mcm .mb-bar,.mcm .mb-bar a{color:#0e0e0e}
+.mcm .vp{height:52svh}
+/* v2 — 보기 편하게: 사건 고르는 줄 · 이름표는 고른 점만 · 범례는 지도 밧그로 */
+.mcm-chips{position:sticky;top:48px;z-index:30;display:flex;gap:6px;padding:10px var(--g);overflow-x:auto;background:#0b0b0b;border-bottom:1px solid #222;scrollbar-width:none}
+.mcm-chips::-webkit-scrollbar{display:none}
+.mcm-chips button{flex:none;display:flex;align-items:center;gap:7px;height:38px;padding:0 12px 0 5px;border:1px solid #3a3a3a;border-radius:19px;background:#151515;color:#ecebe7;font:600 13px/1 var(--sans);white-space:nowrap}
+.mcm-chips button i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--seal);color:#fff;font:800 12px/1 var(--serif);font-style:normal}
+.mcm-chips button.d i{background:none;color:#e07a72;box-shadow:inset 0 0 0 1.5px #e07a72}
+.mcm-chips button.on{background:#fff;color:#0e0e0e;border-color:#fff}
+.mcm .vp{height:56svh}
+.mcm .pin i{width:28px;height:28px;font-size:13px}
+.mcm .pin em{display:none!important}
+.mcm .pin.on em{display:block!important}
+.mcm .legend{display:none}
+.mcm .intro{margin-bottom:12px}
+.mcm .credit{margin-top:26px;padding:14px 0 0;border-top:1px solid #222}
+.mcm .inset span{font-size:11px;padding:5px 8px}
