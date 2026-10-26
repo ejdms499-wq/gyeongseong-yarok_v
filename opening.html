@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<script>/* 폰은 흑백 폰판(m/)으로 · 컴퓨터판을 폰에서 보려면 주소 끝에 ?pc=1 */(function(){try{if(/[?&]pc=1/.test(location.search))return;var u=navigator.userAgent,m=(/Mobi|Android|iPhone|iPod/i.test(u)&&!/iPad|Tablet/i.test(u))||(window.matchMedia&&matchMedia('(max-width:600px)').matches&&screen&&Math.min(screen.width,screen.height)<=600);if(m)location.replace('m/m-main.html'+location.hash)}catch(e){}})();</script>
+<script>/* (1026) 온전한 판(m/)으로 */(function(){try{if(/[?&]team=1/.test(location.search))return;location.replace('m/opening.html'+location.search+location.hash)}catch(e){}})();</script>
+
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

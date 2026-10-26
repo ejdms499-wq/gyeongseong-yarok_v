@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<script>/* 폰은 흑백 폰판(m/)으로 · 컴퓨터판을 폰에서 보려면 주소 끝에 ?pc=1 */(function(){try{if(/[?&]pc=1/.test(location.search))return;var u=navigator.userAgent,m=(/Mobi|Android|iPhone|iPod/i.test(u)&&!/iPad|Tablet/i.test(u))||(window.matchMedia&&matchMedia('(max-width:600px)').matches&&screen&&Math.min(screen.width,screen.height)<=600);if(m)location.replace('m/m-main.html'+location.hash)}catch(e){}})();</script>
+<script>/* (1026) 온전한 판(m/)으로 */(function(){try{if(/[?&]team=1/.test(location.search))return;location.replace('m/index.html'+location.search+location.hash)}catch(e){}})();</script>
+
 
 <script>/* 오프닝(자정의 호외)에서 넘어온 경우: 첫 화면을 오프닝의 마지막 장면과 똑같이 맞춘다 */
 if(location.hash.indexOf('#yarok=')===0)document.documentElement.classList.add('yarok-in');</script>
