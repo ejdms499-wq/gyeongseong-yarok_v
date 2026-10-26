@@ -348,3 +348,46 @@
 .sk-catgo .pw{width:13px;height:13px;flex:none;background:currentColor;-webkit-mask:radial-gradient(circle at 50% 70%,#000 32%,transparent 34%),radial-gradient(circle at 18% 30%,#000 13%,transparent 15%),radial-gradient(circle at 42% 12%,#000 13%,transparent 15%),radial-gradient(circle at 66% 12%,#000 13%,transparent 15%),radial-gradient(circle at 88% 30%,#000 13%,transparent 15%);mask:radial-gradient(circle at 50% 70%,#000 32%,transparent 34%),radial-gradient(circle at 18% 30%,#000 13%,transparent 15%),radial-gradient(circle at 42% 12%,#000 13%,transparent 15%),radial-gradient(circle at 66% 12%,#000 13%,transparent 15%),radial-gradient(circle at 88% 30%,#000 13%,transparent 15%)}
 .sk-catgo:hover,.sk-catgo:focus-visible{background:var(--ink);color:var(--paper)}
 .sk-catgo::before{content:"";position:absolute;inset:-8px -6px}
+
+/* (1026) 현상 수배 제 이백륙십팔 호 — 폰·흑백판에서 다시 옮겨 옴, 컴퓨터판 질감(누런 종이 · 먹 · 인주) */
+.sk-268{margin:34px 0 0;padding:34px 40px 38px;background:#0b0b0b;color:#ecebe7}
+.sk-268-k{margin:0 0 20px;font:500 12px/1 var(--sans,"Noto Sans KR",sans-serif);letter-spacing:.3em;color:#e07a72;text-align:center}
+.sk-268-g{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,520px);gap:40px;justify-content:center;align-items:center}
+.sk-268 .sk-mug{position:relative;margin:0;aspect-ratio:520/690;overflow:hidden;border:1px solid #2a2a2a;cursor:pointer;user-select:none;transform:rotate(-1.2deg);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.sk-268 .sk-mug img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.12) brightness(.95)!important;transition:transform .25s}
+.sk-268 .sk-mug:hover img{transform:scale(1.015)}
+.sk-268 .sk-mug .rt{position:absolute;right:8px;top:8px;font:500 10px/1 var(--sans,"Noto Sans KR",sans-serif);letter-spacing:.14em;padding:4px 5px;background:rgba(0,0,0,.6);color:#ddd}
+.sk-268 .sk-paw{position:absolute;left:6%;top:6%;width:30%;aspect-ratio:1;opacity:0;transform:scale(1.6) rotate(-14deg);transition:opacity .25s,transform .35s cubic-bezier(.3,1.6,.5,1);pointer-events:none}
+.sk-268 .sk-paw svg{display:block;width:100%;height:100%}
+.sk-268 .sk-mug.inked .sk-paw{opacity:.92;transform:rotate(-14deg)}
+.sk-268 .sk-paw-t{position:absolute;left:4%;top:calc(6% + 31%);padding:3px 7px;border:2px solid #9c1f17;color:#9c1f17;background:rgba(240,238,232,.75);font:900 12px/1 var(--serif,"Noto Serif KR",serif);letter-spacing:.12em;transform:rotate(-6deg) scale(1.4);opacity:0;transition:opacity .3s .25s,transform .35s .25s cubic-bezier(.3,1.6,.5,1)}
+.sk-268 .sk-mug.inked .sk-paw-t{opacity:1;transform:rotate(-6deg)}
+.sk-268-t h3{margin:0 0 12px;font:900 30px/1.3 var(--serif,"Noto Serif KR",serif);color:#fff;letter-spacing:.04em}
+.sk-268 .cv-mug{margin:0;font:400 16px/1.9 var(--serif,"Noto Serif KR",serif);color:#bdbcb7}
+.sk-268 .cv-mug em{display:block;margin-top:6px;font-style:normal;color:#ecebe7;font-weight:700}
+.sk-268 .cv-mug small{display:block;margin-top:8px;font:400 12.5px/1.5 var(--sans,"Noto Sans KR",sans-serif);color:#8a8984}
+.sk-268 .sk-walk{display:grid;gap:6px;margin-top:24px;padding:16px 18px;border:1px solid #ecebe7;color:#ecebe7;text-decoration:none;transition:background .2s,color .2s}
+.sk-268 .sk-walk b{font:900 18px/1.3 var(--serif,"Noto Serif KR",serif)}
+.sk-268 .sk-walk span{font:400 13.5px/1.7 var(--sans,"Noto Sans KR",sans-serif);color:#bdbcb7}
+.sk-268 .sk-walk u{justify-self:start;text-decoration:none;border-bottom:1px solid currentColor;font:700 13px/1.4 var(--sans,"Noto Sans KR",sans-serif)}
+.sk-268 .sk-walk:hover{background:#ecebe7;color:#0b0b0b}
+.sk-268 .sk-walk:hover span{color:#3a3a37}
+.sk-268{background:#1e1913;color:#efe3c8;border-top:3px double var(--rule,#3a3128);border-bottom:3px double var(--rule,#3a3128);box-shadow:inset 0 0 0 6px #1e1913,inset 0 0 0 7px rgba(239,227,200,.35)}
+.sk-268-k{color:#d8a08f;font-family:var(--myeongjo,serif)}
+.sk-268 .sk-mug{background:#efe3c8;padding:8px;border:1px solid #3a3128;box-shadow:0 18px 40px rgba(0,0,0,.55)}
+.sk-268 .sk-mug img{filter:grayscale(1) sepia(.35) contrast(1.12) brightness(.95)!important}
+.sk-268 .sk-mug .rt{background:rgba(30,25,19,.8);color:#efe3c8;font-family:var(--myeongjo,serif)}
+.sk-268-t h3{color:#efe3c8;font-family:var(--serif,"Noto Serif KR",serif)}
+.sk-268 .cv-mug{color:#cbbd9f;font-family:var(--myeongjo,serif)}
+.sk-268 .cv-mug em{color:#efe3c8}
+.sk-268 .cv-mug small{color:#a8977a}
+.sk-268 .sk-walk{border-color:#efe3c8;color:#efe3c8}
+.sk-268 .sk-walk b{font-family:var(--serif,"Noto Serif KR",serif)}
+.sk-268 .sk-walk span{color:#cbbd9f;font-family:var(--myeongjo,serif)}
+.sk-268 .sk-walk:hover{background:#efe3c8;color:#1e1913}
+.sk-268 .sk-walk:hover span{color:#3a3128}
+.sk-268 .sk-paw{color:#8a2a21}
+.sk-268 .sk-paw svg g{fill:#8a2a21}
+.sk-268 .sk-paw-t{border-color:#8a2a21;color:#8a2a21;background:rgba(239,227,200,.82)}
+.sk-268 .sk-mug{cursor:pointer}
+@media (max-width:760px){.sk-268{padding:26px 18px 30px}.sk-268-g{grid-template-columns:1fr;gap:24px;justify-items:center}.sk-268 .sk-mug{width:min(300px,80%)}.sk-268-t h3{font-size:24px}}
