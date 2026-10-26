@@ -234,7 +234,7 @@
 .sp-foot .more{display:block;width:max-content;margin:16px auto 0;color:var(--ink);border-bottom:1px solid var(--ink);text-decoration:none;font-size:14px}
 
 /* ════════ 오리기 무대 · 스크랩첩 보강 ════════ */
-.cut-news{opacity:.32!important;background:url(assets/ads/day/sk_19360825_page.jpg) center/cover no-repeat!important;filter:blur(.4px)}
+.cut-news{opacity:.32!important;background:url(assets/gwanggo/day/sk_19360825_page.jpg) center/cover no-repeat!important;filter:blur(.4px)}
 .cut-sheet.cut .cut-news{opacity:.18!important}
 .cut-sheet{background:#e6dcc4}
 .pc-left:before{content:"";position:absolute;left:44px;right:28px;top:16px;bottom:40px;border:1px dashed rgba(58,49,40,.28)}

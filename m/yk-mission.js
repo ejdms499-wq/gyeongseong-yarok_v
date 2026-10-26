@@ -43,7 +43,7 @@
     ],
     lede: '1933년 5월, 죽첨정 매립지에서 발견된 어린아이의 머리는 살인의 흔적이 아니었다. 아이는 병으로 숨져 이미 묻혀 있었고, 그 무덤을 판 이들이 있었다. 지면이 23일 동안 받아 적은 말 가운데, 바로잡아야 할 것을 아래에 적는다.',
     orig: '원 보도 · 동아일보 1933.5.17 ~ 6.2',
-    band: 'assets/ads/day/jk_19330517_band.jpg', bandCap: '그날(1933.5.17) 지면의 맨 아래칸 — 실제 광고'
+    band: 'assets/gwanggo/day/jk_19330517_band.jpg', bandCap: '그날(1933.5.17) 지면의 맨 아래칸 — 실제 광고'
   };
 
   var BASE = (function () { try { var c = D.currentScript && D.currentScript.src; return c ? c.replace(/yk-mission\.js.*$/, '') : ''; } catch (e) { return ''; } })();

@@ -262,10 +262,10 @@
   /* ═══ 四 광고만 켜기 ═══ */
   (function () {
     var P = S.OD, i = 0, lit = false, sec = $('#oneday');
-    $('#odTabs').innerHTML = P.map(function (p, k) { return '<li><button type="button" data-k="' + k + '"><img alt="" src="assets/ads/d38/' + p.k + '.jpg" loading="lazy"><span>' + esc(p.n.split(' · ')[0]) + '</span>' + (p.r.length ? '' : '<em>광고 업슴</em>') + '</button></li>'; }).join('');
+    $('#odTabs').innerHTML = P.map(function (p, k) { return '<li><button type="button" data-k="' + k + '"><img alt="" src="assets/gwanggo/d38/' + p.k + '.jpg" loading="lazy"><span>' + esc(p.n.split(' · ')[0]) + '</span>' + (p.r.length ? '' : '<em>광고 업슴</em>') + '</button></li>'; }).join('');
     function draw() {
       var p = P[i];
-      $('#odImg').src = 'assets/ads/d38/' + p.k + '.jpg'; $('#odImg').alt = '동아일보 1938년 7월 28일 ' + p.n;
+      $('#odImg').src = 'assets/gwanggo/d38/' + p.k + '.jpg'; $('#odImg').alt = '동아일보 1938년 7월 28일 ' + p.n;
       $('#odPath').setAttribute('d', 'M0 0H100V100H0Z' + p.r.map(function (r) { return 'M' + r[0] + ' ' + r[1] + 'h' + r[2] + 'v' + r[3] + 'h-' + r[2] + 'Z'; }).join(''));
       $('#odBoxes').innerHTML = p.r.map(function (r, k) { return '<i style="left:' + r[0] + '%;top:' + r[1] + '%;width:' + r[2] + '%;height:' + r[3] + '%;--k:' + k + '"></i>'; }).join('');
       $('#odN').innerHTML = '<b>' + esc(p.n) + '</b> · 광고 ' + (p.r.length ? p.r.length + ' 칸' : '업슴');

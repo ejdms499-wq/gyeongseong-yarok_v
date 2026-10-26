@@ -110,7 +110,7 @@
   var IMG = './image/Jukcheomjeong/';
 
   /* 第二章 · 일곱 날의 지면 (공통 장치) */
-  var ADB = '../assets/ads/day/jk_';
+  var ADB = '../assets/gwanggo/day/jk_';
   W.mb.paper({ arts: ARTS, words: WORDS, imgBase: IMG + 'articles-toned/', era: '소화 팔 년', goto: 'ch5', shop: '../shop.html#ad-jk-',
     ads: { '19330517': { top: .665, h: .325, img: ADB + '19330517_band.jpg', cap: '죽첨정 사건이 처음 실린 오월 십칠일 지면, 그 맨 아래칸이오. 카메라 · 필름 광고와 「당선 사례」 광고가 열 칸 넘게 줄지어 잇소.', say: '가튼 장 우에선 범인을 쫓고, 아래에선 당선을 감사햇소.' },
       '19330518': { top: .74, h: .24, img: ADB + '19330518_band.jpg' }, '19330519': { top: .82, h: .16, img: ADB + '19330519_band.jpg' },

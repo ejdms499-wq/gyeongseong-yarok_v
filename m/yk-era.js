@@ -40,7 +40,7 @@
     ],
     src: '고등학교 한국사 교과서 · 국사편찬위원회 「우리역사넷」에서 확인되는 내용만 적엇소.',
     ad: {
-      img: 'assets/ads/day/jk_19330517_band.jpg',
+      img: 'assets/gwanggo/day/jk_19330517_band.jpg',
       date: '1933년 5월 17일 · 동아일보',
       cap: '죽첨정 사건이 처음 실린 오월 십칠일 지면, 그 맨 아래칸이오. 카메라 · 필름 광고와 「당선 사례」 광고가 열 칸 넘게 줄지어 잇소.',
       say: '가튼 장 우에선 범인을 쫓고, 아래에선 당선을 감사햇소.',
@@ -112,7 +112,7 @@
     ],
     src: W.YK_ERA.jk.src,
     ad: {
-      img: 'assets/ads/day/sk_19360812_band.jpg',
+      img: 'assets/gwanggo/day/sk_19360812_band.jpg',
       date: '1936년 8월 12일 · 동아일보',
       cap: '「조선의 두 아들」을 노래한 팔월 십이일 지면, 그 맨 아래칸이오. 일본말로 쓴 화장품 광고(「ユキワリソ」 · 「お顔ふき容器 進呈」)가 칸을 채웟소.',
       say: '가튼 장 우에선 조선의 아들을 노래하고, 아래칸은 일본말이 채웟소.',
@@ -149,7 +149,7 @@
     ],
     src: W.YK_ERA.jk.src,
     ad: {
-      img: 'assets/ads/day/mr_19310902_band.jpg',
+      img: 'assets/gwanggo/day/mr_19310902_band.jpg',
       date: '1931년 9월 2일 · 동아일보',
       cap: '일홈 업는 투서가 수사를 다시 움직엿다는 구월 이일 지면, 그 맨 아래칸이오. 「박사의 약」 · 「후미나인」 같은 약 광고가 줄지어 잇소.',
       say: '가튼 장 우에선 범인을 다시 쫏고, 아래칸은 약을 팔앗소.',
@@ -186,7 +186,7 @@
     ],
     src: W.YK_ERA.jk.src,
     ad: {
-      img: 'assets/ads/day/bb_19371211_band.jpg',
+      img: 'assets/gwanggo/day/bb_19371211_band.jpg',
       date: '1937년 12월 11일 · 동아일보',
       cap: '「살인교서 수 완성」 — 백백교 수사가 송치에 이른 십이월 십일일 지면, 그 맨 아래칸이오. 총 멘 병사를 그린 광고와 「利殖の道(돈 불리는 길)」 · 약 · 시계 광고가 빽빽하오.',
       say: '가튼 장 우에선 사교의 죄상을, 아래칸에선 전쟁과 돈벌이를 팔앗소.',
@@ -449,7 +449,7 @@
   function mkAds(pre, rows) {
     return rows.map(function (r) {
       var k = r[0], y = k.slice(0, 4), m = +k.slice(4, 6), d = +k.slice(6, 8);
-      return { img: 'assets/ads/day/' + pre + '_' + k + '_band.jpg', date: y + '년 ' + m + '월 ' + d + '일 · ' + (r[3] || '동아일보'),
+      return { img: 'assets/gwanggo/day/' + pre + '_' + k + '_band.jpg', date: y + '년 ' + m + '월 ' + d + '일 · ' + (r[3] || '동아일보'),
         cap: r[4] || (y + '년 ' + m + '월 ' + d + '일 지면, 그 맨 아래칸이오. 가튼 날 가튼 장에 실린 진짜 광고들이오.'),
         say: r[5] || '가튼 장 우에선 사건을 쫏고, 아래칸에선 물건을 팔앗소.', go: 'shop.html#ad-' + pre + '-' + k,
         hot: { book: '#rBook', img: k, top: r[1], h: r[2] } };

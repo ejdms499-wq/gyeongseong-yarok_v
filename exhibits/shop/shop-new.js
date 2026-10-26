@@ -33,10 +33,10 @@
     var P = JSON.parse(box.textContent), i = 0, lit = false;
     var tabs = $('.od-tabs', sec), img = $('.od-page img', sec), path = $('.od-mask path', sec), boxes = $('.od-boxes', sec);
     var cap = $('.od-cap', sec), num = $('.od-n', sec), sw = $('.od-switch', sec), end = $('.od-end', sec);
-    tabs.innerHTML = P.map(function (p, k) { return '<li><button type="button" data-k="' + k + '"><img alt="" src="../../assets/ads/d38/' + p.k + '.jpg"><span>' + p.n.replace(' · ', '<br>') + '</span>' + (p.r.length ? '' : '<em>' + hj('광고 업슴', '광고 없음') + '</em>') + '</button></li>'; }).join('');
+    tabs.innerHTML = P.map(function (p, k) { return '<li><button type="button" data-k="' + k + '"><img alt="" src="../../assets/gwanggo/d38/' + p.k + '.jpg"><span>' + p.n.replace(' · ', '<br>') + '</span>' + (p.r.length ? '' : '<em>' + hj('광고 업슴', '광고 없음') + '</em>') + '</button></li>'; }).join('');
     function draw() {
       var p = P[i];
-      img.src = '../../assets/ads/d38/' + p.k + '.jpg'; img.alt = '동아일보 1938년 7월 28일 ' + p.n;
+      img.src = '../../assets/gwanggo/d38/' + p.k + '.jpg'; img.alt = '동아일보 1938년 7월 28일 ' + p.n;
       path.setAttribute('d', 'M0 0H100V100H0Z' + p.r.map(function (r) { return 'M' + r[0] + ' ' + r[1] + 'h' + r[2] + 'v' + r[3] + 'h-' + r[2] + 'Z'; }).join(''));
       boxes.innerHTML = p.r.map(function (r, k) { return '<i style="left:' + r[0] + '%;top:' + r[1] + '%;width:' + r[2] + '%;height:' + r[3] + '%;--k:' + k + '"></i>'; }).join('');
       num.innerHTML = '<b>' + p.n + '</b>' + hj('광고 ' + (p.r.length || '업슴') + (p.r.length ? ' 칸' : ''), '광고 ' + (p.r.length ? p.r.length + '칸' : '없음'));

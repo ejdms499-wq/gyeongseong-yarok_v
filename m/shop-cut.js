@@ -18,7 +18,7 @@
   function loadData() {
     if (window.YK_ADDATA) return Promise.resolve();
     if (dataReady) return dataReady;
-    dataReady = new Promise(function (ok) { var s = document.createElement('script'); s.src = 'shop-adsdata.js'; s.onload = ok; s.onerror = ok; document.head.appendChild(s); });
+    dataReady = new Promise(function (ok) { var s = document.createElement('script'); s.src = 'shop-ggdata.js'; s.onload = ok; s.onerror = ok; document.head.appendChild(s); });
     return dataReady;
   }
   function imgFor(id) {
@@ -80,7 +80,7 @@
 
   function openCut(v) {
     cur = { id: v.dataset.id, d: v.dataset.d, p: v.dataset.p, t: v.dataset.t };
-    var src = 'assets/ads/' + cur.id + '.jpg';
+    var src = 'assets/gwanggo/' + cur.id + '.jpg';
     pimg.src = src; ta.value = '';
     $('.pc-from', modal).innerHTML = hj('東亞日報 ' + cur.d + ' · ' + cur.p + ' 에서 오림', '동아일보 ' + cur.d + ' · ' + cur.p + '에서 오림');
     $('.pm-d', modal).textContent = cur.d.replace(/^19/, '').replace(/\.0?/g, '.');
@@ -305,7 +305,7 @@
     book.forEach(function (it, k) {
       var n = document.createElement('figure'); n.className = 'sb-item';
       n.style.left = it.x + '%'; n.style.top = it.y + '%'; n.style.transform = 'rotate(' + it.r + 'deg)';
-      n.innerHTML = '<img src="assets/ads/' + it.id + '.jpg" alt="" draggable="false"><figcaption>' + esc(it.d) + '</figcaption><button type="button" aria-label="떼기">×</button>';
+      n.innerHTML = '<img src="assets/gwanggo/' + it.id + '.jpg" alt="" draggable="false"><figcaption>' + esc(it.d) + '</figcaption><button type="button" aria-label="떼기">×</button>';
       $('button', n).addEventListener('click', function (e) { e.stopPropagation(); book.splice(k, 1); saveBook(); render(); count(); });
       drag(n, it); board.appendChild(n);
     });

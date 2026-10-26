@@ -1,9 +1,9 @@
 /* =========================================================================
-   경성야록 · 광고첩 놀이 칸 (adcollection-play.js)
-   자료는 adcollection-data.js 의 AD_QUIZ · AD_JUDGE · AD_ALIVE · AD_PRICE
+   경성야록 · 광고첩 놀이 칸 (ggmoeum-play.js)
+   자료는 ggmoeum-data.js 의 AD_QUIZ · AD_JUDGE · AD_ALIVE · AD_PRICE
    ========================================================================= */
 (function () {
-  var DIR = 'assets/adcollection/', SCRAP = 'yk-ad-scraps', MINE = 'yk-my-sheet';
+  var DIR = 'assets/ggmoeum/', SCRAP = 'yk-ad-scraps', MINE = 'yk-my-sheet';
   var ADS = window.ADS || [], BY = {};
   ADS.forEach(function (a) { BY[a.id] = a; });
   var $ = function (s, r) { return (r || document).querySelector(s); };

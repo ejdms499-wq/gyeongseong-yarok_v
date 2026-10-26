@@ -424,7 +424,7 @@
   })();
 
   /* ════ 보도 · 여섯 날의 지면 (공통 장치) ════ */
-  var ADB = '../assets/ads/day/bb_';
+  var ADB = '../assets/gwanggo/day/bb_';
   W.mb.paper({ arts: ARTS, imgBase: './img/scan/', era: '소화 십이 년', sec: '경제면', shop: '../shop.html#ad-bb-',
     ads: { '19370609': { top: .77, h: .21, img: ADB + '19370609_band.jpg' },
       '19370923': { top: .665, h: .31, img: ADB + '19370923_band.jpg' },

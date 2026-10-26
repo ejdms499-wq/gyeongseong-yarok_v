@@ -4,7 +4,7 @@
 <!-- =========================================================================
      경성야록 · 廣告帖 「광고 모아보기」 (adcollection.html)
      동아일보 아카이브 '광고 모아보기'처럼: 분류 · 정렬 · 격자 · 크게 보기
-     · 광고 목록은 adcollection-data.js (광고 더 넣는 법도 거기 적어 둠)
+     · 광고 목록은 ggmoeum-data.js (광고 더 넣는 법도 거기 적어 둠)
      · 크게 보면 '그 광고의 뒤' 이야기 + 그 광고가 실린 그날 지면
      · '오려 두기' → 가위가 오림선을 돌고, '오려 둔 것' 칸에 모임 (메인 광고 띠에서 오린 것도 같이)
      ========================================================================= -->
@@ -125,7 +125,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media (max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px}.card .ph{height:130px;padding:10px}.card .tt{font-size:14px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-<link rel="stylesheet" href="adcollection-play.css">
+<link rel="stylesheet" href="ggmoeum-play.css">
 </head>
 <body>
 <div class="sheet">
@@ -186,10 +186,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="adcollection-data.js"></script>
+<script src="ggmoeum-data.js"></script>
 <script>
 (function(){
-  var DIR='assets/adcollection/', KEY='yk-ad-scraps';
+  var DIR='assets/ggmoeum/', KEY='yk-ad-scraps';
   var ADS=window.ADS||[], CATS=window.AD_CATS||[];
   var $=function(s){return document.querySelector(s)};
   var state={cat:'all',sort:'old',list:[],i:0,showSheet:false};
@@ -280,6 +280,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   if(h){for(var k=0;k<state.list.length;k++)if(state.list[k].id===h){open(k);break}}
 })();
 </script>
-<script src="adcollection-play.js"></script>
+<script src="ggmoeum-play.js"></script>
 </body>
 </html>

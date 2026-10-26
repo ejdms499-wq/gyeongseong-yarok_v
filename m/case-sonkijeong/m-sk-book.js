@@ -251,7 +251,7 @@
   })();
 
   /* ════ 第一章 · 네 날의 지면 (공통 장치) ════ */
-  var ADB = '../assets/ads/day/sk_';
+  var ADB = '../assets/gwanggo/day/sk_';
   W.mb.paper({ arts: ARTS, imgBase: './img/scan/', era: '소화 십일 년', sec: '문화예술면', n26: { sec: '스포츠', sub: '올림픽' }, shop: '../shop.html#ad-sk-',
     ads: { '19360811': { top: .76, h: .23, img: ADB + '19360811_band.jpg' },
       '19360812p': { top: .75, h: .245, img: ADB + '19360812_band.jpg', sk: '19360812', cap: '「조선의 두 아들」을 노래한 팔월 십이일 지면, 그 맨 아래칸이오. 일본말로 쓴 화장품 광고(「ユキワリソ」 · 「お顔ふき容器 進呈」)가 칸을 채웟소.', say: '가튼 장 우에선 조선의 아들을 노래하고, 아래칸은 일본말이 채웟소.' },
