@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<base href="m/"><!-- (1026) 정리판 맨 위에 둔 화면 · 그림·소리·스크립트는 m/ 의 것을 함께 씀 -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<title>경성야록 — 독자의 방</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<!--
+  경성야록 · 독자의 방 (1014)
+  - 입장한 독자만의 하숙방: 벽(광고 엽서 · 사건 스크랩) + 책상(소품) + 등불
+  - 사건을 끝까지 읽으면 그 사건 스크랩과 50錢 (yk-auth.js)
+  - 錢으로 상점에서 물건을 사서 끌어다 놓음 → 저절로 저장 (Supabase room_layout)
+  - 錢 충전은 시험용 (실제 결제 아님 · 결제 회사 연결은 사업자 등록 뒤)
+-->
+<style>
+:root{--ink:#1d1813;--paper:#efe7d6;--fade:#9c9382;--red:#9a2f24;--gold:#d8b77a;--my:"Nanum Myeongjo","Noto Serif KR","Batang",serif;--sa:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0b0907;color:var(--paper);min-height:100%}
+body{font-family:var(--my);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(16px,3vw,40px);border-bottom:1px solid #2a231c}
+.top .l{display:flex;align-items:baseline;gap:16px}
+.top .k{font:500 11px/1 var(--sa);letter-spacing:.45em;color:var(--fade)}
+.top h1{font-weight:800;font-size:clamp(20px,2.2vw,26px);letter-spacing:.16em}
+.top .r{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.coin{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid #4a3e31;font:700 15px var(--my);letter-spacing:.06em;white-space:nowrap}
+.coin i{font-style:normal;color:var(--gold);font-size:13px}
+.btn{background:none;border:1px solid #4a3e31;padding:8px 14px;font:500 12.5px var(--sa);letter-spacing:.14em;cursor:pointer;white-space:nowrap;text-decoration:none;transition:border-color .2s,background .2s}
+.btn:hover{border-color:var(--paper)}
+.btn.solid{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.btn.gold{border-color:var(--gold);color:var(--gold)}
+.btn.gold:hover{background:var(--gold);color:var(--ink)}
+
+/* 방 */
+.wrap{max-width:1280px;margin:0 auto;padding:22px clamp(12px,3vw,40px) 40px}
+.stage{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#15110d;box-shadow:0 40px 90px #000;user-select:none;-webkit-user-select:none;touch-action:none}
+.stage .bgwall{position:absolute;left:0;right:0;top:0;height:71%;background:url(assets/room/wall.jpg) center/cover}
+.stage .bgdesk{position:absolute;left:0;right:0;bottom:0;height:29%;background:url(assets/room/desk.jpg) center top/cover}
+.stage .bgdesk:before{content:"";position:absolute;left:0;right:0;top:-1px;height:10px;background:linear-gradient(#0008,#0000)}
+.light{position:absolute;inset:0;pointer-events:none;transition:background 1.2s ease;z-index:30;mix-blend-mode:multiply}
+.glow{position:absolute;inset:0;pointer-events:none;transition:opacity 1.2s ease;z-index:31;mix-blend-mode:screen}
+.stage[data-lamp="lamp_amber"] .light{background:radial-gradient(ellipse 70% 80% at 22% 30%,#fff0 0%,#fff0 34%,#0007 78%,#000b 100%)}
+.stage[data-lamp="lamp_amber"] .glow{background:radial-gradient(ellipse 40% 45% at 22% 30%,#ffb25c33,#0000 70%)}
+.stage[data-lamp="lamp_moon"] .light{background:radial-gradient(ellipse 70% 90% at 82% 18%,#fff0 0%,#fff0 34%,#0008 80%,#000c 100%),linear-gradient(#5a6e8a30,#5a6e8a30)}
+.stage[data-lamp="lamp_moon"] .glow{background:radial-gradient(ellipse 35% 50% at 82% 18%,#9fc0ff2e,#0000 70%)}
+.stage[data-lamp="lamp_red"] .light{background:radial-gradient(ellipse 60% 70% at 50% 92%,#fff0 0%,#fff0 22%,#000c 80%,#000e 100%),linear-gradient(#7a1a1230,#7a1a1230)}
+.stage[data-lamp="lamp_red"] .glow{background:radial-gradient(ellipse 45% 35% at 50% 92%,#ff3a2026,#0000 70%)}
+.plate{position:absolute;left:50%;top:4.5%;transform:translateX(-50%);z-index:20;padding:.55em 1.6em .5em;background:linear-gradient(#3b2c1f,#2a1f16);border:1px solid #5b4632;box-shadow:0 6px 16px #0009,inset 0 1px 0 #6b5440;font:800 clamp(13px,1.6vw,20px)/1 var(--my);letter-spacing:.3em;color:#e8d6b4;cursor:pointer;white-space:nowrap}
+.plate:after{content:"";position:absolute;left:50%;top:-14px;width:1px;height:14px;background:#6b5440}
+.it{position:absolute;z-index:10;cursor:grab;transform-origin:50% 0;filter:drop-shadow(0 10px 14px #000c)}
+.it:active{cursor:grabbing}
+.it img{display:block;width:100%;height:auto;pointer-events:none}
+.it.desk img{max-height:none}
+.it.wall,.it.scrap{background:#e9dfca;padding:clamp(3px,.45vw,7px);transform:rotate(var(--r,0deg));filter:drop-shadow(0 8px 12px #000b) sepia(.25) brightness(.9)}
+.it.wall:before,.it.scrap:before{content:"";position:absolute;left:50%;top:-3px;width:7px;height:7px;margin-left:-3px;border-radius:50%;background:#7a2a20;box-shadow:0 2px 3px #0008}
+.it.scrap{background:#d9cdb2}
+.it.desk{transform-origin:50% 100%}
+.it.sel{outline:1px dashed #e8d6b4aa;outline-offset:4px}
+.it.drag{z-index:25}
+.hint{position:absolute;left:50%;bottom:3%;transform:translateX(-50%);z-index:40;font:400 12px var(--sa);letter-spacing:.18em;color:#cfc4b0b0;white-space:nowrap;pointer-events:none;transition:opacity .6s}
+.tools{position:absolute;z-index:45;display:none;gap:6px}
+.tools.on{display:flex}
+.tools button{background:#0d0a08e6;border:1px solid #5b4a38;padding:5px 10px;font:500 11.5px var(--sa);letter-spacing:.1em;cursor:pointer}
+.state{margin-top:10px;display:flex;justify-content:space-between;font:400 12px var(--sa);letter-spacing:.14em;color:var(--fade)}
+
+/* 서랍 (가진 물건) */
+.drawer{margin-top:22px;border-top:1px solid #2a231c;padding-top:16px}
+.drawer h2,.panel h2{font-weight:800;font-size:17px;letter-spacing:.2em;display:flex;align-items:baseline;gap:12px}
+.drawer h2 small,.panel h2 small{font:400 11.5px var(--sa);letter-spacing:.1em;color:var(--fade)}
+.inv{display:flex;gap:12px;overflow-x:auto;padding:14px 2px 6px}
+.inv button{flex:none;width:96px;background:#14100c;border:1px solid #2e261e;padding:10px 8px 8px;cursor:pointer;text-align:center;transition:border-color .2s}
+.inv button:hover{border-color:#7a6650}
+.inv button.placed{opacity:.38}
+.inv .th{height:64px;display:grid;place-items:center}
+.inv .th img{max-width:100%;max-height:64px}
+.inv .nm{margin-top:6px;font:400 11px/1.3 var(--sa);color:#cfc4b0}
+.inv .empty{font:400 13px var(--sa);color:var(--fade);padding:10px 0}
+
+/* 상점 · 충전 판 */
+.veil{position:fixed;inset:0;z-index:200;background:#000a;opacity:0;pointer-events:none;transition:opacity .3s}
+.veil.on{opacity:1;pointer-events:auto}
+.panel{position:fixed;top:0;right:0;bottom:0;z-index:210;width:min(520px,100vw);background:#efe7d6;color:var(--ink);transform:translateX(102%);transition:transform .45s cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column}
+.panel.on{transform:none}
+.panel header{padding:22px 24px 14px;border-bottom:1px solid #1d1813}
+.panel header .k{font:500 11px/1 var(--sa);letter-spacing:.45em;color:var(--red)}
+.panel header h2{margin-top:10px;font-size:22px}
+.panel .x{position:absolute;right:18px;top:16px;background:none;border:0;font-size:24px;cursor:pointer;color:#6b6257}
+.panel .bal{margin-top:10px;font:400 13px var(--sa);color:#6b6257}
+.panel .bal b{color:var(--ink);font-family:var(--my);font-size:16px}
+.panel .tabs{display:flex;gap:0;border-bottom:1px solid #c9bfae;padding:0 24px}
+.panel .tabs button{background:none;border:0;padding:12px 14px;font:700 14px var(--my);letter-spacing:.18em;color:#8c8273;cursor:pointer}
+.panel .tabs button.on{color:var(--ink);box-shadow:inset 0 -3px 0 var(--ink)}
+.panel .body{flex:1;overflow:auto;padding:18px 24px 30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
+.card{position:relative;background:#f7f1e4;border:1px solid #d6ccb9;padding:12px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.card .th{height:110px;display:grid;place-items:center;background:#e7dcc7}
+.card .th img{max-width:86%;max-height:96px}
+.card .th.lamp{background:#1d1813}
+.card .nm{font-weight:700;font-size:14.5px;letter-spacing:.06em}
+.card .nt{font:400 11px var(--sa);color:#8c8273}
+.card .pr{font:700 14px var(--my)}
+.card .pr i{font-style:normal;color:var(--red)}
+.card .buy{margin-top:auto;background:var(--ink);color:var(--paper);border:0;padding:9px;font:600 12.5px var(--sa);letter-spacing:.16em;cursor:pointer}
+.card .buy[disabled]{background:#cfc6b4;color:#6b6257;cursor:default}
+.card .buy.short{background:none;border:1px solid var(--red);color:var(--red)}
+.card .rare{position:absolute;right:8px;top:8px;font:700 10px var(--sa);letter-spacing:.14em;color:#fff;background:var(--red);padding:3px 6px}
+.packs{display:flex;flex-direction:column;gap:12px}
+.pack{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f7f1e4;border:1px solid #d6ccb9;padding:16px 18px}
+.pack .a{font-weight:800;font-size:22px;letter-spacing:.04em}
+.pack .a small{font:600 11px var(--sa);color:var(--red);margin-left:8px;letter-spacing:.08em}
+.pack .w{font:400 12px var(--sa);color:#6b6257;margin-top:3px}
+.pack button{background:var(--ink);color:var(--paper);border:0;padding:11px 16px;font:600 13px var(--sa);letter-spacing:.12em;cursor:pointer;white-space:nowrap}
+.pack.best{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.demo-note{margin-top:16px;font:400 12px/1.7 var(--sa);color:#8a2a21}
+.ledger{margin-top:22px;font:400 12.5px var(--sa);color:#4b443b}
+.ledger li{list-style:none;display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dotted #c9bfae}
+
+/* 입장 전 */
+.locked .stage{filter:brightness(.55) saturate(.7)}
+.gate{position:absolute;inset:0;z-index:60;display:none;place-items:center;text-align:center}
+.locked .gate{display:grid}
+.gate .in{background:#0d0a08d9;border:1px solid #4a3e31;padding:clamp(20px,4vw,34px) clamp(18px,4vw,40px);max-width:min(520px,90%)}
+.gate h3{font-weight:800;font-size:clamp(18px,4.6vw,24px);letter-spacing:.12em;white-space:nowrap}
+.gate p{margin:14px 0 22px;font:400 13.5px/1.8 var(--sa);color:#cfc4b0}
+.gate .btn{margin:0 4px}
+
+.toast{position:fixed;left:50%;bottom:26px;z-index:300;transform:translate(-50%,20px);opacity:0;background:#efe7d6;color:var(--ink);padding:12px 18px;font:14px/1.6 var(--my);box-shadow:0 14px 40px #000a;transition:opacity .4s,transform .4s;display:flex;gap:14px;align-items:center;max-width:92vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast button{background:none;border:0;color:var(--red);text-decoration:underline;cursor:pointer;font:inherit}
+@media (max-width:760px){.top{flex-direction:column;align-items:flex-start}.top .r{justify-content:flex-start}.stage{aspect-ratio:4/5}.stage .bgwall{height:66%}.stage .bgdesk{height:34%}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="l"><p class="k">京 城 野 錄</p><h1>독자의 방</h1></div>
+  <div class="r">
+    <span class="coin" id="coin" hidden><i>錢</i><span id="coinN">0</span></span>
+    <button class="btn gold" id="openShop" hidden>상점</button>
+    <button class="btn" id="openCharge" hidden>錢 충전</button>
+    <button class="btn" id="out" hidden>퇴장</button>
+    <a class="btn" href="index.html">본지로</a>
+  </div>
+</header>
+
+<main class="wrap locked" id="wrap">
+  <div class="stage" id="stage" data-lamp="lamp_amber">
+    <div class="bgwall"></div><div class="bgdesk"></div>
+    <button class="plate" id="plate" title="필명 고치기">무명 독자의 방</button>
+    <div id="items"></div>
+    <div class="light"></div><div class="glow"></div>
+    <div class="tools" id="tools"><button data-a="front">앞으로</button><button data-a="tilt">기울이기</button><button data-a="put">치우기</button></div>
+    <p class="hint" id="hint">물건을 끌어 옮기시오 · 누르면 치울 수 잇소</p>
+    <div class="gate"><div class="in">
+      <h3>입장해야 방이 열리오</h3>
+      <p>읽은 사건은 스크랩으로 벽에 붙고,<br>錢으로 엽서와 소품을 사서 내 방을 꾸밀 수 잇소.<br>처음 오면 <b>300錢</b>을 드리오.</p>
+      <button class="btn solid" id="gIn">입장</button><button class="btn" id="gUp">처음 오셧소</button>
+    </div></div>
+  </div>
+  <div class="state"><span id="who"></span><span id="saved"></span></div>
+
+  <section class="drawer" aria-label="가진 물건">
+    <h2>서랍 <small>가진 물건 · 누르면 방에 놓이오</small></h2>
+    <div class="inv" id="inv"><p class="empty">입장하면 서랍이 열리오.</p></div>
+  </section>
+</main>
+
+<div class="veil" id="veil"></div>
+<aside class="panel" id="shop" aria-label="상점">
+  <header><p class="k">京城野錄 商店</p><h2>상점 <small>그 시절 지면에서 오려 온 것들</small></h2><p class="bal">가진 錢 <b id="shopBal">0</b> · <a href="#" id="toCharge">충전</a></p><button class="x" data-close>×</button></header>
+  <nav class="tabs" id="shopTabs"><button data-k="wall" class="on">벽</button><button data-k="desk">책상</button><button data-k="lamp">등불</button></nav>
+  <div class="body"><div class="grid" id="grid"></div></div>
+</aside>
+<aside class="panel" id="charge" aria-label="錢 충전">
+  <header><p class="k">錢 充 塡</p><h2>錢 충전</h2><p class="bal">가진 錢 <b id="chBal">0</b></p><button class="x" data-close>×</button></header>
+  <div class="body">
+    <div class="packs">
+      <div class="pack"><div><p class="a">100 錢</p><p class="w">₩1,100</p></div><button data-p="p100">충전</button></div>
+      <div class="pack best"><div><p class="a">550 錢<small>덤 50</small></p><p class="w">₩4,900 · 가장 만히 고르는 꾸러미</p></div><button data-p="p500">충전</button></div>
+      <div class="pack"><div><p class="a">1,400 錢<small>덤 200</small></p><p class="w">₩9,900</p></div><button data-p="p1200">충전</button></div>
+    </div>
+    <p class="demo-note">※ 지금은 시험 충전이오. 누르면 錢만 들어오고 돈은 나가지 안소.<br>실제 결제는 사업자 등록 뒤 결제 회사(예: 토스페이먼츠)를 붙여야 하오.</p>
+    <ul class="ledger" id="ledger"></ul>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="yk-config.js?v=1"></script>
+<script src="yk-auth.js?v=2"></script>
+<script>
+(function(){
+'use strict';
+var D=document,$=function(i){return D.getElementById(i)},A=window.ykAuth;
+var stage=$('stage'),itemsEl=$('items'),wrap=$('wrap'),me=null,owned=[],prices={},lay={lamp:'lamp_amber',items:{}},sel=null,saveT=null;
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function toast(h,act,ms){var t=$('toast');t.innerHTML='<span>'+h+'</span>'+(act||'');t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('on')},ms||3600);var b=t.querySelector('button');if(b)b.onclick=function(){t.classList.remove('on');openPanel('charge')};}
+function price(id){var it=A.item(id);return prices[id]!=null?prices[id]:(it?it.price:0)}
+
+/* 기본 자리 (처음 놓을 때) */
+var SLOT={wall:[[8,14],[22,22],[64,12],[79,20],[36,30],[52,26],[90,34],[12,40]],scrap:[[30,8],[42,12],[70,32],[56,8]],desk:[[10,73],[24,76],[40,72],[58,75],[72,73],[86,76],[48,78],[32,79]]};
+function defaultPos(it){var k=it.kind,used=Object.keys(lay.items).length,same=Object.keys(lay.items).filter(function(i){var x=A.item(i);return x&&x.kind===k}).length,s=SLOT[k]||SLOT.desk,p=s[same%s.length];return {x:p[0],y:p[1],r:(k==='wall'||k==='scrap')?Math.round((Math.random()*6-3)*10)/10:0,z:used+1}}
+function widthOf(it){var k=stage.clientWidth<600?1.7:1;return k*(it.kind==='wall'?11:it.kind==='scrap'?9:(it.w||12))}
+window.addEventListener('resize',function(){clearTimeout(window._rz);window._rz=setTimeout(render,200)});
+
+function render(){
+  stage.dataset.lamp=lay.lamp||'lamp_amber';
+  $('plate').textContent=(me?me.nickname:'무명 독자')+'의 방';
+  itemsEl.innerHTML='';
+  Object.keys(lay.items).forEach(function(id){
+    var it=A.item(id),p=lay.items[id];if(!it||!it.img||owned.indexOf(id)<0)return;
+    var el=D.createElement('div');el.className='it '+it.kind;el.dataset.id=id;
+    el.style.cssText='left:'+p.x+'%;top:'+p.y+'%;width:'+widthOf(it)+'%;--r:'+(p.r||0)+'deg;z-index:'+(10+(p.z||1));
+    if(it.kind==='desk'){el.style.transform='translate(-50%,-100%) rotate('+(p.r||0)+'deg)'}else{el.style.transform='translateX(-50%) rotate('+(p.r||0)+'deg)'}
+    el.innerHTML='<img src="'+it.img+'" alt="'+esc(it.name)+'" draggable="false">';
+    drag(el);itemsEl.appendChild(el);
+  });
+  inv();
+}
+function inv(){
+  var box=$('inv');if(!me){box.innerHTML='<p class="empty">입장하면 서랍이 열리오.</p>';return}
+  var list=owned.map(A.item).filter(function(it){return it&&it.img});
+  if(!list.length){box.innerHTML='<p class="empty">서랍이 비엇소. 사건을 끝까지 읽거나 상점에서 사 오시오.</p>';return}
+  box.innerHTML=list.map(function(it){return '<button data-id="'+it.id+'" class="'+(lay.items[it.id]?'placed':'')+'"><div class="th"><img src="'+it.img+'" alt=""></div><p class="nm">'+esc(it.name)+'</p></button>'}).join('');
+  [].forEach.call(box.querySelectorAll('button'),function(b){b.onclick=function(){var id=b.dataset.id,it=A.item(id);if(lay.items[id]){delete lay.items[id]}else{lay.items[id]=defaultPos(it)}render();save()}});
+}
+
+/* 끌어 옮기기 */
+function drag(el){
+  var sx,sy,ox,oy,moved=false,id=el.dataset.id;
+  el.addEventListener('pointerdown',function(e){e.preventDefault();el.setPointerCapture(e.pointerId);var r=stage.getBoundingClientRect(),p=lay.items[id];sx=e.clientX;sy=e.clientY;ox=p.x;oy=p.y;moved=false;el.classList.add('drag');
+    var mv=function(ev){var dx=(ev.clientX-sx)/r.width*100,dy=(ev.clientY-sy)/r.height*100;if(Math.abs(dx)+Math.abs(dy)>.6)moved=true;p.x=Math.max(2,Math.min(98,ox+dx));p.y=Math.max(2,Math.min(97,oy+dy));el.style.left=p.x+'%';el.style.top=p.y+'%';tools(null)};
+    var up=function(){el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);el.classList.remove('drag');if(moved){save();$('hint').style.opacity=0}else select(el)};
+    el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+  });
+}
+function select(el){[].forEach.call(itemsEl.children,function(c){c.classList.toggle('sel',c===el)});sel=el?el.dataset.id:null;tools(el)}
+function tools(el){var t=$('tools');if(!el){t.classList.remove('on');[].forEach.call(itemsEl.children,function(c){c.classList.remove('sel')});return}
+  var r=stage.getBoundingClientRect(),b=el.getBoundingClientRect();t.style.left=Math.min(r.width-200,Math.max(4,b.left-r.left))+'px';t.style.top=Math.max(4,b.top-r.top-34)+'px';t.classList.add('on')}
+$('tools').addEventListener('click',function(e){var a=e.target.dataset.a;if(!a||!sel)return;var p=lay.items[sel];
+  if(a==='put'){delete lay.items[sel];sel=null;tools(null)}
+  if(a==='tilt'){p.r=((p.r||0)+4>8)?-8:(p.r||0)+4}
+  if(a==='front'){var m=0;Object.keys(lay.items).forEach(function(k){m=Math.max(m,lay.items[k].z||1)});p.z=m+1}
+  var keep=sel;render();save();if(keep&&lay.items[keep]){var el=itemsEl.querySelector('[data-id="'+keep+'"]');if(el)select(el)}});
+stage.addEventListener('pointerdown',function(e){if(!e.target.closest('.it')&&!e.target.closest('.tools'))tools(null)});
+
+function save(){if(!me)return;$('saved').textContent='저장하는 중…';clearTimeout(saveT);saveT=setTimeout(function(){A.saveLayout(lay).then(function(){$('saved').textContent='방이 저장되엇소'}).catch(function(e){$('saved').textContent='저장 실패 · '+A.msg(e)})},700)}
+
+/* 상점 */
+var shopKind='wall';
+function shop(){
+  $('shopBal').textContent=me?me.coins:0;
+  var list=A.items.filter(function(it){return it.kind===shopKind});
+  $('grid').innerHTML=list.map(function(it){var has=owned.indexOf(it.id)>-1,pr=price(it.id),short=me&&!has&&me.coins<pr;
+    var th=it.kind==='lamp'?'<div class="th lamp" style="background:'+({lamp_amber:'radial-gradient(circle at 40% 40%,#c9862f,#1d1813 70%)',lamp_moon:'radial-gradient(circle at 70% 30%,#8fa9cf,#141a24 70%)',lamp_red:'radial-gradient(circle at 50% 80%,#a0261b,#1d1813 70%)'}[it.id])+'"></div>':'<div class="th"><img src="'+it.img+'" alt=""></div>';
+    var btn=has?'<button class="buy" disabled>'+(it.kind==='lamp'?(lay.lamp===it.id?'켜 둠':'켜기'):'가짐')+'</button>':short?'<button class="buy short" data-short="'+(pr-me.coins)+'">'+(pr-me.coins)+'錢 모자람 · 충전</button>':'<button class="buy" data-buy="'+it.id+'">사기</button>';
+    if(has&&it.kind==='lamp'&&lay.lamp!==it.id)btn='<button class="buy" data-lamp="'+it.id+'">켜기</button>';
+    return '<div class="card">'+(it.rare?'<span class="rare">귀한 물건</span>':'')+th+'<p class="nm">'+esc(it.name)+'</p><p class="nt">'+esc(it.note||'')+'</p><p class="pr">'+(pr?pr+' <i>錢</i>':'공짜')+'</p>'+btn+'</div>'}).join('');
+}
+$('grid').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.short){openPanel('charge');return}
+  if(b.dataset.lamp){lay.lamp=b.dataset.lamp;render();save();shop();return}
+  var id=b.dataset.buy;if(!id)return;b.disabled=true;b.textContent='…';
+  A.buy(id).then(function(){owned.push(id);var it=A.item(id);if(it.kind==='lamp'){lay.lamp=id}else{lay.items[id]=defaultPos(it)}render();save();shop();toast('「'+esc(it.name)+'」을(를) 들엿소. '+(it.kind==='lamp'?'불을 바꿧소.':'방에 놓아 두엇소.'))})
+   .catch(function(err){toast(esc(A.msg(err)),/모자라/.test(A.msg(err))?'<button>충전</button>':'');shop()});
+});
+$('shopTabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;shopKind=b.dataset.k;[].forEach.call(this.children,function(c){c.classList.toggle('on',c===b)});shop()});
+
+/* 충전 */
+function ledgerPaint(){var l=$('ledger');try{var o=JSON.parse(localStorage.getItem('ykroom_demo')||'{}');if(A.live||!o.ledger){l.innerHTML='';return}l.innerHTML=o.ledger.slice(-6).reverse().map(function(x){return '<li><span>'+esc(x.r)+'</span><b>'+(x.d>0?'+':'')+x.d+' 錢</b></li>'}).join('')}catch(e){}}
+$('charge').addEventListener('click',function(e){var b=e.target.closest('button[data-p]');if(!b)return;b.disabled=true;
+  A.charge(b.dataset.p).then(function(c){$('chBal').textContent=c;toast('錢이 드러왓소. 이제 '+c+' 錢.');ledgerPaint();shop()}).catch(function(err){toast(esc(A.msg(err)))}).then(function(){b.disabled=false})});
+
+function openPanel(w){['shop','charge'].forEach(function(k){$(k).classList.toggle('on',k===w)});$('veil').classList.toggle('on',!!w);if(w==='shop')shop();if(w==='charge'){$('chBal').textContent=me?me.coins:0;ledgerPaint()}}
+$('openShop').onclick=function(){openPanel('shop')};$('openCharge').onclick=function(){openPanel('charge')};
+$('toCharge').onclick=function(e){e.preventDefault();openPanel('charge')};
+$('veil').onclick=function(){openPanel(null)};
+[].forEach.call(D.querySelectorAll('[data-close]'),function(b){b.onclick=function(){openPanel(null)}});
+D.addEventListener('keydown',function(e){if(e.key==='Escape')openPanel(null)});
+if(/#charge/.test(location.hash))A.ready.then(function(){if(A.user())openPanel('charge');else A.open('in')});
+$('gIn').onclick=function(){A.open('in')};$('gUp').onclick=function(){A.open('up')};
+$('out').onclick=function(){A.signOut()};
+$('plate').onclick=function(){if(!me)return;var n=prompt('방 문패에 적을 필명 (스무 자까지)',me.nickname);if(n)A.setNickname(n).catch(function(e){toast(esc(A.msg(e)))})};
+
+/* 입장 상태 */
+var lastId=null;
+A.on(function(u){
+  me=u;var on=!!u;
+  ['coin','openShop','openCharge','out'].forEach(function(k){$(k).hidden=!on});
+  wrap.classList.toggle('locked',!on);
+  if(!on){lastId=null;owned=[];lay={lamp:'lamp_amber',items:{}};sample();$('who').textContent='';$('saved').textContent='';return}
+  $('coinN').textContent=u.coins;$('shopBal').textContent=u.coins;$('chBal').textContent=u.coins;
+  $('who').textContent=(A.live?'':'시연 모드 · ')+(u.how==='kakao'?'카카오로 입장':u.how==='custom:naver'||u.how==='naver'?'네이버로 입장':'전자우편으로 입장');
+  if(lastId===u.id){owned=owned;return}
+  lastId=u.id;
+  Promise.all([A.owned(),A.loadLayout(),A.prices()]).then(function(r){owned=r[0];lay=r[1]&&r[1].items?r[1]:{lamp:'lamp_amber',items:{}};prices=r[2];
+    owned.forEach(function(id){var it=A.item(id);if(it&&it.kind==='scrap'&&!lay.items[id])lay.items[id]=defaultPos(it)});
+    render();if($('shop').classList.contains('on'))shop()}).catch(function(e){toast('방을 불러오지 못햇소 · '+esc(A.msg(e)))});
+});
+/* 입장 뒤 錢이 바뀌면(완독 적립 등) 서랍도 다시 */
+A.on(function(u){if(u&&lastId===u.id){A.owned().then(function(o){if(o.length!==owned.length){owned=o;owned.forEach(function(id){var it=A.item(id);if(it&&it.kind==='scrap'&&!lay.items[id])lay.items[id]=defaultPos(it)});render()}}).catch(function(){})}});
+
+/* 입장 전: 꾸며 둔 방을 미리 보여 줌 */
+function sample(){owned=['ad_calpis','ad_pilot','scrap_maria','scrap_sk','o_clock','o_watch','o_cat'];lay={lamp:'lamp_amber',items:{ad_calpis:{x:14,y:16,r:-2,z:1},ad_pilot:{x:80,y:14,r:2.5,z:2},scrap_maria:{x:34,y:24,r:1.5,z:3},scrap_sk:{x:63,y:22,r:-1.5,z:4},o_clock:{x:18,y:78,z:5},o_watch:{x:56,y:80,z:6},o_cat:{x:82,y:76,z:7}}};render();owned=[]}
+})();
+</script>
+<script src="yk-noir.js?v=17"></script>
+<script src="../shared/yk-teamlinks.js?v=1"></script>
+</body>
+</html>

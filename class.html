@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<base href="m/"><!-- (1026) 정리판 맨 위에 둔 화면 · 그림·소리·스크립트는 m/ 의 것을 함께 씀 -->
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
+<title>경성야록 — 수업 안내</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@400;600;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<!--
+  경성야록 · 수업 안내 (1014)
+  - 수업 모드 켜기/끄기 · 공통 45분 흐름 · 사건별 수업안 · 활동지 인쇄
+  - 수업안 내용은 yk-class.js 의 YK_CLASS, 물음 · 교과서 낱말은 yk-era.js 의 YK_ERA · YK_WORDS 를 그대로 씀 (여긔엔 내용을 따로 적지 않음)
+-->
+<style>
+:root{--ink:#1d1813;--paper:#ebe2cf;--rule:#3a3128;--fade:#7b7062;--seal:#8a2a21;
+  --my:"Nanum Myeongjo","Noto Serif KR","Batang",serif;--sa:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#2a231c}
+body{min-height:100vh;color:var(--ink);font-family:var(--my);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,#3a3027,#1d1813 70%)}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.sheet{position:relative;max-width:980px;margin:28px auto 40px;background:var(--paper);box-shadow:0 30px 80px #000a;padding:30px clamp(16px,5vw,64px) 44px;
+  background-image:repeating-linear-gradient(0deg,rgba(60,45,30,.03) 0 1px,transparent 1px 3px),radial-gradient(ellipse at 50% 30%,#efe7d6,#e2d6bf)}
+.sheet:after{content:"";position:absolute;inset:10px;border:1px solid rgba(58,49,40,.28);pointer-events:none}
+.mast{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;border-bottom:3px double var(--rule);padding-bottom:10px}
+.mast .k{font:500 11px/1 var(--sa);letter-spacing:.42em;color:var(--fade)}
+.mast h1{margin-top:8px;font:800 clamp(22px,2.6vw,30px)/1 var(--my);letter-spacing:.2em}
+.mast h1 small{font:700 14px var(--my);letter-spacing:.3em;color:var(--seal);margin-left:10px}
+.mast nav{position:relative;z-index:1;display:flex;gap:16px;flex-wrap:wrap;font:500 12.5px var(--sa);letter-spacing:.12em}
+.mast nav a{text-decoration:none;border-bottom:1px solid transparent}
+.mast nav a:hover{border-bottom-color:var(--ink)}
+.lead{margin:26px 0 6px;font:800 clamp(20px,2.4vw,26px)/1.6 var(--my);word-break:keep-all}
+.lead em{font-style:normal;color:var(--seal)}
+.intro{font:400 15px/1.9 var(--sa);color:#3e352c;word-break:keep-all}
+section{margin-top:42px}
+h2{display:flex;align-items:center;gap:12px;font:800 15px/1 var(--my);letter-spacing:.3em;margin-bottom:16px}
+h2 b{font:800 12px/1 var(--my);color:#efe6d2;background:var(--ink);padding:6px 8px 6px 10px;letter-spacing:.3em}
+h2:after{content:"";flex:1;height:1px;background:rgba(58,49,40,.35)}
+/* 수업 모드 */
+.mode{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.mode div{background:#f3ecdc;padding:16px;box-shadow:0 2px 0 rgba(58,49,40,.18),0 10px 22px rgba(40,30,20,.1)}
+.mode b{display:block;font:800 15.5px/1.4 var(--my);margin-bottom:6px}
+.mode b i{font-style:normal;color:var(--seal);margin-right:6px}
+.mode p{font:400 13.5px/1.75 var(--sa);color:#3e352c;word-break:keep-all}
+.sw{position:relative;z-index:1;display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px;padding:14px 16px;border:1px solid var(--rule)}
+.sw p{font:500 13.5px var(--sa)}
+.sw p b{color:var(--seal)}
+.btn{all:unset;cursor:pointer;display:inline-block;padding:10px 16px;border:1px solid var(--ink);font:700 13px/1 var(--sa);letter-spacing:.06em;text-align:center}
+.btn.dark{background:var(--ink);color:#efe6d2}
+.btn:hover{background:#e3d8c2}.btn.dark:hover{background:#2c241c}
+/* 공통 흐름 */
+.flow{display:flex;border:1px solid var(--rule)}
+.flow div{padding:12px 10px;border-right:1px solid rgba(58,49,40,.35);min-width:0}
+.flow div:last-child{border-right:0}
+.flow i{display:block;font:500 10.5px/1 var(--sa);letter-spacing:.2em;color:var(--seal)}
+.flow b{display:block;margin-top:6px;font:800 14px/1.35 var(--my);word-break:keep-all}
+.flow small{display:block;margin-top:4px;font:400 12px/1.5 var(--sa);color:#5a5046;word-break:keep-all}
+.flow-n{margin-top:8px;font:400 12.5px/1.7 var(--sa);color:var(--fade)}
+/* 사건별 */
+.cs{position:relative;z-index:1;margin-top:18px;background:#f3ecdc;padding:20px 20px 18px;box-shadow:0 2px 0 rgba(58,49,40,.18),0 12px 26px rgba(40,30,20,.12)}
+.cs-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.cs-h h3{font:800 20px/1.3 var(--my)}
+.cs-h span{font:500 12px var(--sa);color:var(--fade);letter-spacing:.1em}
+.cs dl{display:grid;grid-template-columns:86px 1fr;gap:6px 14px;margin-top:12px;font:400 13.5px/1.7 var(--sa)}
+.cs dt{font-weight:700;color:var(--seal);letter-spacing:.1em}
+.cs dd{word-break:keep-all}
+.cs table{width:100%;margin-top:14px;border-collapse:collapse;font:400 13px/1.6 var(--sa)}
+.cs th,.cs td{padding:8px 8px;border-bottom:1px solid rgba(58,49,40,.25);text-align:left;vertical-align:top;word-break:keep-all}
+.cs th{font-weight:700;font-size:12px;letter-spacing:.1em;color:var(--fade);border-bottom:1px solid var(--rule)}
+.cs td.m{white-space:nowrap;font-weight:700}
+.cs td.m small{display:block;font-weight:400;color:var(--fade)}
+.cs td .ask{display:block;margin-top:3px;color:var(--seal)}
+.cs .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.use{border:1px solid var(--rule);padding:16px 18px;background:rgba(243,236,220,.6)}
+.use li{margin-left:18px;font:400 13.5px/1.85 var(--sa);color:#3e352c;word-break:keep-all}
+.use a{color:var(--seal)}
+.foot{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font:400 12px var(--sa);color:var(--fade)}
+.foot a{position:relative;z-index:1;text-decoration:none;border-bottom:1px solid currentColor}
+/* 활동지 (인쇄 때만 보임) */
+#print{display:none}
+@media (max-width:720px){.sheet{margin:0;padding:22px 16px 30px}.mode{grid-template-columns:1fr}.flow{flex-direction:column}.flow div{border-right:0;border-bottom:1px solid rgba(58,49,40,.35)}.cs dl{grid-template-columns:1fr}.cs table,.cs tbody,.cs tr,.cs td{display:block}.cs thead{display:none}.cs td{border:0;padding:3px 0}.cs tr{padding:8px 0;border-bottom:1px solid rgba(58,49,40,.25)}}
+@media print{
+  @page{size:A4;margin:14mm}
+  html,body{background:#fff!important}
+  .sheet{display:none!important}
+  #print{display:block!important;color:#000;font-family:var(--sa)}
+  .ws-h{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px double #000;padding-bottom:6px}
+  .ws-h p{font:500 9pt var(--sa);letter-spacing:.3em}
+  .ws-h h1{font:800 18pt/1.2 var(--my);margin-top:4px}
+  .ws-who{display:flex;gap:18px;font-size:10pt}
+  .ws-who span{border-bottom:1px solid #000;min-width:70px;display:inline-block}
+  .ws-g{margin-top:10px;font-size:10pt;line-height:1.6}
+  .ws h2{margin:16px 0 6px;font:800 11.5pt var(--my);letter-spacing:.1em;display:block}
+  .ws h2:after{display:none}
+  .ws-q{margin-top:10px;page-break-inside:avoid}
+  .ws-q b{font-size:10.5pt}
+  .ws-ln{height:62px;margin-top:4px;background:repeating-linear-gradient(#fff 0 19px,#999 19px 20px)}
+  .ws-t{width:100%;border-collapse:collapse;font-size:9.5pt}
+  .ws-t th,.ws-t td{border:1px solid #000;padding:6px;text-align:left;vertical-align:top}
+  .ws-t td.e{height:44px}
+  .ws-f{margin-top:12px;font-size:8.5pt;color:#333}
+}
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="mast">
+    <div><p class="k">京 城 野 錄 · 授 業 案 內</p><h1>수업 안내<small>교실에서 읽는 옛 신문</small></h1></div>
+    <nav><a href="index.html">본지로</a><a href="about.html">야록 소개</a><a href="case-map.html">사건 긔록</a></nav>
+  </header>
+
+  <p class="lead">한 사건, 한 차시(45분).<br><em>옛 신문 한 장</em>으로 교과서를 다시 읽습니다.</p>
+  <p class="intro">경성야록의 네 사건은 모두 실제 지면에 실린 일입니다. 학생들은 원문 지면을 넘기고, 같은 기사를 오늘의 기사와 견주고, 그해의 큰일과 교과서 단원을 이은 뒤, 자기 생각을 「독자 투고」로 남깁니다.</p>
+
+  <section id="mode">
+    <h2><b>授業</b>수업 모드</h2>
+    <div class="mode">
+      <div><b><i>一</i>결제 없이 모두 열림</b><p>구독이 필요한 단신 기록까지 결제 창 없이 바로 열립니다. 학생에게 錢(코인)이 없어도 됩니다.</p></div>
+      <div><b><i>二</i>오른쪽에 수업 진행표</b><p>사건 페이지 오른쪽 「授業 진행표」를 누르면 45분 흐름이 나오고, 단계를 누르면 그 장면으로 바로 이동합니다.</p></div>
+      <div><b><i>三</i>학생 글은 서버로 가지 않음</b><p>독자 투고에 쓴 글은 서버로 보내지 않고 그 화면에만 남으며, 창을 새로 열면 지워집니다. 다음 반이 같은 컴퓨터를 써도 됩니다. (수업 모드 설정은 남습니다.)</p></div>
+    </div>
+    <div class="sw"><p id="swState">지금 이 컴퓨터는 <b>보통 모드</b>입니다.</p><button type="button" class="btn dark" id="swOn">이 컴퓨터에서 수업 모드 켜기</button><button type="button" class="btn" id="swOff">끄기</button></div>
+  </section>
+
+  <section id="flow">
+    <h2><b>流</b>45분 공통 흐름</h2>
+    <div class="flow" id="flowBar"></div>
+    <p class="flow-n">네 사건 모두 같은 다섯 단계로 짜여 있어, 한 사건으로 익힌 흐름을 다른 사건에도 그대로 쓸 수 있습니다.</p>
+  </section>
+
+  <section id="cases">
+    <h2><b>案</b>사건별 수업안</h2>
+    <div id="caseList"></div>
+  </section>
+
+  <section id="care">
+    <h2><b>注意</b>수업 전에</h2>
+    <div class="use"><ul>
+      <li>각 장면의 <b>原文 · 再構成 · 解說</b> 도장으로 실제 기록과 다시 꾸민 장면을 구분해 읽게 해 주세요. → <a href="about.html#marks">표시 읽는 법</a></li>
+      <li>실제 피해자의 얼굴 · 주검 · 피는 보여 주지 않습니다. 그림은 모두 「그림 · 재현」입니다. → <a href="about.html#rules">이 아카이브가 지키는 것</a></li>
+      <li>옛 지면의 차별적 표현은 그대로 옮기되, 무엇이 문제였는지 함께 다뤄 주세요.</li>
+      <li>옛 지면 · 광고 이미지는 교육 · 비영리 목적으로 출처를 밝혀 인용한 것입니다. → <a href="about.html#use">자료 이용</a></li>
+    </ul></div>
+  </section>
+
+  <p class="foot"><span>京城野錄 · 동아일보 부트캠프 B조 · 2026</span><a href="index.html">본지로 돌아가기 →</a></p>
+</main>
+<div id="print" aria-hidden="true"></div>
+
+<script src="yk-era.js?v=8"></script>
+<script src="yk-class.js?v=3"></script>
+<script>
+(function(){
+  var C=window.YK_CLASS, E=window.YK_ERA||{}, WD=window.YK_WORDS||{};
+  function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  var ORDER=['jk','sk','maria','bb'];
+  /* 수업 모드 스위치 */
+  function paintSw(){ var on=ykClass.on(); document.getElementById('swState').innerHTML='지금 이 컴퓨터는 <b>'+(on?'수업 모드':'보통 모드')+'</b>입니다.'; }
+  document.getElementById('swOn').onclick=function(){ ykClass.set(true); paintSw(); };
+  document.getElementById('swOff').onclick=function(){ ykClass.set(false); paintSw(); };
+  paintSw();
+  /* 공통 흐름 (첫 사건의 단계 이름 · 분) */
+  var base=C.jk.steps, NAME=['무슨 일이었나','원문 지면 읽기 · 오늘의 기사와 비교','사건의 핵심 장면','그해의 지면 · 교과서로 읽기','독자 투고 · 발표'];
+  document.getElementById('flowBar').innerHTML=base.map(function(s,i){ return '<div style="flex:'+s.min+'"><i>'+esc(s.part)+'</i><b>'+s.min+'분</b><small>'+NAME[i]+'</small></div>'; }).join('');
+  /* 사건별 */
+  var Y={jk:'소화 팔 년 · 경성',sk:'소화 십일 년 · 백림과 경성',maria:'소화 륙 년 · 부산',bb:'소화 십이 년 · 경성 근교'};
+  document.getElementById('caseList').innerHTML=ORDER.map(function(k){
+    var c=C[k], e=E[k]||{};
+    var units=c.words.map(function(w){ return WD[w]?'<span style="display:block">· '+esc(WD[w].unit)+'</span>':''; }).join('');
+    return '<article class="cs" id="'+k+'"><div class="cs-h"><h3>'+esc(c.title)+'</h3><span>'+c.year+' · '+Y[k]+'</span></div>'+
+      '<dl><dt>수업 목표</dt><dd>'+esc(c.goal)+'</dd><dt>교과서</dt><dd>고등학교 한국사'+units+'</dd>'+
+      (e.asks?'<dt>투고 물음</dt><dd>'+e.asks.map(function(q,i){return '<span style="display:block">問'+(i+1)+' '+esc(q.q)+'</span>';}).join('')+'</dd>':'')+'</dl>'+
+      '<table><thead><tr><th>시간</th><th>단계</th><th>활동 · 발문</th></tr></thead><tbody>'+c.steps.map(function(s){
+        return '<tr><td class="m">'+s.min+'분<small>'+esc(s.part)+'</small></td><td><b>'+esc(s.name)+'</b></td><td>'+esc(s.do)+'<span class="ask">발문 · '+esc(s.ask)+'</span></td></tr>';
+      }).join('')+'</tbody></table>'+
+      '<div class="acts"><a class="btn dark" href="'+c.dir+'/index.html?class=1">수업 모드로 열기 →</a><button type="button" class="btn" data-print="'+k+'">활동지 인쇄</button></div></article>';
+  }).join('');
+  /* 활동지 */
+  function sheet(k){
+    var c=C[k], e=E[k]||{}, how=e.how||{};
+    return '<div class="ws"><div class="ws-h"><div><p>京城野錄 · 讀者 投稿 活動紙</p><h1>'+esc(c.title)+' ('+c.year+')</h1></div><div class="ws-who">학년 · 반 <span></span> 이름 <span></span></div></div>'+
+      '<p class="ws-g"><b>오늘의 목표</b> — '+esc(c.goal)+'</p>'+
+      '<h2>一. 원문과 오늘의 기사</h2><table class="ws-t"><tr><th style="width:50%">옛 신문(원문)이 쓴 말</th><th>오늘의 기사라면 이렇게 쓰겠다</th></tr><tr><td class="e"></td><td class="e"></td></tr></table>'+
+      '<h2>二. 교과서로 읽기</h2><table class="ws-t"><tr><th style="width:34%">교과서 낱말</th><th>이 사건에서는 어떻게 보이나</th></tr>'+c.words.map(function(w){ return '<tr><td>'+esc((WD[w]||{}).t||w)+'</td><td class="e"></td></tr>'; }).join('')+'</table>'+
+      '<h2>三. 독자 투고 — 하나를 골라 써 보세요</h2>'+(e.asks||[]).map(function(q,i){ return '<div class="ws-q"><b>問'+(i+1)+'. '+esc(q.q)+'</b><div class="ws-ln"></div></div>'; }).join('')+
+      '<p class="ws-f">※ 경성야록의 그림은 모두 「그림 · 재현」이며, 사건의 사실은 당시 지면과 기록에서 옮겼습니다.</p></div>';
+  }
+  document.getElementById('caseList').addEventListener('click',function(ev){
+    var b=ev.target.closest('[data-print]'); if(!b) return;
+    document.getElementById('print').innerHTML=sheet(b.dataset.print); window.print();
+  });
+  if(location.hash){ var t=document.querySelector(location.hash); if(t) setTimeout(function(){ t.scrollIntoView(); },50); }
+})();
+</script>
+<script src="yk-noir.js?v=17"></script>
+<script src="../shared/yk-teamlinks.js?v=1"></script>
+</body>
+</html>

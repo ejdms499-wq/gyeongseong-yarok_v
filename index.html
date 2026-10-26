@@ -2294,7 +2294,7 @@ html::after{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;
   <div class="topbar">
     <span class="kicker"><span class="hj" data-ko="미스터리 아카이브">怪事 文庫</span> · <b><span class="hj" data-ko="납량특집">納涼 特輯</span></b></span>
     <nav aria-label="주 메뉴">
-      <a href="#"><span class="hj l" data-ko="사건 기록">事件 記錄</span></a><a href="#"><span class="hj l" data-ko="신문 아카이브">新聞 文庫</span></a><a href="exhibits/fair/fair.html"><span class="hj l" data-ko="부록 박람회">附錄 博覽會</span></a><!-- 부록 박람회 회장 거리(fair.html)로 --><a href="exhibits/newsroom/newsroom.html"><span class="hj l" data-ko="편집국">編輯局</span></a><!-- 야록 편집국 (AI 재구성 원고) --><a href="#"><span class="hj l" data-ko="경성야록 소개">野錄 紹介</span></a>
+      <a href="case-map.html"><span class="hj l" data-ko="사건 기록">事件 記錄</span></a><!-- 경성 사건 지도 --><a href="#"><span class="hj l" data-ko="신문 아카이브">新聞 文庫</span></a><a href="exhibits/fair/fair.html"><span class="hj l" data-ko="부록 박람회">附錄 博覽會</span></a><!-- 부록 박람회 회장 거리(fair.html)로 --><a href="exhibits/newsroom/newsroom.html"><span class="hj l" data-ko="편집국">編輯局</span></a><!-- 야록 편집국 (AI 재구성 원고) --><a href="about.html"><span class="hj l" data-ko="경성야록 소개">野錄 紹介</span></a><a href="class.html"><span class="hj l" data-ko="수업용">授業用</span></a>
       <a href="#" class="search" aria-label="검색"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="7" cy="7" r="5.5"/><path d="M11 11l4 4"/></svg></a>
     </nav>
   </div>
@@ -3085,7 +3085,7 @@ if(vh){setV('hj');}
   /* ── 05 ② 반권 → 동그랗게 닫힘 → 박람회 회장 거리 ──
      0.0초 반권이 찢겨 떨어짐 → 0.35초 반권 자리를 중심으로 검은 테두리가 조여 듦(1.3초) → 박람회 */
   const stub = document.getElementById('expoStub'), iris = document.getElementById('irisOut');
-  const GO = 'fair.html?from=main';
+  const GO = 'exhibits/fair/fair.html?from=main';
   function enterFair(){
     if(reduce){ location.href = GO; return; }
     if(stub.classList.contains('torn')) return;
@@ -3829,13 +3829,65 @@ if(vh){setV('hj');}
   document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.sec-btn, [data-sec], .secmore')) hardReset(); }, true);
 })();
 </script>
+<script id="yk-dansin-link-js">
+/* 1014 · 단신(dansin.html) 연결 — 면을 바꾸면 나오는 칸 · 단신 띠 · 지면 색인에서 열린 단신으로 바로
+   열리지 않은 사건(독갑이 집 · 평양지점 · 청양 등)은 그대로 구독 안내 */
+(function(){
+  var KEY=[['현해탄','hyeonhaetan'],['윤심덕','hyeonhaetan'],['현진건','hyeonjingeon'],['김정필','kim-jeongpil'],['독살','kim-jeongpil'],['반복창','bankbokchang'],['미두왕','bankbokchang'],['장진홍','jangjinhong'],['금관','geumgwanchong'],['보육학교','jungang-boyuk']];
+  function idOf(s){ s=String(s||'').replace(/긔/g,'기'); for(var i=0;i<KEY.length;i++) if(s.indexOf(KEY[i][0])>-1) return KEY[i][1]; return null; }
+  function url(id){ return 'dansin.html?id='+id; }
+  function nav(id){ var u=url(id); if(window.ykLightGo) window.ykLightGo(u); else location.href=u; }
+  /* 1014 · 단신은 정긔 독자만: 구독(錢) 하면 열림 (yk-paywall.js) */
+  var TITLE={'kim-jeongpil':'「독살 미인」이라 불린 피고인, 김정필','jangjinhong':'이름조차 쓰지 못한 폭탄 — 장진홍 의거','jungang-boyuk':'33인의 교장, 의혹 한가운데에 서다','bankbokchang':'한 해 만의 사십만 원 — 「미두왕」 반복창','hyeonhaetan':'현해탄, 1926년 8월 4일 새벽','hyeonjingeon':'소설가이자 사회부장, 현진건','geumgwanchong':'금관만 남았다 — 경주 금관총 유물 도난'};
+  function go(id){ if(window.ykPay) window.ykPay.gate(id, TITLE[id], function(){ nav(id); }); else nav(id); }
+  /* ① 면을 바꾸면 나오는 칸 */
+  document.querySelectorAll('#cases .alt').forEach(function(alt){
+    var h=alt.querySelector('h3'); if(!h) return;
+    var hj=h.querySelector('.hj'), id=idOf(h.textContent+' '+(hj&&hj.dataset.ko||''));
+    if(!id) return;
+    alt.querySelectorAll('a.more.soon').forEach(function(a){
+      var n=a.cloneNode(true); n.classList.remove('soon'); n.href=url(id);
+      n.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); go(id); });
+      a.parentNode.replaceChild(n,a);
+    });
+    h.style.cursor='pointer'; h.setAttribute('role','link'); h.tabIndex=0; h.title='단신 읽기';
+    h.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); go(id); });
+    h.addEventListener('keydown',function(e){ if(e.key==='Enter') go(id); });
+  });
+  /* ② 지면 색인 */
+  document.querySelectorAll('.ix-col li a').forEach(function(a){
+    var tt=a.querySelector('.tt .hj'); var id=idOf(a.textContent+' '+(tt&&tt.dataset.ko||''));
+    if(id && /#$/.test(a.getAttribute('href')||'#')){ a.href=url(id); a.addEventListener('click',function(e){ e.preventDefault(); go(id); }); }
+  });
+  /* ③ 단신 띠 (면을 고를 때마다 새로 그려짐) */
+  function band(){
+    document.querySelectorAll('.yk-dansin a').forEach(function(a){
+      if(a.dataset.dl) return; a.dataset.dl=1;
+      var id=idOf(a.textContent+' '+(a.title||''));
+      if(id){ a.href=url(id); a.classList.add('open'); a.title=(a.title||'')+' — 정긔 독자 전용'; a.addEventListener('click',function(e){ e.preventDefault(); go(id); }); }
+      else { a.classList.add('shut'); a.title=(a.title||'')+' — 아즉 실리지 못한 긔록'; }
+    });
+  }
+  var b=document.querySelector('.yk-dansin'); if(b) new MutationObserver(band).observe(b,{childList:true}); band();
+  var st=document.createElement('style');
+  st.textContent='.yk-dansin a.open{cursor:pointer}.yk-dansin a.open b{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}.yk-dansin a.shut{cursor:default;opacity:.72}';
+  document.head.appendChild(st);
+})();
+</script>
 <script src="m-index.js?v=5"></script>
 <script src="shared/yk-reward.js?v=20261020"></script>
 <script src="exhibits/newsroom/nr-store.js?v=1"></script>
 <script src="exhibits/newsroom/nr-main.js?v=5"></script>
-<script src="exhibits/hogoe/hg-main.js?v=3"></script>
+<script src="exhibits/hogoe/hg-main.js?v=4"></script>
 <script src="shared/yk-guide.js?v=20261019"></script>
 <script src="shared/case-navigator.js?v=20261019"></script>
 <script src="shared/yk-ink-engine.js?v=20261019"></script>
+<!-- (1026) 되살림: 독자 입장 · 수업 모드 · 단신 구독 · 사건 칸 불빛 -->
+<script src="m/yk-config.js?v=1"></script>
+<script src="m/yk-auth.js?v=2"></script>
+<script src="m/yk-class.js?v=3"></script>
+<script src="m/yk-paywall.js?v=2"></script>
+<script src="m/yk-light.js?v=3"></script>
+<script src="shared/yk-teamlinks.js?v=1"></script>
 </body>
 </html>

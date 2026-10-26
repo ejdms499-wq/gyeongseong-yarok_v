@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>경성야록 · 길을 잃었소</title>
+<script>window.__ykTeamOnly = 1;</script>
+<script src="/gyeongseong-yarok_v/shared/yk-teamlinks.js"></script>
+<script>
+/* 옛 자리 이름으로 들어온 주소를 정리판 제자리로 넘김 (예: /hogoe.html → /exhibits/hogoe/hogoe.html) */
+(function () {
+  try {
+    var B = '/gyeongseong-yarok_v/', p = location.pathname;
+    if (p.indexOf(B) !== 0) return;
+    var rel = decodeURIComponent(p.slice(B.length));
+    var t = window.ykTeamPath && window.ykTeamPath(rel);
+    if (!t) {
+      /* 한 단계 더: 폴더가 겹쳐 붙은 주소(exhibits/fair/appendix.html 등)는 끝 이름으로 */
+      var tail = rel.split('/').slice(-2).join('/');
+      t = window.ykTeamPath && (window.ykTeamPath(tail) || window.ykTeamPath(rel.split('/').pop()));
+    }
+    if (t && t !== rel) location.replace(B + t + location.search + location.hash);
+  } catch (e) {}
+})();
+</script>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#ebe2cc;color:#2a2219;font-family:"Nanum Myeongjo",serif;text-align:center}a{color:#8a2a21}</style>
+</head><body><div><p style="letter-spacing:.3em;font-size:13px">경성야록 · 사고</p><h1 style="font-size:30px;margin:8px 0 14px">이 지면은 업소</h1><p><a href="/gyeongseong-yarok_v/index.html">본지로 돌아가기 →</a></p></div></body></html>

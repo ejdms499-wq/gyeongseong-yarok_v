@@ -394,7 +394,7 @@
     ['쥐를 찻는 광고는 실리지 안소. 고양이가 먼저 차즘으로.', '쥐를 찾는 광고는 싣지 않는다. 고양이가 먼저 찾으므로.']
   ];
   var SAY = ['냐!', '냥?', '먀—', '캭', '…냐', '냐아'];
-  var CAT = '<img src="assets/seek/cat_peek.png" alt="" draggable="false">';   /* 활자 상자 광고의 그 고양이와 같은 놈 */
+  var CAT = '<img src="../../m/assets/seek/cat_peek.png" alt="" draggable="false">';   /* 활자 상자 광고의 그 고양이와 같은 놈 */
   var css = D.createElement('style');
   css.textContent =
     '.yk-cat{position:absolute;z-index:6;width:calc(100px * var(--s,1));height:calc(57px * var(--s,1));pointer-events:none;overflow:hidden}' +
@@ -483,7 +483,7 @@
   W.ykCatFound = function () {
     var ad = D.getElementById('adCat'); if (!ad || ad.querySelector('.cat-found')) return;
     var f = D.createElement('figure'); f.className = 'cat-found';
-    f.innerHTML = '<div class="cf-img"><img src="assets/seek/cat_type.jpg" alt="활자 상자 위에서 자는 먹색 고양이 (재현 그림)"><span class="cf-rp">그림 · 재현</span></div>' +
+    f.innerHTML = '<div class="cf-img"><img src="../../m/assets/seek/cat_type.jpg" alt="활자 상자 위에서 자는 먹색 고양이 (재현 그림)"><span class="cf-rp">그림 · 재현</span></div>' +
       '<figcaption>' + hj('차잣소 — 활자 상자 우에서, 「ㄱ」을 물고 자고 잇섯소. 깨우지 마시오. 마감은 내일로 미루오.', '찾았다 — 활자 상자 위에서, 「ㄱ」을 물고 자고 있었다. 깨우지 마시오. 마감은 내일로 미룬다.') + '</figcaption>';
     ad.appendChild(f); requestAnimationFrame(function () { requestAnimationFrame(function () { f.classList.add('on'); }); });
   };
@@ -492,7 +492,7 @@
     if (D.querySelector('.cat-wanted')) return;
     var w = D.createElement('aside'); w.className = 'cat-wanted'; w.setAttribute('role', 'status');
     w.innerHTML = '<button type="button" class="cw-x" aria-label="닫기">×</button><p class="cw-k">' + hj('現 狀 手 配', '현상 수배') + '</p>' +
-      '<div class="cw-img"><img src="assets/seek/cat_wanted.jpg" alt="번호판을 든 먹색 고양이 (재현 그림)"><span class="cf-rp">그림 · 재현</span></div>' +
+      '<div class="cw-img"><img src="../../m/assets/seek/cat_wanted.jpg" alt="번호판을 든 먹색 고양이 (재현 그림)"><span class="cf-rp">그림 · 재현</span></div>' +
       '<p class="cw-t">' + hj('혐의 — 활자 「ㄱ」 절도 · 마감 방해 · 편집장 의자 점거', '혐의 — 활자 「ㄱ」 절도 · 마감 방해 · 편집장 의자 점거') + '</p>' +
       '<p class="cw-s">' + hj('특징: 먹색. 눈은 호박빛. 반성의 빗 업슴.<br>사례: 생선 반 마리 (나머지 반은 이미 업슴)', '특징: 먹색. 눈은 호박빛. 반성의 기색 없음.<br>사례: 생선 반 마리 (나머지 반은 이미 없음)') + '</p>';
     D.body.appendChild(w); requestAnimationFrame(function () { requestAnimationFrame(function () { w.classList.add('on'); }); });
