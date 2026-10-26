@@ -4,7 +4,7 @@
    전략: HTML/JS/CSS 네트워크 우선(Network-First, fallback to Cache)
    ========================================================= */
 
-const CACHE_NAME = 'gsyr-pwa-20261026-v10';
+const CACHE_NAME = 'gsyr-pwa-20261020-v9';
 
 const PRECACHE_ASSETS = [
   './index.html',
