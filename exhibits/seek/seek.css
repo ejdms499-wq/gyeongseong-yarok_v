@@ -220,7 +220,7 @@
 .sk-wanted .sk-l-img{position:relative}
 .sk-wanted .sk-l-img::after{content:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-3deg);font-family:var(--serif);font-weight:900;font-size:30px;letter-spacing:.3em;color:rgba(40,30,20,.78);mix-blend-mode:multiply}
 .sk-sorry .sk-l-img img{filter:sepia(.25) contrast(1.05);mix-blend-mode:normal}
-.sk-card{background:linear-gradient(rgba(236,226,203,.86),rgba(230,218,192,.9)),url(assets/v3/confess.jpg) center/cover!important}
+.sk-card{background:linear-gradient(rgba(236,226,203,.86),rgba(230,218,192,.9)),url(../../assets/v3/confess.jpg) center/cover!important}
 .sk-photo img{object-position:50% 55%}
 .sk-crime{display:block}
 .sk-crime legend{margin-bottom:4px}
