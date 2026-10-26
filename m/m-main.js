@@ -69,7 +69,7 @@
         });
         if (main) { html = main + html; shown.unshift(mainT); }
         /* (1020) 문화예술면 맨 아래 — 수배 고양이와 함께하는 경성 산책 */
-        if (f === '문화예술') html += '<a class="mm-walk" href="https://ejdms499-wq.github.io/simmyo-walk/"><img src="assets/seek/cat_wanted.jpg" alt="수배 고양이 심묘 (재현 그림)" loading="lazy"><span><small>경성야록 스핀오프</small><b>심묘한 산책</b><em>글을 모르는 수배 고양이 심묘의 눈높이로 1899~1937 경성 여덟 곳을 걷소. 냄새 맡고, 소리 듯고, 사람 눈으로 당시 지면을 여시오.</em><u>산책 따라가기 →</u></span></a>';
+        if (f === '문화예술') html += '<a class="mm-walk" href="https://ejdms499-wq.github.io/simmyo-walk/proto/road/index.html?from=yarok"><img src="assets/seek/cat_wanted.jpg" alt="수배 고양이 심묘 (재현 그림)" loading="lazy"><span><small>경성야록 스핀오프</small><b>심묘한 산책</b><em>글을 모르는 수배 고양이 심묘의 눈높이로 1899~1937 경성 여덟 곳을 걷소. 냄새 맡고, 소리 듯고, 사람 눈으로 당시 지면을 여시오.</em><u>산책 따라가기 →</u></span></a>';
         out.innerHTML = '<div class="mm-hd"><small>' + f + '면</small><h2>' + f + '면의 긔사 ' + knat(shown.length) + ' 건</h2></div>' + html + dansin(f, shown) +
           '<button type="button" class="mm-back">온 지면으로 도라가기</button>';
         $$('.mb-rv', out).forEach(function (el) { el.classList.add('in'); });

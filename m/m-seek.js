@@ -81,7 +81,7 @@
 
   /* ── 수배 사진 — 꾹 누르면 지문(발바닥)을 뜸 ── */
   /* (1020) 수배 사진 → 지문이 찍히고 심묘한 산책으로 넘어감 */
-  var goFile = function () { if (goFile.on) return; goFile.on = 1; location.href = 'https://ejdms499-wq.github.io/simmyo-walk/index.html?from=seek'; };
+  var goFile = function () { if (goFile.on) return; goFile.on = 1; location.href = 'https://ejdms499-wq.github.io/simmyo-walk/proto/road/index.html?from=yarok'; };
   var mug = $('#skMug');
   if (mug) {
     var lt = 0;

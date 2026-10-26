@@ -341,3 +341,10 @@
 .sk-upb::before { content: ""; position: absolute; inset: -10px -6px; }
 .sk-go::before { content: ""; position: absolute; inset: -8px -6px; }
 .ykg-q::before { content: ""; position: absolute; inset: -7px; }
+
+/* (1026) 고양이 광고 → 심묘한 산책으로 이어지는 발자국 */
+.sk-catgo{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:4px 12px 3px;border:1px dashed var(--ink);font-family:var(--myeongjo);font-size:12.5px;font-weight:800;letter-spacing:.06em;color:var(--ink);text-decoration:none;position:relative}
+.sk-catgo b{font-weight:800;border-bottom:1px solid currentColor}
+.sk-catgo .pw{width:13px;height:13px;flex:none;background:currentColor;-webkit-mask:radial-gradient(circle at 50% 70%,#000 32%,transparent 34%),radial-gradient(circle at 18% 30%,#000 13%,transparent 15%),radial-gradient(circle at 42% 12%,#000 13%,transparent 15%),radial-gradient(circle at 66% 12%,#000 13%,transparent 15%),radial-gradient(circle at 88% 30%,#000 13%,transparent 15%);mask:radial-gradient(circle at 50% 70%,#000 32%,transparent 34%),radial-gradient(circle at 18% 30%,#000 13%,transparent 15%),radial-gradient(circle at 42% 12%,#000 13%,transparent 15%),radial-gradient(circle at 66% 12%,#000 13%,transparent 15%),radial-gradient(circle at 88% 30%,#000 13%,transparent 15%)}
+.sk-catgo:hover,.sk-catgo:focus-visible{background:var(--ink);color:var(--paper)}
+.sk-catgo::before{content:"";position:absolute;inset:-8px -6px}

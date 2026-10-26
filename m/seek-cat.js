@@ -18,7 +18,7 @@
     } catch (e) {}
   }
   /* (1020) 수배 사진 → 지문이 찍히고 심묘한 산책(walk.html)으로 넘어감 */
-  var go = function () { if (go.on) return; go.on = 1; location.href = 'https://ejdms499-wq.github.io/simmyo-walk/index.html?from=seek'; };
+  var go = function () { if (go.on) return; go.on = 1; location.href = 'https://ejdms499-wq.github.io/simmyo-walk/proto/road/index.html?from=yarok'; };
   var mug = $('#skMug');
   if (mug) {
     var ink = function () {
