@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>경성야록 · 그림 점검</title>
+<style>
+body{margin:0;background:#ebe2cc;color:#2a2219;font:15px/1.6 "Nanum Myeongjo",serif;padding:24px 16px 60px}
+main{max-width:860px;margin:0 auto}
+h1{font-size:24px;margin:0 0 6px}
+.k{font-size:13px;color:#6e6250;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.c{background:#f6efdc;border:1px solid #8a7b66;padding:8px}
+.c img{display:block;width:100%;height:120px;object-fit:contain;background:#e2d6bb}
+.c b{display:block;font-size:13px;margin-top:6px}
+.c small{display:block;font-size:11px;color:#6e6250;word-break:break-all}
+.ok{color:#2f6b2f}.no{color:#a8402c}
+#info{margin:18px 0;padding:12px;background:#f6efdc;border:1px dashed #8a7b66;font:13px/1.7 sans-serif;white-space:pre-wrap}
+button{font:700 15px "Nanum Myeongjo",serif;padding:12px 18px;background:#2a2219;color:#f3ead6;border:0;border-radius:999px;cursor:pointer;margin:6px 6px 0 0}
+</style></head><body><main>
+<h1>그림 점검</h1>
+<p class="k">이 화면을 그대로 캡처해서 보내 주시면 됩니다. (아래 「저장된 것 지우기」를 눌러 고쳐질 수도 있어요)</p>
+<div class="grid" id="g"></div>
+<div id="info">점검 중…</div>
+<button id="fix">저장된 것 지우고 상뎜 다시 열기</button>
+<button id="go">상뎜 열기</button>
+</main>
+<script>
+(function(){
+  var T=[
+    ['상뎜 사진 (m 폴더)','m/assets/gwanggo/x_ajitteok.jpg'],
+    ['상뎜 사진 (맨 위 폴더)','assets/gwanggo/x_ajitteok.jpg'],
+    ['상뎜 사진 2','m/assets/gwanggo/smoka.jpg'],
+    ['본지 사진','assets/case3.jpg'],
+    ['백물어 사진','assets/np/hero.jpg'],
+    ['수배 고양이','m/assets/seek/cat_wanted.jpg']
+  ];
+  var g=document.getElementById('g'),res=[],left=T.length;
+  T.forEach(function(t){
+    var c=document.createElement('div');c.className='c';
+    var im=new Image();im.alt='';
+    var b=document.createElement('b');b.textContent=t[0]+' · 불러오는 중';
+    var s=document.createElement('small');s.textContent=t[1];
+    c.appendChild(im);c.appendChild(b);c.appendChild(s);g.appendChild(c);
+    var t0=Date.now();
+    im.onload=function(){b.textContent=t[0]+' · 됨';b.className='ok';res.push('됨  '+t[1]);done()};
+    im.onerror=function(){b.textContent=t[0]+' · 안 됨';b.className='no';res.push('안됨 '+t[1]);done()};
+    im.src=t[1]+'?t='+t0;
+  });
+  function done(){
+    if(--left)return;
+    var sw='서비스 워커: '+(navigator.serviceWorker&&navigator.serviceWorker.controller?'있음 ('+navigator.serviceWorker.controller.scriptURL.split('/').pop()+')':'없음');
+    var info=[location.href,navigator.userAgent,sw,''].concat(res).join('\n');
+    /* 같은 그림을 fetch 로도 받아 봄 (차단 프로그램이면 여기서 막힘) */
+    fetch('m/assets/gwanggo/x_ajitteok.jpg?f='+Date.now(),{cache:'no-store'}).then(function(r){info+='\nfetch: '+r.status+' '+(r.headers.get('content-type')||'');document.getElementById('info').textContent=info}).catch(function(e){info+='\nfetch 실패: '+e;document.getElementById('info').textContent=info});
+    document.getElementById('info').textContent=info;
+  }
+  document.getElementById('go').onclick=function(){location.href='exhibits/shop/shop.html'};
+  document.getElementById('fix').onclick=function(){
+    var p=[];
+    if(navigator.serviceWorker&&navigator.serviceWorker.getRegistrations)p.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister()}))}));
+    if(window.caches&&caches.keys)p.push(caches.keys().then(function(ks){return Promise.all(ks.map(function(k){return caches.delete(k)}))}));
+    Promise.all(p).catch(function(){}).then(function(){location.href='exhibits/shop/shop.html?fresh='+Date.now()});
+  };
+})();
+</script>
+</body></html>
