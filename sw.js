@@ -4,7 +4,7 @@
    전략: HTML/JS/CSS 네트워크 우선(Network-First, fallback to Cache)
    ========================================================= */
 
-const CACHE_NAME = 'gsyr-pwa-20261026-v10';
+const CACHE_NAME = 'gsyr-pwa-20261026-v11';
 
 const PRECACHE_ASSETS = [
   './index.html',
@@ -71,20 +71,14 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // 2. 기타 정적 미디어(이미지, 폰트, 사운드): 캐시 우선(Cache-First) 후 백그라운드 갱신
+  // 2. 그림·글꼴·소리: (1026) 네트워크 우선 — 예전에 저장된 것이 그림을 막지 않게. 네트워크가 끊겼을 때만 저장본
   event.respondWith(
-    caches.match(req).then(cached => {
-      if (cached) return cached;
-      return fetch(req).then(res => {
-        if (!res || res.status !== 200 || (res.type !== 'basic' && res.type !== 'cors')) {
-          return res;
-        }
+    fetch(req).then(res => {
+      if (res && res.status === 200 && res.type === 'basic') {
         const copy = res.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(req, copy));
-        return res;
-      }).catch(() => {
-        return Response.error();
-      });
-    })
+        caches.open(CACHE_NAME).then(cache => cache.put(req, copy)).catch(() => {});
+      }
+      return res;
+    }).catch(() => caches.match(req).then(cached => cached || Response.error()))
   );
 });

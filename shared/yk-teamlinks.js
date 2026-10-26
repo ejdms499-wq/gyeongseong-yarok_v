@@ -84,6 +84,20 @@
       }).observe(D.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['href'] });
     } catch (e) {}
   }
+  /* 그림이 안 뜨면 한 번 더: 맨 위 assets/ 그림을 m/assets/ 의 같은 그림으로 바꿔 불러 봄 */
+  D.addEventListener('error', function (e) {
+    var im = e.target;
+    if (!im || im.tagName !== 'IMG' || im.dataset.ykfb) return;
+    try {
+      var u = new URL(im.getAttribute('src') || '', D.baseURI), rp = new URL(ROOT).pathname;
+      if (u.pathname.indexOf(rp) !== 0) return;
+      var rel = u.pathname.slice(rp.length);
+      if (/^m\//.test(rel)) return;
+      var k = rel.indexOf('assets/'); if (k < 0) return;
+      im.dataset.ykfb = '1';
+      im.src = ROOT + 'm/' + rel.slice(k) + u.search;
+    } catch (x) {}
+  }, true);
   /* 누르는 순간에도 한 번 더 */
   D.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
