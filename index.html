@@ -3,6 +3,7 @@
 <head>
 <script>/* 폰은 흑백 폰판(m/)으로 · 컴퓨터판을 폰에서 보려면 주소 끝에 ?pc=1 */(function(){try{if(/[?&]pc=1/.test(location.search))return;var u=navigator.userAgent,m=(/Mobi|Android|iPhone|iPod/i.test(u)&&!/iPad|Tablet/i.test(u))||(window.matchMedia&&matchMedia('(max-width:600px)').matches&&screen&&Math.min(screen.width,screen.height)<=600);if(m)location.replace('m/m-main.html'+location.hash)}catch(e){}})();</script>
 
+<script>/* 컴퓨터판: 처음 들어오면 오프닝 「자정까지」 한 번 (주소 끝 ?op=0 이면 건너뜀) */(function(){try{var s=sessionStorage;if(!/Mobi|Android|iPhone|iPod/i.test(navigator.userAgent)&&!location.hash&&!/[?&]op=0\b/.test(location.search)&&!s.getItem('ykop-seen')){s.setItem('ykop-seen','1');location.replace('opening.html');document.write('<style>html{background:#050403}body{display:none}</style>');return;}s.setItem('ykop-seen','1');}catch(e){}})();</script>
 <script>/* 오프닝(자정의 호외)에서 넘어온 경우: 첫 화면을 오프닝의 마지막 장면과 똑같이 맞춘다 */
 if(location.hash.indexOf('#yarok=')===0)document.documentElement.classList.add('yarok-in');</script>
 <style>html.yarok-in,html.yarok-in body{background:#000}html.yarok-in body{visibility:hidden}
@@ -274,7 +275,7 @@ if(location.hash.indexOf('#yarok=')===0)document.documentElement.classList.add('
 @media (max-width:980px){ .card-stamp{width:34px;height:42px} }
 @media (prefers-reduced-motion:reduce){ .mol-stamp{animation:none} .tl-dot::before{transition:none} }
 </style>
-<meta charset="UTF-8"><script src="shared/yk-teamlinks.js?v=2"></script>
+<meta charset="UTF-8"><script src="shared/yk-hangul.js?v=1"></script><script src="shared/yk-teamlinks.js?v=2"></script>
 <script src="shared/yk-zoom.js?v=20261019" data-yk-main></script><!-- 화면 배율 120% -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -3705,8 +3706,8 @@ if(vh){setV('hj');}
       var hay=norm(old+ko).replace(/긔/g,'기');
       var dup=toks.some(function(t){ return hay.indexOf(t)>-1; });
       if(dup) return;
-      var mm=li.querySelector('.mm'), meta=mm?mm.textContent.replace(/\s+/g,' ').replace(/·\s*(甲|乙)/g,'').trim():'';
-      extra.push({old:old,ko:ko,meta:meta,otsu:!!(mm&&mm.textContent.indexOf('乙')>-1)});
+      var mm=li.querySelector('.mm'), meta=mm?mm.textContent.replace(/\s+/g,' ').replace(/·\s*(甲|乙|갑|을)/g,'').trim():'';
+      extra.push({old:old,ko:ko,meta:meta,otsu:!!(mm&&/乙|·\s*을/.test(mm.textContent))});
     });
     if(!extra.length){ band.classList.remove('on'); band.innerHTML=''; return; }
     band.innerHTML='<b class="dh">단신</b>'+extra.slice(0,7).map(function(it){

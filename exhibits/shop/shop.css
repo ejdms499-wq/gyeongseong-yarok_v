@@ -238,7 +238,7 @@
 .cut-sheet.cut .cut-news{opacity:.18!important}
 .cut-sheet{background:#e6dcc4}
 .pc-left:before{content:"";position:absolute;left:44px;right:28px;top:16px;bottom:40px;border:1px dashed rgba(58,49,40,.28)}
-.pc-left:after{content:"寫 眞";position:absolute;left:56px;bottom:50px;font-family:var(--serif);font-size:10px;letter-spacing:.4em;color:rgba(58,49,40,.4)}
+.pc-left:after{content:"사 진";position:absolute;left:56px;bottom:50px;font-family:var(--serif);font-size:10px;letter-spacing:.4em;color:rgba(58,49,40,.4)}
 .sb-panel{background:#b59d74!important;background-image:radial-gradient(ellipse at center,transparent 45%,rgba(60,40,20,.35)),url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='.85' numOctaves='3'/><feColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .1 0 0 0 .22 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>")!important}
 .sb-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
 .sb-empty[hidden]{display:none}
@@ -403,5 +403,5 @@
   .od-main{grid-template-columns:36px 1fr 36px}.od-side{grid-column:1/-1}
   .bn-grid{grid-template-columns:1fr}
 }
-.ud-page .mk.c:after{content:"祝 續刊"}
+.ud-page .mk.c:after{content:"축 속간"}
 .yk-send{bottom:auto;top:28px}

@@ -786,7 +786,7 @@ img{max-width:100%;display:block}
 .seek-list{list-style:none;display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:16px}
 .seek-list li{font-family:var(--myeongjo);font-weight:700;font-size:13px;padding:5px 12px;border:1px solid var(--rule)}
 .seek-list li.ok{text-decoration:line-through;text-decoration-thickness:1px;color:var(--fade);border-style:dashed}
-.seek-list li.ok::after{content:" 印";color:var(--indigo);text-decoration:none;display:inline-block;margin-left:4px}
+.seek-list li.ok::after{content:" 인";color:var(--indigo);text-decoration:none;display:inline-block;margin-left:4px}
 .seek-note{min-height:1.8em;margin-top:10px;font-family:var(--myeongjo);font-size:13.5px;color:#2e2720}
 
 
